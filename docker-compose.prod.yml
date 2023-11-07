@@ -80,7 +80,7 @@ services:
   update:
     image: carlossfc/odourcollect-api:${IMAGE_TAG}
     command: sh -c "./wait-for-it.sh mysql:3306 -t 30 && ./update.sh"
-    restart: no
+    restart: "no"
     volumes:
       - ./.env:/usr/src/.env
     depends_on:
