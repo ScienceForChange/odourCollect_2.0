@@ -1,0 +1,111 @@
+textarea,
+input:not([type=checkbox]):not([type=radio]):not([type=button]){ 
+  width: 100%;
+  padding: 11.2px 15px;   
+  border-radius: 30px;
+  border: 0.95px solid $grey-dark;
+  &.error,
+  &.ng-touched.ng-invalid{
+      border: 1px solid $error;
+  }
+}
+
+textarea {
+  resize: none;
+  border: 1px solid $violet-lighter;
+  background-color: $violet-lighter;
+  &:focus {
+    outline: none;
+  }
+  &.error,
+  &.ng-touched.ng-invalid{
+      border: 1px solid $error;
+  }
+}
+
+.input-password {
+  border: 0.95px solid $grey-dark;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  input {
+    border: none !important;
+    padding: 10.2px 15px;
+    &.ng-touched.ng-invalid{
+      border: none;
+      box-shadow: none;
+    }
+  }
+  button {
+    width: fit-content;
+    min-width: fit-content;
+    background-color: transparent;
+    padding: 0 15px 0 0;
+    height: fit-content;
+    border: none;
+    cursor: pointer;
+  }
+  &:has(> input.ng-touched.ng-invalid){
+    border: 1px solid $error;
+  }
+}
+
+input[type=radio]{
+  height: 20px;
+}
+
+
+.range{
+  display: flex;
+  flex-direction: column;
+  .range-container{
+    height: 30px;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    input[type=range] {
+      position: absolute;
+      appearance: none;
+      padding: 0;
+      background: transparent;
+      outline: none;
+      opacity: 1;
+      border: none;
+      justify-self: center;
+      z-index: 2;
+      &::-webkit-slider-thumb{
+        appearance: none;
+        width: 24px;
+        height: 24px;
+        border: 3px solid white;
+        background: $violet;
+        cursor: pointer;
+        border-radius: 12px;
+        box-shadow: 2px 2px 5px rgba(125, 125, 125, 0.2);;
+        pointer-events: auto;
+      }
+    }
+    .range-segments{
+      position: absolute;
+      display: flex;
+      align-self: center;
+      justify-content: space-between;
+      align-items: center;
+      background-color: $grey-lighter;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      padding:0 10px;
+      z-index: 0;
+      i{
+        display: block;
+        height: 4px;
+        width: 4px;
+        border-radius: 2px;
+        opacity: 0.4;
+        background-color: $violet-light;
+      }
+    }
+  }
+}

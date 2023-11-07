@@ -1,0 +1,66 @@
+<ng-container [formGroup]="commentDetails">
+  <fieldset>
+    <legend class="label-l text-start mb-4">¿Conoces la fuente de olor?</legend>
+    <div class="d-flex justify-content-center gap-4 mb-4">
+      <div class="d-flex justify-content-center gap-2">
+        <input
+          id="true"
+          type="radio"
+          value="true"
+          name="know_about_source"
+          formControlName="know_about_source"
+        />
+        <label for="true"> Si </label>
+      </div>
+      <div class="label-l d-flex justify-content-center gap-2">
+        <input
+          id="false"
+          type="radio"
+          value="false"
+          name="know_about_source"
+          formControlName="know_about_source"
+        />
+        <label for="false"> No </label>
+      </div>
+    </div>
+
+    <div
+      class="d-flex flex-column gap-2 mb-4"
+      *ngIf="commentDetails.get('know_about_source')?.value === 'true'"
+    >
+      <label for="origin" class="label-l text-start">
+        ¿Cuál crees que es?
+      </label>
+      <textarea id="origin" formControlName="origin" rows="3"> </textarea>
+      <app-form-error-list
+        *ngIf="
+          commentDetails.get('origin')?.touched &&
+          commentDetails.get('origin')?.errors
+        "
+        [errorList]="commentDetails.get('origin')?.errors"
+      />
+    </div>
+
+    <div class="d-flex flex-column gap-2 mb-4">
+      <label for="description" class="label-l text-start">
+        ¿Puedes dar más detalles?
+        <span class="d-block label-m"
+          >(Sensaciones físicas,recuerdos asociados, duración, emociones,
+          efectos en la salud)</span
+        >
+      </label>
+      <textarea
+        id="description"
+        formControlName="description"
+        rows="6"
+      ></textarea>
+    </div>
+  </fieldset>
+  <app-form-error-list
+    *ngIf="
+      commentDetails.get('description')?.touched &&
+      commentDetails.get('description')?.errors
+    "
+    [errorList]="commentDetails.get('description')?.errors"
+  />
+</ng-container>

@@ -1,0 +1,14 @@
+<article class="d-flex flex-column justify-content-start">
+    <div id="header" class="d-flex align-items-center justify-content-center">
+        <h1 class="title-l">
+            Hubo un Error
+        </h1>
+    </div>
+    <div id="body" class="d-flex flex-1 flex-column align-items-center justify-content-center body-m">
+        <p class="text-center mb-5">Por favor, vuelve a intentarlo más tarde.</p>
+        <button class="btn btn-primary" [disabled]="loading" [ngClass]="{ loading: loading }" (click)="retry()">Reintentar</button>
+    </div>
+    <div id="footer" class="mt-auto">
+        
+    </div>
+</article>    

@@ -1,0 +1,45 @@
+ngb-offcanvas-panel.offcanvas.default{
+    border-radius: 40px 40px 0 0;
+    border: none;
+    height: auto;
+    max-height: calc(100dvh - 70px);
+    
+    &.public-profile{
+        .offcanvas-header{
+            min-height: 82px;
+            #picture{
+                transition: all .25s ease-out;
+            }
+        }
+    }
+    
+    &.show{
+        .offcanvas-header{
+            #picture{
+                height: 124px;
+                width: 124px;    
+            }
+        }
+        &.showing{
+            .offcanvas-header{
+                #picture{
+                    height: 124px;
+                    width: 124px;
+                }
+            }
+        }
+    }
+    &.hiding{
+        .offcanvas-header{
+            #picture{
+                height: 0;
+                width: 0;
+            }
+        }
+    }
+}
+    
+  
+ngb-offcanvas-backdrop.default{
+    background-color: transparent;
+}

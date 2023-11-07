@@ -1,0 +1,22 @@
+header {
+  position: fixed;
+  z-index: 99;
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 24px;
+    > div {
+      max-width: 425px;
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 auto;
+      * {
+        flex: 1;
+      }
+    }
+  }
+}

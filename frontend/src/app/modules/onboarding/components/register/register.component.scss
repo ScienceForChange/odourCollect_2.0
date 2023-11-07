@@ -1,0 +1,79 @@
+@import "../../../../../styles/colors";
+
+article {
+  animation: slidein 1s ease;
+  margin: 45px auto;
+  max-width: 425px;
+  section {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+  section:nth-child(1) {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    min-height: 435px;
+    text-align: center;
+    strong {
+      font-weight: 700;
+    }
+  }
+  section:nth-child(2) {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 50px;
+    button{
+        min-width: 300px;
+    }
+    a {
+      text-decoration: none;
+    }
+    a:nth-child(1) {
+      button {
+        background-color: $violet;
+        border: none;
+        color: $black;
+        &:hover,
+        &:active {
+          background-color: $violet-dark;
+        }
+      }
+    }
+    a:nth-child(2) {
+      button {
+        background-color: transparent;
+        border: 1px solid $black;
+        color: $black;
+        &:hover,
+        &:active {
+          border: 1px solid $violet;
+        }
+      }
+    }
+    a:nth-child(3) {
+      color: $black;
+      &:hover,
+      &:active {
+        text-decoration: $black;
+      }
+      button {
+        background-color: transparent;
+        border: none;
+        color: $black;
+      }
+    }
+  }
+}
+
+@keyframes slidein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

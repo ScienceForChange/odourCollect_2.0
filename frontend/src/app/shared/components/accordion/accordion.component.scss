@@ -1,0 +1,41 @@
+@import "../../../../styles/colors";
+
+.accordion-button::after {
+  position: absolute;
+  right: 10px;
+  margin-left: auto;
+}
+
+.accordion-button:not(.collapsed) {
+  color: $black;
+  background-color: $violet-lighter;
+}
+
+button {
+  align-items: flex-start;
+  height: fit-content;
+  padding-right: 32px;
+}
+
+button:hover,
+button.btn:hover,
+button:active,
+button.btn:active {
+  background-color: white;
+  color: $black;
+}
+
+.accordion-button:not(.collapsed)::after {
+  background-image: var(--bs-accordion-btn-icon);
+  transform: var(--bs-accordion-btn-icon-transform);
+}
+
+.accordion-body {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.accordion-item {
+  border: none;
+}

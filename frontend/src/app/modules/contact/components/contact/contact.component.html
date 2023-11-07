@@ -1,0 +1,42 @@
+<header>
+  <app-back-btn />
+  <p>Contacto e incidencias</p>
+</header>
+<section>
+  <div>
+    <img
+      src="../../../../../assets/images/avatar-oc.svg"
+      alt="odour colect avatar"
+      width="42"
+      height="42"
+    />
+    <div>
+      <p class="label-l">¿En qué te podemos ayudar?</p>
+    </div>
+  </div>
+  <form [formGroup]="contactForm">
+    <textarea
+      rows="5"
+      required
+      formControlName="comment"
+      aria-label="comment"
+    ></textarea>
+    <app-form-error-list
+      *ngIf="
+        contactForm.get('comment')?.touched &&
+        contactForm.get('comment')?.errors
+      "
+      [errorList]="contactForm.get('comment')?.errors"
+    />
+
+    <button
+      type="submit"
+      class="btn"
+      [disabled]="!contactForm.valid || loading"
+      (click)="send()"
+      [ngClass]="{ loading: loading }"
+    >
+      Enviar consulta
+    </button>
+  </form>
+</section>

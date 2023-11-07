@@ -1,0 +1,43 @@
+<header>
+  <div>
+    <app-back-btn />
+    <p>Mis olores</p>
+  </div>
+  <div>
+    <select class="form-select" (change)="sortedBy($event)">
+      <option selected value="createdAt_desc">Más reciente</option>
+      <option value="createdAt_asc">Más antigua</option>
+    </select>
+    <button (click)="toggleFilters()"><icon-filter /> Filtrar</button>
+    <label class="input-group">
+      <span class="input-group-text">
+        <icon-search />
+      </span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Buscar"
+        aria-label="Buscar"
+        (keyup)="filterByName(searchInput.value)"
+        #searchInput
+      />
+    </label>
+  </div>
+</header>
+<section>
+  <p class="label-m">{{ observations.length }} registros</p>
+  <ul>
+    <li *ngFor="let observation of observations">
+      <app-my-odour-card
+        [observation]="observation"
+        (deleteObservation)="deleteObservation($event)"
+      />
+    </li>
+  </ul>
+</section>
+<app-filters
+  [isOpen]="isOpenFilters"
+  (toggleFilters)="toggleFilters()"
+  (filterObservations)="filterObservations($event)"
+  (resetFilters)="resetFilters()"
+/>

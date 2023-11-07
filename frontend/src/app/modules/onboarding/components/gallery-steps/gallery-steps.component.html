@@ -1,0 +1,51 @@
+<article>
+  <header>
+    <a [routerLink]="['/register']">
+      <button>Saltar</button>
+    </a>
+  </header>
+  <section>
+    <section *ngIf="step === 1">
+      <icon-cloud-search></icon-cloud-search>
+      <h1 class="headline-s">
+        Te damos la bienvenida a <strong>OdourCollect</strong>. ¡Nos
+        <strong>olíamos</strong> tu llegada!
+      </h1>
+      <p class="body-l">
+        ¿Todo listo para poner a prueba tu sentido del olfato y hacer ciencia
+        ciudadana?
+      </p>
+    </section>
+    <section *ngIf="step === 2">
+      <icon-location-tracking></icon-location-tracking>
+      <p class="body-l">
+        Mapea, valora y comparte observaciones de olor en cualquier momento y
+        cualquier lugar.
+      </p>
+    </section>
+    <section *ngIf="step === 3">
+      <icon-buffering></icon-buffering>
+      <p class="body-l">
+        También puedes anotar las características del olor de una forma
+        intuitiva, sencilla y rápida.
+      </p>
+    </section>
+    <section *ngIf="step === 4">
+      <icon-search-world></icon-search-world>
+      <p class="body-l">
+        Además, puedes consultar otros olores registrados y así saber la
+        situación odorífera del lugar que te interese en tiempo real.
+      </p>
+    </section>
+    <section>
+      <div>
+        <button
+          *ngFor="let steps of steps; index as idx"
+          [ngClass]="idx + 1 === step ? 'painted' : ''"
+          (click)="moveTo(idx + 1)"
+        ></button>
+      </div>
+      <button (click)="goForward()"><icon-arrow-right></icon-arrow-right></button>
+    </section>
+  </section>
+</article>

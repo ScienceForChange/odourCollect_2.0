@@ -1,0 +1,125 @@
+@import "../../../../../../styles/colors";
+
+button {
+  border: none;
+  min-width: auto;
+}
+
+.burguer_btn,
+.burguer_btn_cross {
+  cursor: pointer;
+  background: transparent;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  z-index: 110;
+  padding: 0px;
+  border: none;
+}
+
+.burguer_btn_open {
+  animation: fadeOutLeft 0.3s ease-in;
+}
+
+.burguer_btn > div {
+  background: $black;
+  border-radius: 2px;
+  border-radius: 3px;
+  height: 3px;
+  position: relative;
+  transition: all 0.2s ease-out 0s;
+  width: 100%;
+}
+.burguer_btn > div:after {
+  left: 0px;
+  top: 10px;
+  transform: rotate(0deg);
+  width: calc(100% - 8px);
+}
+
+.burguer_btn > div:before {
+  transform: rotate(0deg);
+  top: -10px;
+}
+
+.burguer_btn > div:after,
+.burguer_btn > div:before {
+  background: $black;
+  border-radius: 3px;
+  content: " ";
+  height: 3px;
+  left: 0px;
+  position: absolute;
+  transition: all 0.2s ease-out 0s;
+  width: 100%;
+}
+
+//   /*Cross btn*/
+
+.burguer_btn_cross {
+  animation: fadeInLeft 0.3s ease-in;
+  margin-left: 93%;
+}
+
+.burguer_btn_cross > div {
+  background: transparent;
+  border-radius: 3px;
+  height: 3px;
+  position: relative;
+  transition: all 0.2s ease-out 0s;
+  width: 100%;
+}
+
+.burguer_btn_cross > div:after,
+.burguer_btn_cross > div:before {
+  background-color: $grey-light;
+  border-radius: 3px;
+  content: " ";
+  height: 3px;
+  left: 0px;
+  position: absolute;
+  transition: all 0.2s ease-out 0s;
+  animation: toggleColor 0.3s ease-in;
+  width: 100%;
+}
+
+.burguer_btn_cross > div:after {
+  left: 0px;
+  top: 0px;
+  transform: rotate(-45deg);
+  width: 100%;
+}
+
+.burguer_btn_cross > div:before {
+  transform: rotate(45deg);
+  top: 0px;
+}
+
+@keyframes fadeInLeft {
+  from {
+    margin-left: 0;
+  }
+
+  to {
+    margin-left: 93%;
+  }
+}
+
+@keyframes fadeOutLeft {
+  from {
+    margin-left: 93%;
+  }
+
+  to {
+    margin-left: 0;
+  }
+}
+
+@keyframes toggleColor {
+  from {
+    background-color: $black;
+  }
+  to {
+    background-color: $grey-light;
+  }
+}

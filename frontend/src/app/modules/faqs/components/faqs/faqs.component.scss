@@ -1,0 +1,36 @@
+@import "../../../../../styles/colors";
+
+article {
+  height: 100%;
+  padding-bottom: 10%;
+  max-width: 425px;
+  margin: 0 auto;
+  > section {
+    padding-left: 40px;
+    padding-right: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+  }
+}
+
+header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  padding: 16px 0;
+  :first-child {
+    top: 2px;
+    position: absolute;
+    width: fit-content;
+    min-width: auto;
+    background-color: transparent;
+    border: none;
+    padding: 0 16px;
+  }
+  p {
+    width: 100%;
+    text-align: center;
+  }
+}

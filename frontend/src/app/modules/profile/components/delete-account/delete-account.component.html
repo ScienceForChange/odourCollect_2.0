@@ -1,0 +1,37 @@
+<article>
+  <header>
+    <app-back-btn></app-back-btn>
+    <p>Eliminar mi cuenta</p>
+  </header>
+  <section>
+    <h1 class="headline-m">
+      No nos olíamos tu <br />
+      despedida...<br />
+      ¡Ayudanos a mejorar!
+    </h1>
+    <form [formGroup]="deleteForm">
+      <label class="label-l" for="comment">
+        ¿Por qué deseas eliminar tu cuenta?
+      </label>
+      <textarea
+        rows="5"
+        required
+        formControlName="comment"
+        aria-label="comment"
+      ></textarea>
+      <app-form-error-list 
+        *ngIf="deleteForm.get('comment')?.touched && deleteForm.get('comment')?.errors" 
+        [errorList]="deleteForm.get('comment')?.errors"/>
+
+      <button
+        type="submit"
+        class="btn"
+        [disabled]="!deleteForm.valid || loading"
+        (click)="send()"
+        [ngClass]="{ loading: loading }"
+      >
+        Eliminar mi cuenta
+      </button>
+    </form>
+  </section>
+</article>

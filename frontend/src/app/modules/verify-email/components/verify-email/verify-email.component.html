@@ -1,0 +1,26 @@
+<article>
+  <header>
+    <app-back-btn>Volver</app-back-btn>
+  </header>
+  <section>
+    <div>
+      <icon-letter [iconClass]="'icon-violet-dark'"></icon-letter>
+      <h1 class="headline-m">Verifica tu correo</h1>
+      <p>Confirma el correo de activación antes de empezar a oler.</p>
+    </div>
+    <div>
+      <a href="mailto:email">
+        <button>Abrir correo</button>
+      </a>
+        <button #sendButton (click)="resendVerifyEmail()">Reenviar correo</button>
+    </div>
+  </section>
+  <section>
+    <p class="label-l">
+      ¿No recibiste el correo? Revisa en la carpeta de spam o
+      <a (click)="logoutAndRedirect()"
+        >intenta con otra dirección de correo electrónico</a
+      >
+    </p>
+  </section>
+</article>

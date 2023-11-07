@@ -1,0 +1,57 @@
+<article>  
+  <header>
+    <app-back-btn>Volver</app-back-btn>
+  </header>
+  <section>
+    <h1 class="headline-m">¡Narices a la obra!</h1>
+    <p>Inicia sesión</p>
+  </section>
+  <form [formGroup]="loginForm">
+    <div class="d-flex flex-column mb-3">
+
+      <label class="label-l" for="email"> Correo electrónico </label>
+      <input
+        formControlName="email"
+        class="border-input"
+        aria-label="Email"
+        type="text"
+        name="email"
+        required="required"
+      />
+      <app-form-error-list
+        *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors" 
+        [errorList]="loginForm.get('email')?.errors"/>
+
+
+    </div>
+    <div class="d-flex flex-column mb-3">
+
+      <label class="label-l" for="password"> Introduce tu contraseña </label>
+      <div
+        class="border-input"
+        class="border-input input-password"
+        id="input-password"
+      >
+        <input
+          formControlName="password"
+          aria-label="password"
+          [type]="showPassword ? 'text' : 'password'"
+          name="password"
+          required="required"
+        />
+        <button type="button" (click)="toggleShowPassword()">
+          <icon-eye *ngIf="!showPassword"></icon-eye>
+          <icon-close-eye *ngIf="showPassword"></icon-close-eye>
+        </button>
+      </div>
+      <app-form-error-list
+        *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors" 
+        [errorList]="loginForm.get('password')?.errors"/>
+
+    </div>
+    
+    <a class="label-l" [routerLink]="['/recover-password']" routerLinkActive="active">¿Olvidaste tu contraseña?</a>
+    <button class="btn btn-primary" [disabled]="!loginForm.valid || loading" type="submit" (click)="send()" [ngClass]="{'loading' : loading}">Entrar</button>
+    <a class="label-l" [routerLink]="['/signup']" routerLinkActive="active" >¿No tienes una cuenta? ¡Regístrate!</a>
+  </form>
+</article>

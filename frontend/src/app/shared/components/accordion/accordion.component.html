@@ -1,0 +1,16 @@
+<div ngbAccordion>
+  <div ngbAccordionItem>
+    <h2 class="label-l" ngbAccordionHeader>
+      <button class="label-l" ngbAccordionButton>
+        {{ title }}
+      </button>
+    </h2>
+    <div ngbAccordionCollapse>
+      <div ngbAccordionBody>
+        <ng-template>
+          <ng-content></ng-content>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

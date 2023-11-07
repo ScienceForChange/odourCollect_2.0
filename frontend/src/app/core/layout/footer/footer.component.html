@@ -1,0 +1,41 @@
+<nav>
+  <ul>
+    <li [class.active]="rlahome.isActive">
+      <a routerLink="/map" routerLinkActive #rlahome="routerLinkActive">
+        <icon-home
+          [class]="
+            rlahome.isActive
+              ? 'white-icon-stroke icon-color-transition '
+              : 'violet-light-icon-stroke icon-color-transition '
+          "
+        ></icon-home>
+        <p>Inicio</p>
+      </a>
+    </li>
+    <li [class.active]="rlaodours.isActive">
+      <a routerLink="/my-odours" routerLinkActive #rlaodours="routerLinkActive"
+        ><icon-odour
+          [class]="
+            rlaodours.isActive
+              ? 'white-icon-stroke icon-color-transition '
+              : 'violet-light-icon-stroke icon-color-transition '
+          "
+        ></icon-odour>
+        <p>Mis olores</p></a
+      >
+    </li>
+    <li [class.active]="rlaprofile.isActive">
+      <a routerLink="/profile" routerLinkActive #rlaprofile="routerLinkActive"
+        ><icon-profile
+          [class]="
+            rlaprofile.isActive
+              ? 'white-icon-stroke icon-color-transition'
+              : 'violet-light-icon-stroke icon-color-transition '
+          "
+        ></icon-profile>
+        <p>Perfil</p></a
+      >
+    </li>
+    <li class="follow"></li>
+  </ul>
+</nav>

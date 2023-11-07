@@ -1,0 +1,163 @@
+@import '../../../../../styles/colors';
+
+section {
+  background: white;
+  border-radius: 40px 40px 0 0;
+  bottom: -100dvh;
+  margin: 0 auto;
+  max-width: 425px;
+  padding: 30px 20px 34px;
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+  display: none;
+  &.open-filter {
+    display: block;
+    animation: animation-fade-in 400ms ease-in-out forwards;
+  }
+  &.closed-filter {
+    animation: animation-fade-out 400ms ease-in-out forwards;
+  }
+
+  > div {
+    padding: 0 20px;
+  }
+  .modal-header {
+    > div {
+      align-items: center;
+      display: flex;
+      gap: 18px;
+      img {
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+    position: relative;
+    z-index: 2;
+    .close {
+      background-color: transparent;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      height: auto;
+      min-width: auto;
+      padding: 0;
+      position: absolute;
+      right: 28px;
+      top: 8px;
+      width: 25px;
+    }
+    .close::after,
+    .close::before {
+      background: $grey-light;
+      border-radius: 3px;
+      content: ' ';
+      height: 3px;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+    }
+    .close::after {
+      transform: rotate(-45deg);
+    }
+    .close::before {
+      transform: rotate(45deg);
+    }
+  }
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    overflow-y: scroll;
+    padding-top: 37px;
+    position: relative;
+    z-index: 1;
+    > div {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      > div {
+        flex: 1;
+      }
+    }
+    .box-type {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 18px;
+      height: auto;
+      border-radius: 20px;
+      > span {
+        font-family: Space Grotesk;
+        font-size: 28px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 32px;
+      }
+      > p {
+        z-index: 1;
+        text-align: center;
+      }
+      &#urban {
+        background-color: $yellow-lighter;
+      }
+      &#waste-water {
+        background-color: $blue-lighter;
+      }
+      &#agriculture-livestock {
+        background-color: $green-lighter;
+      }
+      &#food-industries {
+        background-color: $violet-lighter;
+      }
+      &#industrial {
+        background-color: $orange-lighter;
+      }
+    }
+    > div:first-child > div:last-child {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      .tone-title {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 4px;
+        p {
+          color: $grey-dark;
+        }
+      }
+    }
+    > div:last-child {
+      icon-calendar {
+        display: flex;
+      }
+      > div {
+        align-items: center;
+        display: flex;
+        gap: 3px;
+      }
+    }
+  }
+}
+
+@keyframes animation-fade-in {
+  0% {
+    bottom: -100dvh;
+  }
+  100% {
+    bottom: 0;
+  }
+}
+@keyframes animation-fade-out {
+  0% {
+    bottom: 0;
+    display: block;
+  }
+  100% {
+    display: none;
+    bottom: -100dvh;
+  }
+}

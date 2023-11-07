@@ -1,0 +1,17 @@
+<header>
+  <nav>
+    <div>
+      <div>
+        <app-hamburguer (click)="toggleIsOpen()" />
+      </div>
+      <div>
+        <!-- <input /> -->
+      </div>
+      <!-- TODO hacer algo para que no se muestren los items(Filter & input de búsqueda) -->
+      <div [style.display]="showMenu === 'open' ? 'none' : ''">
+        <app-filters />
+      </div>
+    </div>
+    <app-menu *ngIf="showMenu" />
+  </nav>
+</header>

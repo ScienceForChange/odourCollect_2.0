@@ -1,0 +1,86 @@
+@import "../../../../../styles/colors";
+
+article {
+  align-items: center;
+  animation: slidein 1s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  justify-content: space-between;
+  padding-bottom: 100px;
+  padding-top: 10px;
+  text-align: center;
+  width: 100%;
+  header{
+    padding-left: 45px;
+    width: 100%;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 425px;
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+  section:nth-child(2) {
+    div:nth-child(1) {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      p {
+        color: $grey-dark;
+      }
+    }
+    div:nth-child(2) {
+      a {
+        text-decoration: none;
+      }
+      button:nth-child(1) {
+        margin-bottom: 18px;
+        margin-top: 54px;
+      }
+      
+      button {
+        background-color: $violet;
+        border: none;
+        color: $black;
+        width: 100%;
+        cursor: pointer;
+        &:hover,
+        &:active {
+          background-color: $violet-dark;
+        }
+      }
+    }
+  }
+
+  section:last-child {
+    a {
+      color: $violet;
+      cursor: pointer;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+icon-letter {
+  height: 60px;
+  width: 60px;
+  display: flex;
+}
+
+@keyframes slidein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

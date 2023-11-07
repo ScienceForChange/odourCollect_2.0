@@ -1,0 +1,25 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Mask group">
+<mask id="mask0_3251_2885" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="80" height="80">
+<g id="Group">
+<path id="Vector" d="M80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80C62.0914 80 80 62.0914 80 40Z" fill="white"/>
+</g>
+</mask>
+<g mask="url(#mask0_3251_2885)">
+<g id="Group_2">
+<path id="Vector_2" d="M0 0H80V40H0V0Z" fill="url(#paint0_linear_3251_2885)"/>
+<path id="Vector_3" d="M0 40H80V80H0V40Z" fill="url(#paint1_linear_3251_2885)"/>
+</g>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_3251_2885" x1="40" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+<stop stop-color="#EF8746"/>
+<stop offset="1" stop-color="#FFFF90"/>
+</linearGradient>
+<linearGradient id="paint1_linear_3251_2885" x1="40" y1="40" x2="40" y2="80" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D2B3ED"/>
+<stop offset="1" stop-color="#9ACEF5"/>
+</linearGradient>
+</defs>
+</svg>

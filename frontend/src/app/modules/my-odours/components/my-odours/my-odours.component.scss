@@ -1,0 +1,91 @@
+@import '../../../../../styles/colors';
+
+header {
+  > div {
+    display: flex;
+    flex-direction: row;
+  }
+  > div:first-child {
+    align-items: center;
+    position: relative;
+    padding: 16px 0;
+    :first-child {
+      top: 2px;
+      position: absolute;
+      width: fit-content;
+      min-width: auto;
+      background-color: transparent;
+      border: none;
+      padding: 0 16px;
+    }
+    p {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  > div:nth-child(2) {
+    align-items: stretch;
+    gap: 8px;
+    padding: 0 36px;
+    margin-bottom: 12px;
+    select,
+    button {
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 15px;
+      height: auto;
+    }
+    select {
+      flex: 3;
+      padding: 10px 12px;
+      max-width: 120px;
+      border-radius: 29px;
+      border: 2px solid $violet;
+    }
+    button {
+      flex: 1;
+      display: inline-flex;
+      flex-direction: row;
+      color: $black;
+      border: none;
+      padding: 8px 15px;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      background: $violet;
+    }
+    .input-group {
+      flex: 2;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      border: 1px solid $black;
+      border-radius: 36px;
+      padding: 8px 12px;
+      gap: 4px;
+      span,
+      input {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+      }
+      input {
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 12px;
+      }
+    }
+  }
+}
+section {
+  padding: 0 36px;
+  ul {
+    display: grid;
+    place-content: center;
+    gap: 15px;
+    margin-top: 8px;
+    margin-bottom: 100px;
+  }
+}

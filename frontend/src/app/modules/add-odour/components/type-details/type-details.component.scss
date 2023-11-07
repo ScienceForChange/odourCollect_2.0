@@ -1,0 +1,45 @@
+@import "../../../../../styles/colors";
+
+fieldset{
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+
+    .oudor-types{
+        border-radius: 500px;
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        padding: 16px;
+        flex: auto;
+        cursor: pointer;
+
+        &#agriculture-livestock{
+            top: 7vh;
+            margin-right: 50dvw;
+        }
+
+        &#food-industries{
+            top: 12vh;
+            margin-left: 60vw;
+        }
+
+        &#industrial{
+            top: 23vh;
+        }
+
+        &#urban{
+            top: 36vh;
+            margin-right: 58vw;
+        }
+
+        &#waste-water{
+            top: 42dvh;
+            margin-left: 38dvw;
+        }
+    }
+}

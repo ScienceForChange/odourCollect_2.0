@@ -1,0 +1,14 @@
+<div class="range mt-2">
+    <div class="range-container">
+        <input 
+            type="range"
+            step="0"
+            [min]="min"
+            [max]="max"
+            [value]="this.fControl ? this.fControl.value : value"
+            (change)="onRangeChange($event)"            
+        />
+        <div class="range-segments"><i *ngFor="let item of segments"></i></div>
+    </div>
+    <span class="label-m text-end">{{ currentSegment }}</span>
+</div>

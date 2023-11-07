@@ -1,0 +1,64 @@
+@import "../../../../../styles/colors";
+
+#header {
+  padding: 23px 17px 0;
+  app-back-btn {
+    width: fit-content;
+  }
+  &::after{
+    content: " ";
+    display: block;
+    width: 17px;
+  }
+}
+ul {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 100%;
+  margin-top: 60px;
+  padding-left: 32px;
+  padding-right: 32px;
+  li,
+  a,
+  li div {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  li,
+  a {
+    width: 100%;
+  }
+  li > div {
+    gap: 7px;
+    width: 100%;
+  }
+  #email-option {
+    padding: 12px 16px;
+  }
+  li {
+    background: $violet-lighter;
+    border-radius: 33px;
+    box-shadow: 1px 1px 10.5px 1px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    p {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    a {
+      padding: 12px 16px;
+      text-decoration: none;
+      color: $black;
+      div {
+        gap: 6px;
+      }
+      * {
+        display: flex;
+      }
+    }
+  }
+}

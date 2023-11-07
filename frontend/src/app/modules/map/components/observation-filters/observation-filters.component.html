@@ -1,0 +1,71 @@
+<section [ngClass]="[isOpen ? 'open-filter' : 'closed-filter']">
+  <div class="modal-header">
+    <div>
+      <p class="label-l">Filtros</p>
+      <p class="label-m color-gray-dark">Elige los filtros de tu interés</p>
+    </div>
+    <button type="button" (click)="toggleFilter()" class="close"></button>
+  </div>
+  <div class="modal-body">
+    <form *ngIf="filtersForm" [formGroup]="filtersForm">
+      <ng-container *ngIf="loadingData; else form">
+        <app-spinner></app-spinner>
+      </ng-container>
+      <ng-template #form>
+        <app-accordion-filters [title]="'Tipos de olor'">
+          <fieldset id="types">
+            <div class="d-flex justify-cotent-start flex-wrap">
+              <input
+                *ngFor="let type of types"
+                for="type"
+                [ngClass]="
+                  filtersForm.get('type')?.value.includes(type.id)
+                    ? 'active-type-' + type.slug
+                    : 'type-' + type.slug
+                "
+                class="type-button"
+                type="button"
+                value="{{ type.name }}"
+                (click)="addTypeToForm(type.id)"
+              />
+            </div>
+          </fieldset>
+        </app-accordion-filters>
+        <app-accordion-filters [title]="'Intensidad'">
+          <fieldset>
+            <app-multi-range
+              [minFControl]="this.filtersForm.get('intensityMin')"
+              [maxFControl]="this.filtersForm.get('intensityMax')"
+              [minSegments]="intensityForRange"
+              [maxSegments]="intensityForRange"
+            />
+          </fieldset>
+        </app-accordion-filters>
+        <app-accordion-filters [title]="'Agradabilidad '">
+          <fieldset>
+            <app-multi-range
+              [minFControl]="this.filtersForm.get('hedonicToneMin')"
+              [maxFControl]="this.filtersForm.get('hedonicToneMax')"
+              [minSegments]="hedonicToneForRange"
+              [maxSegments]="hedonicToneForRange"
+            />
+          </fieldset>
+        </app-accordion-filters>
+        <div class="d-flex justify-content-between">
+          <button class="btn-secondary" (click)="resetFilters()" type="button">
+            Restablecer
+          </button>
+          <button
+            class="btn-primary"
+            (click)="filterOdour()"
+            [disabled]="!formChanges || loading"
+            type="submit"
+            [ngClass]="{ loading: loading }"
+          >
+            Aplicar filtros
+          </button>
+        </div>
+      </ng-template>
+    </form>
+  </div>
+</section>

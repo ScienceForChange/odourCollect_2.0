@@ -1,0 +1,59 @@
+@import "../../../../../styles/colors";
+
+article {
+  max-width: 425px;
+  margin: 0 auto;
+}
+
+header {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  padding: 16px 0;
+  :first-child {
+    top: 2px;
+    position: absolute;
+    width: fit-content;
+    min-width: auto;
+    background-color: transparent;
+    border: none;
+    padding: 0 16px;
+  }
+  p {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+section {
+  padding-left: 48px;
+  padding-right: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+  h1 {
+    text-align: center;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    button[type="submit"] {
+      background-color: $violet;
+      border: none;
+      color: $black;
+      margin-top: 20vh;
+      width: 100%;
+      cursor: pointer;
+      &:hover,
+      &:active {
+        background-color: $violet-dark;
+      }
+    }
+    .btn:disabled {
+      background-color: $violet-light;
+      color: $black;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<article>
+  <section>
+    <div>
+      <icon-letter [class]="class"></icon-letter>
+      <h1 class="headline-m">Revisa tu correo</h1>
+      <p>
+        Te hemos enviado las instrucciones de recuperación de contraseña a tu
+        correo electrónico.
+      </p>
+    </div>
+    <div>
+      <a href="mail://">
+        <button>Abrir correo</button>
+      </a>
+    </div>
+  </section>
+  <section>
+    <p class="label-l">
+      ¿No recibiste el correo? Revisa en la carpeta de spam o
+      <a [routerLink]="['/signup']">intenta con otra dirección de correo electrónico</a
+      >
+    </p>
+  </section>
+</article>

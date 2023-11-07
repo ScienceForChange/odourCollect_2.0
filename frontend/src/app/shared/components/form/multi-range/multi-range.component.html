@@ -1,0 +1,41 @@
+<div class="range mt-2">
+    <div class="range-container">
+        <input 
+            #minRange
+            id="min"
+            type="range"
+            step="0"
+            [min]="min"
+            [max]="max"
+            [value]="this.minFControl ? this.minFControl.value : minValue"
+            (input)="onInputMinRange($event)"
+            (change)="onMinRangeChange($event)"        
+            class="slider-left"    
+        />
+        <input 
+            #maxRange
+            id="max"
+            type="range"
+            step="0"
+            [min]="min"
+            [max]="max"
+            [value]="this.maxFControl ? this.maxFControl.value : maxValue"
+            (input)="onInputMaxRange($event)"
+            (change)="onMaxRangeChange($event)"        
+            class="slider-right"              
+        />
+        <div class="range-segments">
+            <div class="points-container">
+                <i class="point" *ngFor="let item of maxSegments"></i>
+            </div>
+            <div class="segments-container">
+                <i class="segment" *ngFor="let item of maxSegments | keyvalue" [ngClass]="{ 'selected' : this.minFControl && this.maxFControl && item.key >= this.minFControl.value + '' && item.key < this.maxFControl.value + ''}"></i>
+            </div>
+        </div>
+    </div>
+    <span class="label-m text-center">
+        <ng-template *ngIf="this.minFControl?.value != this.maxFControl?.value; then eqRange; else dfRange"></ng-template>
+        <ng-template #eqRange>{{minCurrentSegment + ' - ' }}{{ maxCurrentSegment }}</ng-template>
+        <ng-template #dfRange>{{ maxCurrentSegment }}</ng-template>
+    </span>
+</div>

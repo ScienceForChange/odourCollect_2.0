@@ -1,0 +1,59 @@
+<ng-container [formGroup]="subtypeDetails">
+  <fieldset class="d-flex flex-column">
+    <div id="subtype-title">
+      <app-odour-type-icon
+        [odourType]="selectedType.slug"
+        [odourName]="selectedType.name"
+        [iconClass]="'odour-type'"
+      />
+    </div>
+    <p class="body-m color-gray-dark">Elige el subtipo de olor</p>
+    <div
+      id="subtype-container"
+      class="d-flex justify-cotent-start flex-wrap gap-2 mt-5"
+    >
+      <input
+        class="btn btn-xs btn-grey-lighter subtype-option"
+        *ngFor="let subtype of subtypes"
+        for="subtype"
+        type="button"
+        [class.selected]="subtypeDetails.get('subtype')?.value === subtype.id"
+        [ngClass]="'type-' + selectedType.slug"
+        value="{{ subtype.name }}"
+        (click)="subtypeDetails.get('subtype')?.setValue(subtype.id)"
+      />
+    </div>
+    <app-form-error-list
+    *ngIf="
+      subtypeDetails.get('subtype')?.touched &&
+      subtypeDetails.get('subtype')?.errors
+    "
+    [errorList]="subtypeDetails.get('subtype')?.errors"
+  />
+    <div class="d-flex justify-cotent-center align-items-end gap-2 mt-5">
+      <icon-chart />
+      <label class="text-start label-l" for="intensity"
+        >¿Cuál es la intensidad de olor?</label
+      >
+      <icon-info-square class="ms-auto" iconClass="icon-l icon-violet-dark" />
+    </div>
+
+    <app-single-range
+      [fControl]="this.subtypeDetails.get('intensity')"
+      [segments]="intensityForRange"
+    />
+
+    <div class="d-flex justify-cotent-center align-items-end gap-2 mt-5">
+      <icon-chart />
+      <label class="text-start label-l" for="hedonic_tone"
+        >¿Es agradable o desagradable?</label
+      >
+      <icon-info-square class="ms-auto" iconClass="icon-l icon-violet-dark" />
+    </div>
+
+    <app-single-range
+      [fControl]="this.subtypeDetails.get('hedonic_tone')"
+      [segments]="hedonicToneForRange"
+    />
+  </fieldset>
+</ng-container>

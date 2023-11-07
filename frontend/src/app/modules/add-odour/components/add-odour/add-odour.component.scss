@@ -1,0 +1,70 @@
+@import '../../../../../styles/colors';
+
+article {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+header {
+  padding-top: 23px;
+  padding-left: 17px;
+  flex: 0 1 auto;
+  #stepBackBtn {
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    color: $black;
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+    min-width: auto;
+    padding: 12px 0;
+    text-decoration: none;
+    width: fit-content;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex: auto;
+  section {
+    display: flex;
+    flex-direction: column;
+    app-type-details {
+      display: flex;
+      flex-direction: column;
+      flex: auto;
+    }
+  }
+  .btn {
+    &:hover,
+    &:active {
+      background-color: $violet-dark;
+    }
+  }
+}
+
+.urban,
+.waste {
+  background-color: $yellow;
+}
+.waste-water {
+  background-color: $blue;
+}
+.agriculture-livestock {
+  background-color: $green;
+}
+.food-industries {
+  background-color: $violet;
+}
+.industrial {
+  background-color: $orange;
+}
+
+

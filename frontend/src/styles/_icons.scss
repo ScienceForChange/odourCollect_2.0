@@ -1,0 +1,20 @@
+svg{
+    &.icon-l{
+        height: 22px;
+        width: 22px;
+    }
+    &.icon-violet{
+        path {
+            fill: $violet;
+        }
+    }
+    &.icon-violet-dark{
+        path {
+            fill: $violet-dark;
+        }
+    }
+    &.xl{
+        height: 60px;
+        width: 60px;
+    }
+}

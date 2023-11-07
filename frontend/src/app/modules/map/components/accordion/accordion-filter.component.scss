@@ -1,0 +1,65 @@
+@import '../../../../../styles/colors';
+
+span {
+  background: $violet-lighter;
+  border-radius: 4px;
+  display: flex;
+  height: 20px;
+  padding: 2px;
+  width: 20px;
+}
+
+.accordion-body {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.accordion-item {
+  border: none;
+  border-bottom: 1px solid $grey;
+  border-radius: 0;
+}
+
+.accordion-button {
+  background-color: transparent;
+  flex-direction: row;
+  gap: 12px;
+  padding: 0 10px;
+}
+.accordion-button:focus {
+  border: none;
+}
+.accordion-button:not(.collapsed) {
+  background-color: transparent;
+  box-shadow: none;
+  color: $black;
+  span {
+    background-color: $violet;
+    position: relative;
+    &:after {
+      background-image: url('../../../../../assets/images/check.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      content: '';
+      height: 16px;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+    }
+  }
+}
+
+.accordion-button:not(.collapsed)::after {
+  background-image: var(--bs-accordion-btn-icon);
+  transform: var(--bs-accordion-btn-icon-transform);
+}
+
+button:hover,
+button.btn:hover,
+button:active,
+button.btn:active {
+  background-color: white;
+  color: $black;
+}

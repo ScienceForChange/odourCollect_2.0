@@ -1,0 +1,22 @@
+<article>
+  <section>
+    <div>
+      <icon-letter [class]="class"></icon-letter>
+      <h1 class="headline-m">Revisa tu correo</h1>
+      <p>Te hemos enviado un correo de confirmación para activar tu cuenta.</p>
+    </div>
+    <div>
+      <a href="mailto:email">
+        <button>Abrir correo</button>
+      </a>
+    </div>
+  </section>
+  <section>
+    <p class="label-l">
+      ¿No recibiste el correo? Revisa en la carpeta de spam o
+      <a routerLink="/signup" (click)="activateAccount()"
+        >intenta con otra dirección de correo electrónico</a
+      >
+    </p>
+  </section>
+</article>

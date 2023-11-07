@@ -1,0 +1,103 @@
+@import '../../../../../styles/colors';
+
+header {
+  align-items: flex-start;
+  background-color: white;
+  box-shadow: 0 20px 20px white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-height: 42px;
+  padding: 0 10px;
+}
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: calc(100dvh - 186px);
+  overflow-y: scroll;
+  padding-top: 20px;
+  position: relative;
+  z-index: 1;
+  > * {
+    display: flex;
+    flex: auto;
+  }
+  form {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 15px;
+
+    .btn-secondary {
+      background-color: white;
+      color: $black;
+      border: 1px solid $black;
+    }
+
+    #types {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      div {
+        gap: 8px;
+      }
+    }
+
+    .type-button {
+      border: none;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+      line-height: 24px;
+      padding: 8px 12px;
+    }
+
+    .type-agriculture-livestock {
+      background-color: $green-lighter;
+      color: $grey-dark;
+    }
+    .type-food-industries {
+      background-color: $violet-lighter;
+      color: $grey-dark;
+    }
+    .type-industrial {
+      background-color: $orange-lighter;
+      color: $grey-dark;
+    }
+    .type-urban {
+      background-color: $yellow-lighter;
+      color: $grey-dark;
+    }
+    .type-waste-water {
+      background-color: $blue-lighter;
+      color: $grey-dark;
+    }
+
+    .active-type-agriculture-livestock {
+      background-color: $green;
+      color: $black;
+    }
+    .active-type-food-industries {
+      background-color: $violet;
+      color: $black;
+    }
+
+    .active-type-industrial {
+      background-color: $orange;
+      color: $black;
+    }
+
+    .active-type-urban {
+      background-color: $yellow;
+      color: $black;
+    }
+
+    .active-type-waste-water {
+      background-color: $blue;
+      color: $black;
+    }
+  }
+}

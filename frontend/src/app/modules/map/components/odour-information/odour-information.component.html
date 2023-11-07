@@ -1,0 +1,76 @@
+<section
+  *ngIf="observation"
+  [ngClass]="[isOpen ? 'open-filter' : 'closed-filter']"
+>
+  <div class="modal-header">
+    <button type="button" class="close" (click)="toggleModal()"></button>
+    <div (click)="openProfileOffcanva()">
+      <img
+        width="48"
+        height="48"
+        src="https://i.stack.imgur.com/l60Hf.png"
+        alt="user image"
+      />
+      <p class="label-l">Usuario{{ observation.relationships.user?.id }}</p>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div
+        class="box-type"
+        [id]="
+          observation.relationships.odourSubType.relationships.odourType.slug
+        "
+      >
+        <app-odour-type-icon
+          [iconClass]="'odour-type-information'"
+          [odourType]="
+            observation.relationships.odourSubType.relationships.odourType.slug
+          "
+          [odourName]="
+            observation.relationships.odourSubType.relationships.odourType.name
+          "
+        />
+        <p class="headline-s">
+          {{ observation.relationships.odourSubType.name }}
+        </p>
+      </div>
+      <div>
+        <div>
+          <div class="tone-title">
+            <icon-intensity />
+            <p class="label-l">Intensidad</p>
+          </div>
+          <p class="body-l">
+            {{ observation.relationships.odourIntensity.name }}
+          </p>
+        </div>
+        <div>
+          <div class="tone-title">
+            <icon-happy-face />
+            <p class="label-l">Agradabilidad</p>
+          </div>
+          <p class="body-l">
+            {{ observation.relationships.odourHedonicTone.name }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex flex-column align-items-start">
+      <div class="d-flex justify-content-start gap-3">
+        <icon-calendar />
+        <p>{{ observation.createdAt | date: 'dd/MM/yyyy, HH:mm:ss' }}</p>
+      </div>
+      <div
+        (keydown.enter)="toggleModal()"
+        tabindex="0"
+        (click)="send()"
+        *ngIf="user && user.id === observation.relationships.user?.id"
+        class="d-flex justify-content-start gap-3"
+      >
+        <icon-delete [iconClass]="'icon-violet-dark'" />
+        <p class="color-violet-dark">Eliminar</p>
+      </div>
+    </div>
+  </div>
+</section>

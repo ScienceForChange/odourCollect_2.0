@@ -1,0 +1,6 @@
+<dialog [ngClass]="[isOpen ? 'open-filter' : 'closed-filter']">
+  <div>
+    <button type="button" class="close" (click)="toggleFilters.emit()"></button>
+  </div>
+  <ng-content></ng-content>
+</dialog>

@@ -1,0 +1,15 @@
+<div ngbAccordion #accordion="ngbAccordion">
+  <div ngbAccordionItem="first">
+    <button ngbAccordionButton>
+      <span></span>
+      {{ title }}
+    </button>
+    <div ngbAccordionCollapse>
+      <div ngbAccordionBody>
+        <ng-template>
+          <ng-content />
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

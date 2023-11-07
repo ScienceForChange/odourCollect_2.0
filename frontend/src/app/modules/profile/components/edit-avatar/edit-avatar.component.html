@@ -1,0 +1,14 @@
+<article *ngIf="user">
+    <section>
+      <div id="header" class="d-flex justify-content-between">
+        <a class="label-m" [routerLink]="['/profile']">Cancelar</a>
+        <h1 class="label-l">Editar avatar</h1>
+        <button class="label-m" (click)="updateAvatar()">Hecho</button>
+      </div>
+      <ul class="d-flex justify-content-center flex-wrap">
+        <li class="d-flex" *ngFor="let item of [].constructor(18); let i = index">
+          <img [src]="'/assets/images/avatars/' + (i + 1) + '.svg'" [ngClass]="{'selected' : user.avatar_id === (i + 1)}" (click)="selectNewAvatar($event, i+1)" />
+        </li>
+      </ul>
+    </section>
+</article>

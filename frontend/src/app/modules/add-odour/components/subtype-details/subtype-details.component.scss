@@ -1,0 +1,64 @@
+@import '../../../../../styles/colors';
+
+fieldset {
+  padding: 0 28px;
+
+  #subtype-title {
+    position: relative;
+  }
+
+  .subtype-option {
+    max-width: max-content;
+    padding: 12px;
+    border: none;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0.6px;
+    &.type-agriculture-livestock {
+      &:hover,
+      &:active {
+        background-color: $green;
+      }
+    }
+    &.type-food-industries {
+      &:hover,
+      &:active {
+        background-color: $violet;
+      }
+    }
+    &.type-industrial {
+      &:hover,
+      &:active {
+        background-color: $orange;
+      }
+    }
+    &.type-urban {
+      &:hover,
+      &:active {
+        background-color: $yellow;
+      }
+    }
+    &.type-waste-water {
+      &:hover,
+      &:active {
+        background-color: $blue;
+      }
+    }
+
+    &.type-agriculture-livestock .selected {
+      background-color: $green;
+    }
+    &.type-food-industries.selected {
+      background-color: $violet;
+    }
+    &.type-industrial.selected {
+      background-color: $orange;
+    }
+    &.type-urban.selected {
+      background-color: $yellow;
+    }
+    &.type--waste-water.selected {
+      background-color: $blue;
+    }
+  }
+}

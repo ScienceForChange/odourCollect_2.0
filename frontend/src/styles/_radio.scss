@@ -1,0 +1,23 @@
+input[type=radio] {
+    display: flex;
+    background-color: transparent;
+    border: 2px solid $violet;
+    border-radius: 3px;
+    color: $black;
+    width: 14px;
+    height: 14px;    
+    padding: 0;    
+    margin-top: 0.35em;
+    vertical-align: top;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    &:checked[type=radio] {
+        background-color: $violet;
+        border-color: $violet;
+    }
+ } 

@@ -1,0 +1,100 @@
+@import "../../../../../styles/colors";
+
+input[type=range].slider-left,
+input[type=range].slider-right {
+    width: 100%;
+    height: 10px;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    pointer-events: none;
+}
+
+input[type=range].slider-left {
+    position: relative;
+    height: 10px;
+    &::-webkit-slider-runnable-track {
+        z-index: 1;
+    }
+    &::-moz-range-track {
+        z-index: 1;
+        position: relative;
+        pointer-events: auto;
+    }
+}
+
+input[type=range].touched {
+    z-index: 3 !important;
+}
+
+input[type=range].slider-right {
+    position: relative;
+    height: 0;
+    top:-17px;
+    &::-webkit-slider-runnable-track {
+        background: none transparent;
+        box-shadow: none;
+        height: 0;
+        width: 0;
+        z-index: 1;
+    }
+    &::-moz-range-track {
+        height: 0px;
+        z-index: 1;
+        position: relative;
+        pointer-events: auto;
+    }
+}
+
+.range-segments {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    background-color: $grey-lighter;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    padding:0;
+    z-index: 0;
+    overflow: hidden;
+    .segments-container,
+    .points-container {
+        display: flex;
+        flex-wrap: wrap;
+        position: absolute;
+        top: 0;
+        right: 0;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        height: 6px;
+        i.segment {
+            display: flex;
+            border-radius: 0;
+            opacity: 1;
+            height: 6px;
+            background-color: transparent;
+            flex: 1;
+            &.selected{
+                background-color: $violet;
+            }
+            &:last-child{
+                display: none;
+            }
+        }
+        i.points {
+            display: flex;
+            border-radius: 0;
+            opacity: 1;
+            height: 4px;
+            width: 4px;
+            background-color: $violet;
+            flex: 2;
+        }
+        
+    }
+    .points-container {
+        justify-content: space-between;
+        padding:0 10px;
+    }
+}

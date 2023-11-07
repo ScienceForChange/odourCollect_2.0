@@ -1,0 +1,67 @@
+<article>
+  <div id="header" class="d-flex gap-3 justify-content-between align-items-center">
+    <app-back-btn>Volver</app-back-btn>
+  </div>
+  <section class="d-flex flex-column">
+    <div class="d-flex justify-content-center" >
+      <div id="picture" [style.background-image]="'url(/assets/images/avatars/' + user?.avatar_id + '.svg)'">
+        <icon-verified/>
+      </div>
+    </div>
+    <h1 class="body-l text-center mb-2">Usuario {{user?.id}}</h1>
+    <span class="label-m text-center d-flex justify-content-center mb-2 gap-2 color-grey">Usuario entrenando <a><icon-info-square/></a></span>
+    <a routerLink="edit-avatar" class="label-m text-center color-violet d-flex justify-content-center mb-5 gap-2"><a><icon-edit/> Editar avatar</a></a>
+    <div id="my-profile-options">
+      <ul>
+        <li>
+          <a routerLink="public-profile">
+            <icon-profile [class]="'violet-icon-stroke'"></icon-profile>
+            <span class="label-l">Mi perfil</span>
+            <icon-arrow-right2/>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/my-odours">
+            <icon-odour [class]="'violet-icon-stroke'"/>
+            <span class="label-l">Mis olores</span>
+            <icon-arrow-right2/>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/">
+            <icon-map-point-wave/>
+            <span class="label-l">Mis zonas de estudio</span>
+            <icon-arrow-right2/>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/">
+              <icon-letter [class]="'violet-icon violet-icon-stroke'"/>
+              <span class="label-l">Mensajes y notificaciones</span>
+              <icon-arrow-right2/>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/">
+              <icon-medal-icon />
+              <span class="label-l">Mis premios</span>
+              <icon-arrow-right2/>
+          </a>
+        </li>
+        <li>
+          <a routerLink="settings">
+              <icon-settings-icon/>
+              <span class="label-l">Ajustes</span>
+              <icon-arrow-right2/>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/">
+            <icon-download-icon/>
+            <p class="label-l">Descargar mis olores</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</article>

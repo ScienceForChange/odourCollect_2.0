@@ -1,0 +1,14 @@
+<ng-container [formGroup]="typeDetails">
+  <h1 class="headline-m">¿Qué tipo de olor es?</h1>
+  <p class="body-m color-gray-dark">Información sobre los tipos de olor</p>
+  <fieldset>
+    <div class="oudor-types" *ngFor="let type of types" [id]="type.slug">
+      <app-odour-type-icon
+        [odourType]="type.slug"
+        [odourName]="type.name"
+        [iconClass]="'odour-type-form'"
+        (click)="typeDetails.get('type')?.setValue(type.id)"
+      />
+    </div>
+  </fieldset>
+</ng-container>

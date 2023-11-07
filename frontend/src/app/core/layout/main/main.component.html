@@ -1,0 +1,7 @@
+<app-header [ngClass]="{ 'd-none': !displayHeader }" />
+<main>
+  <div [style.display]="!displayMap ? 'none' : 'flex'" id="map"></div>
+  <router-outlet />
+</main>
+<app-footer [ngClass]="{ close: !isVisible }" />
+<app-alert />

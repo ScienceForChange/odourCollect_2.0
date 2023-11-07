@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Providers;
+
+use App\Models\OdourObservation;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Route;
+use App\Models\User;
+
+class RouteServiceProvider extends ServiceProvider
+{
+    /**
+     * The path to your application's "home" route.
+     *
+     * Typically, users are redirected here after authentication.
+     *
+     * @var string
+     */
+    public const HOME = '/map';
+
+    /**
+     * Define your route model bindings, pattern filters, and other route configuration.
+     */
+    public function boot(): void
+    {
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
+
+        $this->routes(function () {
+            Route::middleware('api')
+                ->prefix('api')
+                ->group(base_path('routes/api.php'));
+
+            Route::middleware('web')
+                ->group(base_path('routes/web.php'));
+        });
+
+        // Allow to route model binding the deleted users
+        Route::bind('trashed_user', function ($id) {
+            return User::onlyTrashed()->findOrFail($id);
+        });
+
+        // Allow to route model binding the deleted odours
+        Route::bind('trashed_observation', function ($id) {
+            return OdourObservation::onlyTrashed()->findOrFail($id);
+        });
+    }
+}

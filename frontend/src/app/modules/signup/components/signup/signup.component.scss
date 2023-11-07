@@ -1,0 +1,70 @@
+@import "../../../../../styles/colors";
+
+article {
+  display: grid;
+  gap: 7px;
+  padding-bottom: 5%;
+  place-content: center;
+  text-align: center;
+  width: 100%;
+  header {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    padding: 9px 0 0 13px;
+    width: 100%;
+    a {
+      color: $black;
+      padding: 12px 0;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  section,
+  form {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    p {
+      color: $grey-dark;
+    }
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    div:nth-child(2) > div:nth-child(1) {
+      width: 54%;
+    }
+    div:nth-child(2) > div:nth-child(2) {
+      width: 46%;
+    }
+    label {
+      margin-bottom: 5px;
+      text-align: start;
+      width: 100%;
+    }
+    select {
+      width: 100%;
+      padding: 11.2px 15px;
+    }
+    select {
+      padding-right: 30px;
+    }
+    button[type="submit"] {
+      color: $black;
+      margin-top: 1rem;
+      width: 100%;
+    }
+    .btn:disabled {
+      background-color: $violet-light;
+      color: $black;
+    }
+  }
+}
+

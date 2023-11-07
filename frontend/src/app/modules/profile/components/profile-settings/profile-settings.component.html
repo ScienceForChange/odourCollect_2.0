@@ -1,0 +1,42 @@
+<article>
+  <div id="header" class="d-flex gap-3 justify-content-between align-items-center">
+    <app-back-btn>Volver</app-back-btn>
+    <h1 class="title-m text-center">Configuración de la cuenta</h1>
+  </div>
+  <section>
+    <ul>
+      <li id="email-option" *ngIf="user">
+        <div class="d-flex justify-content-start">
+          <icon-letter [class]="'violet-icon  icon-size24'"></icon-letter>
+          <p class="label-l">{{user.email}}</p>
+        </div>
+      </li>
+      <li>
+        <a routerLink="/profile/change-password" routerLinkActive="active">
+          <div>
+            <icon-lock [class]="' icon-size24'"></icon-lock>
+            <p class="label-l">Contraseña</p>
+          </div>
+          <icon-arrow-right2></icon-arrow-right2>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/" routerLinkActive="active">
+          <div>
+            <icon-notification [class]="' icon-size24'"></icon-notification>
+            <p class="label-l">Notificaciones</p>
+          </div>
+          <icon-arrow-right2></icon-arrow-right2>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/profile/delete-account" routerLinkActive="active">
+          <div>
+            <icon-delete-user [class]="' icon-size24'"></icon-delete-user>
+            <p class="label-l">Eliminar cuenta</p>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </section>
+</article>

@@ -1,0 +1,70 @@
+@import "../../../../styles/colors";
+
+nav {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  opacity: 0;
+  transition: opacity;
+  animation: animation-footer-fadeIn 600ms ease-in-out forwards!important;
+  ul {
+    background: linear-gradient(199deg, #fff 51.2%, #f4f5fa 98.99%);
+    border-radius: 40px;
+    box-shadow: 1px 1px 10.5px 1px rgba(0, 0, 0, 0.05);
+    display: flex;
+    min-width: 321px;
+    position: relative;
+    li {
+      flex: 1;
+      a {
+        align-items: center;
+        color: $violet-light;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 8px 0;
+        text-decoration: none;
+      }
+    }
+  }
+}
+.active {
+  z-index: 2;
+  a {
+    color: $white !important;
+    transition: all 0.5s ease-out;
+  }
+}
+
+.follow {
+  position: absolute;
+  top: 0;
+  display: flex;
+  transition: all 0.3s ease-out;
+
+  height: 100%;
+  background: $violet-light;
+  padding: 8px 0;
+  width: calc(100% / 3);
+  border-radius: 40px;
+}
+
+li:nth-child(1).active ~ .follow {
+  left: 0;
+}
+
+li:nth-child(2).active ~ .follow {
+  left: 33%;
+}
+
+li:nth-child(3).active ~ .follow {
+  left: 67%;
+}
+@keyframes animation-footer-fadeIn {
+  50% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 100;
+  }
+}
