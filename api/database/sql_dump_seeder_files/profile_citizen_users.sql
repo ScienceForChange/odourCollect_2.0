@@ -2867,7 +2867,4 @@ INSERT INTO odourcollect.profile_citizens (name,gender,birth_year,created_at,upd
 	 ('','female',NULL,'2023-09-26 05:11:58','2023-09-26 05:13:16'),
 	 ('','male',NULL,'2023-09-27 11:09:03','2023-09-27 11:09:03'),
 	 ('','female',NULL,'2023-09-27 14:09:59','2023-09-27 14:12:05'),
-	 ('','male',NULL,'2023-10-02 12:36:18','2023-10-02 12:37:06'),
-	 ('Dr. Caesar Weimann I','undefined','1982','2023-10-03 15:53:06','2023-10-03 15:53:06');
-INSERT INTO odourcollect.profile_citizens (name,gender,birth_year,created_at,updated_at) VALUES
-	 ('Ross O''Connell','undefined','2009','2023-10-05 16:30:59','2023-10-05 16:30:59');
+	 ('','male',NULL,'2023-10-02 12:36:18','2023-10-02 12:37:06');

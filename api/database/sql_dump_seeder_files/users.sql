@@ -2866,4 +2866,5 @@ INSERT INTO odourcollect.users (userable_id,userable_type,email,password,remembe
 	 (2663,'App\\Models\\ProfileCitizen','w78ttbwgj@mozmail.com','$2y$10$49vSDeraKEib9qJ63rDO7eVzspZ0XSDRTzAL1MYNLJu8z0cNklvam',NULL,NULL,NULL,'2023-09-15 17:59:26','2023-09-15 17:59:26'),
 	 (2664,'App\\Models\\ProfileCitizen','lynne.barker@lynnebarker.co.uk','$2y$10$PlGsdfi.bfJUd6vJLRncMeAZj1aLD/H./G9LLtRpbzH4tAd.dNO5G',NULL,NULL,NULL,'2023-09-18 14:26:43','2023-09-18 14:29:50'),
 	 (2665,'App\\Models\\ProfileCitizen','Lani.Curtis@centralcoast.nsw.gov.au','$2y$10$ftkEXC32GPF37K59LrdFUO646y3YEy/O5GALrVnOpyFf17EtDEAgq',NULL,NULL,NULL,'2023-09-21 11:34:54','2023-09-21 11:35:57'),
+	 (2666,'App\\Models\\ProfileCitizen','test2@scienceforchange.eu','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','3IULlk7sQU','2023-10-03 15:53:06',NULL,'2023-09-21 12:38:43','2023-09-21 12:38:43'),
 	 (2666,'App\\Models\\ProfileCitizen','test@scienceforchange.eu','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','3IULlk7sQU','2023-10-03 15:53:06',NULL,'2023-09-21 12:38:43','2023-09-21 12:38:43');
