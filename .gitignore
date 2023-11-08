@@ -3,3 +3,4 @@
 redisdata
 mysqldata
 .env
+.vscode/
