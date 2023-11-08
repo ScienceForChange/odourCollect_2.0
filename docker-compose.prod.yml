@@ -2,12 +2,20 @@ version: "3.8"
 services:
   proxy:
     image: carlossfc/odourcollect-proxy:${IMAGE_TAG}
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:ro
     restart: unless-stopped
     ports:
       - "80:80"
     depends_on:
       - frontend
       - nginx
+
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
 
   frontend:
     image: carlossfc/odourcollect-frontend:${IMAGE_TAG}
