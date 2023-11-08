@@ -15,7 +15,50 @@ env:
   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
 jobs:
+  build-nginx:
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build nginx image
+        run: |
+          docker build -t $NGINX_IMAGE -f ./Dockerfile.nginx .
+          docker push $NGINX_IMAGE
+
+  build-proxy:
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build nginx image
+        run: |
+          docker build -t $PROXY_IMAGE -f ./Dockerfile.proxy .
+          docker push $PROXY_IMAGE
+
+  build-frontend:
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build frontend image
+        run: |
+          docker build -t $FRONTEND_IMAGE --target=prod -f ./frontend/Dockerfile .
+          docker push $FRONTEND_IMAGE
+
   deploy-prod:
+    needs: [ build-frontend, build-nginx, build-proxy ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
