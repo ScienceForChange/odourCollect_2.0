@@ -15,6 +15,51 @@ env:
   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
 jobs:
+  build-backend-images:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build images
+        run: |
+          docker build -t $API_IMAGE --target=api --build-arg user=ubuntu --build-arg uid=1000 -f ./api/Dockerfile .
+          docker build -t $SCHEDULER_IMAGE --target=scheduler --build-arg user=ubuntu --build-arg uid=1000 -f ./api/Dockerfile .
+          docker build -t $WORKER_IMAGE --target=worker --build-arg user=ubuntu --build-arg uid=1000 -f ./api/Dockerfile .
+      - name: Push images
+        run: |
+          docker push $API_IMAGE
+          docker push $SCHEDULER_IMAGE
+          docker push $WORKER_IMAGE
+
+  build-mysql:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build MySQL image
+        run: docker build -t $MYSQL_IMAGE --build-arg password=${{ secrets.DB_PASSWORD }} -f ./Dockerfile.mysql .
+      - name: Push Mysql image
+        run: docker push $MYSQL_IMAGE
+
+  remove-images:
+
+    runs-on: ubuntu-latest
+    if: ${{ always() && contains(needs.*.result, 'failure') }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Remove images
+        run: |
+          ./deployment/bin/remove-image.sh carlossfc/odourcollect-api ${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }} ${{ secrets.DOCKERHUB_PASSWORD }}
+          ./deployment/bin/remove-image.sh carlossfc/odourcollect-mysql ${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }} ${{ secrets.DOCKERHUB_PASSWORD }}
+          ./deployment/bin/remove-image.sh carlossfc/odourcollect-worker ${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }} ${{ secrets.DOCKERHUB_PASSWORD }}
+          ./deployment/bin/remove-image.sh carlossfc/odourcollect-scheduler ${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }} ${{ secrets.DOCKERHUB_PASSWORD }}
+
   build-nginx:
 
     runs-on: ubuntu-latest
