@@ -3,10 +3,11 @@ services:
   proxy:
     image: carlossfc/odourcollect-proxy:${IMAGE_TAG}
     volumes:
-      - ./certbot/www/:/var/www/certbot/:ro
+      - ./usr/src/certbot/conf:/etc/letsencrypt/:ro
     restart: unless-stopped
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - frontend
       - nginx
