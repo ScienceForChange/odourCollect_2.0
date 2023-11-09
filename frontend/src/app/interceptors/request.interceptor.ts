@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
  */
 
 @Injectable()
-export class LoginInterceptor implements HttpInterceptor {
+export class RequestInterceptor implements HttpInterceptor {
 
 
   /**

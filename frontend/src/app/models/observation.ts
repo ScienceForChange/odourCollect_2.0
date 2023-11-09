@@ -261,4 +261,6 @@ export interface ObservationQuery {
   type: number[] | null;
   intensity: number[] | null;
   hedonicTone: number[] | null;
+  createdBetween: string | null;
+  createdTodayBetween: string[] | null;
 }

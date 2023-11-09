@@ -1,3 +1,6 @@
+ngb-offcanvas-panel{
+    overflow-y: auto;
+}
 ngb-offcanvas-panel.offcanvas.default{
     border-radius: 40px 40px 0 0;
     border: none;
@@ -5,11 +8,19 @@ ngb-offcanvas-panel.offcanvas.default{
     max-height: calc(100dvh - 70px);
     
     &.public-profile{
+        overflow-y: unset;
         .offcanvas-header{
-            min-height: 82px;
+            position: sticky;
+            top: 0;
+            min-height: 72px;
+            box-shadow: 0 10px 10px $violet-lighter;
             #picture{
                 transition: all .25s ease-out;
             }
+        }
+        .offcanvas-body{
+            padding-top: 10px;
+            overflow-y: auto;
         }
     }
     
@@ -38,8 +49,34 @@ ngb-offcanvas-panel.offcanvas.default{
         }
     }
 }
-    
-  
+
 ngb-offcanvas-backdrop.default{
     background-color: transparent;
+}
+
+ngb-offcanvas-panel.offcanvas.about-canvas{
+    width: 100%;
+    border: none;
+    &>*{
+        flex: 1;
+        display: flex;
+    }
+    #header{
+        padding: 23px 17px 10px;
+        position: sticky;
+        top: 0;
+        background-color: white;
+        box-shadow: 0 10px 10px white;
+        h1{
+            padding-top: 15px;
+        }
+        &::after {
+            content: " ";
+            display: block;
+            width: 17px;
+        }
+    }
+    section{
+        padding: 10px 35px 60px 52px;
+    }
 }

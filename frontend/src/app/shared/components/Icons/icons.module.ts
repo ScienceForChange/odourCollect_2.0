@@ -44,6 +44,8 @@ import { IconTrophiesComponent } from './trophies/trophies.component';
 import { FilterComponent } from './filter/filter.component';
 import { SearchComponent } from './search/search.component';
 import { TickSquareComponent } from './tick-square/tick-square.component';
+import { TimeCircleComponent } from './time-circle/time-circle.component';
+import { Filter2Component } from './filter2/filter2.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +93,8 @@ import { TickSquareComponent } from './tick-square/tick-square.component';
     VerifiedComponent,
     WasteComponent,
     TickSquareComponent,
-    
+    TimeCircleComponent,
+    Filter2Component    
   ],
   exports: [
     ArrowLeftComponent,
@@ -137,6 +140,8 @@ import { TickSquareComponent } from './tick-square/tick-square.component';
     UrbanComponent,
     VerifiedComponent,
     WasteComponent,
+    TimeCircleComponent,
+    Filter2Component
   ],
   imports: [CommonModule],
 })

@@ -102,16 +102,19 @@ export class OdourService {
 
   //Conseguir los olores filtrados
   public filterOdours(querys: ObservationQuery): Observable<ObservationRes> {
-    const baseUrl = `${environment.BACKEND_BASE_URL}api/observations?`;
+    const baseUrl = `${environment.BACKEND_BASE_URL}api/observations/?include=odourSubType.odourType,user.userable&`;
+
     const filters = Object.entries(querys)
-      .filter(([value]) => value)
-      .map(
-        ([key, value]) =>
-          value && `filter[${key}]=${value?.length ? value.join(',') : value}`,
-      )
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .filter(([_, value]) => value)
+      .map(([key, value]) => {
+        return (
+          value && `filter[${key}]=${value?.length ? value.join(',') : value}`
+        );
+      })
       .join('&');
 
-    const url = baseUrl + filters + '&include=odourSubType.odourType';
+    const url = baseUrl + filters;
 
     return this.http.get<ObservationRes>(url);
   }

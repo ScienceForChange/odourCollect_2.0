@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   HTTP_INTERCEPTORS,
+  HttpClientModule,
   HttpClientXsrfModule,
 } from '@angular/common/http';
 
@@ -11,7 +12,7 @@ import { CoreModule } from './core/core.module';
 
 import { AppComponent } from './app.component';
 
-import { LoginInterceptor } from './interceptors/http.interceptor';
+import { RequestInterceptor } from './interceptors/request.interceptor';
 import { AuthService } from './services/auth.service';
 import { appInitializer } from './helpers/appInitializer';
 
@@ -22,6 +23,7 @@ import { appInitializer } from './helpers/appInitializer';
     BrowserModule,
     CoreModule,
     NgbModule,
+    HttpClientModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-XSRF-TOKEN',
@@ -34,7 +36,7 @@ import { appInitializer } from './helpers/appInitializer';
       multi: true,
       deps: [AuthService],
     },
-    { provide: HTTP_INTERCEPTORS, useClass: LoginInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

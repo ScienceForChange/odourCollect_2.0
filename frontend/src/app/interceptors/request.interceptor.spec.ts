@@ -1,16 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-
-import { LoginInterceptor } from './http.interceptor';
+import { RequestInterceptor } from './request.interceptor';
 
 describe('CsrfInterceptorInterceptor', () => {
   beforeEach(() => TestBed.configureTestingModule({
     providers: [
-      LoginInterceptor
+      RequestInterceptor
     ]
   }));
 
   it('should be created', () => {
-    const interceptor: LoginInterceptor = TestBed.inject(LoginInterceptor);
+    const interceptor: RequestInterceptor = TestBed.inject(RequestInterceptor);
     expect(interceptor).toBeTruthy();
   });
 });

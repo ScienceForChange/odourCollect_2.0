@@ -9,6 +9,24 @@ import { MapModalsService } from 'src/app/services/map-modals.service';
 import { OdourService } from 'src/app/services/odour.service';
 import { ObservationQuery } from '../../../../models/observation';
 import { Subscription } from 'rxjs';
+import { AlertService } from 'src/app/services/alert.service';
+
+const date = new Date();
+date.setDate(date.getDate() - 1);
+const yesterday = date
+  .toLocaleDateString('en-CA', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+  .replace(/\//g, '-');
+const today = new Date()
+  .toLocaleDateString('en-CA', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+  .replace(/\//g, '-');
 
 @Component({
   selector: 'app-observation-filters',
@@ -16,7 +34,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./observation-filters.component.scss'],
 })
 
-//TODO Ver que hacer los errores
 export class ObservationFiltersComponent implements OnInit, OnDestroy {
   public isOpen: boolean = false;
 
@@ -30,6 +47,16 @@ export class ObservationFiltersComponent implements OnInit, OnDestroy {
 
   public hedonicToneForRange!: string[];
   public intensityForRange!: string[];
+  public hourForRange: string[] = Array.from({ length: 24 }, (_, i) => {
+    const hour = i % 12 || 12;
+    const period = i < 12 ? 'am' : 'pm';
+    return `${hour < 10 ? '0' + hour : hour}${period}`;
+  });
+  private hoursToSend = Array.from({ length: 24 }, (_, i) => {
+    return i < 10 ? '0' + i + ':00' : i + ':00';
+  });
+  public distanceRange: string[] = ['1km', '3km', '5km', '7km', '9km', '10km'];
+  public dateRange: string[] = [yesterday, today];
 
   public filtersForm!: FormGroup;
   private filtersFormInitialValues!: any;
@@ -39,6 +66,7 @@ export class ObservationFiltersComponent implements OnInit, OnDestroy {
   constructor(
     private mapModalsService: MapModalsService,
     private odourService: OdourService,
+    private alertService: AlertService,
   ) {
     this.loadingData = true;
   }
@@ -75,6 +103,16 @@ export class ObservationFiltersComponent implements OnInit, OnDestroy {
         this.loadingData = false;
 
         this.filtersForm = new FormGroup({
+          createdBetween: new FormControl(this.dateRange),
+          hourMin: new FormControl(0, [
+            Validators.min(0),
+            Validators.max(this.hourForRange.length - 1),
+          ]),
+          hourMax: new FormControl(this.hourForRange.length - 1, [
+            Validators.min(0),
+            Validators.max(this.hourForRange.length - 1),
+          ]),
+          distance: new FormControl(0),
           type: new FormControl([]),
           intensityMin: new FormControl(0, [
             Validators.min(0),
@@ -95,8 +133,12 @@ export class ObservationFiltersComponent implements OnInit, OnDestroy {
         });
 
         this.subscriptions.add(
-          this.filtersForm.valueChanges.subscribe(() => {
-            this.formChanges = true;
+          this.filtersForm.statusChanges.subscribe(() => {
+            const isAnyQuerySelected = Object.keys(
+              this.filtersForm.controls,
+            ).some((key) => this.filtersForm.controls[key].valid);
+
+            this.formChanges = isAnyQuerySelected;
           }),
         );
 
@@ -131,48 +173,86 @@ export class ObservationFiltersComponent implements OnInit, OnDestroy {
 
   public filterOdour(): void {
     this.loading = true;
-
-    const querys: ObservationQuery = {
-      type:
-        this.filtersForm.value.type.length > 0
-          ? this.filtersForm.value.type
-          : null,
-      intensity:
-        this.filtersForm.value.intensityMin !== this.intensity[0].power - 1
-          ? [
-              this.intensity[this.filtersForm.value.intensityMin].power,
-              this.intensity[this.filtersForm.value.intensityMax].power,
-            ]
-          : null,
-      hedonicTone:
-        this.filtersForm.value.hedonicToneMin !== this.hedonicTone[0].index - 1
-          ? [
-              this.hedonicTone[this.filtersForm.value.hedonicToneMin].index,
-              this.hedonicTone[this.filtersForm.value.hedonicToneMax].index,
-            ]
-          : null,
+    const formValues = this.filtersForm.value;
+    let querysSelected: ObservationQuery = {
+      type: null,
+      intensity: null,
+      hedonicTone: null,
+      createdBetween: null,
+      createdTodayBetween: null,
     };
+    for (const control in this.filtersForm.controls) {
+      if (this.filtersForm.controls[control].valid) {
+        switch (control) {
+          case 'intensityMax':
+          case 'intensityMin':
+            if (formValues.intensityMin !== this.intensity[0].power - 1) {
+              querysSelected = {
+                ...querysSelected,
+                intensity: [
+                  this.intensity[formValues.intensityMin].power,
+                  this.intensity[formValues.intensityMax].power,
+                ],
+              };
+            }
+            break;
+          case 'hedonicToneMax':
+          case 'hedonicToneMin':
+            if (formValues.hedonicToneMin !== this.hedonicTone[0].index - 1) {
+              querysSelected = {
+                ...querysSelected,
+                hedonicTone: [
+                  this.hedonicTone[formValues.hedonicToneMin].index,
+                  this.hedonicTone[formValues.hedonicToneMax].index,
+                ],
+              };
+            }
+            break;
+          case 'hourMax':
+          case 'hourMin':
+            if (formValues.hourMin !== this.hourForRange[0]) {
+              querysSelected = {
+                ...querysSelected,
+                createdTodayBetween: [
+                  this.hoursToSend[formValues.hourMin],
+                  this.hoursToSend[formValues.hourMax],
+                ],
+              };
+            }
+            break;
+          case 'type':
+            if (!formValues.type.length) {
+              querysSelected = {
+                ...querysSelected,
+                type: [1, 2, 3, 4, 5],
+              };
+            } else {
+              querysSelected = {
+                ...querysSelected,
+                type: formValues.type,
+              };
+            }
+            break;
+          case 'distance':
+            break;
+          default:
+            querysSelected = {
+              ...querysSelected,
+              [control]: formValues[control],
+            };
+        }
+      }
+    }
 
-    //TODO a la que carlos me suba la rama y me de solo los 5 tipos actualizar filters
     this.subscriptions.add(
-      this.odourService.filterOdours(querys).subscribe({
+      this.odourService.filterOdours(querysSelected).subscribe({
         next: (observations) => {
-          const types = [
-            'agriculture-livestock',
-            'food-industries',
-            'industrial',
-            'urban',
-            'waste-water',
-          ];
-          const observationsFilteredsByType = observations.data.filter(
-            (observation) =>
-              types.some(
-                (type) =>
-                  type ===
-                  observation.relationships.odourSubType.relationships.odourType.slug,
-              ),
-          );
-          this.odourService.updateObservations(observationsFilteredsByType);
+          if (!observations.data.length) {
+            this.alertService.info('No hay observaciones con esos filtros', {
+              autoClose: true,
+            });
+          }
+          this.odourService.updateObservations(observations.data);
           this.loading = false;
           this.toggleFilter();
           this.formChanges = false;
@@ -180,7 +260,7 @@ export class ObservationFiltersComponent implements OnInit, OnDestroy {
         error: (resp) => {
           this.loading = false;
           if (resp.status == 422) {
-            //TODO faltan los errores
+            console.error(resp.status);
           }
         },
       }),

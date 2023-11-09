@@ -1,0 +1,97 @@
+@import '../../../../../styles/colors';
+
+.dp-hidden {
+  input {
+    border: none;
+    padding: 0;
+  }
+  width: 0;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.date-input-value {
+  border-radius: 25px;
+  border: 1px solid $black;
+  gap: 5px;
+  padding: 8px 10px;
+  icon-calendar {
+    display: flex;
+  }
+}
+
+//Popup
+::ng-deep .dropdown-menu {
+  border-radius: 12px;
+  border: none !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1) !important;
+  transform: translate3d(25%, 40px, 0px) !important;
+}
+
+//Header Popup
+::ng-deep .ngb-dp-header {
+  background-color: white !important;
+  padding-bottom: 12px !important;
+}
+::ng-deep .ngb-dp-navigation-select {
+  select {
+    --bs-form-select-bg-img: none;
+    appearance: none;
+    border: none;
+    color: #383838;
+    font-size: 16px !important;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    line-height: 24px;
+    &:active {
+      border: none;
+      color: #383838;
+    }
+  }
+}
+::ng-deep .ngb-dp-arrow {
+  button {
+    background: transparent;
+    border: none;
+    height: auto;
+    padding: 0;
+    span {
+      color: $violet-lighter;
+    }
+  }
+}
+
+//Popup Content
+::ng-deep .ngb-dp-weekdays {
+  background-color: white !important;
+  border-bottom: none !important;
+  border-top: 1px solid $violet-lighter !important;
+  padding-top: 12px !important;
+  .ngb-dp-weekday {
+    color: #383838;
+    font-style: normal;
+  }
+}
+
+
+//Custom styles for days
+
+.custom-day {
+  display: inline-block;
+  height: 2rem;
+  padding: 0.185rem 0.25rem;
+  text-align: center;
+  width: 2rem;
+}
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+.custom-day.range,
+.custom-day:hover {
+  background-color: $violet;
+  color: white;
+}
+.custom-day.faded {
+  background-color: $violet-lighter;
+}

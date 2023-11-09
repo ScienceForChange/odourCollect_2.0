@@ -1,9 +1,17 @@
 <div ngbAccordion #accordion="ngbAccordion">
   <div ngbAccordionItem="first">
-    <button ngbAccordionButton>
-      <span></span>
-      {{ title }}
-    </button>
+    <div class="d-flex align-items-center">
+      <button
+        id="button-check"
+        [ngClass]="isChecked ? 'checked' : ''"
+        (click)="toggleTouch()"
+      >
+        <span></span>
+      </button>
+      <button ngbAccordionButton>
+        {{ title }}
+      </button>
+    </div>
     <div ngbAccordionCollapse>
       <div ngbAccordionBody>
         <ng-template>

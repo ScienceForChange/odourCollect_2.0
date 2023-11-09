@@ -9,7 +9,6 @@ import { Observation } from '../models/observation';
 @Injectable({
   providedIn: 'root',
 })
-
 export class MapService {
   private mapL!: L.Map;
   private markers: L.Marker[] = [];

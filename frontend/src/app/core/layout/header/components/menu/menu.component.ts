@@ -1,5 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
+import { AboutDataProtectionComponent } from 'src/app/modules/information/components/about-data-protection/about-data-protection.component';
+import { AboutEthicalIssuesComponent } from 'src/app/modules/information/components/about-ethical-issues/about-ethical-issues.component';
+import { AboutOdourCollectComponent } from 'src/app/modules/information/components/about-odour-collect/about-odour-collect.component';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { MenuService } from 'src/app/services/menu.service';
@@ -10,6 +14,7 @@ import { MenuService } from 'src/app/services/menu.service';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit, OnDestroy {
+
   @Input() showMenu!: string | undefined;
 
   public isLoggedIn!: boolean;
@@ -18,7 +23,8 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   constructor(
     public authService: AuthService,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private offcanvasService: NgbOffcanvas
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +40,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     );
   }
 
-  public logout() {
+  public logout(): void {
     this.authService.logout();
     this.menuService.toggleVisible();
   }
@@ -42,4 +48,17 @@ export class MenuComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
+
+  public openAboutOCOffcanvas(): void {
+    this.offcanvasService.open(AboutOdourCollectComponent, { position: 'start', scroll: false, panelClass: 'about-canvas' })
+  }
+
+  public openAboutDataProtectionOffcanvas(): void {
+    this.offcanvasService.open(AboutDataProtectionComponent, { position: 'start', scroll: false, panelClass: 'about-canvas' })
+  }
+
+  public openAboutEthicalIssuesOffcanvas(): void {
+    this.offcanvasService.open(AboutEthicalIssuesComponent, { position: 'start', scroll: false, panelClass: 'about-canvas' })
+  }
+
 }

@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'icon-calendar',
   template: `
-    <svg width="17" height="19" viewBox="0 0 17 19" fill="none">
+    <svg width="17" height="19" [ngClass]="iconClass" viewBox="0 0 17 19" fill="none">
       <path
         fill-rule="evenodd"
         clip-rule="evenodd"
@@ -86,4 +86,6 @@ import { Component } from '@angular/core';
   `,
   styles: [],
 })
-export class CalendarComponent {}
+export class CalendarComponent {
+  @Input() iconClass =''
+}

@@ -11,6 +11,7 @@ import { OdourInformationComponent } from './components/odour-information/odour-
 import {
   NgbAccordionModule,
   NgbCollapseModule,
+  NgbDatepickerModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { AccordionComponent } from './components/accordion/accordion-filter.component';
 
@@ -30,6 +31,7 @@ import { AccordionComponent } from './components/accordion/accordion-filter.comp
     ReactiveFormsModule,
     NgbCollapseModule,
     NgbAccordionModule,
+    NgbDatepickerModule,
   ],
 })
 export class MapModule {}

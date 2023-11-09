@@ -34,7 +34,7 @@
         </div>
     </div>
     <span class="label-m text-center">
-        <ng-template *ngIf="this.minFControl?.value != this.maxFControl?.value; then eqRange; else dfRange"></ng-template>
+        <ng-template *ngIf="this.minFControl?.value !== this.maxFControl?.value; then eqRange; else dfRange"></ng-template>
         <ng-template #eqRange>{{minCurrentSegment + ' - ' }}{{ maxCurrentSegment }}</ng-template>
         <ng-template #dfRange>{{ maxCurrentSegment }}</ng-template>
     </span>

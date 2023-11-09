@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'icon-chart',
   template: `
-    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" [ngClass]="iconClass" viewBox="0 0 22 22" fill="none">
       <path fill-rule="evenodd" clip-rule="evenodd" d="M6.12109 16.5626C5.70709 16.5626 5.37109 16.2266 5.37109 15.8126V8.95264C5.37109 8.53864 5.70709 8.20264 6.12109 8.20264C6.53509 8.20264 6.87109 8.53864 6.87109 8.95264V15.8126C6.87109 16.2266 6.53509 16.5626 6.12109 16.5626Z" fill="#D7B1F2"/>
       <path fill-rule="evenodd" clip-rule="evenodd" d="M10.7881 16.5615C10.3741 16.5615 10.0381 16.2255 10.0381 15.8115V5.66846C10.0381 5.25446 10.3741 4.91846 10.7881 4.91846C11.2021 4.91846 11.5381 5.25446 11.5381 5.66846V15.8115C11.5381 16.2255 11.2021 16.5615 10.7881 16.5615Z" fill="#D7B1F2"/>
       <path fill-rule="evenodd" clip-rule="evenodd" d="M15.3779 16.5616C14.9639 16.5616 14.6279 16.2256 14.6279 15.8116V12.5776C14.6279 12.1636 14.9639 11.8276 15.3779 11.8276C15.7919 11.8276 16.1279 12.1636 16.1279 12.5776V15.8116C16.1279 16.2256 15.7919 16.5616 15.3779 16.5616Z" fill="#D7B1F2"/>
@@ -12,4 +12,6 @@ import { Component } from '@angular/core';
   `,
   styleUrls: [],
 })
-export class ChartComponent { }
+export class ChartComponent { 
+  @Input() iconClass:string = '';
+}

@@ -8,14 +8,14 @@
       <div>
         <p class="label-l">Mi Idioma: Español</p>
       </div>
-      <icon-arrow-right2></icon-arrow-right2>
+      <icon-arrow-right2/>
     </li>
     <li>
-      <a routerLink="/about-odourcollect" routerLinkActive="active">
+      <a (click)="openAboutOCOffcanvas()" routerLinkActive="active">
         <div>
           <p class="label-l">Sobre OdourCollect</p>
         </div>
-        <icon-arrow-right2></icon-arrow-right2>
+        <icon-arrow-right2/>
       </a>
     </li>
     <li>
@@ -23,7 +23,7 @@
         <div>
           <p class="label-l">Preguntas Frecuentes</p>
         </div>
-        <icon-arrow-right2></icon-arrow-right2>
+        <icon-arrow-right2/>
       </a>
     </li>
     <li>
@@ -31,27 +31,27 @@
         <div>
           <p class="label-l">Contacto e incidencias</p>
         </div>
-        <icon-arrow-right2></icon-arrow-right2>
+        <icon-arrow-right2/>
       </a>
     </li>
     <li>
-      <a routerLink="/" routerLinkActive="active">
+      <a (click)="openAboutDataProtectionOffcanvas()" routerLink="/" routerLinkActive="active">
         <div>
           <p class="label-l">Protección de datos personales</p>
         </div>
-        <icon-arrow-right2></icon-arrow-right2>
+        <icon-arrow-right2/>
       </a>
     </li>
     <li>
-      <a routerLink="/" routerLinkActive="active">
+      <a (click)="openAboutEthicalIssuesOffcanvas()" routerLink="/" routerLinkActive="active">
         <div>
           <p class="label-l">Asuntos éticos</p>
         </div>
-        <icon-arrow-right2></icon-arrow-right2>
+        <icon-arrow-right2/>
       </a>
     </li>
     <li *ngIf="isLoggedIn"  id="signout-option" (click)="logout()" tabindex="0" (keydown.enter)="logout()">
-      <icon-log-out></icon-log-out>
+      <icon-log-out/>
       <div>
         <p class="label-l">Cerrar sessión</p>
       </div>

@@ -33,6 +33,16 @@ span {
   background-color: transparent;
   box-shadow: none;
   color: $black;
+}
+
+#button-check {
+  padding: 0;
+  background-color: transparent;
+  height: auto;
+  border: none;
+}
+
+#button-check.checked {
   span {
     background-color: $violet;
     position: relative;

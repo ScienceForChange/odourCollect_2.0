@@ -15,7 +15,7 @@ export class PublicProfileOffcanvaComponent {
   @Input()  user!: User
 
   constructor(
-    public offcanva: NgbActiveOffcanvas,
+    public offcanvas: NgbActiveOffcanvas,
     public odourService: OdourService,
     public router: Router,
     ) {

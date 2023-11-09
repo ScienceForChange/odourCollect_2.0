@@ -24,7 +24,6 @@ import {
 import { AddOdourComponent } from '../modules/add-odour/components/add-odour/add-odour.component';
 import { MyOdoursComponent } from '../modules/my-odours/components/my-odours/my-odours.component';
 import { ContactComponent } from '../modules/contact/components/contact/contact.component';
-import { InformationComponent } from '../modules/information/components/information/information.component';
 import { ErrorComponent } from '../modules/error/components/error/error.component';
 import { errorActivateGuard, notErrorActivateGuard } from '../guards/error-activate.guard';
 
@@ -109,10 +108,6 @@ const routes: Routes = [
   {
     path: 'contact',
     component: ContactComponent,
-  },
-  {
-    path: 'information/:transTag',
-    component: InformationComponent,
   },
   {
     path: 'error',

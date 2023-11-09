@@ -31,14 +31,6 @@ body {
     overflow-y: hidden;
   }
 }
-html {
-  max-width: 100vw;
-  overflow-x: hidden;
-  &.modal-open {
-    max-height: 100vh;
-    overflow-y: hidden;
-  }
-}
 *.animated {
   transition: all 0.15s ease-out;
 }

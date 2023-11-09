@@ -12,7 +12,44 @@
         <app-spinner></app-spinner>
       </ng-container>
       <ng-template #form>
-        <app-accordion-filters [title]="'Tipos de olor'">
+        <app-accordion-filters
+          [fControls]="[this.filtersForm.get('createdBetween')]"
+          [title]="'Periodo'"
+        >
+          <app-date-range
+            [dateRangeControl]="this.filtersForm.get('createdBetween')"
+            [dateRange]="dateRange"
+          />
+        </app-accordion-filters>
+        <app-accordion-filters
+          [fControls]="[
+            this.filtersForm.get('hourMin'),
+            this.filtersForm.get('hourMax')
+          ]"
+          [title]="'Hora'"
+        >
+          <fieldset>
+            <app-multi-range
+              [minFControl]="this.filtersForm.get('hourMin')"
+              [maxFControl]="this.filtersForm.get('hourMax')"
+              [minSegments]="hourForRange"
+              [maxSegments]="hourForRange"
+            />
+          </fieldset>
+        </app-accordion-filters>
+        <app-accordion-filters
+          [fControls]="[this.filtersForm.get('distance')]"
+          [title]="'Distancia'"
+        >
+          <app-single-range
+            [fControl]="this.filtersForm.get('distance')"
+            [segments]="distanceRange"
+          />
+        </app-accordion-filters>
+        <app-accordion-filters
+          [fControls]="[this.filtersForm.get('type')]"
+          [title]="'Tipos de olor'"
+        >
           <fieldset id="types">
             <div class="d-flex justify-cotent-start flex-wrap">
               <input
@@ -31,7 +68,13 @@
             </div>
           </fieldset>
         </app-accordion-filters>
-        <app-accordion-filters [title]="'Intensidad'">
+        <app-accordion-filters
+          [fControls]="[
+            this.filtersForm.get('intensityMin'),
+            this.filtersForm.get('intensityMax')
+          ]"
+          [title]="'Intensidad'"
+        >
           <fieldset>
             <app-multi-range
               [minFControl]="this.filtersForm.get('intensityMin')"
@@ -41,7 +84,13 @@
             />
           </fieldset>
         </app-accordion-filters>
-        <app-accordion-filters [title]="'Agradabilidad '">
+        <app-accordion-filters
+          [fControls]="[
+            this.filtersForm.get('hedonicToneMin'),
+            this.filtersForm.get('hedonicToneMax')
+          ]"
+          [title]="'Agradabilidad '"
+        >
           <fieldset>
             <app-multi-range
               [minFControl]="this.filtersForm.get('hedonicToneMin')"

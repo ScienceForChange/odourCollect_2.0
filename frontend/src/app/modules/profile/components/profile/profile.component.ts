@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { User } from 'src/app/models/user';
+import { AboutTrainedUserComponent } from 'src/app/modules/information/components/about-trained-user/about-trained-user.component';
 import { FooterService } from 'src/app/services/footer.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -17,6 +19,7 @@ export class ProfileComponent{
   constructor(
     private footerService: FooterService,
     private userService: UserService,
+    private offcanvasService: NgbOffcanvas
   ) {
     this.footerService.visible = true;
   }
@@ -24,5 +27,9 @@ export class ProfileComponent{
   showProfileSubmenu(title: string) {
     this.showSubmenu = true;
     this.submenuTitle = title;
+  }
+  
+  openInfoOffcanvas(){
+    this.offcanvasService.open(AboutTrainedUserComponent, {  position: 'start', scroll: false, panelClass: 'about-canvas'})
   }
 }
