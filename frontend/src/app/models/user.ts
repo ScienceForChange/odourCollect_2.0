@@ -17,7 +17,6 @@ export class User {
     this.total_observations                 = element.total_observations ? element.total_observations: 0 ;
     this.password                           = element.password;
     this.password_confirmation              = element.password_confirmation;
-    element.relationships.odourObservations = element.relationships.odourObservations.sort((a:Observation, b:Observation) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
     this.relationships                      = element.relationships;
   }
 

@@ -26,16 +26,16 @@
         />
         <div class="range-segments">
             <div class="points-container">
-                <i class="point" *ngFor="let item of maxSegments"></i>
+                <i class="point" *ngFor="let item of maxSegments">{{item}}</i>
             </div>
             <div class="segments-container">
-                <i class="segment" *ngFor="let item of maxSegments | keyvalue" [ngClass]="{ 'selected' : this.minFControl && this.maxFControl && item.key >= this.minFControl.value + '' && item.key < this.maxFControl.value + ''}"></i>
+                <i class="segment" *ngFor="let item of maxSegments; index as i " [ngClass]="{ 'selected' : this.minFControl && this.maxFControl && i >= this.minFControl.value  && i < this.maxFControl.value }"></i>
             </div>
         </div>
     </div>
     <span class="label-m text-center">
         <ng-template *ngIf="this.minFControl?.value !== this.maxFControl?.value; then eqRange; else dfRange"></ng-template>
-        <ng-template #eqRange>{{minCurrentSegment + ' - ' }}{{ maxCurrentSegment }}</ng-template>
+        <ng-template #eqRange>{{ minCurrentSegment + ' - ' }}{{ maxCurrentSegment }}</ng-template>
         <ng-template #dfRange>{{ maxCurrentSegment }}</ng-template>
     </span>
 </div>

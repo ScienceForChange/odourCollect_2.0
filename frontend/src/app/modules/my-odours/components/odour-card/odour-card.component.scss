@@ -1,4 +1,4 @@
-@import "../../../../../styles/colors";
+@import '../../../../../styles/colors';
 
 article {
   border-radius: 20px;
@@ -23,6 +23,17 @@ article {
       display: flex;
       gap: 11.5px;
       align-items: center;
+    }
+  }
+  footer {
+    display: flex;
+    justify-content: flex-end;
+    button {
+      border: none;
+      padding: 0;
+      background-color: transparent;
+      color: $grey;
+      height: auto;
     }
   }
 }

@@ -3,13 +3,13 @@ import { Subscription } from 'rxjs';
 import { Observation } from 'src/app/models/observation';
 import { User } from 'src/app/models/user';
 import { AlertService } from 'src/app/services/alert.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { OdourService } from 'src/app/services/odour.service';
 import { UserService } from 'src/app/services/user.service';
 import { MapModalsService } from 'src/app/services/map-modals.service';
 import { NgbModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { DialogModalComponent } from 'src/app/modules/modals/dialog-modal/dialog-modal.component';
 import { PublicProfileOffcanvaComponent } from 'src/app/modules/offcanvas/components/public-profile-offcanva/public-profile-offcanva.component';
+import { MapService } from '../../../../services/map.service';
 
 @Component({
   selector: 'app-odour-information',
@@ -17,9 +17,8 @@ import { PublicProfileOffcanvaComponent } from 'src/app/modules/offcanvas/compon
   styleUrls: ['./odour-information.component.scss'],
 })
 export class OdourInformationComponent implements OnInit, OnDestroy {
-  private observation$!: Subscription;
-  private observationDelete$!: Subscription;
   private user$!: Subscription;
+  private subscriptions = new Subscription();
 
   public observation!: Observation;
   public isOpen: boolean = false;
@@ -28,65 +27,64 @@ export class OdourInformationComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private odourService: OdourService,
+    private mapService: MapService,
     private alertService: AlertService,
     private mapModalsService: MapModalsService,
     private modalService: NgbModal,
-    private offcanvasService: NgbOffcanvas
+    private offcanvasService: NgbOffcanvas,
   ) {}
 
   ngOnInit(): void {
+    this.subscriptions.add(
+      this.mapModalsService.isVisibleState.subscribe((value) => {
+        this.isOpen = value.observationInfo;
+      }),
+    );
     this.user = this.userService.user;
-
-    this.mapModalsService.isVisibleState.subscribe((value) => {
-      this.isOpen = value.observationInfo;
-    });
-
-    // if (this.authService.isLoggedIn && !this.user?.id) {
-    //   this.user$ = this.userService.getUser().subscribe({
-    //     next: () => {
-    //       this.user = this.userService.user;
-    //     },
-    //   });
-    // }
-
-    this.observation$ = this.odourService.observation$.subscribe({
-      next: (observation: Observation) => {        
+    this.subscriptions.add(
+      this.odourService.observation$.subscribe((observation: Observation) => {
         if (this.observation?.id === observation.id && this.isOpen) return;
         if (this.observation && this.isOpen) {
-          this.mapModalsService.toggleObservationModal()
+          this.mapModalsService.toggleObservationModal();
           setTimeout(() => {
             this.observation = observation;
-            this.mapModalsService.toggleObservationModal()
+            this.mapModalsService.toggleObservationModal();
           }, 450);
         } else {
           this.observation = observation;
-          this.mapModalsService.toggleObservationModal()
+          this.mapModalsService.toggleObservationModal();
         }
-      },
-      error: (error) => console.error(error),
-    });
+      }),
+    );
   }
 
-  send() {
+  public send() {
     //Llamamos al modal de confirmación
-    const dialog = this.modalService.open( DialogModalComponent, {windowClass: 'default', backdropClass: 'default', centered : true, size: 'sm' } )
-    dialog.componentInstance.config = { 
-      text: "¿Seguro que quieres eliminar tu observación?",
-      acceptButtonText : "Eliminar",
+    const dialog = this.modalService.open(DialogModalComponent, {
+      windowClass: 'default',
+      backdropClass: 'default',
+      centered: true,
+      size: 'sm',
+    });
+    dialog.componentInstance.config = {
+      text: '¿Seguro que quieres eliminar tu observación?',
+      acceptButtonText: 'Eliminar',
     };
     dialog.result.catch(
       //si el modal se cierra clicando en "Acpetar" llamamos a delete()
-      (reason) => { if(reason === true)  this.delete() },
-		);
+      (reason) => {
+        if (reason === true) this.delete();
+      },
+    );
   }
 
-  delete() {
-    this.observationDelete$ = this.odourService
-      .deleteObservation(this.observation)
-      .subscribe({
+  private delete() {
+    this.subscriptions.add(
+      this.odourService.deleteObservation(this.observation.id).subscribe({
         next: () => {
           this.mapModalsService.toggleObservationModal();
-          this.userService.removeObservation(this.observation);
+          this.userService.removeObservation(this.observation.id);
+          this.mapService.deleteMarker(this.observation.id);
           this.alertService.success('Observacion eliminada', {
             autoClose: true,
             keepAfterRouteChange: true,
@@ -98,7 +96,8 @@ export class OdourInformationComponent implements OnInit, OnDestroy {
             keepAfterRouteChange: true,
           });
         },
-      });
+      }),
+    );
   }
 
   public toggleModal() {
@@ -107,13 +106,19 @@ export class OdourInformationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.user$) this.user$.unsubscribe();
-    if (this.observationDelete$) this.observationDelete$.unsubscribe();
-    this.observation$.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
-  openProfileOffcanva(){
-    const offcanva = this.offcanvasService.open(PublicProfileOffcanvaComponent, {  position: 'bottom', scroll: true, panelClass: 'default public-profile', backdropClass: 'default public-profile' });
+  openProfileOffcanva() {
+    const offcanva = this.offcanvasService.open(
+      PublicProfileOffcanvaComponent,
+      {
+        position: 'bottom',
+        scroll: true,
+        panelClass: 'default public-profile',
+        backdropClass: 'default public-profile',
+      },
+    );
     offcanva.componentInstance.user = this.observation.relationships.user;
   }
-
 }

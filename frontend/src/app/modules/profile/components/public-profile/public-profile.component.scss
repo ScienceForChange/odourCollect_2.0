@@ -1,30 +1,44 @@
 @import "../../../../../styles/colors";
 
+:host{
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#header{
+  padding: 23px 17px 0;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  box-shadow: 0 10px 10px white;
+  z-index: 1;
+  h1{
+      padding-top: 15px;
+  }
+  &::after {
+      content: " ";
+      display: block;
+      width: 17px;
+  }
+}
 article {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  max-width: 100vw;
-  min-height: 100vh;
+  min-height: 100%;
   position: relative;
-}
-
-app-back-btn {
-  padding-top: 23px;
-  padding-left: 17px;
-  width: 100%;
-  margin: 0 auto;
 }
 
 section {
   border-radius: 40px 40px 0px 0px;
-  flex: 1;
   padding-bottom: 110px;
   padding-left: 32px;
   padding-right: 32px;
   border-radius: 40px 40px 0 0;
   background-color: $violet-lighter;
   margin-top: 80px;
+  min-height: 100%;
   #picture{
     height: 124px;
     width: 124px;

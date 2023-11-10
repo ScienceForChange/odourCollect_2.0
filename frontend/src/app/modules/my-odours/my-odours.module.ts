@@ -5,9 +5,15 @@ import { MyOdoursComponent } from './components/my-odours/my-odours.component';
 import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
 import { FiltersComponent } from './components/filters/filters.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [OdourCardComponent, MyOdoursComponent, FiltersComponent],
-  imports: [CommonModule, SharedComponentsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    SharedComponentsModule,
+    ReactiveFormsModule,
+    RouterModule,
+  ],
 })
 export class MyOdoursModule {}

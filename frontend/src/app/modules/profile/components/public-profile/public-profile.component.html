@@ -1,9 +1,11 @@
+<div id="header" class="d-flex gap-3 justify-content-between align-items-center">
+  <app-back-btn [route]="'/profile'"></app-back-btn>
+</div>
 <article>
-  <app-back-btn>Volver</app-back-btn>
   <section class="d-flex flex-column h-100 align-items-center" *ngIf="user">
-    <div class="d-flex justify-content-center" >
-      <div id="picture" [style.background-image]="'url(/assets/images/avatars/' + user.avatar_id +'.svg)'">
-        <icon-verified/>
+    <div class="d-flex justify-content-center">
+      <div id="picture" [style.background-image]="'url(/assets/images/avatars/' + user.avatar_id + '.svg)'">
+        <icon-verified />
       </div>
     </div>
     <h1 class="body-l text-center mb-2" *ngIf="user">Usuario {{user.id}}</h1>
@@ -25,9 +27,9 @@
     <div *ngIf="user.relationships.odourObservations.length > 0">
       <h2 class="headline-s text-center mb-4">Últimos olores registrados</h2>
       <ul id="recent-oudours" class="d-flex flex-column w-100 body-l gap-3 ps-2 pe-2">
-        <li *ngFor="let obs of user.relationships.odourObservations | slice:0:3;" class="d-flex flex-fill gap-3 justify-content-between align-items-center">
-          <span>{{obs.relationships.odourSubType.name}}</span>
-          <a (click)="showOnMap(obs)" class="color-violet-dark text-end">Ver en el mapa</a>
+        <li *ngFor="let obs of user.relationships.odourObservations | slice: 0 : 3" class="d-flex flex-fill gap-3 justify-content-between align-items-center">
+            <span>{{ obs.relationships.odourSubType.name }}</span>
+            <a (click)="showOnMap(obs.id)" class="color-violet-dark text-end">Ver en el mapa</a>
         </li>
       </ul>
     </div>

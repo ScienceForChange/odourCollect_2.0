@@ -30,6 +30,6 @@ export class ProfileComponent{
   }
   
   openInfoOffcanvas(){
-    this.offcanvasService.open(AboutTrainedUserComponent, {  position: 'start', scroll: false, panelClass: 'about-canvas'})
+    this.offcanvasService.open(AboutTrainedUserComponent, {  position: 'start', scroll: false, panelClass: 'about-canvas'});
   }
 }

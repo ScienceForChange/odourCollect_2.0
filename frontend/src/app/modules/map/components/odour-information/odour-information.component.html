@@ -4,7 +4,11 @@
 >
   <div class="modal-header">
     <button type="button" class="close" (click)="toggleModal()"></button>
-    <div (click)="openProfileOffcanva()">
+    <div
+      (click)="openProfileOffcanva()"
+      tabindex="0"
+      (keydown.enter)="openProfileOffcanva()"
+    >
       <img
         width="48"
         height="48"

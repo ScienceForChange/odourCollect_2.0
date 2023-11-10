@@ -9,8 +9,18 @@ import { CoreRoutingModule } from '../../core-routing.module';
 import { FiltersComponent } from './components/filters/filters.component';
 
 @NgModule({
-  declarations: [HamburguerComponent, HeaderComponent, MenuComponent, FiltersComponent],
-  imports: [CommonModule, SharedComponentsModule, HttpClientModule,CoreRoutingModule],
+  declarations: [
+    HamburguerComponent,
+    HeaderComponent,
+    MenuComponent,
+    FiltersComponent,
+  ],
+  imports: [
+    CommonModule,
+    SharedComponentsModule,
+    HttpClientModule,
+    CoreRoutingModule,
+  ],
   exports: [HeaderComponent, MenuComponent],
 })
 export class HeaderModule {}

@@ -25,13 +25,23 @@
   </div>
 </header>
 <section>
-  <p class="label-m">{{ observations.length }} registros</p>
+  <p class="label-m">{{ observations?.length }} registros</p>
   <ul>
     <li *ngFor="let observation of observations">
       <app-my-odour-card
         [observation]="observation"
-        (deleteObservation)="deleteObservation($event)"
+        (deleteObservation)="send($event)"
       />
+    </li>
+    <li *ngIf="!observations?.length" id="no-observation-card">
+      <article>
+        <header>
+          <h2 class="body-l">No tienes ninguna observación creada</h2>
+        </header>
+        <a routerLink="/create-odour" routerLinkActive="active"
+          >¡Crear una observación!</a
+        >
+      </article>
     </li>
   </ul>
 </section>

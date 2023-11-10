@@ -6,6 +6,7 @@
             [min]="min"
             [max]="max"
             [value]="this.fControl ? this.fControl.value : value"
+            (input)="onRangeChange($event)"
             (change)="onRangeChange($event)"            
         />
         <div class="range-segments"><i *ngFor="let item of segments"></i></div>

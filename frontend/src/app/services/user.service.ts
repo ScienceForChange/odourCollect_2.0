@@ -98,9 +98,9 @@ export class UserService {
     if(this.user) this.user.total_observations ++;
   }
 
-  public removeObservation(removedObs: Observation){
+  public removeObservation(removedObsId: number){
     if(this.user){
-      this.user.relationships.odourObservations = this.user.relationships.odourObservations.filter((obs) => obs.id !== removedObs.id);
+      this.user.relationships.odourObservations = this.user.relationships.odourObservations.filter((obs) => obs.id !== removedObsId);
       this.user.total_observations --;
     }
   }

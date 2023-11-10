@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
-import { Observation } from 'src/app/models/observation';
 import { User } from 'src/app/models/user';
 import { AboutBadgesComponent } from 'src/app/modules/information/components/about-badges/about-badges.component';
 import { AboutTrainedUserComponent } from 'src/app/modules/information/components/about-trained-user/about-trained-user.component';
@@ -13,35 +12,28 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-public-profile',
   templateUrl: './public-profile.component.html',
-  styleUrls: ['./public-profile.component.scss']
+  styleUrls: ['./public-profile.component.scss'],
 })
-export class PublicProfileComponent{
-
+export class PublicProfileComponent {
   public user: User | undefined = this.userService.user;
-  
+
   constructor(
     private footerService: FooterService,
     private userService: UserService,
-    private odourService: OdourService,
-    private router: Router,
     private mapService: MapService,
-    private offcanvasService: NgbOffcanvas
-    ) {
-      this.footerService.visible = true;
+    private offcanvasService: NgbOffcanvas,
+  ) {
+    this.footerService.visible = true;
   }
-  showOnMap(obs : Observation){
-    this.odourService.observation$.next(obs);
-    this.mapService.centerMap(Number(obs.latitude), Number(obs.longitude))
-    this.router.navigate(['/map']);
+  showOnMap(observationId: number) {
+    this.mapService.seeMoreAbout(observationId);
   }
-  
-  openAboutTrainedOffcanvas(){
-    this.offcanvasService.open(AboutTrainedUserComponent, {  position: 'start', scroll: false, panelClass: 'about-canvas'})
-    
+
+  openAboutTrainedOffcanvas() {
+    this.offcanvasService.open(AboutTrainedUserComponent, { position: 'start', scroll: false, panelClass: 'about-canvas' });
   }
-  
-  openAboutBadgesOffcanvas(){
-    this.offcanvasService.open(AboutBadgesComponent, {  position: 'start', scroll: false, panelClass: 'about-canvas'})
-    
+
+  openAboutBadgesOffcanvas() {
+    this.offcanvasService.open(AboutBadgesComponent, { position: 'start', scroll: false, panelClass: 'about-canvas' });
   }
 }

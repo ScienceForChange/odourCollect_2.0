@@ -35,8 +35,6 @@ export class OdourService {
 
   //Actualizo las observaciones
   public updateObservations(observations: Observation[]): void {
-    //Filtro aquí los 500 primeros
-    // const filter500 = observations.slice(0,500)
     this._observations.next(observations);
   }
 
@@ -119,25 +117,24 @@ export class OdourService {
     return this.http.get<ObservationRes>(url);
   }
 
+  //Conseguir un olor
+  public getOdour(odourId: number): Observable<ObservationRes> {
+    return this.http.get<ObservationRes>(
+      `${environment.BACKEND_BASE_URL}api/observations/${odourId}`,
+    );
+  }
+
   //Eliminar olor
-  public deleteObservation(observation: Observation): Observable<any> {
-    return this.http
-      .delete(
-        `${environment.BACKEND_BASE_URL}api/observations/${observation.id}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          withCredentials: true,
+  public deleteObservation(observationId: number): Observable<any> {
+    return this.http.delete(
+      `${environment.BACKEND_BASE_URL}api/observations/${observationId}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
-      )
-      .pipe(
-        tap(() => {
-          this.updateObservations(
-            this._observations.value.filter((obs) => obs.id !== observation.id),
-          );
-        }),
-      );
+        withCredentials: true,
+      },
+    );
   }
 }

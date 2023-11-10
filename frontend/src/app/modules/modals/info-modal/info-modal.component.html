@@ -1,18 +1,29 @@
 <div class="modal-header align-items-center justify-between pb-0">
-    <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close" (click)="modal.close()"></button>
+  <button
+    type="button"
+    class="close"
+    data-bs-dismiss="modal"
+    aria-label="Close"
+    (click)="modal.close()"
+  ></button>
 </div>
 
 <div class="modal-body">
-    <div class="d-flex justify-content-center pb-4" *ngIf="config.icon">
-        <div *ngComponentOutlet="config.icon; inputs: iconInputs"></div>
-    </div>
-    <p class="text-center">
-        {{config.text || 'SIN TEXTO'}}
-    </p>
+  <div class="d-flex justify-content-center pb-4" *ngIf="config.icon">
+    <div *ngComponentOutlet="config.icon; inputs: iconInputs"></div>
+  </div>
+  <p class="text-center">
+    {{ config.text || 'SIN TEXTO' }}
+  </p>
 </div>
 
-<div class="modal-footer mt-4 px-0 gap-3 justify-content-center">
-    <button type="button" class="btn btn-primary" [class]="config.acceptButtonClass" (click)="modal.dismiss(true)">
-        {{config.acceptButtonText || 'Aceptar'}}
-    </button>
+<div class="modal-footer px-0 gap-3 justify-content-center">
+  <button
+    type="button"
+    class="btn btn-primary"
+    [class]="config.acceptButtonClass"
+    (click)="modal.dismiss(true)"
+  >
+    {{ config.acceptButtonText || 'Aceptar' }}
+  </button>
 </div>

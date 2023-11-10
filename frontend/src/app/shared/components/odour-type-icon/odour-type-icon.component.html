@@ -1,6 +1,5 @@
 <!-- TODO hay que cambiar de odourType a odour id por la internalización -->
 
-<div class="odour-icon">
   <!-- Box del tipo con el bolb y el icono -->
   <div [class]="'type-' + odourType + ' ' + iconClass">
     <div *ngIf="odourType === 'agriculture-livestock'">
@@ -18,14 +17,13 @@
     <div *ngIf="odourType === 'waste-water'">
       <icon-waste class="odour-icon" />
     </div>
+    <p
+      [ngClass]="
+        iconClass === 'odour-type' || iconClass === 'odour-type-information'
+          ? 'headline-m'
+          : 'label-l'
+      "
+    >
+      {{ odourName }}
+    </p>
   </div>
-  <p
-    [ngClass]="
-      iconClass === 'odour-type' || iconClass === 'odour-type-information'
-        ? 'headline-m'
-        : 'label-l'
-    "
-  >
-    {{ odourName }}
-  </p>
-</div>
