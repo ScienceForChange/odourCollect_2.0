@@ -5,7 +5,6 @@ services:
     volumes:
       - ./certbot/conf:/etc/letsencrypt/:ro
       - ./certbot/www/:/var/www/certbot/:ro
-      - ./deployment/config/proxy.conf:/etc/nginx/nginx.conf
     restart: unless-stopped
     ports:
       - "80:80"
