@@ -28,6 +28,7 @@ nav {
     }
   }
 }
+
 .active {
   z-index: 2;
   a {
@@ -60,6 +61,7 @@ li:nth-child(2).active ~ .follow {
 li:nth-child(3).active ~ .follow {
   left: 67%;
 }
+
 @keyframes animation-footer-fadeIn {
   50% {
       opacity: 0;

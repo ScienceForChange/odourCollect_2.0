@@ -97,9 +97,10 @@ export class MyOdoursComponent implements OnInit {
 
   public filterObservations(querys: {
     type: [];
-    intensity: number;
-    hedonicTone: number;
+    intensity: number[];
+    hedonicTone: number[];
   }) {
+
     const observationsFiltered = this.observationsRef?.filter((observation) => {
       const observationType =
         observation.relationships.odourSubType.relationships.odourType.id;
@@ -110,8 +111,14 @@ export class MyOdoursComponent implements OnInit {
       const haveSameType = querys.type.length
         ? querys.type.some((type: number) => type === observationType)
         : true;
-      const haveSameIntensity = querys.intensity === observationIntensity;
-      const haveSameHedonictone = querys.hedonicTone === observationHedonicTone;
+
+      const haveSameIntensity =
+        querys.intensity[0] <= observationIntensity &&
+        querys.intensity[1] >= observationIntensity;
+
+      const haveSameHedonictone =
+        querys.hedonicTone[0] <= observationHedonicTone &&
+        querys.hedonicTone[1] >= observationHedonicTone;
 
       return haveSameType && haveSameIntensity && haveSameHedonictone;
     });

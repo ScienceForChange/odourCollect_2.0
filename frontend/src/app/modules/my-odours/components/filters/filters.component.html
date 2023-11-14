@@ -34,10 +34,14 @@
               >¿Cuál es la intensidad de olor?</label
             >
           </div>
-          <app-single-range
-            [fControl]="this.filtersForm.get('intensity')"
-            [segments]="intensityForRange"
-          />
+          <fieldset>
+            <app-multi-range
+              [minFControl]="this.filtersForm.get('intensityMin')"
+              [maxFControl]="this.filtersForm.get('intensityMax')"
+              [minSegments]="intensityForRange"
+              [maxSegments]="intensityForRange"
+            />
+          </fieldset>
         </div>
         <div>
           <div class="d-flex justify-cotent-center align-items-end gap-2">
@@ -46,14 +50,22 @@
               >¿Es agradable o desagradable?</label
             >
           </div>
-          <app-single-range
-            [fControl]="this.filtersForm.get('hedonicTone')"
-            [segments]="hedonicToneForRange"
-          />
+          <fieldset>
+            <app-multi-range
+              [minFControl]="this.filtersForm.get('hedonicToneMin')"
+              [maxFControl]="this.filtersForm.get('hedonicToneMax')"
+              [minSegments]="hedonicToneForRange"
+              [maxSegments]="hedonicToneForRange"
+            />
+          </fieldset>
         </div>
 
         <div class="d-flex justify-content-between">
-          <button class="btn-secondary" (click)="resetDefaultFilters()" type="button">
+          <button
+            class="btn-secondary"
+            (click)="resetDefaultFilters()"
+            type="button"
+          >
             Restablecer
           </button>
           <button

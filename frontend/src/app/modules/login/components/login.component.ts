@@ -11,14 +11,12 @@ import { AlertService } from 'src/app/services/alert.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent {
   private user!:        UserLogin;
   public isLogin:       boolean = false;
 
   public loading:       boolean = false;
   public showPassword:  boolean = false;
-
-  //public loginObs:      boolean = this.authService.isLoggedIn.value;
 
   public loginForm:     FormGroup = new FormGroup({
     email: new FormControl('', [
@@ -64,17 +62,24 @@ export class LoginComponent implements OnDestroy {
       },
       error: (resp) => {
         if (resp.status == 422) {
+
           this.loginForm.controls['email'].markAsUntouched();
-          document.getElementsByName('email')[0].classList.add('error')
+
+          document.getElementsByName('email')[0].classList.add('error');
+
+          this.alertService.clear();
           this.alertService.warn('Email o contraseña son incorrectos', { keepAfterRouteChange: false, autoClose: false });
+
           this.loginForm.controls['password'].reset();
+
+          document.getElementsByName('email')[0].addEventListener('click', function() {
+            document.getElementsByName('email')[0].classList.remove('error');
+          });
+          
         }
         this.loading = false;
       },
     });
   }
   
-  ngOnDestroy(): void {
-    //this.loginObs.unsubscribe();
-  }
 }

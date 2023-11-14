@@ -25,6 +25,7 @@ import { MapService } from '../../../../services/map.service';
 import { UserService } from 'src/app/services/user.service';
 import { ObservationRes } from 'src/app/models/observation';
 import { TickSquareComponent } from 'src/app/shared/components/Icons/tick-square/tick-square.component';
+import { AlertService } from '../../../../services/alert.service';
 
 @Component({
   selector: 'app-add-odour',
@@ -59,7 +60,8 @@ export class AddOdourComponent implements OnInit, OnDestroy {
     private router: Router,
     private footerService: FooterService,
     private mapService: MapService,
-    private userService: UserService
+    private userService: UserService,
+    private alertService: AlertService,
   ) {
     this.footerService.visible = false;
     this.goToStep1();
@@ -197,7 +199,7 @@ export class AddOdourComponent implements OnInit, OnDestroy {
     };
 
     this.odourService.createNewOdour(newOdour).subscribe({
-      next: (observation:ObservationRes) => {
+      next: (observation: ObservationRes) => {
         this.loading = false;
         this.modalService.open(InfoModalComponent, {
           windowClass: 'default',
@@ -209,7 +211,7 @@ export class AddOdourComponent implements OnInit, OnDestroy {
           text: '¡El olor ha sido añadido!',
           acceptButtonText: 'Aceptar',
         };
-        this.userService.addObservation(observation.data[0])
+        this.userService.addObservation(observation.data[0]);
         this.router.navigate(['/map']);
         this.mapService.addOneMarker(observation.data[0]);
         this.mapService.centerMap(
@@ -217,12 +219,11 @@ export class AddOdourComponent implements OnInit, OnDestroy {
           Number(observation.data[0].longitude),
         );
       },
-      error: (resp) => {
+      error: () => {
         this.loading = false;
-        if (resp.status == 422) {
-          //TODO faltan los errores
-        }
-        //console.log('resp', resp);
+        this.alertService.error(
+          'No se ha podido crear la observación, prueba lo mas tarde.',
+        );
       },
     });
   }

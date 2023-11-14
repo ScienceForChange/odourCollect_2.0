@@ -46,6 +46,7 @@ import { SearchComponent } from './search/search.component';
 import { TickSquareComponent } from './tick-square/tick-square.component';
 import { TimeCircleComponent } from './time-circle/time-circle.component';
 import { Filter2Component } from './filter2/filter2.component';
+import { InfoCircleComponent } from './info-circle/info-circle.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import { Filter2Component } from './filter2/filter2.component';
     WasteComponent,
     TickSquareComponent,
     TimeCircleComponent,
-    Filter2Component    
+    Filter2Component,
+    InfoCircleComponent   
   ],
   exports: [
     ArrowLeftComponent,
@@ -141,7 +143,8 @@ import { Filter2Component } from './filter2/filter2.component';
     VerifiedComponent,
     WasteComponent,
     TimeCircleComponent,
-    Filter2Component
+    Filter2Component,
+    InfoCircleComponent
   ],
   imports: [CommonModule],
 })

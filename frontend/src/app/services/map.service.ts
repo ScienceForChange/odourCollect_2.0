@@ -5,21 +5,36 @@ import 'leaflet.markercluster';
 import { OdourService } from './odour.service';
 import { Observation } from '../models/observation';
 import { Router } from '@angular/router';
+import { UserService } from './user.service';
+import { BehaviorSubject } from 'rxjs';
 //TODO ver como desuscribirse o no estar suscrito si no estás en mapa
 
 //Creo un customMarker para poder añadirle el ID directamente
 class CustomMarker extends L.Marker {
   id: number;
+  isUserObservation: boolean;
 
   constructor(
     latlng: L.LatLngExpression,
     options?: L.MarkerOptions,
     id?: number,
+    isUserObservation?: boolean,
   ) {
     super(latlng, options);
     this.id = id || 0;
+    this.isUserObservation = isUserObservation || false;
   }
 }
+const clusterSettings = {
+  spiderLegPolylineOptions: { opacity: 0 },
+  spiderfyOnMaxZoom: true,
+  showCoverageOnHover: false,
+  zoomToBoundsOnClick: true,
+  animate: true,
+  animateAddingMarkers: false,
+  spiderfyDistanceMultiplier: 1,
+  chunkedLoading: true,
+};
 
 @Injectable({
   providedIn: 'root',
@@ -27,23 +42,49 @@ class CustomMarker extends L.Marker {
 export class MapService {
   private mapL!: L.Map;
   private markers: CustomMarker[] = [];
-  private markerCluster: L.MarkerClusterGroup = L.markerClusterGroup({
-    spiderLegPolylineOptions: { opacity: 0 },
-    spiderfyOnMaxZoom: true,
-    showCoverageOnHover: false,
-    zoomToBoundsOnClick: false,
-  });
+  private markerCluster: L.MarkerClusterGroup =
+    L.markerClusterGroup(clusterSettings);
+  private userMarkerCluster: L.MarkerClusterGroup =
+    L.markerClusterGroup(clusterSettings);
   private observations: Observation[] = [];
 
+  public showUserObservations: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+
   constructor(
+    private userService: UserService,
     private odourService: OdourService,
     private router: Router,
   ) {
     this.getObservations();
+    this.showUserObservations.subscribe((show) => {
+      if (this.mapL) {
+        this.showUserObservationMarkers(show);
+      }
+    });
   }
 
   public getMap(): L.Map {
     return this.mapL;
+  }
+
+  // Wrap removeLayer in a function that returns a Promise
+  private removeLayerAsync(layer: L.MarkerClusterGroup) {
+    return new Promise<void>((resolve) => {
+      this.mapL.removeLayer(layer);
+      resolve();
+    });
+  }
+
+  // Filtrar por los markers del usuario
+  public async showUserObservationMarkers(show: boolean) {
+    if (show) {
+      await this.removeLayerAsync(this.markerCluster);
+      this.mapL.addLayer(this.userMarkerCluster);
+    } else {
+      await this.removeLayerAsync(this.userMarkerCluster);
+      this.mapL.addLayer(this.markerCluster);
+    }
   }
 
   //Creo el marker
@@ -94,9 +135,12 @@ export class MapService {
 
   //Añadir los markers al mapa
   private addAllMarkers(observations: Observation[]) {
+    //Algo sucede cuando cambio los mapas. Es como si no se borrara bien
     this.markers.forEach((marker) => {
-      this.markerCluster.removeLayer(marker);
-      marker.remove();
+      this.markerCluster.clearLayers();
+      if (marker.isUserObservation) {
+        this.userMarkerCluster.clearLayers();
+      }
     });
 
     this.markers = [];
@@ -106,6 +150,39 @@ export class MapService {
     });
 
     this.mapL.invalidateSize();
+  }
+
+  //Añadir un marker al mapa
+  public addOneMarker(observation: Observation) {
+    const markerType =
+      observation.relationships.odourSubType.relationships.odourType.slug;
+    const icon = this.createMarkerIcon(markerType);
+
+    const isUserObservation = this.userService.user
+      ? this.userService.user.id === observation.relationships.user?.id
+      : false;
+
+    const lat = Number(observation.latitude);
+    const lng = Number(observation.longitude);
+
+    const marker = new CustomMarker(
+      [lat, lng],
+      { icon },
+      observation.id,
+      isUserObservation,
+    );
+
+    marker.on('click', (e) => {
+      this.onClickMarker(e);
+    });
+
+    if (isUserObservation) {
+      this.userMarkerCluster.addLayer(marker);
+    }
+
+    this.markerCluster.addLayer(marker);
+
+    this.markers.push(marker);
   }
 
   //filtro por los 5 tipos
@@ -127,6 +204,15 @@ export class MapService {
     );
   }
 
+  //Para centrar el mapa en mi ubicación
+  public centerMapToMyLatLng() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.centerMap(position.coords.latitude, position.coords.longitude);
+      });
+    }
+  }
+
   //para centrar el mapa
   public centerMap(lat: number, lon: number): void {
     const offset = 0.001;
@@ -141,29 +227,11 @@ export class MapService {
     marker.remove();
   }
 
-  //Añadir un marker al mapa
-  public addOneMarker(observation: Observation) {
-    const markerType =
-      observation.relationships.odourSubType.relationships.odourType.slug;
-    const icon = this.createMarkerIcon(markerType);
-
-    const lat = Number(observation.latitude);
-    const lng = Number(observation.longitude);
-
-    const marker = new CustomMarker([lat, lng], { icon }, observation.id);
-    marker.on('click', (e) => {
-      this.onClickMarker(e);
-    });
-
-    this.markerCluster.addLayer(marker);
-    this.markers.push(marker);
-  }
-
   //Consigo las observaciones y me suscribo a getObservations
   private getObservations(): void {
     this.odourService.getObservations().subscribe((observations) => {
       if (observations.length) {
-        this.addAllMarkers(this.filterByTypes(observations));
+        this.addAllMarkers(observations);
       }
       this.observations = observations;
     });

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, tap, filter } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
   OdourRelatedDataRes,
@@ -21,8 +21,8 @@ export class OdourService {
   >([]);
   public observation$ = new Subject<Observation>();
 
+
   constructor(private http: HttpClient) {
-    // this.getAllOdours();
   }
 
   public get observations(): Observable<Observation[]> {
@@ -77,7 +77,7 @@ export class OdourService {
   public getAllOdours(): void {
     this.http
       .get<ObservationRes>(
-        `${environment.BACKEND_BASE_URL}api/observations?include=odourSubType.odourType`,
+        `${environment.BACKEND_BASE_URL}api/observations?include=odourSubType.odourType,user`,
       )
       .subscribe((observations) => {
         this.updateObservations(observations.data);
@@ -114,7 +114,7 @@ export class OdourService {
 
     const url = baseUrl + filters;
 
-    return this.http.get<ObservationRes>(url);
+    return this.http.get<ObservationRes>(url)
   }
 
   //Conseguir un olor

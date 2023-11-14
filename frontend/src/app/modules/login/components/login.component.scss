@@ -1,5 +1,21 @@
 @import "../../../../styles/colors";
 
+#header{
+  padding: 23px 17px 0;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  box-shadow: 0 10px 10px white;
+  z-index: 1;
+  h1{
+      padding-top: 15px;
+  }
+  &::after {
+      content: " ";
+      display: block;
+      width: 17px;
+  }
+}
 article {
   display: flex;
   flex-direction: column;
@@ -7,27 +23,14 @@ article {
   place-content: center;
   text-align: center;
   width: 100%;
-  header {
-    align-items: center;
-    display: flex;
-    gap: 12px;
-    padding: 9px 0 0 13px;
-    width: 100%;
-    a {
-      color: $black;
-      padding: 12px 0;
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
+  padding-bottom: 60px;
   section,
   form {
     padding-left: 45px;
     padding-right: 45px;
   }
   section {
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
     gap: 11px;

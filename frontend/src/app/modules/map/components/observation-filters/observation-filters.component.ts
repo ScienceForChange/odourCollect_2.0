@@ -33,7 +33,6 @@ const today = new Date()
   templateUrl: './observation-filters.component.html',
   styleUrls: ['./observation-filters.component.scss'],
 })
-
 export class ObservationFiltersComponent implements OnInit, OnDestroy {
   public isOpen: boolean = false;
 
@@ -165,10 +164,11 @@ export class ObservationFiltersComponent implements OnInit, OnDestroy {
   }
 
   public resetFilters(): void {
-    //TODO esta linea linea habria que evitarla, investigar por que solo type parece referencial
     this.filtersFormInitialValues.type = [];
-
     this.filtersForm.reset(this.filtersFormInitialValues);
+    for (const control in this.filtersForm.controls) {
+      this.filtersForm.controls[control].setErrors({ incorrect: true });
+    }
   }
 
   public filterOdour(): void {

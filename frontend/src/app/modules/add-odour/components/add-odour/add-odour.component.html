@@ -27,6 +27,7 @@
       <app-comment-details
         *ngIf="activeStep === 2"
         [commentDetails]="currentGroup"
+        [selectedType]="selectedType"
       ></app-comment-details>
     </section>
     <button class="btn btn-primary btn-lg" *ngIf="activeStep === 1" (click)="next()">Siguiente</button>

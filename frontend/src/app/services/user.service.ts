@@ -1,12 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
-import { Observable, map, of, tap } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
-import { ChangePasswords } from '../models/change-password';
-import { MapService } from './map.service';
-import { OdourService } from './odour.service';
+import { ChangePasswords } from '../models/change-password'
 import { Observation } from '../models/observation';
 
 
@@ -80,9 +78,7 @@ export class UserService {
   }
 
   changePassword(passwords:ChangePasswords): Observable<Object> {
-    return this.http.post(
-      `${environment.BACKEND_BASE_URL}change-password`,
-      { ...passwords },
+    return this.http.post(`${environment.BACKEND_BASE_URL}change-password`, { ...passwords }, 
       {
         headers: {
           'Content-Type': 'application/json',

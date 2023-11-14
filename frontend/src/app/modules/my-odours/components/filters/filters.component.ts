@@ -38,11 +38,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
   public intensityForRange!: string[];
 
   public filtersForm!: FormGroup;
-  private filtersFormInitialValues: {
-    type: [];
-    intensity: number;
-    hedonicTone: number;
-  } = { type: [], intensity: 0, hedonicTone: 0 };
+  private filtersFormInitialValues!: any;
 
   private subscriptions = new Subscription();
 
@@ -75,8 +71,22 @@ export class FiltersComponent implements OnInit, OnDestroy {
 
         this.filtersForm = new FormGroup({
           type: new FormControl([]),
-          intensity: new FormControl(0, [Validators.required]),
-          hedonicTone: new FormControl(0, [Validators.required]),
+          intensityMin: new FormControl(0, [
+            Validators.min(0),
+            Validators.max(this.intensity.length - 1),
+          ]),
+          intensityMax: new FormControl(this.intensity.length - 1, [
+            Validators.min(0),
+            Validators.max(this.intensity.length - 1),
+          ]),
+          hedonicToneMin: new FormControl(0, [
+            Validators.min(0),
+            Validators.max(this.hedonicTone.length - 1),
+          ]),
+          hedonicToneMax: new FormControl(this.hedonicTone.length - 1, [
+            Validators.min(0),
+            Validators.max(this.hedonicTone.length - 1),
+          ]),
         });
 
         this.subscriptions.add(
@@ -84,6 +94,8 @@ export class FiltersComponent implements OnInit, OnDestroy {
             this.formChanges = true;
           }),
         );
+
+        this.filtersFormInitialValues = this.filtersForm.value;
       }),
     );
   }
@@ -102,17 +114,29 @@ export class FiltersComponent implements OnInit, OnDestroy {
   }
 
   public resetDefaultFilters(): void {
+    this.filtersFormInitialValues.type = [];
     this.resetFilters.emit();
     this.filtersForm.reset(this.filtersFormInitialValues);
     this.toggleFilters.emit();
   }
 
   public filterOdour(): void {
-
     const filters = {
       type: this.filtersForm.value.type,
-      intensity: this.intensity[this.filtersForm.value.intensity].id,
-      hedonicTone: this.hedonicTone[this.filtersForm.value.hedonicTone].id,
+      intensity:
+        this.filtersForm.value.intensityMin !== this.intensity[0].power - 1
+          ? [
+              this.intensity[this.filtersForm.value.intensityMin].id,
+              this.intensity[this.filtersForm.value.intensityMax].id,
+            ]
+          : null,
+      hedonicTone:
+        this.filtersForm.value.hedonicToneMin !== this.hedonicTone[0].index - 1
+          ? [
+              this.hedonicTone[this.filtersForm.value.hedonicToneMin].id,
+              this.hedonicTone[this.filtersForm.value.hedonicToneMax].id,
+            ]
+          : null,
     };
     this.filterObservations.emit(filters);
     this.toggleFilters.emit();

@@ -13,6 +13,12 @@ export class AccordionComponent implements OnInit {
 
   ngOnInit(): void {
     this.fControls.forEach((fcontrol) => {
+      fcontrol?.statusChanges.subscribe(()=> {
+        this.isChecked = fcontrol.valid
+      })
+    });
+
+    this.fControls.forEach((fcontrol) => {
       fcontrol?.setErrors({ incorrect: true });
     });
     this.isChecked = false;

@@ -1,3 +1,5 @@
+@import '../../../../../../styles/colors';
+
 header {
   position: fixed;
   z-index: 99;
@@ -12,11 +14,71 @@ header {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      align-items: center;
+      align-items: strech;
       margin: 0 auto;
       * {
         flex: 1;
       }
+      > div:nth-child(2) {
+        button {
+          padding: 0;
+          height: auto;
+          border: none;
+          color: $black;
+          background-color: transparent;
+          line-height: 24px;
+        }
+        ul {
+          position: relative;
+          background-color: white;
+          padding: 6px 12px;
+          border-radius: 21px;
+          box-shadow: 1px 1px 10.5px 0px rgba(0, 0, 0, 0.1);
+          gap: 10px;
+        }
+      }
+      > div:nth-child(3) {
+        position: relative;
+        #location-btn {
+          background-color: white;
+          border-radius: 50%;
+          border: none;
+          height: auto;
+          padding: 5px;
+          position: absolute;
+          right: -15px;
+          top: 75px;
+          z-index: 3;
+        }
+      }
     }
   }
+}
+
+.active {
+  z-index: 2;
+  button {
+    transition: all 0.6s ease-out;
+  }
+}
+
+.follow {
+  position: absolute;
+  top: 0;
+  display: flex;
+  transition: all 0.3s ease-out;
+  height: 100%;
+  background: $violet-light;
+  padding: 8px 0;
+  border-radius: 40px;
+}
+
+li:nth-child(1).active ~ .follow {
+  left: 0;
+  width: 42%;
+}
+
+li:nth-child(2).active ~ .follow {
+  left: 39%;
+  width: 61%;
 }

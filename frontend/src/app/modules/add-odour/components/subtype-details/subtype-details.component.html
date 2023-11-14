@@ -35,7 +35,7 @@
       <label class="text-start label-l" for="intensity"
         >¿Cuál es la intensidad de olor?</label
       >
-      <icon-info-square class="ms-auto" iconClass="icon-l icon-violet-dark" />
+      <icon-info-square (click)="openInfoOffcanvas()" class="ms-auto" iconClass="icon-l icon-violet-dark" />
     </div>
 
     <app-single-range
@@ -48,7 +48,7 @@
       <label class="text-start label-l" for="hedonic_tone"
         >¿Es agradable o desagradable?</label
       >
-      <icon-info-square class="ms-auto" iconClass="icon-l icon-violet-dark" />
+      <icon-info-square (click)="openInfoOffcanvas()" class="ms-auto" iconClass="icon-l icon-violet-dark" />
     </div>
 
     <app-single-range

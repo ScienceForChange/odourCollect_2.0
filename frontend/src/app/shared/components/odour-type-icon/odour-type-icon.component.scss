@@ -173,3 +173,30 @@
   }
   
 }
+
+.inline-type {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 58px;
+  ::ng-deep icon-waste svg,
+  ::ng-deep icon-factory svg,
+  ::ng-deep icon-nature svg,
+  ::ng-deep icon-food svg,
+  ::ng-deep icon-urban svg {
+    width: 26px!important;
+    height: 26px!important;
+  }
+  ::ng-deep icon-waste svg path,
+  ::ng-deep icon-factory svg path,
+  ::ng-deep icon-nature svg path,
+  ::ng-deep icon-food svg path,
+  ::ng-deep icon-urban svg path{
+    fill: $grey-dark
+  }
+  
+}

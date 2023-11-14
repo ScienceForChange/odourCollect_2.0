@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddOdourComponent } from './components/add-odour/add-odour.component';
 
-import { AboutSourceOdourComponent } from './components/about-source-odour/about-source-odour.component';
 import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TypeDetailsComponent } from './components/type-details/type-details.component';
@@ -13,7 +12,6 @@ import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     AddOdourComponent,
-    AboutSourceOdourComponent,
     TypeDetailsComponent,
     SubtypeDetailsComponent,
     CommentDetailsComponent,

@@ -3,24 +3,28 @@ import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
 import { HttpXsrfTokenExtractor } from '@angular/common/http';
 import { UserService } from '../services/user.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RegisterModalComponent } from '../modules/modals/register-modal/register-modal.component';
 
 export const AuthGuardActivate: CanActivateFn = (route, state) => {
 
-  const authService: AuthService = inject(AuthService);
-  const router = inject(Router);
+  const authService: AuthService  = inject(AuthService);
+  const router:Router             = inject(Router);
+  const modalService:NgbModal     = inject(NgbModal);
 
   //En caso de estar logueado dejamos pasar.
   if (authService.isLoggedIn.value) return true;
 
   //En caso contrario le pasamos al servicio login la url protegida y redigimos a login.
   authService.routeToRedirect = state.url;
-  return router.parseUrl('/login');
+  if(!authService.isLoggedIn.value) modalService.open(RegisterModalComponent, { windowClass: 'default', backdropClass: 'default', centered : true, size: 'sm' } )
+  return router.parseUrl('/map');
 };
 
 export const AuthGuardLogoutActivate: CanActivateFn = (route, state) => {
 
-  const authService: AuthService = inject(AuthService);
-  const router = inject(Router);
+  const authService: AuthService  = inject(AuthService);
+  const router:Router             = inject(Router);
 
   //En caso de estar logueado no dejamos pasar, en caso contrario sí.
   return authService.isLoggedIn.value ? router.parseUrl('/map') : true;

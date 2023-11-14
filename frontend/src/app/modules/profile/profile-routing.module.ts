@@ -7,11 +7,16 @@ import { VerifyGuardActivate } from 'src/app/guards/verify.guard';
 import { AuthGuardActivate } from 'src/app/guards/auth.guard';
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 import { EditAvatarComponent } from './components/edit-avatar/edit-avatar.component';
+import { BadgesComponent } from './components/badges/badges.component';
 
 const routes: Routes = [{
   path: "",
     canActivateChild: [AuthGuardActivate, VerifyGuardActivate],
     children:[
+      {
+        path: 'profile/edit-avatar',
+        component: EditAvatarComponent,
+      },
       {
         path: 'profile/public-profile',
         component: PublicProfileComponent,
@@ -19,18 +24,29 @@ const routes: Routes = [{
       {
         path: 'profile/settings',
         component: ProfileSettingsComponent,
+        // children:[
+          
+        //   {
+        //     path: 'delete-account',
+        //     component: DeleteAccountComponent,
+        //   },
+        //   {
+        //     path: 'change-password',
+        //     component: ChangePasswordComponent,
+        //   },
+        // ]
       },
       {
-        path: 'profile/delete-account',
+        path: 'profile/settings/delete-account',
         component: DeleteAccountComponent,
       },
       {
-        path: 'profile/change-password',
+        path: 'profile/settings/change-password',
         component: ChangePasswordComponent,
       },
       {
-        path: 'profile/edit-avatar',
-        component: EditAvatarComponent,
+        path: 'profile/badges',
+        component: BadgesComponent,
       }
     ]
   }

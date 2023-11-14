@@ -1,0 +1,24 @@
+<div class="modal-header align-items-center justify-between pb-0">
+    <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close" (click)="modal.close()">
+        <span></span>
+        <span></span>
+    </button>
+</div>
+
+<div class="d-flex justify-content-center pb-4" *ngIf="config.icon">
+    <div *ngComponentOutlet="config.icon; inputs: iconInputs"></div>
+</div>
+<div class="modal-body">
+    <p class="text-center">
+        {{config.text || 'Debes estar registrado/a para añadir un olor.'}}
+    </p>
+</div>
+
+<div class="modal-footer mt-4 px-0 gap-2 flex-column justify-content-center">
+    <button type="button" class="btn btn-lg btn-primary" [routerLink]="'/signup'" (click)="modal.close()">
+        {{config.registerButtonText || 'Registrarme'}}
+    </button>
+    <button type="button" class="btn btn-lg btn-white" [routerLink]="'/login'" (click)="modal.close()">
+        {{config.loginButtonText || 'Loguearme'}}
+    </button>
+</div>

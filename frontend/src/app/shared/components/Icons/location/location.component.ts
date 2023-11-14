@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'icon-location',
@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
       height="59"
       viewBox="0 0 50 59"
       fill="none"
+      [ngClass]="iconClass"
     >
       <path
         fill-rule="evenodd"
@@ -43,4 +44,6 @@ import { Component } from '@angular/core';
   `,
   styleUrls: [],
 })
-export class LocationComponent {}
+export class LocationComponent {
+  @Input() iconClass = '';
+}

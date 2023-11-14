@@ -11,6 +11,7 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 import { EditAvatarComponent } from './components/edit-avatar/edit-avatar.component';
+import { BadgesComponent } from './components/badges/badges.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { EditAvatarComponent } from './components/edit-avatar/edit-avatar.compon
     ChangePasswordComponent,
     PublicProfileComponent,
     EditAvatarComponent,
+    BadgesComponent,
   ],
   exports: [],
   imports: [

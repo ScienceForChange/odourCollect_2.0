@@ -1,6 +1,16 @@
 <ng-container [formGroup]="commentDetails">
   <fieldset>
-    <legend class="label-l text-start mb-4">¿Conoces la fuente de olor?</legend>
+    <div id="subtype-title">
+      <app-odour-type-icon
+        [odourType]="selectedType.slug"
+        [odourName]="selectedType.name"
+        [iconClass]="'inline-type'"
+      />
+    </div>
+    <legend class="label-l text-start mb-4 d-flex justify-content-between">
+      ¿Conoces la fuente de olor? 
+      <icon-info-square (click)="openInfoOffcanvas()" class="ms-auto" iconClass="icon-l icon-violet-dark"/>
+    </legend>
     <div class="d-flex justify-content-center gap-4 mb-4">
       <div class="d-flex justify-content-center gap-2">
         <input

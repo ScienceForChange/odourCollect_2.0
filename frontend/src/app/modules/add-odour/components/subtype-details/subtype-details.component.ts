@@ -1,11 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import {
   OdourHedonicTone,
   OdourIntensity,
   OdourSubType,
   OdourTypeData,
 } from 'src/app/models/odour-related-data';
+import { AboutIntensityAndPleasentessComponent } from 'src/app/modules/information/components/about-intensity-and-pleasentess/about-intensity-and-pleasentess.component';
 
 @Component({
   selector: 'app-subtype-details',
@@ -21,9 +23,15 @@ export class SubtypeDetailsComponent implements OnInit {
 
   public hedonicToneForRange: string[] = [];
   public intensityForRange: string[] = [];
+  
+  constructor(private offcanvasService: NgbOffcanvas) {}
 
   ngOnInit() {
     this.intensityForRange = this.intensity.map((segment) => segment.name);
     this.hedonicToneForRange = this.hedonicTone.map((segment) => segment.name);
+  }
+  
+  openInfoOffcanvas(){
+    this.offcanvasService.open(AboutIntensityAndPleasentessComponent, {  position: 'start', scroll: false, panelClass: 'about-canvas' });
   }
 }

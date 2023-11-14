@@ -1,0 +1,25 @@
+<div id="header" class="d-flex gap-3 justify-content-between align-items-center">
+    <app-back-btn [route]="'profile'"/>
+    <h1>Mis insignias</h1>
+</div>
+<article class="mt-3">
+    <section class="d-flex flex-column">
+        <div class="d-flex justify-content-center" >
+            <div id="picture" [style.background-image]="'url(/assets/images/avatars/' + user?.avatar_id + '.svg)'">
+                <icon-verified/>
+            </div>
+        </div>
+        <h1 class="body-l text-center">Usuario {{user?.id}}</h1>
+        <span class="label-m text-center d-flex justify-content-center align-items-center color-grey mb-5">Usuario entrenando <icon-info-square class="d-flex p-2" (click)="openAboutTrainedOffcanvas()"/></span>
+        <div class="d-flex justify-content-center column-gap-4 flex-wrap mb-4" (click)="openAboutBadgesOffcanvas()">
+          <icon-trophies [trophy]="0" [iconClass]="'trophy-md'" [grey]="false" />
+          <icon-trophies [trophy]="1" [iconClass]="'trophy-md'" [grey]="true" />
+          <icon-trophies [trophy]="2" [iconClass]="'trophy-md'" [grey]="true" />
+          <icon-trophies [trophy]="3" [iconClass]="'trophy-md'" [grey]="true" />
+          <icon-trophies [trophy]="4" [iconClass]="'trophy-md'" [grey]="true" />
+        </div>
+        <p class="d-flex justify-content-center gap-3 mb-3" (click)="openAboutBadgesOffcanvas()">
+            ¿Qué son las insignias? <icon-arrow-right/>
+        </p>
+    </section>
+</article>

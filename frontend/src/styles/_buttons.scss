@@ -17,6 +17,8 @@ button.btn{
     font-weight: 400;
     line-height: 16px; 
     letter-spacing: 0.2px;
+    margin-left: 0;
+    margin-right: 0;
     &:hover{
         background-color: $white;
         color: $black;
@@ -32,9 +34,9 @@ button.btn{
         box-shadow: none !important;
     }
  } 
-
- input[type=button].btn-primary,
- button.btn-primary{
+.btn.btn-primary,
+input[type=button].btn-primary,
+button.btn-primary{
     background-color: $violet;
     border: $violet;
     color: $black;
@@ -100,6 +102,7 @@ button.btn{
         background-color: $grey-lighter;
     }
  }
+
  input[type=button].btn-grey-lighter,
  button.btn-grey-light{
     background-color: $grey-lighter;
@@ -116,6 +119,24 @@ button.btn{
         background-color: $white;
     }
  }
+.btn.btn-white,
+input[type=button].btn-white,
+button.btn-white{
+    background-color: white;
+    border-color: $black;
+    color: $black;
+    &:hover,
+    &:active,
+    &:focus-visible,
+    &:first-child:active {
+        border-color: $violet-dark;
+        color: $violet-dark;
+    }
+    &:disabled{
+        background-color: $grey-light;
+    }
+}
+
 
  input[type=button].btn-xs,
  button.btn-sm{

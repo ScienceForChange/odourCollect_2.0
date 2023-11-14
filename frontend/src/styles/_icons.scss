@@ -1,28 +1,37 @@
-svg{
-    &.icon-l{
-        height: 22px;
-        width: 22px;
+svg {
+  &.icon-l {
+    height: 22px;
+    width: 22px;
+  }
+  &.icon-violet {
+    path {
+      fill: $violet;
     }
-    &.icon-violet{
-        path {
-            fill: $violet;
-        }
+  }
+  &.icon-violet-dark {
+    path {
+      fill: $violet-dark;
     }
-    &.icon-violet-dark{
-        path {
-            fill: $violet-dark;
-        }
+  }
+  &.icon-black {
+    path {
+      fill: $black;
     }
-    &.md-1{
-        height: 34px;
-        width: 34px;
-    }
-    &.md-2{
-        height: 40px;
-        width: 40px;
-    }
-    &.xl{
-        height: 60px;
-        width: 60px;
-    }
+  }
+  &.md-1 {
+    height: 34px;
+    width: 34px;
+  }
+  &.md-2 {
+    height: 40px;
+    width: 40px;
+  }
+  &.xl {
+    height: 60px;
+    width: 60px;
+  }
+
+  &.trophy-md{
+    height: 82px;
+  }
 }

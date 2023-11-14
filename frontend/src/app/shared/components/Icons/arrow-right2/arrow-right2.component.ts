@@ -19,5 +19,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: [],
 })
 export class ArrowRight2Component {
-  @Input() iconClass = ''
+  @Input() iconClass = '';
 }
