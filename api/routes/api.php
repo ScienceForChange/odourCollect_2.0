@@ -88,3 +88,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/user-data', function (Req
         new UserResource($request->user()->load($loads))
     ],200);
 });
+
+Route::GET('/version', function(){
+    return [
+        'odourCollect' => 'v'.config('app.version')
+    ];
+});
