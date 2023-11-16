@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 interface mapModals {
   filters: boolean;
   observationInfo: boolean;
+  lastOdours: boolean;
 }
 
 @Injectable({
@@ -13,6 +14,7 @@ export class MapModalsService {
   private _modalVisible = new BehaviorSubject<mapModals>({
     filters: false,
     observationInfo: false,
+    lastOdours: false,
   });
 
   set modalsVisible(value: mapModals) {
@@ -27,6 +29,7 @@ export class MapModalsService {
     this.modalsVisible = {
       filters: !this._modalVisible.value.filters,
       observationInfo: false,
+      lastOdours: false,
     };
   }
 
@@ -34,6 +37,15 @@ export class MapModalsService {
     this.modalsVisible = {
       filters: false,
       observationInfo: !this._modalVisible.value.observationInfo,
+      lastOdours: false,
+    };
+  }
+  
+  toggleLastOdoursModal(): void {
+    this.modalsVisible = {
+      filters: false,
+      observationInfo: false,
+      lastOdours: !this._modalVisible.value.lastOdours,
     };
   }
 }

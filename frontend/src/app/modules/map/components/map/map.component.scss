@@ -6,34 +6,6 @@
   justify-content: center;
 }
 
-#addObservation {
-  z-index: 3;
-  height: 70px;
-  width: 70px;
-  bottom: 112px;
-  position: absolute;
-  display: flex;
-  border-radius: 100px;
-  justify-content: center;
-  background-color: $violet;
-  cursor: pointer;
-  filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.1));
-  &::after,
-  &::before {
-    content: '';
-    border-radius: 5px;
-    position: absolute;
-    display: flex;
-    background-color: $black;
-    align-self: center;
-    width: 40%;
-    height: 5px;
-  }
-  &::after {
-    transform: rotate(90deg);
-  }
-}
-
 app-header {
   position: absolute;
   width: 100%;

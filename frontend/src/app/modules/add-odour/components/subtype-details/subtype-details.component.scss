@@ -45,7 +45,7 @@ fieldset {
       }
     }
 
-    &.type-agriculture-livestock .selected {
+    &.type-agriculture-livestock.selected {
       background-color: $green;
     }
     &.type-food-industries.selected {

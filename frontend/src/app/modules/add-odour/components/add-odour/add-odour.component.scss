@@ -33,6 +33,12 @@ form {
   flex-direction: column;
   text-align: center;
   flex: auto;
+  app-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
   section {
     display: flex;
     flex-direction: column;
@@ -66,5 +72,3 @@ form {
 .industrial {
   background-color: $orange;
 }
-
-

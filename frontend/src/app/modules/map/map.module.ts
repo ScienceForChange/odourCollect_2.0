@@ -14,6 +14,7 @@ import {
   NgbDatepickerModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { AccordionComponent } from './components/accordion/accordion-filter.component';
+import { LastOdoursComponent } from './components/last-odours/last-odours.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AccordionComponent } from './components/accordion/accordion-filter.comp
     ObservationFiltersComponent,
     OdourInformationComponent,
     AccordionComponent,
+    LastOdoursComponent,
   ],
   exports: [],
   imports: [

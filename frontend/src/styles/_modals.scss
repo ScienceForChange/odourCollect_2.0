@@ -1,26 +1,30 @@
-ngb-modal-window.default{
-    .modal-content{
-        box-shadow: 1px 1px 10.5px 1px rgba(0, 0, 0, 0.05);
-        border-radius: 25px;
-        border: none;
-        .modal-header{
-            border:none;
-            padding: 30px 25px 0;
-            
-        }
-        .modal-body{
-            padding:25px;
-            font-size: 20px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 20px;
-        }
-        .modal-footer{
-            border:none;
-            padding:0 25px 34px!important;
-        }
+:root {
+  .modal {
+    --bs-modal-margin: 2.5rem !important;
+  }
+}
+ngb-modal-window.default {
+  .modal-content {
+    box-shadow: 1px 1px 10.5px 1px rgba(0, 0, 0, 0.05);
+    border-radius: 25px;
+    border: none;
+    .modal-header {
+      border: none;
+      padding: 30px 25px 0;
     }
-}  
-ngb-modal-backdrop.default{
-    background-color: transparent;
+    .modal-body {
+      padding: 25px;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px;
+    }
+    .modal-footer {
+      border: none;
+      padding: 0 25px 34px !important;
+    }
+  }
+}
+ngb-modal-backdrop.default {
+  background-color: transparent;
 }

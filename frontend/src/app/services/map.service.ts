@@ -68,7 +68,6 @@ export class MapService {
     return this.mapL;
   }
 
-  // Wrap removeLayer in a function that returns a Promise
   private removeLayerAsync(layer: L.MarkerClusterGroup) {
     return new Promise<void>((resolve) => {
       this.mapL.removeLayer(layer);
@@ -135,7 +134,6 @@ export class MapService {
 
   //Añadir los markers al mapa
   private addAllMarkers(observations: Observation[]) {
-    //Algo sucede cuando cambio los mapas. Es como si no se borrara bien
     this.markers.forEach((marker) => {
       this.markerCluster.clearLayers();
       if (marker.isUserObservation) {
@@ -215,9 +213,9 @@ export class MapService {
 
   //para centrar el mapa
   public centerMap(lat: number, lon: number): void {
-    const offset = 0.001;
+    // const offset = 0.001; // => apply to lat
     if (this.mapL) {
-      this.mapL.flyTo(new L.LatLng(lat - offset, lon), this.mapL.getMaxZoom());
+      this.mapL.flyTo(new L.LatLng(lat, lon), this.mapL.getMaxZoom());
     }
   }
 
@@ -225,6 +223,16 @@ export class MapService {
   public deleteMarker(id: number) {
     const [marker] = this.markers.filter((marker) => marker.id === id);
     marker.remove();
+
+    this.markerCluster.removeLayer(marker);
+    this.userMarkerCluster.removeLayer(marker);
+
+    this.mapL.eachLayer((layer) => {
+      if (layer instanceof L.MarkerClusterGroup) {
+        layer.refreshClusters();
+      }
+    });
+    
   }
 
   //Consigo las observaciones y me suscribo a getObservations

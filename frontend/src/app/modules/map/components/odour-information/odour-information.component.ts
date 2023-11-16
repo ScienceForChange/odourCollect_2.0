@@ -59,7 +59,6 @@ export class OdourInformationComponent implements OnInit, OnDestroy {
   }
 
   public send() {
-    //Llamamos al modal de confirmación
     const dialog = this.modalService.open(DialogModalComponent, {
       windowClass: 'default',
       backdropClass: 'default',
@@ -71,7 +70,6 @@ export class OdourInformationComponent implements OnInit, OnDestroy {
       acceptButtonText: 'Eliminar',
     };
     dialog.result.catch(
-      //si el modal se cierra clicando en "Acpetar" llamamos a delete()
       (reason) => {
         if (reason === true) this.delete();
       },

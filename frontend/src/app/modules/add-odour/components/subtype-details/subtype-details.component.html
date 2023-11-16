@@ -17,19 +17,21 @@
         *ngFor="let subtype of subtypes"
         for="subtype"
         type="button"
-        [class.selected]="subtypeDetails.get('subtype')?.value === subtype.id"
+        [class.selected]="
+          subtypeDetails.get('subtype')?.value === subtype.id
+        "
         [ngClass]="'type-' + selectedType.slug"
         value="{{ subtype.name }}"
         (click)="subtypeDetails.get('subtype')?.setValue(subtype.id)"
       />
     </div>
     <app-form-error-list
-    *ngIf="
-      subtypeDetails.get('subtype')?.touched &&
-      subtypeDetails.get('subtype')?.errors
-    "
-    [errorList]="subtypeDetails.get('subtype')?.errors"
-  />
+      *ngIf="
+        subtypeDetails.get('subtype')?.touched &&
+        subtypeDetails.get('subtype')?.errors
+      "
+      [errorList]="subtypeDetails.get('subtype')?.errors"
+    />
     <div class="d-flex justify-cotent-center align-items-end gap-2 mt-5">
       <icon-chart />
       <label class="text-start label-l" for="intensity"

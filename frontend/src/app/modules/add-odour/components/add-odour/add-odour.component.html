@@ -7,14 +7,16 @@
       </button>
     </ng-template>
   </header>
-  <form [formGroup]="addOdourForm" class="justify-content-start align-items-center pb-5">
-    <section class="mb-4">
+  <form
+    [formGroup]="addOdourForm"
+    class="justify-content-start align-items-center pb-5"
+  >
+    <section *ngIf="dataLoaded; else loading" class="mb-4">
       <app-type-details
         *ngIf="activeStep === 0"
         [typeDetails]="currentGroup"
         [types]="types"
-      ></app-type-details>
-
+      />
       <app-subtype-details
         *ngIf="activeStep === 1"
         [subtypeDetails]="currentGroup"
@@ -22,15 +24,30 @@
         [selectedType]="selectedType"
         [hedonicTone]="hedonicTone"
         [intensity]="intensity"
-      ></app-subtype-details>
-
+      />
       <app-comment-details
         *ngIf="activeStep === 2"
         [commentDetails]="currentGroup"
         [selectedType]="selectedType"
-      ></app-comment-details>
+      />
     </section>
-    <button class="btn btn-primary btn-lg" *ngIf="activeStep === 1" (click)="next()">Siguiente</button>
-    <button class="btn btn-primary btn-lg" *ngIf="activeStep === 2" (click)="addNewOdor()" type="submit">Añadir olor al mapa</button>
+    <ng-template #loading>
+      <app-spinner />
+    </ng-template>
+    <button
+      class="btn btn-primary btn-lg"
+      *ngIf="dataLoaded && activeStep === 1"
+      (click)="next()"
+    >
+      Siguiente
+    </button>
+    <button
+      class="btn btn-primary btn-lg"
+      *ngIf="activeStep === 2"
+      (click)="addNewOdor()"
+      type="submit"
+    >
+      Añadir olor al mapa
+    </button>
   </form>
 </article>

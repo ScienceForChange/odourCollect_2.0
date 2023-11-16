@@ -5,7 +5,7 @@ section {
   border-radius: 40px 40px 0 0;
   bottom: -100dvh;
   display: none;
-  padding: 30px 20px 34px;
+  padding: 30px 20px 0px;
   position: absolute;
   width: 100%;
   z-index: 10;
@@ -73,15 +73,12 @@ section {
       flex: auto;
     }
     form {
-      margin-top: 10px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       gap: 15px;
-
-      > div:last-child {
-        margin-top: 50px;
-      }
+      justify-content: space-between;
+      margin-top: 10px;
+      padding-bottom: 20px;
 
       .btn-secondary {
         background-color: white;
@@ -157,13 +154,8 @@ section {
   0% {
     bottom: -100dvh;
   }
-  // 70% {
-  //   bottom: 0;
-  //   // height: calc(100dvh - 60px);
-  // }
   100% {
     bottom: 0;
-    // height: calc(100dvh - 80px);
   }
 }
 
@@ -172,14 +164,8 @@ section {
     bottom: 0;
     display: block;
   }
-  // 70% {
-  //   display: block;
-  //   bottom: 0;
-  //   // height: calc(100dvh - 60px);
-  // }
   100% {
     display: none;
     bottom: -100dvh;
-    // height: calc(100dvh - 80px);
   }
 }

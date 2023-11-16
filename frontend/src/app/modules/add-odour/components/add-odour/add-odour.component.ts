@@ -6,7 +6,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 
@@ -34,6 +34,7 @@ import { AlertService } from '../../../../services/alert.service';
 })
 export class AddOdourComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
+  public dataLoaded: boolean = false;
   public activeStep: number = 0;
   public selectedType!: OdourTypeData;
   public types: OdourTypeData[] = [];
@@ -44,8 +45,9 @@ export class AddOdourComponent implements OnInit, OnDestroy {
     lat: '',
     lng: '',
   };
-
+  private params!: any;
   private subscriptions = new Subscription();
+  public addOdourForm!: FormGroup;
 
   private subtypeValidator(control: AbstractControl): ValidationErrors | null {
     if (control.value === 0) {
@@ -62,12 +64,17 @@ export class AddOdourComponent implements OnInit, OnDestroy {
     private mapService: MapService,
     private userService: UserService,
     private alertService: AlertService,
+    private route: ActivatedRoute,
   ) {
     this.footerService.visible = false;
-    this.goToStep1();
+    const queryParams = this.route.snapshot.queryParams;
+    this.params = queryParams;
+    if (this.params.type && this.params.subtype) {
+      this.activeStep = 1;
+    }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.subscriptions.add(
       this.odourService.observationRelatedData().subscribe(({ data }) => {
         const filterObservationsSlugs = [
@@ -77,16 +84,71 @@ export class AddOdourComponent implements OnInit, OnDestroy {
           'food-industries',
           'industrial',
         ];
+
         const filteredObservations = data.OdourType.filter((observation) =>
           filterObservationsSlugs.some((slug) => observation.slug === slug),
         );
+
         this.types = filteredObservations;
         this.hedonicTone = data.OdourHedonicTone;
         this.intensity = data.OdourIntensity;
+
+        if (this.params.type && this.params.subtype) {
+          this.subtypes = filteredObservations.filter(
+            (odorType) => odorType.id === Number(this.params.type),
+          )[0].relationships.odourSubTypes;
+        }
+        this.selectedType = this.types.filter(
+          (odorType) =>
+            odorType.id === this.addOdourForm.value.typeDetails.type,
+        )[0];
+        this.dataLoaded = true;
       }),
     );
 
     this.getLocation();
+
+    this.addOdourForm = new FormGroup({
+      typeDetails: new FormGroup({
+        type: new FormControl(0, [Validators.required, Validators.min(1)]),
+      }),
+      subtypeDetails: new FormGroup({
+        subtype: new FormControl(0, [
+          Validators.required,
+          this.subtypeValidator,
+        ]),
+        intensity: new FormControl(0, [Validators.required]),
+        hedonic_tone: new FormControl(0, [Validators.required]),
+      }),
+      commentDetails: new FormGroup({
+        know_about_source: new FormControl(''),
+        origin: new FormControl(null, [
+          Validators.minLength(2),
+          Validators.maxLength(255),
+        ]),
+        description: new FormControl(null, [
+          Validators.minLength(5),
+          Validators.maxLength(1500),
+        ]),
+      }),
+    });
+
+    if (this.params.type && this.params.subtype) {
+      this.addOdourForm.patchValue({
+        typeDetails: {
+          type: Number(this.params.type),
+        },
+        subtypeDetails: {
+          subtype: Number(this.params.subtype),
+        },
+      });
+    }
+
+    this.subscriptions.add(
+      this.addOdourForm.valueChanges.subscribe((value) =>
+        this.goToStep1(value),
+      ),
+    );
   }
 
   private getLocation() {
@@ -100,27 +162,20 @@ export class AddOdourComponent implements OnInit, OnDestroy {
     }
   }
 
-  private goToStep1(): void {
-    this.subscriptions.add(
-      this.addOdourForm.valueChanges.subscribe((value) => {
-        const doneStep1 = value.typeDetails.type > 0 && this.activeStep === 0;
+  private goToStep1(value: any): void {
+    const doneStep1 = value.typeDetails.type > 0 && this.activeStep === 0;
+    if (doneStep1) {
+      const subtypeFilteredByType = this.types.filter(
+        (odorType) => odorType.id === this.addOdourForm.value.typeDetails.type,
+      )[0].relationships.odourSubTypes;
 
-        if (doneStep1) {
-          const subtypeFilteredByType = this.types.filter(
-            (odorType) =>
-              odorType.id === this.addOdourForm.value.typeDetails.type,
-          )[0].relationships.odourSubTypes;
+      this.selectedType = this.types.filter(
+        (odorType) => odorType.id === this.addOdourForm.value.typeDetails.type,
+      )[0];
 
-          this.selectedType = this.types.filter(
-            (odorType) =>
-              odorType.id === this.addOdourForm.value.typeDetails.type,
-          )[0];
-
-          this.activeStep = 1;
-          this.subtypes = subtypeFilteredByType;
-        }
-      }),
-    );
+      this.activeStep = 1;
+      this.subtypes = subtypeFilteredByType;
+    }
   }
 
   public goStepBack(): void {
@@ -147,28 +202,6 @@ export class AddOdourComponent implements OnInit, OnDestroy {
 
     this.currentGroup.markAllAsTouched();
   }
-
-  public addOdourForm: FormGroup = new FormGroup({
-    typeDetails: new FormGroup({
-      type: new FormControl(0, [Validators.required, Validators.min(1)]),
-    }),
-    subtypeDetails: new FormGroup({
-      subtype: new FormControl(0, [Validators.required, this.subtypeValidator]),
-      intensity: new FormControl(0, [Validators.required]),
-      hedonic_tone: new FormControl(0, [Validators.required]),
-    }),
-    commentDetails: new FormGroup({
-      know_about_source: new FormControl(''),
-      origin: new FormControl(null, [
-        Validators.minLength(2),
-        Validators.maxLength(255),
-      ]),
-      description: new FormControl(null, [
-        Validators.minLength(5),
-        Validators.maxLength(1500),
-      ]),
-    }),
-  });
 
   public get currentGroup(): FormGroup {
     return this.getGroupAt(this.activeStep);

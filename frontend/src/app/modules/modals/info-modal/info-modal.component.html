@@ -22,7 +22,7 @@
     type="button"
     class="btn btn-primary"
     [class]="config.acceptButtonClass"
-    (click)="modal.dismiss(true)"
+    (click)="actionToDo()"
   >
     {{ config.acceptButtonText || 'Aceptar' }}
   </button>
