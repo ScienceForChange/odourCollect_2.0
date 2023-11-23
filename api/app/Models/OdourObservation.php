@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
@@ -69,6 +70,20 @@ class OdourObservation extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the Type of the odour.
+     */
+    public function odourType(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            OdourType::class,
+            OdourSubType::class,
+            'id',
+            'id',
+            'odour_sub_type_id',
+            'odour_type_id');
     }
 
     public function scopeCreatedBetween(Builder $query, string $start_date, string $end_date): void
