@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 import { RecoverCreatePasswordService } from './recover-create-password.service';
 
@@ -6,7 +7,9 @@ describe('RecoverCreatePasswordService', () => {
   let service: RecoverCreatePasswordService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientModule]
+    });
     service = TestBed.inject(RecoverCreatePasswordService);
   });
 

@@ -1,16 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OnboardingComponent } from './home.component';
+import { HomeComponent } from './home.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
 
 describe('OnboardingComponent', () => {
-  let component: OnboardingComponent;
-  let fixture: ComponentFixture<OnboardingComponent>;
+  let component: HomeComponent;
+  let fixture: ComponentFixture<HomeComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [OnboardingComponent],
+      imports: [RouterTestingModule, SharedComponentsModule],
+      declarations: [HomeComponent],
     });
-    fixture = TestBed.createComponent(OnboardingComponent);
+    fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

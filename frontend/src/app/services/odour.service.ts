@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, tap, filter } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
   OdourRelatedDataRes,
@@ -15,15 +15,15 @@ import {
 @Injectable({
   providedIn: 'root',
 })
+
+
 export class OdourService {
   private _observations: BehaviorSubject<Observation[]> = new BehaviorSubject<
     Observation[]
   >([]);
   public observation$ = new Subject<Observation>();
 
-
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   public get observations(): Observable<Observation[]> {
     return this._observations.asObservable();
@@ -69,6 +69,8 @@ export class OdourService {
       .pipe(
         tap(({ data }) => {
           this.observation$.next(data[0]);
+          const currObservations = this._observations.getValue();
+          this._observations.next([...currObservations, data[0]]);
         }),
       );
   }
@@ -85,7 +87,7 @@ export class OdourService {
   }
 
   //Conseguir los datos de un olor en particular
-  public getOdourInfo(id: string): Observable<ObservationRes> {
+  public getOdourInfo(id: number): Observable<ObservationRes> {
     return this.http.get<ObservationRes>(
       `${environment.BACKEND_BASE_URL}api/observations/${id}`,
       {
@@ -114,7 +116,7 @@ export class OdourService {
 
     const url = baseUrl + filters;
 
-    return this.http.get<ObservationRes>(url)
+    return this.http.get<ObservationRes>(url);
   }
 
   //Conseguir un olor
@@ -126,15 +128,24 @@ export class OdourService {
 
   //Eliminar olor
   public deleteObservation(observationId: number): Observable<any> {
-    return this.http.delete(
-      `${environment.BACKEND_BASE_URL}api/observations/${observationId}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
+    return this.http
+      .delete(
+        `${environment.BACKEND_BASE_URL}api/observations/${observationId}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          withCredentials: true,
         },
-        withCredentials: true,
-      },
-    );
+      )
+      .pipe(
+        tap(() => {
+          const observations = this._observations
+            .getValue()
+            .filter((observation) => observation.id !== observationId);
+          this._observations.next(observations);
+        }),
+      );
   }
 }

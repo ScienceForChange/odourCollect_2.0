@@ -16,7 +16,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class PublicProfileOffcanvaComponent {
   
-  @Input()  user!: User
+  @Input() user!: User;
 
   constructor(
     public offcanvas: NgbActiveOffcanvas,

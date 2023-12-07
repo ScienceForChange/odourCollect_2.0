@@ -1,16 +1,122 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientModule, HttpXsrfTokenExtractor } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, of } from "rxjs";
+import { TestScheduler } from "rxjs/testing";
 
 import { UserService } from './user.service';
+import { User, createDummyUser } from '../models/user';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
+jest.mock('./auth.service', () => {
+  return {
+      AuthService: jest.fn().mockImplementation((http, router, tokenExtractor) => ({
+      // Puedes configurar las propiedades o métodos específicos que necesites en el mock
+      // Aquí solo se proporciona un ejemplo básico
+      _user: jest.fn(),
+      actualizarPropiedad: jest.fn(),
+    })),
+  };
+});
 describe('UserService', () => {
   let service: UserService;
+  let testScheduler: TestScheduler;
+  let authService: jest.Mocked<AuthService>;
+  let httpMock: jest.Mocked<HttpClient>;
+  let routerMock = {} as Router;
+  let tokenExtractorMock = {} as HttpXsrfTokenExtractor;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(UserService);
+    
+    httpMock = {
+      post: jest.fn(),
+      get:  jest.fn(),
+      delete:  jest.fn()
+    } as unknown as jest.Mocked<HttpClient>;
+
+    authService = {
+      isVerified: true,
+      user:  new BehaviorSubject<User | undefined>(createDummyUser()),
+    } as jest.Mocked<AuthService>;
+
+    service = new UserService(httpMock, authService);
+
+    testScheduler = new TestScheduler((actual, expected) => {
+			expect(actual).toEqual(expected);
+		});
+
+  });
+  
+  it('should be created and user is logout', () => {
+
+    authService.user.next(undefined)
+
+    expect(service.user).toBeUndefined();
+    expect(service).toBeTruthy();
+  });
+  
+  it('should be created and user is login', () => {
+
+    expect(service.user).toBeTruthy();
+    expect(service).toBeTruthy();
+  });
+  
+  it('Debería comprobar que el usuario esta verificado', () => {
+    
+    const obs$ = service.checkVerifyUser();
+
+    testScheduler.run(({ expectObservable }) => {
+      const expectedMarble = "(---a--|)"; // Diagrama de mármol representando la secuencia de emisión de 'a' seguido por completado '|'
+      const expectedValues = { a: true }; // valor emitido 'a' con el valor de 'response'
+      
+      expectObservable(obs$).toBe(expectedMarble, expectedValues);
+    });
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('Debería comprobar que el usuario no esta verificado', () => {
+    
+    authService.isVerified = false;
+    
+    expect(authService.isVerified).toBeFalsy();
+    const response = { status: 200, value: [] };
+    httpMock.get.mockReturnValueOnce(of(response));
+    
+    const obs$ = service.checkVerifyUser();
+
+    testScheduler.run(({ expectObservable }) => {
+
+      const expectedMarble = "(---a--|)"; // Diagrama de mármol representando la secuencia de emisión de 'a' seguido por completado '|'
+      const expectedValues = { a: true }; // valor emitido 'a' con el valor de 'response'
+      
+      expectObservable(obs$).toBe(expectedMarble, expectedValues);
+
+    });
+    
+    expect(authService.isVerified).toBeTruthy();
+
+  });
+
+  it('Debería borrar el usuario', () => {
+    
+    const response = { status: 200, value: [] };
+    httpMock.delete.mockReturnValueOnce(of(response));
+    
+    const obs$ = service.delete();
+
+    expect(authService.user.value).toBeTruthy();
+
+    testScheduler.run(({ expectObservable }) => {
+
+      const expectedMarble = "(---a--|)"; // Diagrama de mármol representando la secuencia de emisión de 'a' seguido por completado '|'
+      const expectedValues = { a: true }; // valor emitido 'a' con el valor de 'response'
+      
+      
+      expectObservable(obs$).toBe(expectedMarble, expectedValues);
+
+    });
+    
+    expect(authService.user).toBeUndefined();
+
   });
 });

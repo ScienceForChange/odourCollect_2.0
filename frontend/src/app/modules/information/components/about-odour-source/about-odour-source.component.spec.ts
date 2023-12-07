@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap'; 
 
 import { AboutOdourSourceComponent } from './about-odour-source.component';
+import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
 
 describe('AboutOdourSourceComponent', () => {
   let component: AboutOdourSourceComponent;
@@ -8,6 +10,8 @@ describe('AboutOdourSourceComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      providers: [NgbActiveOffcanvas],
+      imports: [SharedComponentsModule],
       declarations: [AboutOdourSourceComponent]
     });
     fixture = TestBed.createComponent(AboutOdourSourceComponent);

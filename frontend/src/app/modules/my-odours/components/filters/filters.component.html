@@ -1,7 +1,11 @@
-<app-bottom-modal [isOpen]="isOpen" (toggleFilters)="toggleFilters.emit()">
+<section [ngClass]="[isOpen.value ? 'open-filter' : 'closed-filter']">
+<div>
   <header>
-    <p class="label-l">Filtros</p>
-    <p class="label-m color-gray-dark">Elige los filtros de tu interés</p>
+    <div>
+      <p class="label-l">Filtros</p>
+      <p class="label-m color-gray-dark">Elige los filtros de tu interés</p>
+    </div>
+    <button type="button" (click)="toggleFilter()" class="close"></button>
   </header>
   <main class="modal-body">
     <form *ngIf="filtersForm" [formGroup]="filtersForm">
@@ -81,4 +85,6 @@
       </ng-template>
     </form>
   </main>
-</app-bottom-modal>
+</div>
+
+</section>

@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import {
   OdourHedonicTone,
   OdourIntensity,
@@ -21,7 +21,7 @@ import { OdourService } from 'src/app/services/odour.service';
   styleUrls: ['./filters.component.scss'],
 })
 export class FiltersComponent implements OnInit, OnDestroy {
-  @Input() isOpen!: boolean;
+  @Input() isOpen!: BehaviorSubject<boolean>;
   @Output() toggleFilters = new EventEmitter<void>();
   @Output() filterObservations = new EventEmitter();
   @Output() resetFilters = new EventEmitter();
@@ -98,6 +98,10 @@ export class FiltersComponent implements OnInit, OnDestroy {
         this.filtersFormInitialValues = this.filtersForm.value;
       }),
     );
+  }
+
+  public toggleFilter(): void {
+    this.isOpen.next(!this.isOpen.value);
   }
 
   public addTypeToForm(typeId: number): void {

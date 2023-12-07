@@ -1,16 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 
-import { SigninComponent } from './signin.component';
+import { SignupComponent } from './signup.component';
+import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('SigninComponent', () => {
-  let component: SigninComponent;
-  let fixture: ComponentFixture<SigninComponent>;
+  let component: SignupComponent;
+  let fixture: ComponentFixture<SignupComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SigninComponent]
+      imports: [HttpClientModule, FormsModule, ReactiveFormsModule, SharedComponentsModule],
+      declarations: [SignupComponent]
     });
-    fixture = TestBed.createComponent(SigninComponent);
+    fixture = TestBed.createComponent(SignupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

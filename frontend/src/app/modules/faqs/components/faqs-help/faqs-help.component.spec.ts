@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FaqsHelpComponent } from './faqs-help.component';
+import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
 
 describe('FaqsHelpComponent', () => {
   let component: FaqsHelpComponent;
@@ -8,6 +9,7 @@ describe('FaqsHelpComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [SharedComponentsModule],
       declarations: [FaqsHelpComponent]
     });
     fixture = TestBed.createComponent(FaqsHelpComponent);

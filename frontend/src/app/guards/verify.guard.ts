@@ -1,10 +1,10 @@
 import { inject } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Observable, tap } from 'rxjs';
-import { Router, UrlTree } from '@angular/router';
+import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
-export const VerifyGuardActivate = (): Observable<Boolean> => {
+export const VerifyGuardActivate: CanActivateFn = (route, state): Observable<boolean> => {
 
   const userService = inject(UserService);
   const router = inject(Router);

@@ -8,14 +8,20 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class DialogModalComponent {
   
-  @Input() config!: {
-    text:            string | null,
+  @Input() config: {
+    text:               string | null,
     acceptButtonText:   string | null,
-    acceptButtonClass:  string | null,
+    acceptButtonClass:  string,
     cancelButtonText:   string | null,
-    cancelButtonClass:  string | null,
-    };
-
+    cancelButtonClass:  string,
+  } = {
+    text:               null,
+    acceptButtonText:   null,
+    acceptButtonClass:  '',
+    cancelButtonText:   null,
+    cancelButtonClass:  '',
+  };
+    
   constructor(
     public modal: NgbActiveModal
     ) {} 

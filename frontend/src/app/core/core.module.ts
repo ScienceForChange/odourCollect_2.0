@@ -23,7 +23,8 @@ import { InformationModule } from '../modules/information/information.module';
 import { ModalsModule } from '../modules/modals/modals.module';
 import { OffcanvasModule } from '../modules/offcanvas/offcanvas.module';
 import { ErrorModule } from '../modules/error/error.module';
-
+import { NgxMapLibreGLModule } from '@maplibre/ngx-maplibre-gl';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [FooterComponent, MainComponent],
@@ -33,22 +34,24 @@ import { ErrorModule } from '../modules/error/error.module';
     CommonModule,
     ContactModule,
     CoreRoutingModule,
+    ErrorModule,
     FaqsModule,
     HeaderModule,
+    InformationModule,
     LoginModule,
     MapModule,
     ModalsModule,
-    OffcanvasModule,
     MyOdoursModule,
+    NgxMapLibreGLModule,
+    OffcanvasModule,
     OnBoardingModule,
     ProfileModule,
     RecoverCreatePasswordModule,
     RecoverPasswordModule,
+    RouterModule,
     SharedComponentsModule,
     SignupModule,
     VerifyEmailModule,
-    InformationModule,
-    ErrorModule
   ],
 })
 export class CoreModule {}

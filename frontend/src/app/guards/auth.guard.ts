@@ -2,7 +2,6 @@ import { CanActivateFn, CanDeactivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
 import { HttpXsrfTokenExtractor } from '@angular/common/http';
-import { UserService } from '../services/user.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RegisterModalComponent } from '../modules/modals/register-modal/register-modal.component';
 

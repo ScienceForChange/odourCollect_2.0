@@ -3,20 +3,20 @@
 section {
   background: white;
   border-radius: 40px 40px 0 0;
-  bottom: -100dvh;
+  bottom: -500px;
   margin: 0 auto;
   max-width: 425px;
   padding: 30px 20px 34px;
-  position: absolute;
   width: 100%;
   z-index: 10;
-  display: none;
   &.open-filter {
-    display: block;
-    animation: animation-fade-in 400ms ease-in-out forwards;
+    bottom: 0;
+    position: fixed;
+    transition: bottom 400ms ease-in-out;
   }
   &.closed-filter {
-    animation: animation-fade-out 400ms ease-in-out forwards;
+    position: fixed;
+    transition: bottom 400ms ease-in-out;
   }
 
   > div {

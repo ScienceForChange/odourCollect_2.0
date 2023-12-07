@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 import { OdourInformationComponent } from './odour-information.component';
 
@@ -8,6 +9,7 @@ describe('OdourInformationComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientModule],
       declarations: [OdourInformationComponent]
     });
     fixture = TestBed.createComponent(OdourInformationComponent);

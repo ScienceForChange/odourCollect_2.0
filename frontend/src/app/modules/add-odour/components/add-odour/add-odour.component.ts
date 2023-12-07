@@ -246,7 +246,6 @@ export class AddOdourComponent implements OnInit, OnDestroy {
         };
         this.userService.addObservation(observation.data[0]);
         this.router.navigate(['/map']);
-        this.mapService.addOneMarker(observation.data[0]);
         this.mapService.centerMap(
           Number(observation.data[0].latitude),
           Number(observation.data[0].longitude),

@@ -14,14 +14,12 @@ import { FormErrorListComponent } from './form-error-list/form-error-list.compon
 import { OdourTypeIconComponent } from './odour-type-icon/odour-type-icon.component';
 import { SingleRangeComponent } from './form/single-range/single-range.component';
 import { MultiRangeComponent } from './form/multi-range/multi-range.component';
-import { BottomModalComponent } from './bottom-modal/bottom-modal.component';
 import { DateRangeComponent } from './form/date-range/date-range.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     BackBtnComponent,
-    BottomModalComponent,
     SpinnerComponent,
     AccordionComponent,
     AlertComponent,
@@ -34,7 +32,6 @@ import { FormsModule } from '@angular/forms';
   exports: [
     IconModule,
     BackBtnComponent,
-    BottomModalComponent,
     SpinnerComponent,
     AccordionComponent,
     AlertComponent,

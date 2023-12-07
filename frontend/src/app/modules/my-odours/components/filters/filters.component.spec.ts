@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 import { FiltersComponent } from './filters.component';
+import { BottomModalComponent } from 'src/app/shared/components/bottom-modal/bottom-modal.component';
 
 describe('FiltersComponent', () => {
   let component: FiltersComponent;
@@ -8,7 +10,8 @@ describe('FiltersComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FiltersComponent]
+      imports: [HttpClientModule],
+      declarations: [FiltersComponent, BottomModalComponent]
     });
     fixture = TestBed.createComponent(FiltersComponent);
     component = fixture.componentInstance;

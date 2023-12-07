@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AccordionComponent } from './accordion-filter.component';
+import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 
 describe('AccordionComponent', () => {
   let component: AccordionComponent;
@@ -8,6 +9,7 @@ describe('AccordionComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports:[NgbAccordionModule],
       declarations: [AccordionComponent],
     });
     fixture = TestBed.createComponent(AccordionComponent);

@@ -1,5 +1,9 @@
-import { OdourHedonicTone, OdourIntensity, OdourSubType } from "./odour-related-data";
-import { User } from "./user";
+import {
+  OdourHedonicTone,
+  OdourIntensity,
+  OdourSubType,
+} from './odour-related-data';
+import { User } from './user';
 
 export interface ObservationRes {
   status: string;
@@ -23,6 +27,28 @@ export interface ObservationRelationships {
   odourIntensity: OdourIntensity;
   odourHedonicTone: OdourHedonicTone;
   user?: User;
+}
+
+export interface Geometry {
+  type: string;
+  coordinates: number[];
+}
+
+interface ObservationSpiderfyGeoJson extends Observation {
+  iconOffset: [number,number];
+}
+
+export interface Feature {
+  id: number;
+  observationType: string;
+  type: string;
+  properties: ObservationSpiderfyGeoJson | Observation;
+  geometry: Geometry;
+}
+
+export interface ObservationGeoJSON {
+  type: string;
+  features: Feature[];
 }
 
 export enum Name {
@@ -232,7 +258,6 @@ export enum Slug {
 }
 
 //TODO eliminar estas interfaces pero hay que esperar a que el back las haga
-
 
 export interface UserRelationships {
   profile: Profile;

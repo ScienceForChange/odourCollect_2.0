@@ -3,19 +3,21 @@
 section {
   background: white;
   border-radius: 40px 40px 0 0;
-  bottom: -100dvh;
-  display: none;
+  bottom: -830px;
   padding: 30px 20px 0px;
-  position: absolute;
   width: 100%;
+  position: fixed;
   z-index: 10;
   &.open-filter {
-    display: block;
-    animation: animation-fade-in 800ms ease-in-out forwards;
+    bottom: 0;
+    position: fixed;
+    transition: bottom 400ms ease-in-out;
   }
   &.closed-filter {
-    animation: animation-fade-out 800ms ease-in-out forwards;
+    position: fixed;
+    transition: bottom 400ms ease-in-out;
   }
+
   .modal-header {
     align-items: flex-start;
     background-color: white;
@@ -147,25 +149,5 @@ section {
         color: $black;
       }
     }
-  }
-}
-
-@keyframes animation-fade-in {
-  0% {
-    bottom: -100dvh;
-  }
-  100% {
-    bottom: 0;
-  }
-}
-
-@keyframes animation-fade-out {
-  0% {
-    bottom: 0;
-    display: block;
-  }
-  100% {
-    display: none;
-    bottom: -100dvh;
   }
 }

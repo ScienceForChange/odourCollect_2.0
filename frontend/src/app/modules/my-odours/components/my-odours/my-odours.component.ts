@@ -7,7 +7,7 @@ import { FooterService } from 'src/app/services/footer.service';
 import { UserService } from 'src/app/services/user.service';
 import { OdourService } from '../../../../services/odour.service';
 import { AlertService } from 'src/app/services/alert.service';
-import { MapService } from '../../../../services/map.service';
+import { BehaviorSubject } from 'rxjs';
 
 enum SortBy {
   CREATED_DESC = 'createdAt_desc',
@@ -24,7 +24,7 @@ export class MyOdoursComponent implements OnInit {
   private observationsRef: Observation[] | undefined = [];
   public observations: Observation[] | undefined = [];
   public sorting: SortBy = SortBy.CREATED_DESC;
-  public isOpenFilters: boolean = false;
+  public isOpenFilters$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
     private footerService: FooterService,
@@ -32,7 +32,6 @@ export class MyOdoursComponent implements OnInit {
     private modalService: NgbModal,
     private odourService: OdourService,
     private alertService: AlertService,
-    private mapService: MapService,
   ) {
     this.footerService.visible = true;
   }
@@ -44,7 +43,7 @@ export class MyOdoursComponent implements OnInit {
   }
 
   public toggleFilters = (): void => {
-    this.isOpenFilters = !this.isOpenFilters;
+    this.isOpenFilters$.next(!this.isOpenFilters$.value);
   };
 
   public resetFilters(): void {
@@ -80,7 +79,6 @@ export class MyOdoursComponent implements OnInit {
         );
         this.observations = observationsFiltered;
         this.observationsRef = observationsFiltered;
-        this.mapService.deleteMarker(id);
         this.alertService.success('Observacion eliminada', {
           autoClose: true,
           keepAfterRouteChange: true,

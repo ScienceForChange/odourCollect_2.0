@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { DialogModalComponent } from './dialog-modal.component';
 
 describe('DialogModalComponent', () => {
@@ -8,6 +10,7 @@ describe('DialogModalComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      providers: [NgbActiveModal],
       declarations: [DialogModalComponent]
     });
     fixture = TestBed.createComponent(DialogModalComponent);

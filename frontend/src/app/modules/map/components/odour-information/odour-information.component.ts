@@ -69,11 +69,9 @@ export class OdourInformationComponent implements OnInit, OnDestroy {
       text: '¿Seguro que quieres eliminar tu observación?',
       acceptButtonText: 'Eliminar',
     };
-    dialog.result.catch(
-      (reason) => {
-        if (reason === true) this.delete();
-      },
-    );
+    dialog.result.catch((reason) => {
+      if (reason === true) this.delete();
+    });
   }
 
   private delete() {
@@ -82,7 +80,8 @@ export class OdourInformationComponent implements OnInit, OnDestroy {
         next: () => {
           this.mapModalsService.toggleObservationModal();
           this.userService.removeObservation(this.observation.id);
-          this.mapService.deleteMarker(this.observation.id);
+          // this.mapService.deleteMarker(this.observation.id);
+          //DEBERIA ELIMINARLO DEL ARRAY DE OBSERVACIONES
           this.alertService.success('Observacion eliminada', {
             autoClose: true,
             keepAfterRouteChange: true,

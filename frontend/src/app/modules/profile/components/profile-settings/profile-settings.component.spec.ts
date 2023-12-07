@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 import { ProfileSettingsComponent } from './profile-settings.component';
+import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
 
 describe('ProfileSettingsComponent', () => {
   let component: ProfileSettingsComponent;
@@ -8,6 +10,7 @@ describe('ProfileSettingsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientModule, SharedComponentsModule],
       declarations: [ProfileSettingsComponent]
     });
     fixture = TestBed.createComponent(ProfileSettingsComponent);

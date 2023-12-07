@@ -4,7 +4,7 @@ import { CanActivateFn } from '@angular/router';
 import { VerifyGuardActivate } from './verify.guard';
 
 describe('verifyGuard', () => {
-  /*const executeGuard: CanActivateFn = (...guardParameters) =>
+  const executeGuard: CanActivateFn = (...guardParameters) =>
       TestBed.runInInjectionContext(() => VerifyGuardActivate(...guardParameters));
 
   beforeEach(() => {
@@ -13,5 +13,5 @@ describe('verifyGuard', () => {
 
   it('should be created', () => {
     expect(executeGuard).toBeTruthy();
-  });*/
+  });
 });

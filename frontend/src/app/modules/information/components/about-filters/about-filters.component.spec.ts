@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+
 import { AboutFiltersComponent } from './about-filters.component';
+import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
 
 describe('AboutFiltersComponent', () => {
   let component: AboutFiltersComponent;
@@ -8,6 +11,8 @@ describe('AboutFiltersComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      providers: [NgbActiveOffcanvas],
+      imports: [SharedComponentsModule],
       declarations: [AboutFiltersComponent]
     });
     fixture = TestBed.createComponent(AboutFiltersComponent);

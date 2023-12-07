@@ -46,7 +46,7 @@
   </ul>
 </section>
 <app-filters
-  [isOpen]="isOpenFilters"
+  [isOpen]="isOpenFilters$"
   (toggleFilters)="toggleFilters()"
   (filterObservations)="filterObservations($event)"
   (resetFilters)="resetFilters()"

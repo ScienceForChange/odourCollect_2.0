@@ -1,52 +1,46 @@
 import { Injectable } from '@angular/core';
-import * as L from 'leaflet';
-import 'leaflet.markercluster';
-
+import * as M from 'maplibre-gl';
 import { OdourService } from './odour.service';
-import { Observation } from '../models/observation';
+import {
+  Observation,
+  ObservationGeoJSON,
+} from '../models/observation';
+import { Map, LngLat, LngLatBounds, GeoJSONSource } from 'maplibre-gl';
+import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import { BehaviorSubject } from 'rxjs';
-//TODO ver como desuscribirse o no estar suscrito si no estás en mapa
-
-//Creo un customMarker para poder añadirle el ID directamente
-class CustomMarker extends L.Marker {
-  id: number;
-  isUserObservation: boolean;
-
-  constructor(
-    latlng: L.LatLngExpression,
-    options?: L.MarkerOptions,
-    id?: number,
-    isUserObservation?: boolean,
-  ) {
-    super(latlng, options);
-    this.id = id || 0;
-    this.isUserObservation = isUserObservation || false;
-  }
-}
-const clusterSettings = {
-  spiderLegPolylineOptions: { opacity: 0 },
-  spiderfyOnMaxZoom: true,
-  showCoverageOnHover: false,
-  zoomToBoundsOnClick: true,
-  animate: true,
-  animateAddingMarkers: false,
-  spiderfyDistanceMultiplier: 1,
-  chunkedLoading: true,
-};
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapService {
-  private mapL!: L.Map;
-  private markers: CustomMarker[] = [];
-  private markerCluster: L.MarkerClusterGroup =
-    L.markerClusterGroup(clusterSettings);
-  private userMarkerCluster: L.MarkerClusterGroup =
-    L.markerClusterGroup(clusterSettings);
-  private observations: Observation[] = [];
+  public map!: Map;
+  public mapSettings: {
+    zoom: [number];
+    mapStyle: string;
+    centerMapLocation: [number, number] | undefined;
+    minZoom: number;
+    maxZoom: number;
+    bounds: LngLatBounds;
+    clusterMaxZoom: number;
+  } = {
+    zoom: [3],
+    mapStyle:
+      'https://api.maptiler.com/maps/ed420585-427b-4078-8edf-7be43d23b4b7/style.json?key=XN4QD60Rt7rui111PDwQ',
+    centerMapLocation: [2.1487613, 41.3776589],
+    minZoom: 5,
+    maxZoom: 17,
+    bounds: new LngLatBounds(new LngLat(-90, 90), new LngLat(90, -90)),
+    clusterMaxZoom: 17,
+  };
+
+  public GeoJSON$: Subject<ObservationGeoJSON> =
+    new Subject<ObservationGeoJSON>();
+  public spiderfiedGeoJSON$: any = new BehaviorSubject<ObservationGeoJSON>({
+    type: 'FeatureCollection',
+    features: [],
+  });
 
   public showUserObservations: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
@@ -57,58 +51,230 @@ export class MapService {
     private router: Router,
   ) {
     this.getObservations();
+  }
+
+  public getMap(): M.Map {
+    return this.map;
+  }
+
+  //OnClick cada Marker
+  public onClickMarker(evt: M.MapMouseEvent): void {
+    const feature = this.map.queryRenderedFeatures(evt.point, {
+      layers: ['unclustered-point'],
+    });
+
+    const featureSpiderfy = this.map.queryRenderedFeatures(evt.point, {
+      layers: ['unclustered-point-spiderfy'],
+    });
+
+    const odourId = feature.length
+      ? Number(feature[0].id)
+      : Number(featureSpiderfy[0].id);
+
+    if (odourId) {
+      this.odourService.getOdourInfo(odourId).subscribe((res) => {
+        this.odourService.observation$.next(res.data[0]);
+      });
+    }
+  }
+
+  //Para centrar el mapa en mi ubicación
+  public centerMapToMyLatLng(): void {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const lngLat = new LngLat(
+          position.coords.longitude,
+          position.coords.latitude,
+        );
+        this.map.easeTo({ duration: 3 * 1000, center: lngLat, zoom: 10 });
+      });
+    }
+  }
+
+  //para centrar el mapa
+  public centerMap(lat: number, lon: number): void {
+    if (this.map) {
+      const lngLat = new LngLat(lon, lat);
+      this.map.easeTo({
+        duration: 3 * 1000,
+        center: lngLat,
+        zoom: this.mapSettings.maxZoom,
+      });
+    }
+  }
+
+  //Funcion de añadir pointer al mouse
+  public mouseEnterLeave(evt: M.MapMouseEvent): void {
+    if (evt.type === 'mouseenter') {
+      this.map.getCanvas().style.cursor = 'pointer';
+    } else {
+      this.map.getCanvas().style.cursor = '';
+    }
+  }
+
+  //Funcion para caluclar el offset en circulo de las observaciones
+  private calculateSpiderfiedPositionsCircle(count: number): number[][] {
+    const leavesSeparation = 80;
+    const leavesOffset = [0, 0];
+    const points = [];
+    const theta = (2 * Math.PI) / count;
+    let angle = theta;
+
+    for (let i = 0; i < count; i += 1) {
+      angle = theta * i;
+      const x = leavesSeparation * Math.cos(angle) + leavesOffset[0];
+      const y = leavesSeparation * Math.sin(angle) + leavesOffset[1];
+      points.push([x, y]);
+    }
+    return points;
+  }
+
+  //Funcion para caluclar el offset en espiral de las observaciones
+  private calculateSpiderfiedPositions(count: number): number[][] {
+    const legLengthStart = 25;
+    const legLengthFactor = 5;
+    const leavesSeparation = 40;
+    const leavesOffset = [0, 0];
+    const points = [];
+    let legLength = legLengthStart;
+    let angle = 0;
+
+    for (let i = 0; i < count; i += 1) {
+      angle += leavesSeparation / legLength + i * 0.0005;
+      const x = legLength * Math.cos(angle) + leavesOffset[0];
+      const y = legLength * Math.sin(angle) + leavesOffset[1];
+      points.push([x, y]);
+
+      legLength += (Math.PI * 2 * legLengthFactor) / angle;
+    }
+    return points;
+  }
+
+  //Funcion para crear el GEOJSON de los markers spiderfy
+  private spiderFyCluster(
+    source: M.GeoJSONSource,
+    clusterId: number,
+    lngLat: { lat: number; lng: number },
+  ): void {
+    //Consigo todos los markers que el cluster tiene
+    source.getClusterLeaves(
+      clusterId,
+      Infinity,
+      0,
+      (err, features) => {
+        if (err) {
+          return console.error(err);
+        }
+
+        if (features?.length) {
+          // Calculate the spiderfied positions
+          const spiderfiedPositions =
+            features.length > 10
+              ? this.calculateSpiderfiedPositions(features.length)
+              : this.calculateSpiderfiedPositionsCircle(features.length);
+
+          // Create a new GeoJson of features with the updated positions
+          const spiderfiedGeoJson = {
+            type: 'FeatureCollection',
+            features: features.map((feature, index) => ({
+              ...feature,
+              properties: {
+                ...feature.properties,
+                iconOffset: spiderfiedPositions[index],
+              },
+              geometry: {
+                ...feature.geometry,
+                coordinates: [lngLat.lng, lngLat.lat],
+              },
+              observationType: 'someObservationType',
+            })),
+          };
+          this.spiderfiedGeoJSON$.next(spiderfiedGeoJson);
+        }
+      },
+    );
+  }
+
+  // Cluster center and zoom in and spiderfy
+  public centerMapToCluster(evt: M.MapMouseEvent): void {
+    const features = this.map.queryRenderedFeatures(evt.point, {
+      layers: ['clusters'],
+    });
+
+    if (features.length) {
+      const source = this.map.getSource('observations') as GeoJSONSource;
+      const clusterId = features[0].properties['cluster_id'];
+      const lngLat = evt.lngLat;
+
+      source.getClusterExpansionZoom(clusterId, (err, zoom) => {
+        if (err || !zoom) {
+          return console.error(err);
+        }
+        if (zoom > 17) {
+          this.spiderFyCluster(source, clusterId, lngLat);
+        } else {
+          this.map.easeTo({
+            center: lngLat,
+            zoom: zoom,
+          });
+        }
+      });
+    }
+  }
+
+  //Create GeoJson
+  private createGeoJSON(observations: Observation[]): void {
+    const userID = this.userService.user?.id;
+
     this.showUserObservations.subscribe((show) => {
-      if (this.mapL) {
-        this.showUserObservationMarkers(show);
+      let obsGeoJson = observations;
+      if (show && userID) {
+        obsGeoJson = observations.filter(
+          (observation) => observation.relationships.user?.id === userID,
+        );
+      }
+
+      const geojsonData = {
+        type: 'FeatureCollection',
+        features: obsGeoJson.map((observation) => ({
+          id: observation.id,
+          observationType:
+            observation.relationships.odourSubType.relationships.odourType.slug,
+          type: 'Feature',
+          properties: {
+            ...observation,
+            type: observation.relationships.odourSubType.relationships.odourType
+              .slug,
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: [
+              Number(observation.longitude),
+              Number(observation.latitude),
+            ],
+          },
+        })),
+      };
+
+      this.GeoJSON$.next(geojsonData);
+    });
+  }
+
+  //Consigo las observaciones y me suscribo a getObservations
+  private getObservations(): void {
+    this.odourService.getObservations().subscribe((observations) => {
+      if (observations.length) {
+        this.createGeoJSON(observations);
+        // this.addAllMarkers();
       }
     });
   }
 
-  public getMap(): L.Map {
-    return this.mapL;
-  }
-
-  private removeLayerAsync(layer: L.MarkerClusterGroup) {
-    return new Promise<void>((resolve) => {
-      this.mapL.removeLayer(layer);
-      resolve();
-    });
-  }
-
-  // Filtrar por los markers del usuario
-  public async showUserObservationMarkers(show: boolean) {
-    if (show) {
-      await this.removeLayerAsync(this.markerCluster);
-      this.mapL.addLayer(this.userMarkerCluster);
-    } else {
-      await this.removeLayerAsync(this.userMarkerCluster);
-      this.mapL.addLayer(this.markerCluster);
-    }
-  }
-
-  //Creo el marker
-  private createMarkerIcon(markerType: string): L.DivIcon {
-    return L.divIcon({
-      className: 'my-div-icon',
-      iconSize: [38, 38],
-      iconAnchor: [19, 38],
-      popupAnchor: [0, -38],
-      html: `<svg width="31" height="42" data-type=${markerType} class="odour-marker" viewBox="0 0 31 42" fill="none">
-<g clip-path="url(#clip0_1369_14122)">
-  <path d="M17.4133 40.3C21.5547 35.1172 31 22.5557 31 15.5C31 6.94271 24.0573 0 15.5 0C6.94271 0 0 6.94271 0 15.5C0 22.5557 9.44531 35.1172 13.5867 40.3C14.5797 41.5352 16.4203 41.5352 17.4133 40.3ZM15.5 10.3333C16.8703 10.3333 18.1844 10.8777 19.1534 11.8466C20.1223 12.8156 20.6667 14.1297 20.6667 15.5C20.6667 16.8703 20.1223 18.1844 19.1534 19.1534C18.1844 20.1223 16.8703 20.6667 15.5 20.6667C14.1297 20.6667 12.8156 20.1223 11.8466 19.1534C10.8777 18.1844 10.3333 16.8703 10.3333 15.5C10.3333 14.1297 10.8777 12.8156 11.8466 11.8466C12.8156 10.8777 14.1297 10.3333 15.5 10.3333Z" fill="#FF6200"/>
-</g>
-<defs>
-  <clipPath id="clip0_1369_14122">
-    <rect width="31" height="41.3333" fill="white"/>
-  </clipPath>
-</defs>
-</svg>`,
-    });
-  }
-
-  //See more info about
+  //Ver más información de la observación seleccionada.
   public seeMoreAbout(observationId: number): void {
-    this.router.navigate(['/map']);
+    if (this.router.url !== '/map') {
+      this.router.navigate(['/map']);
+    }
     this.odourService.getOdour(observationId).subscribe((observationRes) => {
       const observation = observationRes.data[0];
       this.odourService.observation$.next(observation);
@@ -119,165 +285,29 @@ export class MapService {
     });
   }
 
-  //OnClick cada Marker
-  private onClickMarker(event: L.LeafletMouseEvent) {
-    const id = event.target.id;
-    this.odourService.getOdourInfo(id).subscribe((res) => {
-      this.odourService.observation$.next(res.data[0]);
-    });
-  }
-
-  //Invalido el tamaño
-  public invalidatedSize() {
-    this.mapL.invalidateSize();
-  }
-
-  //Añadir los markers al mapa
-  private addAllMarkers(observations: Observation[]) {
-    this.markers.forEach((marker) => {
-      this.markerCluster.clearLayers();
-      if (marker.isUserObservation) {
-        this.userMarkerCluster.clearLayers();
-      }
-    });
-
-    this.markers = [];
-
-    observations.forEach((observation) => {
-      this.addOneMarker(observation);
-    });
-
-    this.mapL.invalidateSize();
-  }
-
-  //Añadir un marker al mapa
-  public addOneMarker(observation: Observation) {
-    const markerType =
-      observation.relationships.odourSubType.relationships.odourType.slug;
-    const icon = this.createMarkerIcon(markerType);
-
-    const isUserObservation = this.userService.user
-      ? this.userService.user.id === observation.relationships.user?.id
-      : false;
-
-    const lat = Number(observation.latitude);
-    const lng = Number(observation.longitude);
-
-    const marker = new CustomMarker(
-      [lat, lng],
-      { icon },
-      observation.id,
-      isUserObservation,
-    );
-
-    marker.on('click', (e) => {
-      this.onClickMarker(e);
-    });
-
-    if (isUserObservation) {
-      this.userMarkerCluster.addLayer(marker);
-    }
-
-    this.markerCluster.addLayer(marker);
-
-    this.markers.push(marker);
-  }
-
-  //filtro por los 5 tipos
-  private filterByTypes(observations: Observation[]) {
-    const types = [
-      'agriculture-livestock',
-      'food-industries',
-      'industrial',
-      'urban',
-      'waste-water',
-    ];
-
-    return observations.filter((observation) =>
-      types.some(
-        (type) =>
-          type ===
-          observation.relationships.odourSubType.relationships.odourType.slug,
-      ),
-    );
-  }
-
-  //Para centrar el mapa en mi ubicación
-  public centerMapToMyLatLng() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.centerMap(position.coords.latitude, position.coords.longitude);
-      });
-    }
-  }
-
-  //para centrar el mapa
-  public centerMap(lat: number, lon: number): void {
-    // const offset = 0.001; // => apply to lat
-    if (this.mapL) {
-      this.mapL.flyTo(new L.LatLng(lat, lon), this.mapL.getMaxZoom());
-    }
-  }
-
-  //Eliminar un marker del mapa
-  public deleteMarker(id: number) {
-    const [marker] = this.markers.filter((marker) => marker.id === id);
-    marker.remove();
-
-    this.markerCluster.removeLayer(marker);
-    this.userMarkerCluster.removeLayer(marker);
-
-    this.mapL.eachLayer((layer) => {
-      if (layer instanceof L.MarkerClusterGroup) {
-        layer.refreshClusters();
-      }
-    });
-    
-  }
-
-  //Consigo las observaciones y me suscribo a getObservations
-  private getObservations(): void {
-    this.odourService.getObservations().subscribe((observations) => {
-      if (observations.length) {
-        this.addAllMarkers(observations);
-      }
-      this.observations = observations;
-    });
-  }
-
   //Inicio el mapa
-  public initializeMap(): void {
-    const southWest = L.latLng(-90, -180);
-    const northEast = L.latLng(90, 180);
-    const bounds = L.latLngBounds(southWest, northEast);
+  public initializeMap(map: Map): void {
+    this.map = map;
 
-    const map = L.map('map', {
-      maxBounds: bounds,
-      minZoom: 2,
-      maxZoom: 18,
-      zoom: 5,
-      zoomControl: !0,
-    });
-
-    const tiles = L.tileLayer(
-      'https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png',
-      {
-        maxZoom: 19,
-      },
-    );
-
-    tiles.addTo(map);
-    map.locate({ setView: true });
-
-    this.mapL = map;
+    this.centerMapToMyLatLng();
 
     this.odourService.getAllOdours();
 
-    //Mirar el depecreted
-    // this.markerCluster.on('clusterclick', function (a) {
-    //   a.layer.zoomToBounds();
-    // });
-
-    this.mapL.addLayer(this.markerCluster);
+    [
+      'agriculture-livestock',
+      'food-industries',
+      'urban',
+      'waste-water',
+      'industrial',
+    ].forEach((type) => {
+      const imageURL = `../../assets/images/markers/${type}.png`;
+      this.map.loadImage(imageURL, (error, image) => {
+        if (error || !image)
+          return console.error(
+            `Failed to load image from URL "${imageURL}": ${error}`,
+          );
+        this.map.addImage(type + '-icon', image);
+      });
+    });
   }
 }

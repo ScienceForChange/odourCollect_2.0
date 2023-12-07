@@ -35,3 +35,33 @@ export interface Profile {
   phone:      string | null;
   avatar_id:  number;
 }
+
+export function createDummyUser(): User {
+
+  const dummyProfile: Profile = {
+    type: 'dummy',
+    name: 'Dummy',
+    surname: null,
+    gender: 'male',
+    birthYear: 1900,
+    phone: null,
+    avatar_id: 1,
+  };
+
+  const dummyRelationships: Relationships = {
+    profile: dummyProfile,
+    odourObservations: [],
+  };
+
+  const dummyUser: User = {
+    id: 1,
+    email: 'dummy@example.com',
+    avatar_id: 1,
+    total_observations: 0,
+    password: undefined,
+    password_confirmation: undefined,
+    relationships: dummyRelationships,
+  };
+
+  return dummyUser;
+}

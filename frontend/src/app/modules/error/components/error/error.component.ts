@@ -39,7 +39,7 @@ export class ErrorComponent implements OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.refreshToken$.unsubscribe();
+    if(this.refreshToken$) this.refreshToken$.unsubscribe();
   }
 
 }
