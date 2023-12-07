@@ -38,8 +38,7 @@ class OdourObservationController extends Controller
                                 ])->allowedIncludes([
                                     'odourIntensity',
                                     'odourHedonicTone',
-                                    'odourType',
-                                    'odourSubType',
+                                    'odourSubType.odourType',
                                     'user.userable'
                                 ]);
 
@@ -85,8 +84,7 @@ class OdourObservationController extends Controller
             new OdourObservationResource($odourObservation->load([
                 'odourHedonicTone',
                 'odourIntensity',
-                'odourType',
-                'odourSubType',
+                'odourSubType.odourType',
                 'user'
             ]))
         ],
@@ -103,8 +101,7 @@ class OdourObservationController extends Controller
             new OdourObservationResource($odourObservation->load([
                 'odourHedonicTone',
                 'odourIntensity',
-                'odourType',
-                'odourSubType',
+                'odourSubType.odourType',
                 'user.userable'
             ]))
         ],

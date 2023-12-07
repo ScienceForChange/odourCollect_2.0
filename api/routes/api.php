@@ -64,8 +64,7 @@ Route::middleware(['auth:sanctum'])->get('/user-logged', function (Request $requ
             'odourObservations' => [
                 'odourHedonicTone',
                 'odourIntensity',
-                'odourType',
-                'odourSubType'
+                'odourSubType.odourType'
             ]
         ])),
     ], 200);
