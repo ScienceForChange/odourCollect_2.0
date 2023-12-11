@@ -14,7 +14,6 @@ import { MenuService } from 'src/app/services/menu.service';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit, OnDestroy {
-
   @Input() showMenu!: string | undefined;
 
   public isLoggedIn!: boolean;
@@ -24,19 +23,19 @@ export class MenuComponent implements OnInit, OnDestroy {
   constructor(
     public authService: AuthService,
     private menuService: MenuService,
-    private offcanvasService: NgbOffcanvas
+    private offcanvasService: NgbOffcanvas,
   ) {}
 
   ngOnInit(): void {
     this.subscriptions.add(
       this.authService.isLoginObs().subscribe((val) => {
         this.isLoggedIn = val;
-      })
+      }),
     );
     this.subscriptions.add(
       this.menuService.isVisibleState.subscribe((value) => {
         this.showMenu = value;
-      })
+      }),
     );
   }
 
@@ -50,15 +49,26 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   public openAboutOCOffcanvas(): void {
-    this.offcanvasService.open(AboutOdourCollectComponent, { position: 'start', scroll: false, panelClass: 'about-canvas' })
+    this.offcanvasService.open(AboutOdourCollectComponent, {
+      position: 'start',
+      scroll: false,
+      panelClass: 'about-canvas',
+    });
   }
 
   public openAboutDataProtectionOffcanvas(): void {
-    this.offcanvasService.open(AboutDataProtectionComponent, { position: 'start', scroll: false, panelClass: 'about-canvas' })
+    this.offcanvasService.open(AboutDataProtectionComponent, {
+      position: 'start',
+      scroll: false,
+      panelClass: 'about-canvas',
+    });
   }
 
   public openAboutEthicalIssuesOffcanvas(): void {
-    this.offcanvasService.open(AboutEthicalIssuesComponent, { position: 'start', scroll: false, panelClass: 'about-canvas' })
+    this.offcanvasService.open(AboutEthicalIssuesComponent, {
+      position: 'start',
+      scroll: false,
+      panelClass: 'about-canvas',
+    });
   }
-
 }

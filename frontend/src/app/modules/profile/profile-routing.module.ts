@@ -8,11 +8,14 @@ import { AuthGuardActivate } from 'src/app/guards/auth.guard';
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 import { EditAvatarComponent } from './components/edit-avatar/edit-avatar.component';
 import { BadgesComponent } from './components/badges/badges.component';
+import { MyStudyZonesComponent } from './components/my-study-zones/my-study-zones.component';
+import { StudyZoneComponent } from './components/study-zone/components/study-zone/study-zone.component';
 
-const routes: Routes = [{
-  path: "",
+const routes: Routes = [
+  {
+    path: '',
     canActivateChild: [AuthGuardActivate, VerifyGuardActivate],
-    children:[
+    children: [
       {
         path: 'profile/edit-avatar',
         component: EditAvatarComponent,
@@ -25,7 +28,7 @@ const routes: Routes = [{
         path: 'profile/settings',
         component: ProfileSettingsComponent,
         // children:[
-          
+
         //   {
         //     path: 'delete-account',
         //     component: DeleteAccountComponent,
@@ -47,10 +50,17 @@ const routes: Routes = [{
       {
         path: 'profile/badges',
         component: BadgesComponent,
-      }
-    ]
-  }
-
+      },
+      {
+        path: 'profile/my-study-zones',
+        component: MyStudyZonesComponent,
+      },
+      {
+        path: 'profile/my-study-zones/id',
+        component: StudyZoneComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({

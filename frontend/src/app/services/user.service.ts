@@ -17,11 +17,11 @@ export class UserService {
   get user(): User | undefined {
     return this._user;
   }
-  
+
   set user(user: User | undefined) {
     this._user = user;
   }
-  
+
 
   constructor(
     private http: HttpClient,
@@ -29,7 +29,7 @@ export class UserService {
   ) {
 
     this.authService.user.subscribe({
-      next:(resp)=>{
+      next: (resp) => {
         this.user = resp;
       }
     })
@@ -66,9 +66,9 @@ export class UserService {
       })
     );
   }
-  
+
   update(): Observable<Object> {
-    return this.http.patch(`${environment.BACKEND_BASE_URL}api/users/${this.user?.id}`,{...this.user,...this.user?.relationships?.profile}, {
+    return this.http.patch(`${environment.BACKEND_BASE_URL}api/users/${this.user?.id}`, { ...this.user, ...this.user?.relationships?.profile }, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -77,8 +77,8 @@ export class UserService {
     })
   }
 
-  changePassword(passwords:ChangePasswords): Observable<Object> {
-    return this.http.post(`${environment.BACKEND_BASE_URL}change-password`, { ...passwords }, 
+  changePassword(passwords: ChangePasswords): Observable<Object> {
+    return this.http.post(`${environment.BACKEND_BASE_URL}change-password`, { ...passwords },
       {
         headers: {
           'Content-Type': 'application/json',
@@ -89,15 +89,15 @@ export class UserService {
     );
   }
 
-  public addObservation(obs: Observation){
+  public addObservation(obs: Observation) {
     this.user?.relationships.odourObservations.unshift(obs);
-    if(this.user) this.user.total_observations ++;
+    if (this.user) this.user.total_observations++;
   }
 
-  public removeObservation(removedObsId: number){
-    if(this.user){
+  public removeObservation(removedObsId: number) {
+    if (this.user) {
       this.user.relationships.odourObservations = this.user.relationships.odourObservations.filter((obs) => obs.id !== removedObsId);
-      this.user.total_observations --;
+      this.user.total_observations--;
     }
   }
 

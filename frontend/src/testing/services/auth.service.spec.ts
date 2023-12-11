@@ -1,10 +1,9 @@
-import { TestBed } from '@angular/core/testing';
-import { HttpClient, HttpClientModule, HttpXsrfTokenExtractor } from '@angular/common/http';
+import { HttpClient, HttpXsrfTokenExtractor } from '@angular/common/http';
 import { of, throwError } from "rxjs";
 import { TestScheduler } from "rxjs/testing";
 
-import { AuthService } from './auth.service';
-import { User, createDummyUser } from '../models/user';
+import { AuthService } from '../../app/services/auth.service';
+import { createDummyUser } from '../../app/models/user';
 import { Router } from '@angular/router';
 
 describe('LoginService', () => {

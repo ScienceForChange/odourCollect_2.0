@@ -4,8 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { of } from "rxjs";
 import { TestScheduler } from "rxjs/testing";
 
-import { SigninService } from './signin.service';
-import { createDummyUser } from '../models/user';
+import { SigninService } from '../../app/services/signin.service';
+import { createDummyUser } from '../../app/models/user';
 
 describe('SigninService', () => {
   let service: SigninService;

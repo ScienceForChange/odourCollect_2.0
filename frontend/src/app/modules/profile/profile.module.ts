@@ -12,6 +12,9 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 import { EditAvatarComponent } from './components/edit-avatar/edit-avatar.component';
 import { BadgesComponent } from './components/badges/badges.component';
+import { MyStudyZonesComponent } from './components/my-study-zones/my-study-zones.component';
+import { NgxMapLibreGLModule } from '@maplibre/ngx-maplibre-gl';
+import { StudyZoneModule } from './components/study-zone/study-zone.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,7 @@ import { BadgesComponent } from './components/badges/badges.component';
     PublicProfileComponent,
     EditAvatarComponent,
     BadgesComponent,
+    MyStudyZonesComponent,
   ],
   exports: [],
   imports: [
@@ -30,8 +34,9 @@ import { BadgesComponent } from './components/badges/badges.component';
     SharedComponentsModule,
     ProfileRoutingModule,
     FormsModule,
-    ProfileRoutingModule,
     ReactiveFormsModule,
+    NgxMapLibreGLModule,
+    StudyZoneModule,
   ],
 })
 export class ProfileModule {}

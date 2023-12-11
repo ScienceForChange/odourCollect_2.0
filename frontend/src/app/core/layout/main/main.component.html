@@ -33,8 +33,7 @@
           'circle-stroke-color': 'rgba(215, 177, 242, 0.5)',
           'circle-stroke-width': 5
         }"
-      >
-      </mgl-layer>
+      />
       <mgl-layer
         id="cluster-count"
         type="symbol"
@@ -83,33 +82,46 @@
         [data]="observationsSpiderfy"
         [cluster]="false"
       />
-        <mgl-layer
-          id="unclustered-point-spiderfy"
-          type="symbol"
-          source="observationsSpiderfy"
-          (layerClick)="getMoreInfoAbout($event)"
-          (layerMouseEnter)="mouseEvent($event)"
-          (layerMouseLeave)="mouseEvent($event)"
-          [layout]="{
-            'icon-image': [
-              'match',
-              ['get', 'type'],
-              'agriculture-livestock',
-              'agriculture-livestock-icon',
-              'food-industries',
-              'food-industries-icon',
-              'urban',
-              'urban-icon',
-              'waste-water',
-              'waste-water-icon',
-              'industrial-icon'
-            ],
-            'icon-size': 0.7,
-            'icon-allow-overlap': true,
-            'icon-ignore-placement': true,
-            'icon-offset': ['get', 'iconOffset']
-          }"
-        />
+      <mgl-layer
+        id="unclustered-point-spiderfy"
+        type="symbol"
+        source="observationsSpiderfy"
+        (layerClick)="getMoreInfoAbout($event)"
+        (layerMouseEnter)="mouseEvent($event)"
+        (layerMouseLeave)="mouseEvent($event)"
+        [layout]="{
+          'icon-image': [
+            'match',
+            ['get', 'type'],
+            'agriculture-livestock',
+            'agriculture-livestock-icon',
+            'food-industries',
+            'food-industries-icon',
+            'urban',
+            'urban-icon',
+            'waste-water',
+            'waste-water-icon',
+            'industrial-icon'
+          ],
+          'icon-size': 0.7,
+          'icon-allow-overlap': true,
+          'icon-ignore-placement': true,
+          'icon-offset': ['get', 'iconOffset']
+        }"
+      />
+    </ng-container>
+    <ng-container *ngIf="studyZone">
+      <mgl-geojson-source id="studyZone" [data]="studyZone" />
+      <mgl-layer
+        id="studyZone"
+        type="fill"
+        before="clusters"
+        source="studyZone"
+        [paint]="{
+          'fill-color': '#D7B1F2',
+          'fill-opacity': 0.5
+        }"
+      />
     </ng-container>
   </mgl-map>
   <router-outlet />

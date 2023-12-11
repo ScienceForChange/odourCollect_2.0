@@ -8,6 +8,7 @@ import { MapService } from '../../../services/map.service';
 import { Map, LngLatBounds } from 'maplibre-gl';
 import * as M from 'maplibre-gl';
 import { ObservationGeoJSON } from 'src/app/models/observation';
+import { OdourService } from '../../../services/odour.service';
 
 @Component({
   selector: 'app-main',
@@ -26,6 +27,8 @@ export class MainComponent implements OnInit, OnDestroy {
     clusterMaxZoom: number;
   } = this.mapService.mapSettings;
 
+  public studyZone!: any;
+
   private subscriptions = new Subscription();
 
   public observations!: ObservationGeoJSON;
@@ -39,18 +42,24 @@ export class MainComponent implements OnInit, OnDestroy {
   public displayHeader: boolean = false;
   public displayMap: boolean = false;
 
+  private isStudyZoneRoute!: boolean;
+
   constructor(
     private footerService: FooterService,
     private router: Router,
     private menuService: MenuService,
     private mapService: MapService,
     private cdr: ChangeDetectorRef,
+    private odourService: OdourService,
   ) {}
 
   private displayHeaderByRoute(event: NavigationEnd): void {
     if (event.url === '/map') {
       this.displayHeader = true;
       this.displayMap = true;
+    } else if (event.url === '/profile/my-study-zones/id') {
+      this.displayMap = true;
+      this.isStudyZoneRoute = true;
     } else {
       this.displayHeader = false;
       this.displayMap = false;
@@ -62,7 +71,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   public onMapLoad(map: Map) {
     this.map = map;
-    this.mapService.initializeMap(map);
+    this.mapService.initializeMap(map, this.isStudyZoneRoute);
   }
 
   public mouseEvent(evt: M.MapMouseEvent) {
@@ -117,6 +126,13 @@ export class MainComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.mapService.GeoJSON$.subscribe((value: ObservationGeoJSON) => {
         this.observations = value;
+      }),
+    );
+
+    //observable of study zone
+    this.subscriptions.add(
+      this.odourService.studyZone.subscribe((studyZone) => {
+        this.studyZone = studyZone;
       }),
     );
 

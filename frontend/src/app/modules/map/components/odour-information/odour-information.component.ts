@@ -10,6 +10,8 @@ import { NgbModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { DialogModalComponent } from 'src/app/modules/modals/dialog-modal/dialog-modal.component';
 import { PublicProfileOffcanvaComponent } from 'src/app/modules/offcanvas/components/public-profile-offcanva/public-profile-offcanva.component';
 import { MapService } from '../../../../services/map.service';
+import { RegisterModalComponent } from 'src/app/modules/modals/register-modal/register-modal.component';
+import { DangerComponent } from 'src/app/shared/components/Icons/danger/danger.component';
 
 @Component({
   selector: 'app-odour-information',
@@ -23,6 +25,9 @@ export class OdourInformationComponent implements OnInit, OnDestroy {
   public observation!: Observation;
   public isOpen: boolean = false;
   public user: User | undefined = undefined;
+  
+        //Borrar cuando tengamos el endpoint
+        public isLiked = false;
 
   constructor(
     private userService: UserService,
@@ -118,4 +123,56 @@ export class OdourInformationComponent implements OnInit, OnDestroy {
     );
     offcanva.componentInstance.user = this.observation.relationships.user;
   }
+
+  toggleObservationLike() {
+    if(this.userService.user) {
+      this.odourService.toggleObservationLike(this.observation.id).subscribe({
+        next: (resp) => {
+          
+        },
+        error: (err) => {
+          console.log(err);
+          this.isLiked = !this.isLiked;
+          //Borrar cuando tengamos el endpoint
+        },
+      });
+    }
+    else {
+      this.modalService
+      .open(
+        RegisterModalComponent, { 
+          windowClass: 'default', 
+          backdropClass: 'default', 
+          centered : true, 
+          size: 'sm' 
+        }
+      )
+      .componentInstance.config = {
+        icon: DangerComponent,
+        text: "Debes iniciar sesión para poder dar 'Me gusta'",
+      };
+    }
+  }
+
+  addCommentary() {
+    if(this.userService.user) {
+     //TODO llevar a formulario de comentario
+    }
+    else {
+      this.modalService
+      .open(
+        RegisterModalComponent, { 
+          windowClass: 'default', 
+          backdropClass: 'default', 
+          centered : true, 
+          size: 'sm' 
+        }
+      )
+      .componentInstance.config = {
+        icon: DangerComponent,
+        text: "Debes iniciar sesión para poder dar 'Me gusta'",
+      };
+    }
+  }
+  
 }

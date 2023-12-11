@@ -1,0 +1,34 @@
+<section [ngClass]="[isOpen ? 'open-filter' : 'closed-filter']">
+  <button (click)="openModal()" id="plus-btn"></button>
+  <div>
+    <article>
+      <header>
+        <button type="button" class="close" (click)="closeModal()"></button>
+      </header>
+      <h3 class="body-l">Actividad de la zona</h3>
+      <div *ngIf="studyZone">
+        <ul>
+          <li class="label-m">
+            <icon-calendar />
+            Útlimo registro: {{ studyZone.last_register }}
+          </li>
+          <li class="label-m">
+            <icon-activity />
+            {{ studyZone.observations_count }} registros de olor
+          </li>
+          <li class="label-m">
+            <icon-three-users />
+            {{ studyZone.users_count }} usuarios reportando
+          </li>
+          <li class="label-m">
+            <icon-clock />
+            {{ studyZone.episode_count }} episodios de olor
+          </li>
+        </ul>
+        <button (click)="openModalAbout()">
+          Saber más <icon-arrow-right2 />
+        </button>
+      </div>
+    </article>
+  </div>
+</section>

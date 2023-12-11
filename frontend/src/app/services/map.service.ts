@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as M from 'maplibre-gl';
 import { OdourService } from './odour.service';
-import {
-  Observation,
-  ObservationGeoJSON,
-} from '../models/observation';
+import { Observation, ObservationGeoJSON } from '../models/observation';
 import { Map, LngLat, LngLatBounds, GeoJSONSource } from 'maplibre-gl';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -25,11 +22,11 @@ export class MapService {
     bounds: LngLatBounds;
     clusterMaxZoom: number;
   } = {
-    zoom: [3],
+    zoom: [4],
     mapStyle:
       'https://api.maptiler.com/maps/ed420585-427b-4078-8edf-7be43d23b4b7/style.json?key=XN4QD60Rt7rui111PDwQ',
     centerMapLocation: [2.1487613, 41.3776589],
-    minZoom: 5,
+    minZoom: 2,
     maxZoom: 17,
     bounds: new LngLatBounds(new LngLat(-90, 90), new LngLat(90, -90)),
     clusterMaxZoom: 17,
@@ -78,6 +75,14 @@ export class MapService {
     }
   }
 
+  //Volver a pintar el mapa con nuevo ancho y alto
+
+  public resizeMap(): void {
+    if (this.map) {
+      this.map.resize();
+    }
+  }
+
   //Para centrar el mapa en mi ubicación
   public centerMapToMyLatLng(): void {
     if (navigator.geolocation) {
@@ -92,13 +97,13 @@ export class MapService {
   }
 
   //para centrar el mapa
-  public centerMap(lat: number, lon: number): void {
+  public centerMap(lat: number, lon: number, zoom?: number): void {
     if (this.map) {
       const lngLat = new LngLat(lon, lat);
       this.map.easeTo({
         duration: 3 * 1000,
         center: lngLat,
-        zoom: this.mapSettings.maxZoom,
+        zoom: zoom || this.mapSettings.maxZoom,
       });
     }
   }
@@ -157,42 +162,36 @@ export class MapService {
     lngLat: { lat: number; lng: number },
   ): void {
     //Consigo todos los markers que el cluster tiene
-    source.getClusterLeaves(
-      clusterId,
-      Infinity,
-      0,
-      (err, features) => {
-        if (err) {
-          return console.error(err);
-        }
+    source.getClusterLeaves(clusterId, Infinity, 0, (err, features) => {
+      if (err) {
+        return console.error(err);
+      }
 
-        if (features?.length) {
-          // Calculate the spiderfied positions
-          const spiderfiedPositions =
-            features.length > 10
-              ? this.calculateSpiderfiedPositions(features.length)
-              : this.calculateSpiderfiedPositionsCircle(features.length);
+      if (features?.length) {
+        // Calculate the spiderfied positions
+        const spiderfiedPositions =
+          features.length > 10
+            ? this.calculateSpiderfiedPositions(features.length)
+            : this.calculateSpiderfiedPositionsCircle(features.length);
 
-          // Create a new GeoJson of features with the updated positions
-          const spiderfiedGeoJson = {
-            type: 'FeatureCollection',
-            features: features.map((feature, index) => ({
-              ...feature,
-              properties: {
-                ...feature.properties,
-                iconOffset: spiderfiedPositions[index],
-              },
-              geometry: {
-                ...feature.geometry,
-                coordinates: [lngLat.lng, lngLat.lat],
-              },
-              observationType: 'someObservationType',
-            })),
-          };
-          this.spiderfiedGeoJSON$.next(spiderfiedGeoJson);
-        }
-      },
-    );
+        // Create a new GeoJson of features with the updated positions
+        const spiderfiedGeoJson = {
+          type: 'FeatureCollection',
+          features: features.map((feature, index) => ({
+            ...feature,
+            properties: {
+              ...feature.properties,
+              iconOffset: spiderfiedPositions[index],
+            },
+            geometry: {
+              ...feature.geometry,
+              coordinates: [lngLat.lng, lngLat.lat],
+            },
+          })),
+        };
+        this.spiderfiedGeoJSON$.next(spiderfiedGeoJson);
+      }
+    });
   }
 
   // Cluster center and zoom in and spiderfy
@@ -265,7 +264,6 @@ export class MapService {
     this.odourService.getObservations().subscribe((observations) => {
       if (observations.length) {
         this.createGeoJSON(observations);
-        // this.addAllMarkers();
       }
     });
   }
@@ -285,13 +283,21 @@ export class MapService {
     });
   }
 
-  //Inicio el mapa
-  public initializeMap(map: Map): void {
+  //Inicio el mapa (Solo se ejecuta una vez)
+  public initializeMap(map: Map, isStudyZone: boolean): void {
     this.map = map;
 
-    this.centerMapToMyLatLng();
-
-    this.odourService.getAllOdours();
+    if (!isStudyZone) {
+      this.centerMapToMyLatLng();
+    } else {
+      this.odourService.studyZone.subscribe((studyZone) => {
+        console.log('studyZone');
+        if (studyZone) {
+          const [lat, lon] = studyZone.features[0].geometry.coordinates[0][0];
+          this.centerMap(lon, lat, 10);
+        }
+      });
+    }
 
     [
       'agriculture-livestock',

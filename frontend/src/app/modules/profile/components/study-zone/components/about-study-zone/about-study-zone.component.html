@@ -1,0 +1,44 @@
+<article>
+  <div
+    id="header"
+    class="d-flex gap-3 justify-content-between align-items-center"
+  >
+    <button class="close-offcanvas" (click)="offcanvas.close()">
+      <icon-arrow-left />
+    </button>
+    <h1 class="title-m text-center">Sobre esta zona de estudio</h1>
+  </div>
+  <section *ngIf="studyZone">
+    <div class="d-flex flex-column">
+      <app-accordion [title]="'Responsable de zona de estudio'">
+        <p>{{ studyZone.study_area_manager }}</p>
+      </app-accordion>
+      <app-accordion [title]="'Nombre'">
+        <p>{{ studyZone.name }}</p>
+      </app-accordion>
+      <app-accordion [title]="'Correo'">
+        <p>{{ studyZone.email }}</p>
+      </app-accordion>
+      <app-accordion [title]="'Objetivo de la zona de estudio'">
+        <p>{{ studyZone.objective }}</p>
+      </app-accordion>
+      <app-accordion [title]="'¿Qué es un episodio de olor?'">
+        <p>
+          De acuerdo con la norma UNE 77270:2023 “Construcción de mapas de olor
+          colaborativos mediante ciencia ciudadana”, un episodio de olor ocurre
+          cuando mínimo dos personas perciben un olor específico en un lugar, y
+          estos registros de olor se agrupan en un período máximo de 4 horas.
+          Este acontecimiento puede durar un momento o puede prolongarse durante
+          varias horas. Además, un episodio de olor puede estar relacionado con
+          una o varias actividades que se estén haciendo en esa zona. Cada
+          episodio de olor tiene asociado un grado de molestia que evalúa
+          objetivamente la molestia ocasionada desde el punto de vista de la
+          persona receptora en función de diferentes variables.
+        </p>
+      </app-accordion>
+      <app-accordion [title]="'Accede al último informe'"> </app-accordion>
+      <app-accordion [title]="'¿Quieres saber más?'"> </app-accordion>
+      <button class="btn btn-primary btn-lg">Contactar</button>
+    </div>
+  </section>
+</article>

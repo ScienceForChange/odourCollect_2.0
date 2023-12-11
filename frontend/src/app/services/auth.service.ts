@@ -11,9 +11,9 @@ import { User } from '../models/user';
 })
 export class AuthService {
 
-  private _user :       BehaviorSubject<User | undefined> = new BehaviorSubject<User | undefined>( undefined );
-  private _isLoggedIn:  BehaviorSubject<boolean> =          new BehaviorSubject<boolean>( false );
-  private _isVerified:  BehaviorSubject<boolean> =          new BehaviorSubject<boolean>( false );
+  private _user: BehaviorSubject<User | undefined> = new BehaviorSubject<User | undefined>(undefined);
+  private _isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private _isVerified: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private _routeToRedirect: string | null = null;
 
   private _error: boolean = false;
@@ -62,46 +62,46 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private tokenExtractor: HttpXsrfTokenExtractor,
-  ) {}
+  ) { }
 
   login(user: UserLogin): Observable<Object> {
-    return this.http
-      .post<{status:number, data:User}>(
-        `${environment.BACKEND_BASE_URL}login`,
-        { ...user },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          withCredentials: true,
-        }
-      )
+
+    return this.http.post<{ status: number, data: User }>(`${environment.BACKEND_BASE_URL}login`,
+      { ...user },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        withCredentials: true,
+      })
       .pipe(
-        tap((resp:{status:number, data:User}) => {
+        tap((resp: { status: number, data: User }) => {
           this.user = new User(resp.data);
           this._routeToRedirect ? this.router.navigate([this._routeToRedirect]) : this.router.navigate(['/map']);
           this._routeToRedirect = null;
           this._isLoggedIn.next(true);
         })
       );
+
   }
 
-  logout( redirecTo?:string ) {
-    
-    this.http.post(`${environment.BACKEND_BASE_URL}logout`, {}, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      withCredentials: true
-    }).subscribe(
-      (() => {
-        this._isLoggedIn.next(false);
-        this.user = undefined;
-        if(redirecTo) this.router.navigate([redirecTo]);
-      })
-    );
+  logout(redirecTo?: string) {
+
+    this.http.post(`${environment.BACKEND_BASE_URL}logout`, {},
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        withCredentials: true
+      }).subscribe(
+        (() => {
+          this._isLoggedIn.next(false);
+          this.user = undefined;
+          if (redirecTo) this.router.navigate([redirecTo]);
+        })
+      );
 
   }
 
@@ -110,35 +110,34 @@ export class AuthService {
   }
 
   refreshToken(fromErrorPage: boolean = false) {
+
     if (!this.tokenExtractor.getToken() && !fromErrorPage) { //si no es llama al función desde la pagina de error y no tenemos token redirigimos a onboarding
       this.router.navigate(['']);
     }
-    return this.http
-      .get<{status:number, data:User}>(`${environment.BACKEND_BASE_URL}api/user-logged`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        withCredentials: true,
-      })
-      .pipe(
-        tap((resp:{status:number, data:User}) => {
+    return this.http.get<{ status: number, data: User }>(`${environment.BACKEND_BASE_URL}api/user-logged`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      withCredentials: true,
+    }).pipe(
+        tap((resp: { status: number, data: User }) => {
           this.user = new User(resp.data);
           this._isLoggedIn.next(true);
         }),
         catchError((error) => {
-          if(error.status === 401 && fromErrorPage) { //si es error 401 le devolvemos a la pagina de error un true, para que permita navegar, ya que no es un error de servidor
-            return of(true); 
+          if (error.status === 401 && fromErrorPage) { //si es error 401 le devolvemos a la pagina de error un true, para que permita navegar, ya que no es un error de servidor
+            return of(true);
           }
           return of(false);
         })
       );
+
   }
 
   resendVerifyEmail() {
-    return this.http.post(
-      `${environment.BACKEND_BASE_URL}email/verification-notification`,
-      {},
+
+    return this.http.post(`${environment.BACKEND_BASE_URL}email/verification-notification`, {},
       {
         headers: {
           'Content-Type': 'application/json',
@@ -148,4 +147,5 @@ export class AuthService {
       }
     );
   }
+
 }

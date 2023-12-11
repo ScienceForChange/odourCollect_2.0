@@ -3,7 +3,7 @@
 section {
   background: white;
   border-radius: 40px 40px 0 0;
-  bottom: -500px;
+  bottom: -560px;
   margin: 0 auto;
   max-width: 425px;
   padding: 30px 20px 34px;
@@ -73,7 +73,6 @@ section {
   .modal-body {
     display: flex;
     flex-direction: column;
-    gap: 40px;
     overflow-y: scroll;
     padding-top: 37px;
     position: relative;
@@ -143,6 +142,33 @@ section {
         display: flex;
         gap: 3px;
       }
+    }
+  }
+  .like{
+    padding: 5px 15px 5px 5px;
+    color: $violet-dark;
+    border-radius: 100px;
+    border: 2px solid white;
+    cursor: pointer;
+    max-width: max-content;
+    icon-heart{
+      padding: 3px 6px;
+      background-color: white;
+      height: 30px;
+      width: 30px;
+      border-radius: 30px;
+    }
+    &.liked{
+      background-color: $violet-lighter;
+      padding: 5px 15px 5px 5px;
+      border: 2px solid $violet-lighter;
+      &:active{
+        background-color: $violet-dark;
+        color: white;
+      }
+    }
+    &:hover{
+      border: 2px solid $violet-dark;
     }
   }
 }
