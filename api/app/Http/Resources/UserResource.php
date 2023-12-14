@@ -17,20 +17,21 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'                => $this->id,
-            'email'             => $this->email,
-            'avatar_id'         => $this->avatar_id,
-            'relationships'     => [
-                'profile'           => $this->whenMorphToLoaded('userable', [
-                    // No me preguntes por qué pero no deja usando: ProfileCitizen::class
-                    //-> cuando mapea el array no coinciden las keys (por el doble paréntesis)
-                    "App\\Models\\ProfileClient" => ProfileClientResource::class,
-                    "App\\Models\\ProfileCitizen" => ProfileCitizenResource::class
-                ]),
+            'type' => $this->getProfileTypeAttribute(),
+            'uuid' => $this->uuid,
+            'attributes' => [
+                'email' => $this->when($request->user()?->uuid === $this->uuid, $this->email),
+                'avatar' => $this->avatar_id,
+                'profile' => new ProfileCitizenResource($this->profile),
+                'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+                'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
+            ],
+            'links' => [
+                'self' => route('users.show', ['uuid' => $this->uuid]),
+            ],
+            'relationships' => [
                 'odourObservations' => OdourObservationResource::collection($this->whenLoaded('odourObservations'))
             ],
-            'createdAt'         => $this->created_at?->format('Y-m-d H:m:s'),
-            'updatedAt'         => $this->updated_at?->format('Y-m-d H:m:s'),
         ];
     }
 }

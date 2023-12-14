@@ -21,6 +21,8 @@ class ProfileCitizenFactory extends Factory
             'name' => fake()->name(),
             'gender' => fake()->randomElement(Gender::cases())->value,
             'birth_year' => fake()->numberBetween(1956, 2015),
+            'status_sentence' => fake()->sentence(),
+            'deleted_because' => fake()->sentence(),
         ];
     }
 }

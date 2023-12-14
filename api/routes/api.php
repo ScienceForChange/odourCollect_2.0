@@ -27,7 +27,7 @@ Route::middleware(['auth:sanctum'])
         ->name('users.')
         ->group(function () {
             Route::GET('/users', 'index')->name('index');
-            Route::GET('users/{user}', 'show')->whereNumber('user')->name('show');
+            Route::GET('users/{uuid}', 'show')->whereNumber('user')->name('show');
             Route::POST('/users', 'store')->name('store');
             Route::PATCH('/users/{user}', 'update')->whereNumber('user')->name('update');
             // Delete method does not allow a body in he http request, so if he send the deleted_because im f.
@@ -68,8 +68,9 @@ Route::middleware(['auth:sanctum'])->get('/user-logged', function (Request $requ
             ]
         ])),
     ], 200);
-
 });
+
+Route::middleware(['auth:sanctum'])->get('/user', [App\Http\Controllers\Api\V1\AuthUserController::class, 'show'])->name('auth.show');
 
 // User logged Data
 Route::middleware(['auth:sanctum', 'verified'])->get('/user-data', function (Request $request) {

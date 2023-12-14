@@ -11,10 +11,18 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Traits\HasUuid;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable //implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasUuid;
+
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array<int, string>
+     */
+    protected $with = ['profile'];
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +30,6 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'username',
         'email',
         'password',
         'avatar_id',
@@ -48,12 +55,25 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    /**
-     * Get the parent userable model (citizen profile, client profile, etc).
-     */
-    public function userable(): MorphTo
+    public function getRouteKeyName(): string
     {
-        return $this->morphTo();
+        return 'uuid';
+    }
+
+    /**
+     * Get the profile associated with user.
+     */
+    public function profile(): MorphTo
+    {
+        return $this->morphTo(__FUNCTION__, 'profile_type', 'profile_id');
+    }
+
+    /**
+     * Get user´s profile type
+     */
+    public function getProfileTypeAttribute(): string
+    {
+        return $this->profile->getMorphClass();
     }
 
     /**

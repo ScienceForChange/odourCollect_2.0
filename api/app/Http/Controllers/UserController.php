@@ -52,11 +52,14 @@ class UserController extends Controller
     /**
     * Bring the specified resource.
     */
-    public function show(User $user)
+    public function show(Request $request)
     {
+        $user = User::where('uuid', $request->uuid)->firstOr(function () {
+            abort(404, 'User not found');
+        });
+
         return $this->success([
             new UserResource($user->load([
-                'userable',
                 'odourObservations' => [
                     'odourHedonicTone',
                     'odourIntensity',

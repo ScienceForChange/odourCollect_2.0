@@ -14,7 +14,17 @@ class ProfileCitizen extends Model
         'name',
         'gender',
         'birth_year',
+        'status_sentence',
         'deleted_because'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'birth_year' => 'date',
     ];
 
     /**
@@ -22,6 +32,6 @@ class ProfileCitizen extends Model
      */
     public function user(): MorphOne
     {
-        return $this->morphOne(User::class, 'userable');
+        return $this->morphOne(User::class, 'profile');
     }
 }

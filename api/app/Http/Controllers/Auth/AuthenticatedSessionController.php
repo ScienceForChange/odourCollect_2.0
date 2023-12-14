@@ -24,7 +24,6 @@ class AuthenticatedSessionController extends Controller
         return new JsonResponse([
             'status' => 'success',
             'data' => new UserResource(request()->user()->load([
-                'userable',
                 'odourObservations' => [
                     'odourHedonicTone',
                     'odourIntensity',

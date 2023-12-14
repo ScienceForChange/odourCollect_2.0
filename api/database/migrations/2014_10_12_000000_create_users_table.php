@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->integer('userable_id');
-            $table->string('userable_type')->default('App\\Models\\ProfileCitizen');
+            $table->uuid('uuid');
+            $table->integer('profile_id');
+            $table->string('profile_type')->default('citizen');
             $table->string('avatar_id')->default(1);
             $table->string('email')->unique();
             $table->string('password');
