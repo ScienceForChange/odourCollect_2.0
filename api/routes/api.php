@@ -93,6 +93,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('like', [App\Http\Controllers\LikeController::class, 'unlike'])->name('unlike');
 });
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('notifications', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('notifications/{notification}', [App\Http\Controllers\NotificationController::class, 'show'])->name('notifications.show');
+});
+
 Route::GET('/version', function(){
     return [
         'odourCollect' => 'v'.config('app.version')

@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
             'citizen' => 'App\Models\ProfileCitizen',
             'client' => 'App\Models\ProfileClient',
             'odourObservation' => 'App\Models\OdourObservation',
+            'user' => 'App\Models\User',
         ]);
     }
 }

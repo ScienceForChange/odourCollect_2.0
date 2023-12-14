@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Traits\HasUuid;
 
-class User extends Authenticatable //implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasUuid;
 
@@ -67,14 +67,6 @@ class User extends Authenticatable //implements MustVerifyEmail
     public function profile(): MorphTo
     {
         return $this->morphTo(__FUNCTION__, 'profile_type', 'profile_id');
-    }
-
-    /**
-     * Get user´s profile type
-     */
-    public function getProfileTypeAttribute(): string
-    {
-        return $this->profile->getMorphClass();
     }
 
     /**

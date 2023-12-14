@@ -5,14 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\LikeRequest;
 use App\Http\Requests\UnlikeRequest;
-
+use App\Notifications\LikeReceived;
 class LikeController extends Controller
 {
     public function like(LikeRequest $request)
     {
-        $request->user()->like($request->likeable());
+        $notificationObj = $request->likeable();
 
-        // notification
+        $request->user()->like($notificationObj);
+
+        $userToNoify = $notificationObj->user;
+
+        $userToNoify->notify(new LikeReceived($notificationObj));
+        // \App\Models\User::find($notificationObj->user_id)->notify(new LikeReceived($notificationObj));
 
         return response()->json([
             'likes' => $request->likeable()->likes()->count(),

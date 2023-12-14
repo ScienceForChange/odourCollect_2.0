@@ -17,7 +17,7 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'type' => $this->getProfileTypeAttribute(),
+            'type' => $this->profile_type,
             'uuid' => $this->uuid,
             'attributes' => [
                 'email' => $this->when($request->user()?->uuid === $this->uuid, $this->email),
@@ -26,6 +26,7 @@ class UserResource extends JsonResource
                 'created_at' => $this->created_at->format('Y-m-d H:i:s'),
                 'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
             ],
+            //'notifications' => $this->when
             'links' => [
                 'self' => route('users.show', ['uuid' => $this->uuid]),
             ],

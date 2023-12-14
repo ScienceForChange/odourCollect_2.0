@@ -26,18 +26,18 @@ class LikeReceived extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
+    public function toMail(object $notifiable)//: MailMessage
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        // return (new MailMessage)
+        //             ->line('The introduction to the notification.')
+        //             ->action('Notification Action', url('/'))
+        //             ->line('Thank you for using our application!');
     }
 
     /**
@@ -48,8 +48,8 @@ class LikeReceived extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'odourObservation_id' => $this->odourObservation->id,
-            'user_id' => $this->user->id,
+            'message' => 'You have a new like!',
+            'resource' => $this->notifiable_type,
         ];
     }
 }
