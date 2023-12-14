@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
         Relation::enforceMorphMap([
             'citizen' => 'App\Models\ProfileCitizen',
             'client' => 'App\Models\ProfileClient',
+            'odourObservation' => 'App\Models\OdourObservation',
         ]);
     }
 }

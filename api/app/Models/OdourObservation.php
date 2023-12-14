@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
-
-class OdourObservation extends Model
+use App\Contracts\Likeable;
+use App\Traits\Likes;
+class OdourObservation extends Model implements Likeable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Likes;
 
     /**
      * The attributes that are mass assignable.

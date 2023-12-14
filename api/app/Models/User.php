@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\Likeable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -84,6 +85,52 @@ class User extends Authenticatable //implements MustVerifyEmail
         return $this->hasMany(OdourObservation::class);
     }
 
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
+
+    public function like(Likeable $likeable)
+    {
+     if($this->hasLiked($likeable)) {
+         return $this;
+     }
+
+     (new Like())
+            ->user()->associate($this)
+            ->likeable()->associate($likeable)
+            ->save();
+
+            return $this;
+    }
+
+    public function unlike(Likeable $likeable)
+    {
+        if(!$this->hasLiked($likeable)) {
+            return $this;
+        }
+
+        $likeable->likes()
+            ->whereHas('user', function($q) {
+                $q->where('uuid', $this->uuid);
+            })
+            ->delete();
+
+            return $this;
+    }
+
+    public function hasLiked(Likeable $likeable)
+    {
+        if(! $likeable->exists) {
+            return false;
+        }
+
+        return $likeable->likes()
+                ->whereHas('user', function($q) {
+                    $q->where('uuid', $this->uuid);
+                })
+                ->exists();
+    }
     /**
      * Send the email verification notification.
      *

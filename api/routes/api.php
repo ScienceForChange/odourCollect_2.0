@@ -88,6 +88,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/user-data', function (Req
     ],200);
 });
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('like', [App\Http\Controllers\LikeController::class, 'like'])->name('like');
+    Route::delete('like', [App\Http\Controllers\LikeController::class, 'unlike'])->name('unlike');
+});
+
 Route::GET('/version', function(){
     return [
         'odourCollect' => 'v'.config('app.version')
