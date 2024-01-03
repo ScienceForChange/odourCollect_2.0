@@ -42,7 +42,7 @@ class OdourSubType extends Model
     /**
      * Get the odours for the subtype kind.
      */
-    public function odours(): HasMany
+    public function odourObservations(): HasMany
     {
         return $this->hasMany(OdourObservation::class);
     }

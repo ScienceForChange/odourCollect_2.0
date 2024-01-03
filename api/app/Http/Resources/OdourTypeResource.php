@@ -15,11 +15,32 @@ class OdourTypeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'            => $this->id,
-            'name'          => $this->name,
-            'slug'          => $this->slug,
+            'id' => $this->id,
+            'type' => 'odourType', // Buscar un método para que esto sea automático
+            'attributes' => [
+                'name' => $this->name,
+                'slug' => $this->slug,
+            ],
             'relationships' => [
-                'odourSubTypes' => OdourSubTypeResource::collection($this->whenLoaded('odourSubTypes'))
+                'odourSubTypes' => [
+                    'links' => [
+                        'self' => '', //TODO
+                        'related' => route('odourTypes.odourSubTypes.index', ['odourType' => $this->id]),
+                    ],
+                ],
+                'odourObservations' => [
+                    'links' => [
+                        'self' => '', //TODO
+                        'related' => route('odourTypes.odourObservations.index', ['odourType' => $this->id]),
+                    ],
+                ],
+            ],
+            'includes' => [
+                'odourSubTypes' => OdourSubTypeResource::collection($this->whenLoaded('odourSubTypes')),
+                'odourObservations' => OdourObservationResource::collection($this->whenLoaded('odourObservations')),
+            ],
+            'links' => [
+                'self' => route('odourTypes.show', ['odourType' => $this->id]),
             ],
         ];
     }

@@ -16,9 +16,26 @@ class OdourHedonicToneResource extends JsonResource
     {
         return [
             'id'    => $this->id,
-            'index' => $this->index,
-            'name'  => $this->name,
-            'slug'  => $this->slug,
+            'type'  => 'odourHedonicTone', // Buscar un método para que esto sea automático
+            'attributes' => [
+                'name' => $this->name,
+                'index' => $this->index,
+                'slug' => $this->slug,
+            ],
+            'relationships' => [
+                'odourObservations' => [
+                    'links' => [
+                        'self' => '', //TODO
+                        'related' => route('odourObservations.show', ['odourObservation' => $this->odourObservations]),
+                    ],
+                ],
+            ],
+            'includes' => [
+                'odourObservations' => OdourObservationResource::collection($this->whenLoaded('odourObservations')),
+            ],
+            'links' => [
+                'self' => '', //TODO
+            ],
         ];
     }
 }

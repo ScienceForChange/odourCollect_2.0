@@ -46,7 +46,7 @@ class OdourType extends Model
         return $this->hasMany(OdourSubType::class);
     }
 
-    public function odours(): HasManyThrough
+    public function odourObservations(): HasManyThrough
     {
         return $this->hasManyThrough(
             OdourObservation::class,

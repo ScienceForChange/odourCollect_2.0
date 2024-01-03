@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Models\OdourObservation;
 
 class LikeReceived extends Notification
 {
@@ -14,7 +15,7 @@ class LikeReceived extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(private OdourObservation $odourObservation)
     {
         //
     }
@@ -49,7 +50,7 @@ class LikeReceived extends Notification
     {
         return [
             'message' => 'You have a new like!',
-            'resource' => $this->notifiable_type,
+            'resource' => $this->odourObservation->id,
         ];
     }
 }

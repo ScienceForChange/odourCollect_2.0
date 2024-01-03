@@ -9,8 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
+use App\Support\OdourObservationCollection;
 use App\Contracts\Likeable;
 use App\Traits\Likes;
+
 class OdourObservation extends Model implements Likeable
 {
     use HasFactory, SoftDeletes, Likes;
@@ -29,7 +31,6 @@ class OdourObservation extends Model implements Likeable
         'longitude',
         'description',
         'origin',
-        'odour_report_server_time',
     ];
 
     /**
@@ -38,7 +39,7 @@ class OdourObservation extends Model implements Likeable
      * @var array<string, string>
      */
     protected $casts = [
-        'odour_report_server_time' => 'datetime',
+        //
     ];
 
     /**
@@ -66,14 +67,6 @@ class OdourObservation extends Model implements Likeable
     }
 
     /**
-     * Get the user that owns the odour.
-     */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
      * Get the Type of the odour.
      */
     public function odourType(): HasOneThrough
@@ -87,6 +80,23 @@ class OdourObservation extends Model implements Likeable
             'odour_type_id');
     }
 
+    /**
+     * Get the user that owns the odour.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get base name class
+     */
+    public function getBaseClassName(): string
+    {
+        return class_basename($this);
+    }
+
+
     public function scopeCreatedBetween(Builder $query, string $start_date, string $end_date): void
     {
         $query->whereBetween('created_at', [$start_date, $end_date]);
@@ -98,6 +108,11 @@ class OdourObservation extends Model implements Likeable
         $end = Carbon::createFromTimeString(str_replace('-', ':', $end_hour));
 
         $query->whereBetween('created_at', [Carbon::parse($start), Carbon::parse($end)]);
+    }
+
+    public function newCollection(array $models = []): OdourObservationCollection
+    {
+        return new OdourObservationCollection($models);
     }
 
     public function haversineGreatCircleDistance(
