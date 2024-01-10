@@ -21,10 +21,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Relation::enforceMorphMap([
+            'like' => 'App\Notifications\LikeReceived',
+            'comment'  => 'App\Models\Comment',
             'citizen' => 'App\Models\ProfileCitizen',
-            'client' => 'App\Models\ProfileClient',
-            'odourObservation' => 'App\Models\OdourObservation',
             'user' => 'App\Models\User',
+            'odour' => 'App\Models\OdourObservation',
         ]);
     }
 }

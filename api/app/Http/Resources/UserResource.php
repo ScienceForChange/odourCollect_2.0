@@ -17,22 +17,20 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'type' => $this->profile_type,
-            'uuid' => $this->uuid,
-            'attributes' => [
-                'email' => $this->when($request->user()?->uuid === $this->uuid, $this->email),
-                'avatar' => $this->avatar_id,
-                'profile' => new ProfileCitizenResource($this->profile),
-                'created_at' => $this->created_at->format('Y-m-d H:i:s'),
-                'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
-            ],
-            //'notifications' => $this->when
-            'links' => [
-                'self' => route('users.show', ['uuid' => $this->uuid]),
-            ],
-            'relationships' => [
+            'id'                => $this->id,
+            'email'             => $this->email,
+            'avatar_id'         => $this->avatar_id,
+            'relationships'     => [
+                'profile'           => $this->whenMorphToLoaded('userable', [
+                    // No me preguntes por qué pero no deja usando: ProfileCitizen::class
+                    //-> cuando mapea el array no coinciden las keys (por el doble paréntesis)
+                    "App\\Models\\ProfileClient" => ProfileClientResource::class,
+                    "App\\Models\\ProfileCitizen" => ProfileCitizenResource::class
+                ]),
                 'odourObservations' => OdourObservationResource::collection($this->whenLoaded('odourObservations'))
             ],
+            'createdAt'         => $this->created_at?->format('Y-m-d H:m:s'),
+            'updatedAt'         => $this->updated_at?->format('Y-m-d H:m:s'),
         ];
     }
 }

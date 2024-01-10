@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
-use App\Support\OdourObservationCollection;
 use App\Contracts\Likeable;
 use App\Traits\Likes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class OdourObservation extends Model implements Likeable
 {
@@ -31,6 +30,7 @@ class OdourObservation extends Model implements Likeable
         'longitude',
         'description',
         'origin',
+        'odour_report_server_time',
     ];
 
     /**
@@ -39,7 +39,7 @@ class OdourObservation extends Model implements Likeable
      * @var array<string, string>
      */
     protected $casts = [
-        //
+        'odour_report_server_time' => 'datetime',
     ];
 
     /**
@@ -67,20 +67,6 @@ class OdourObservation extends Model implements Likeable
     }
 
     /**
-     * Get the Type of the odour.
-     */
-    public function odourType(): HasOneThrough
-    {
-        return $this->hasOneThrough(
-            OdourType::class,
-            OdourSubType::class,
-            'id',
-            'id',
-            'odour_sub_type_id',
-            'odour_type_id');
-    }
-
-    /**
      * Get the user that owns the odour.
      */
     public function user(): BelongsTo
@@ -88,14 +74,10 @@ class OdourObservation extends Model implements Likeable
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get base name class
-     */
-    public function getBaseClassName(): string
+    public function comments(): HasMany
     {
-        return class_basename($this);
+        return $this->hasMany(Comment::class);
     }
-
 
     public function scopeCreatedBetween(Builder $query, string $start_date, string $end_date): void
     {
@@ -108,11 +90,6 @@ class OdourObservation extends Model implements Likeable
         $end = Carbon::createFromTimeString(str_replace('-', ':', $end_hour));
 
         $query->whereBetween('created_at', [Carbon::parse($start), Carbon::parse($end)]);
-    }
-
-    public function newCollection(array $models = []): OdourObservationCollection
-    {
-        return new OdourObservationCollection($models);
     }
 
     public function haversineGreatCircleDistance(

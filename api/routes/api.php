@@ -22,18 +22,18 @@ use Illuminate\Http\JsonResponse;
 */
 
 // User CRUD endpoints
-// Route::middleware(['auth:sanctum'])
-//         ->controller(App\Http\Controllers\UserController::class)
-//         ->name('users.')
-//         ->group(function () {
-//             Route::GET('/users', 'index')->name('index');
-//             Route::GET('users/{uuid}', 'show')->whereNumber('user')->name('show');
-//             Route::POST('/users', 'store')->name('store');
-//             Route::PATCH('/users/{user}', 'update')->whereNumber('user')->name('update');
-//             // Delete method does not allow a body in he http request, so if he send the deleted_because im f.
-//             Route::POST('/users/{user}', 'destroy')->whereNumber('user')->name('delete');
-//             Route::POST('/users/{trashed_user}', 'restore')->whereNumber('trashed_user')->name('restore');
-//         });
+Route::middleware(['auth:sanctum'])
+        ->controller(App\Http\Controllers\UserController::class)
+        ->name('users.')
+        ->group(function () {
+            Route::GET('/users', 'index')->name('index');
+            Route::GET('users/{user}', 'show')->whereNumber('user')->name('show');
+            Route::POST('/users', 'store')->name('store');
+            Route::PATCH('/users/{user}', 'update')->whereNumber('user')->name('update');
+            // Delete method does not allow a body in he http request, so if he send the deleted_because im f.
+            Route::POST('/users/{user}', 'destroy')->whereNumber('user')->name('delete');
+            Route::POST('/users/{trashed_user}', 'restore')->whereNumber('trashed_user')->name('restore');
+        });
 
 // Odour Observations CRUD PUBLIC endpoints
 Route::controller(App\Http\Controllers\OdourObservationController::class)
@@ -41,107 +41,53 @@ Route::controller(App\Http\Controllers\OdourObservationController::class)
         ->group(function () {
             Route::GET('/observations', 'index')->name('index');
             Route::GET('/observations/{odourObservation}', 'show')->whereNumber('odourObservation')->name('show');
-            // Route::GET('/observations/related-data', 'showRelatedData')->name('relatedData');
-        });
-
-Route::controller(App\Http\Controllers\Api\V1\OdourMapController::class)
-        ->name('odourMap.')
-        ->group(function () {
-            Route::GET('/odour-map', 'index')->name('index');
-        });
-
-Route::controller(App\Http\Controllers\Api\V1\OdourTypeController::class)
-        ->name('odourTypes.')
-        ->group(function () {
-            Route::GET('/odour-types', 'index')->name('index');
-            Route::GET('/odour-types/{odourType}', 'show')->whereNumber('odourType')->name('show');
-        });
-
-Route::controller(App\Http\Controllers\Api\V1\OdourTypesOdourSubTypesController::class)
-        ->name('odourTypes.odourSubTypes.')
-        ->group(function () {
-            Route::GET('/odour-types/{odourType}/odour-sub-types', 'index')->whereNumber('odourType')->name('index');
-            // Route::GET('/odour-types/{odourType}/odour-sub-types/{odourSubType}', 'show')->name('show');
-        });
-
-Route::controller(App\Http\Controllers\Api\V1\OdourTypesOdourObservationsController::class)
-        ->name('odourTypes.odourObservations.')
-        ->group(function () {
-            Route::GET('/odour-types/{odourType}/odour-observations', 'index')->whereNumber('odourType')->name('index');
-            // Route::GET('/odour-types/{odourType}/odour-observations/{odourObservation}', 'show')->name('show');
-        });
-
-Route::controller(App\Http\Controllers\Api\V1\OdourSubTypeController::class)
-        ->name('odourSubTypes.')
-        ->group(function () {
-            Route::GET('/odour-sub-types', 'index')->name('index');
-            Route::GET('/odour-sub-types/{odourSubType}', 'show')->whereNumber('odourSubType')->name('show');
-        });
-
-Route::controller(App\Http\Controllers\Api\V1\OdourIntensityController::class)
-        ->name('odourIntensities.')
-        ->group(function () {
-            Route::GET('/odour-intensities', 'index')->name('index');
-            Route::GET('/odour-intensities/{odourIntensity}', 'show')->whereNumber('odourIntensity')->name('show');
-        });
-
-Route::controller(App\Http\Controllers\Api\V1\OdourHedonicToneController::class)
-        ->name('odourHedonicTones.')
-        ->group(function () {
-            Route::GET('/odour-hedonic-tones', 'index')->name('index');
-            Route::GET('/odour-hedonic-tones/{odourHedonicTone}', 'show')->whereNumber('odourHedonicTone')->name('show');
-        });
-
-Route::controller(App\Http\Controllers\Api\V1\UserController::class)
-        ->name('users.')
-        ->group(function () {
-            Route::GET('/users', 'index')->name('index');
-            Route::GET('/users/{uuid}', 'show')->name('show');
+            Route::GET('/observations/related-data', 'showRelatedData')->name('relatedData');
         });
 
 // Odour Observations CRUD endpoints
-// Route::middleware(['auth:sanctum', 'verified'])
-//         ->controller(App\Http\Controllers\OdourObservationController::class)
-//         ->name('odourObservations.')
-//         ->group(function () {
-//             Route::POST('/observations', 'store')->name('store');
-//             Route::PATCH('/observations/{odourObservation}', 'update')->whereNumber('odourObservation')->name('update');
-//             Route::DELETE('/observations/{odourObservation}', 'destroy')->whereNumber('odourObservation')->name('delete');
-//             Route::POST('/observations/{trashed_observation}', 'restore')->whereNumber('trashed_observation')->name('restore');
-//         });
+Route::middleware(['auth:sanctum', 'verified'])
+        ->controller(App\Http\Controllers\OdourObservationController::class)
+        ->name('odourObservations.')
+        ->group(function () {
+            Route::POST('/observations', 'store')->name('store');
+            Route::PATCH('/observations/{odourObservation}', 'update')->whereNumber('odourObservation')->name('update');
+            Route::DELETE('/observations/{odourObservation}', 'destroy')->whereNumber('odourObservation')->name('delete');
+            Route::POST('/observations/{trashed_observation}', 'restore')->whereNumber('trashed_observation')->name('restore');
+        });
 
 // User Logged check
-// Route::middleware(['auth:sanctum'])->get('/user-logged', function (Request $request) {
-//     return new JsonResponse([
-//         'status' => 'success',
-//         'data' => new UserResource(request()->user()->load([
-//             'userable',
-//             'odourObservations' => [
-//                 'odourHedonicTone',
-//                 'odourIntensity',
-//                 'odourSubType.odourType'
-//             ]
-//         ])),
-//     ], 200);
-// });
+Route::middleware(['auth:sanctum'])->get('/user-logged', function (Request $request) {
+    return new JsonResponse([
+        'status' => 'success',
+        'data' => new UserResource(request()->user()->load([
+            'userable',
+            'odourObservations' => [
+                'odourHedonicTone',
+                'odourIntensity',
+                'odourSubType' => [
+                    'odourType'
+                ]
+            ]
+        ])),
+    ], 200);
 
-Route::middleware(['auth:sanctum'])->get('/user', [App\Http\Controllers\Api\V1\AuthUserController::class, 'show'])->name('auth.show');
+});
 
 // User logged Data
-// Route::middleware(['auth:sanctum', 'verified'])->get('/user-data', function (Request $request) {
-//     //TODO WIP TEMPORAL SOLUTION FOR TESTING
-//     $loads = [];
-//     if ($request->has('userable')) {
-//         $loads[] = 'userable';
-//     }
+Route::middleware(['auth:sanctum', 'verified'])->get('/user-data', function (Request $request) {
+    //TODO WIP TEMPORAL SOLUTION FOR TESTING
+    $loads = [];
+    if ($request->has('userable')) {
+        $loads[] = 'userable';
+    }
 
-//     if($request->has('odourObservations')) {
-//         $loads[] = 'odourObservations';
-//     }
-//     return response()->json([
-//         new UserResource($request->user()->load($loads))
-//     ],200);
-// });
+    if($request->has('odourObservations')) {
+        $loads[] = 'odourObservations';
+    }
+    return response()->json([
+        new UserResource($request->user()->load($loads))
+    ],200);
+});
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('like', [App\Http\Controllers\LikeController::class, 'like'])->name('like');
@@ -153,8 +99,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('notifications/{notification}', [App\Http\Controllers\NotificationController::class, 'show'])->name('notifications.show');
 });
 
-Route::GET('/version', function(){
-    return [
-        'odourCollect' => 'v'.config('app.version')
-    ];
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/observation/{odourObservation}/comments/', [App\Http\Controllers\OdourObservationCommentController::class, 'index'])->name('comments.index');
+    Route::post('/observation/{odourObservation}/comments/', [App\Http\Controllers\OdourObservationCommentController::class, 'store'])->name('comments.store');
+    Route::patch('/observation/{odourObservation}/comments/{comment}', [App\Http\Controllers\OdourObservationCommentController::class, 'update'])->name('comments.update');
+    Route::delete('/observation/{odourObservation}/comments/{comment}', [App\Http\Controllers\OdourObservationCommentController::class, 'destroy'])->name('comments.destroy');
 });

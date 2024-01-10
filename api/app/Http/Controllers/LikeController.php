@@ -16,7 +16,7 @@ class LikeController extends Controller
 
         $userToNoify = $notificationObj->user;
 
-        $userToNoify->notify(new LikeReceived($notificationObj));
+        $userToNoify->notify(new LikeReceived($notificationObj, $request->user()));
         // \App\Models\User::find($notificationObj->user_id)->notify(new LikeReceived($notificationObj));
 
         return response()->json([

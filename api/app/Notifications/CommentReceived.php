@@ -9,14 +9,14 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class LikeReceived extends Notification
+class CommentReceived extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(
+    public function  __construct(
         private OdourObservation $odourObservation,
         private User $user) {}
 
@@ -48,7 +48,7 @@ class LikeReceived extends Notification
      */
     public function databaseType(object $notifiable): string
     {
-        return 'like';
+        return 'comment';
     }
 
     /**
@@ -59,7 +59,7 @@ class LikeReceived extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'You have a new like!',
+            'message' => 'You have a new comment!',
             'resource' => $this->odourObservation->id,
             'user' => [
                 'id' => $this->user->id,

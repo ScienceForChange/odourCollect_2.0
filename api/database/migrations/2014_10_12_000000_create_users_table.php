@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Ramsey\Uuid\Uuid;
 
 return new class extends Migration
 {
@@ -14,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->default(Uuid::uuid4()->toString());
-            $table->integer('profile_id');
-            $table->string('profile_type')->default('citizen');
+            $table->integer('userable_id');
+            $table->string('userable_type')->default('citizen');
             $table->string('avatar_id')->default(1);
             $table->string('email')->unique();
             $table->string('password');

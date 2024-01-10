@@ -8,11 +8,12 @@ class NotificationController extends Controller
 {
     public function index(Request $request)
     {
+
         $response = response()->json([
-            'notifications' => $request->user()->notifications(),
+            'notifications' => $request->user()->unreadNotifications,
         ]);
 
-        $request->user->notifications->markAsRead();
+        //$request->user()->notifications->markAsRead();
 
         return $response;
     }
@@ -20,6 +21,9 @@ class NotificationController extends Controller
     public function show(Request $request)
     {
         $notification = $request->user()->notifications()->findOrFail($request->notification);
+
+        $notification->markAsRead();
+
         return response()->json([
             'notification' => $notification,
         ]);

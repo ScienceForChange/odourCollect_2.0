@@ -8,6 +8,7 @@ use Illuminate\Validation\Rules\Password;
 use App\Contracts\Likeable;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Gate;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -41,6 +42,7 @@ class AuthServiceProvider extends ServiceProvider
             return $rule;
         });
 
+
         Gate::define('like', function (\App\Models\User $user, Likeable $likeable) {
             if($user->hasLiked($likeable)) {
                 return Response::deny('You have already liked this');
@@ -56,5 +58,6 @@ class AuthServiceProvider extends ServiceProvider
 
             return Response::allow();
         });
+
     }
 }

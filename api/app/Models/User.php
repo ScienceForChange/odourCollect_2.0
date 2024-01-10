@@ -12,18 +12,10 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Traits\HasUuid;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasUuid;
-
-    /**
-     * The relationships that should always be loaded.
-     *
-     * @var array<int, string>
-     */
-    protected $with = ['profile'];
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -31,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
+        'username',
         'email',
         'password',
         'avatar_id',
@@ -56,17 +49,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    public function getRouteKeyName(): string
-    {
-        return 'uuid';
-    }
-
     /**
-     * Get the profile associated with user.
+     * Get the parent userable model (citizen profile, client profile, etc).
      */
-    public function profile(): MorphTo
+    public function userable(): MorphTo
     {
-        return $this->morphTo(__FUNCTION__, 'profile_type', 'profile_id');
+        return $this->morphTo();
     }
 
     /**
@@ -104,7 +92,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $likeable->likes()
             ->whereHas('user', function($q) {
-                $q->where('uuid', $this->uuid);
+                $q->where('id', $this->id);
             })
             ->delete();
 
@@ -119,10 +107,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $likeable->likes()
                 ->whereHas('user', function($q) {
-                    $q->where('uuid', $this->uuid);
+                    $q->where('id', $this->id);
                 })
                 ->exists();
     }
+
     /**
      * Send the email verification notification.
      *

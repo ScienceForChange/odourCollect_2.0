@@ -15,11 +15,12 @@ class ProfileCitizenResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name' => $this->name,
-            'gender' => $this->gender,
-            'birthYear' => $this->birth_year->format('Y-m-d'),
-            'statusSentence' => $this->status_sentence,
-            'deletedBecause' => $this->deleted_because,
-    ];
+            'type'          => 'Citizen', //TODO: ver de mejorar
+            'name'          => $this->name,
+            'surname'       => $this->surname,
+            'gender'        => $this->gender,
+            'birthYear'     => $this->birth_year,
+            'phone'         => $this->phone,
+        ];
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OdourSubTypeResource extends JsonResource
+class CommentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +16,9 @@ class OdourSubTypeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'odourTypeId' => $this->odour_type_id,
-            'name'          => $this->name,
-            'slug'          => $this->slug,
-            'relationships' => [
-                'odourType' => new OdourTypeResource($this->whenLoaded('odourType')),
-            ],
+            'body' => $this->body,
+            'user_id' => $this->user_id,
+            'created_at' => $this->created_at->format('Y-m-d H:m:s'),
         ];
     }
 }

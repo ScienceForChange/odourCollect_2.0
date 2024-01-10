@@ -13,8 +13,9 @@ use App\Models\OdourIntensity;
 use App\Models\OdourObservation;
 use App\Models\OdourType;
 use App\Traits\ApiResponses;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Http\JsonResponse;
 use Spatie\QueryBuilder\AllowedFilter;
 use App\Filters\OdourObservations\{ FilterOdourTypes, FilterOdourHedonicTones, FilterOdourIntensities };
 
@@ -38,7 +39,7 @@ class OdourObservationController extends Controller
                                     'odourIntensity',
                                     'odourHedonicTone',
                                     'odourSubType.odourType',
-                                    'user'
+                                    'user.userable'
                                 ]);
 
         $limit = request()->limit ?? '';
@@ -101,7 +102,9 @@ class OdourObservationController extends Controller
                 'odourHedonicTone',
                 'odourIntensity',
                 'odourSubType.odourType',
-                'user.userable'
+                'user.userable',
+                'user.odourObservations.odourSubType.odourType',
+                'comments'
             ]))
         ],
         Response::HTTP_OK

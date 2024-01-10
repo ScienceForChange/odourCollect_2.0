@@ -41,7 +41,7 @@ class OdourHedonicTone extends Model
     /**
      * Get the odours for the Odour Hedonic Tone kind.
      */
-    public function odourObservations(): HasMany
+    public function odours(): HasMany
     {
         return $this->hasMany(OdourObservation::class);
     }
