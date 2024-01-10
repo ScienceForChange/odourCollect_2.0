@@ -10,16 +10,6 @@ import { Observation } from '../../app/models/observation';
 import { AuthService } from '../../app/services/auth.service';
 import { Router } from '@angular/router';
 
-jest.mock('./auth.service', () => {
-  return {
-    AuthService: jest.fn().mockImplementation((http, router, tokenExtractor) => ({
-      // Puedes configurar las propiedades o métodos específicos que necesites en el mock
-      // Aquí solo se proporciona un ejemplo básico
-      _user: jest.fn(),
-      actualizarPropiedad: jest.fn(),
-    })),
-  };
-});
 describe('UserService', () => {
   let service: UserService;
   let testScheduler: TestScheduler;

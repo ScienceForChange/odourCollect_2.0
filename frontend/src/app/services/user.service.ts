@@ -100,5 +100,21 @@ export class UserService {
       this.user.total_observations--;
     }
   }
+  
+  public addLikeToObservation(obsId: number) {
+    return this.http.post(`${environment.BACKEND_BASE_URL}/like`, { 
+      likeable_type: 'App\\Models\\OdourObservation',
+      id: obsId
+     },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        withCredentials: true,
+      }
+    );
+  }
+
 
 }

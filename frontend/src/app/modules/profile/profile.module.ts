@@ -15,6 +15,11 @@ import { BadgesComponent } from './components/badges/badges.component';
 import { MyStudyZonesComponent } from './components/my-study-zones/my-study-zones.component';
 import { NgxMapLibreGLModule } from '@maplibre/ngx-maplibre-gl';
 import { StudyZoneModule } from './components/study-zone/study-zone.module';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { SfcNotificationsComponent } from './components/notifications/components/sfc-notifications/sfc-notifications.component';
+import { SocialNotificationsComponent } from './components/notifications/components/social-notifications/social-notifications.component';
+import { NotificationComponent } from './components/notifications/components/notification/notification.component';
+import { MessageComponent } from './components/notifications/components/message/message.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +31,11 @@ import { StudyZoneModule } from './components/study-zone/study-zone.module';
     EditAvatarComponent,
     BadgesComponent,
     MyStudyZonesComponent,
+    NotificationsComponent,
+    SfcNotificationsComponent,
+    SocialNotificationsComponent,
+    NotificationComponent,
+    MessageComponent,
   ],
   exports: [],
   imports: [

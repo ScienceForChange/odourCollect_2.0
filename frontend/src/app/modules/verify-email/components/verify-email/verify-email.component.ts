@@ -29,7 +29,6 @@ export class VerifyEmailComponent implements OnDestroy {
   resendVerifyEmail(){
     this.sendButton.nativeElement.classList.add('loading');
     this.sendButton.nativeElement.disabled = true;
-
     if(!this.authService.isVerified){
       this.resendVerifymail$ = this.authService.resendVerifyEmail().subscribe({
         next:()=>{
@@ -57,7 +56,8 @@ export class VerifyEmailComponent implements OnDestroy {
       })
     }
     else{
-      this.router.navigate(['/role']);
+      this.alertService.success('Su correo ya fue verificado.');
+      this.router.navigate(['/']);
     }
   }
 

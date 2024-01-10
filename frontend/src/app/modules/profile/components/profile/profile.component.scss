@@ -70,6 +70,22 @@ section {
           height: 48px;
           text-decoration: none;
           color: $black;
+          &.newNotification::ng-deep:first-child{
+            position: relative;
+            z-index: 1;
+            &::before{
+              content: '';
+              display: block;
+              position: absolute;
+              top: 1px;
+              right: -2px;
+              width: 7px;
+              height: 7px;
+              background-color: $red;
+              border-radius: 50%;
+              z-index: 2;
+            }
+          }
           span{
             line-height: 18px;
             

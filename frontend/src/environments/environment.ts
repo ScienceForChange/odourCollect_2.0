@@ -1,7 +1,7 @@
 export const environment = {
     production: true,
     //appVersion: require('../../package.json').version,
-    BACKEND_BASE_URL: 'https://odourcollect.cloud/',
+    BACKEND_BASE_URL: 'http://prod-url',
     AUTHORIZATION: 'Authorization',
     BEARER: 'Bearer ',
     BACKEND_TOKEN: '',

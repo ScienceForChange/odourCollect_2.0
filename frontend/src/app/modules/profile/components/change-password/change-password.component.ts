@@ -91,7 +91,6 @@ export class ChangePasswordComponent {
         
       },
       error: ( resp ) => {
-        console.log(resp)
         if (resp.status == 422) {
           Object.keys(resp.error.errors)
             .map((key) => key)

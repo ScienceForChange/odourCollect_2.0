@@ -28,14 +28,14 @@
           </a>
         </li>
         <li>
-          <a routerLink="/profile/my-study-zones">
+          <a routerLink="my-study-zones">
             <icon-map-point-wave/>
             <span class="label-l">Mis zonas de estudio</span>
             <icon-arrow-right2/>
           </a>
         </li>
         <li>
-          <a routerLink="/">
+          <a routerLink="notifications" [ngClass]="{ 'newNotification' : newNotification }">
               <icon-letter [class]="'violet-icon violet-icon-stroke'"/>
               <span class="label-l">Mensajes y notificaciones</span>
               <icon-arrow-right2/>

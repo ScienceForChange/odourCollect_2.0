@@ -14,7 +14,7 @@ export const AuthGuardActivate: CanActivateFn = (route, state) => {
   //En caso de estar logueado dejamos pasar.
   if (authService.isLoggedIn.value) return true;
 
-  //En caso contrario le pasamos al servicio login la url protegida y redigimos a login.
+  //En caso contrario le pasamos al servicio login la url protegida mostramos el modal de loguin y redigimos a map.
   authService.routeToRedirect = state.url;
   if(!authService.isLoggedIn.value) modalService.open(RegisterModalComponent, { windowClass: 'default', backdropClass: 'default', centered : true, size: 'sm' } )
   return router.parseUrl('/map');
@@ -31,9 +31,9 @@ export const AuthGuardLogoutActivate: CanActivateFn = (route, state) => {
 
 export const AuthGuardHomePage: CanActivateFn = (route, state) => {
 
-  const authService: AuthService = inject(AuthService);
-  const router = inject(Router);
-  const tokenExtractor: HttpXsrfTokenExtractor = inject(HttpXsrfTokenExtractor);
+  const authService: AuthService                = inject(AuthService);
+  const router:Router                           = inject(Router);
+  const tokenExtractor: HttpXsrfTokenExtractor  = inject(HttpXsrfTokenExtractor);
 
   //En caso de estar logueado o existir un cookie XSRF redirigimos a /map, en caso contrario dejamos pasar.
   return authService.isLoggedIn.value || tokenExtractor.getToken() ? router.parseUrl('/map') : true;

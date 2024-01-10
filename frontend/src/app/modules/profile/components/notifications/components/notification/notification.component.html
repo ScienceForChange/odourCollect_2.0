@@ -1,0 +1,19 @@
+
+<div class="notification d-flex" (click)="openNotification()" *ngIf="notification" [ngClass]="{'new': !notification.read_at, 'is-added': notification.isAdded}">
+    <div class="img">
+        <img 
+            [src]="notification.data.user.avatar_id? '/assets/images/avatars/' + notification.data.user.avatar_id + '.svg' : '/assets/images/notification-oc.png'" 
+            [height]="64" 
+            [alt]="'Odor Collect'"
+        />
+    </div>
+    <div class="content d-flex flex-column justify-content-between flex-fill">
+        <div class="header d-flex justify-content-between align-content-end">
+            <h6 class="label-l"> {{notification.type == 'message' ? "OdourCollect" : "User" + notification.data.user.id + " " + notification.data.message }}</h6>
+            <span class="date label-m" *ngIf="notification.type == 'message'">{{ timeAgo() }}</span>
+        </div>
+        <p class="body-s" [ngClass]="notification.type != 'message' ? 'text-end' : 'text-start'">
+            {{notification.type == 'message' ? notification.data.message : timeAgo() }}
+        </p>
+    </div>
+</div>

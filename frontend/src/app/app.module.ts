@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { RequestInterceptor } from './interceptors/request.interceptor';
 import { AuthService } from './services/auth.service';
 import { appInitializer } from './helpers/appInitializer';
+import { NotificationService } from './services/notification.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,7 +35,7 @@ import { appInitializer } from './helpers/appInitializer';
       provide: APP_INITIALIZER,
       useFactory: appInitializer,
       multi: true,
-      deps: [AuthService],
+      deps: [AuthService, NotificationService],
     },
     { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
   ],

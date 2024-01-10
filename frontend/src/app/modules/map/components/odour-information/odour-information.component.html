@@ -73,7 +73,7 @@
       </div>
     </div>
     <div class="d-flex flex-row align-content-between mt-3">
-      12 Me gusta
+      {{ observation.likes }} Me gusta
     </div>
     <div class="d-flex flex-row align-content-between">
       7 comentarios
@@ -88,11 +88,11 @@
         tabindex="0"
         (click)="toggleObservationLike()"
         *ngIf="!user || user.id != observation.relationships.user?.id"
-        class="d-flex justify-content-start align-items-center gap-2 like"
-        [ngClass]="{'liked': isLiked}"
+        class="d-flex justify-content-start align-items-center gap-2"
+        [ngClass]="{'liked': observation.liked}"
       >
-        <icon-heart [iconClass]="'icon-violet-dark'" />
-        <span>Me gusta</span>
+        <icon-heart [iconClass]="'icon-violet-dark'" [liked]="observation.liked" />
+        <span class="color-violet-dark">Me gusta</span>
       </div>
     </div>
     <div class="d-flex flex-column align-items-start justify-content-center mt-3">

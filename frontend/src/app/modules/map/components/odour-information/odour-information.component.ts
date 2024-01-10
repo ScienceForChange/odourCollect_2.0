@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Observation } from 'src/app/models/observation';
 import { User } from 'src/app/models/user';
@@ -12,6 +12,8 @@ import { PublicProfileOffcanvaComponent } from 'src/app/modules/offcanvas/compon
 import { MapService } from '../../../../services/map.service';
 import { RegisterModalComponent } from 'src/app/modules/modals/register-modal/register-modal.component';
 import { DangerComponent } from 'src/app/shared/components/Icons/danger/danger.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { HeartComponent } from 'src/app/shared/components/Icons/heart/heart.component';
 
 @Component({
   selector: 'app-odour-information',
@@ -19,18 +21,18 @@ import { DangerComponent } from 'src/app/shared/components/Icons/danger/danger.c
   styleUrls: ['./odour-information.component.scss'],
 })
 export class OdourInformationComponent implements OnInit, OnDestroy {
+  @ViewChild(HeartComponent) heartIcon!:HeartComponent;
+
   private user$!: Subscription;
   private subscriptions = new Subscription();
 
   public observation!: Observation;
   public isOpen: boolean = false;
   public user: User | undefined = undefined;
-  
-        //Borrar cuando tengamos el endpoint
-        public isLiked = false;
 
   constructor(
     private userService: UserService,
+    private authService: AuthService,
     private odourService: OdourService,
     private mapService: MapService,
     private alertService: AlertService,
@@ -125,17 +127,25 @@ export class OdourInformationComponent implements OnInit, OnDestroy {
   }
 
   toggleObservationLike() {
-    if(this.userService.user) {
-      this.odourService.toggleObservationLike(this.observation.id).subscribe({
-        next: (resp) => {
-          
-        },
-        error: (err) => {
-          console.log(err);
-          this.isLiked = !this.isLiked;
-          //Borrar cuando tengamos el endpoint
-        },
+    if(this.authService.isLoggedIn.value) {
+
+      if(this.observation.liked)
+      this.odourService.deleteObservationLike(this.observation.id).subscribe({
+        next: (resp: any) => {
+          this.observation.likes = resp.likes;
+          this.observation.liked = false;         
+        }
       });
+
+      else
+      this.odourService.addObservationLike(this.observation.id).subscribe({
+        next: (resp: any) => {
+          this.observation.likes = resp.likes;
+          this.observation.liked = true;   
+          this.heartIcon.heartsEffect();        
+        }
+      });
+      
     }
     else {
       this.modalService

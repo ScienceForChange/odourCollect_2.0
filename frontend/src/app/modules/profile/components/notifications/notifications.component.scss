@@ -1,0 +1,65 @@
+@import "../../../../../styles/colors";
+#header{
+    padding: 23px 17px 0;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    box-shadow: 0 10px 10px white;
+    z-index: 1;
+    &::after{
+        content: '';
+        display: block;
+        width: 30px;
+        height: 30px;
+    }
+    app-back-btn{
+        width: 30px;
+    }
+
+    #notifications-menu{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        box-shadow: 1px 1px 10.5px 0px rgba(0, 0, 0, 0.05);
+        border-radius: 20px;
+        li{
+            margin: 0 -3px;
+            z-index: 2;
+            position: relative;
+            &.new{
+                &::after{
+                    content: '';
+                    position: absolute;
+                    top: 7px;
+                    right: 7px;
+                    width: 7px;
+                    height: 7px;
+                    background-color: $red;
+                    border-radius: 50%;
+                }
+            }
+            a{
+                display: inline-block;
+                color: $black;
+                text-decoration: none;
+                padding: 8px 16px;
+            }
+            
+        }   
+        #marker{
+            //transition: all 0.3s ease-in-out;
+            z-index: 1;
+            position: absolute;
+            display: block;
+            height: 40px;
+            width: 10px;
+            background-color: $violet;
+            border-radius: 20px;
+            top: 0;
+            left: 0;
+            &.transition{
+                transition: all 0.3s ease-in-out;
+            }
+        }
+    }
+}

@@ -66,7 +66,8 @@ export class AuthService {
 
   login(user: UserLogin): Observable<Object> {
 
-    return this.http.post<{ status: number, data: User }>(`${environment.BACKEND_BASE_URL}login`,
+    return this.http.post<{ status: number, data: User }>(
+      `${environment.BACKEND_BASE_URL}login`,
       { ...user },
       {
         headers: {

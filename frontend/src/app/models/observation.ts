@@ -16,6 +16,8 @@ export interface Observation {
   latitude: string;
   longitude: string;
   relationships: ObservationRelationships;
+  likes: number;
+  liked: boolean;
   description: null | string;
   origin: null | string;
   createdAt: Date;

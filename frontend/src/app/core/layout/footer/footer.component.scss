@@ -24,6 +24,21 @@ nav {
         justify-content: center;
         padding: 8px 0;
         text-decoration: none;
+        &.newNotification {
+          position: relative;
+          &::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 10px;
+            right: 30px;
+            width: 7px;
+            height: 7px;
+            background-color: $red;
+            border-radius: 50%;
+            animation: notificationEffect 1s;
+          }
+        }
       }
     }
   }
@@ -42,7 +57,7 @@ nav {
   top: 0;
   display: flex;
   transition: all 0.3s ease-out;
-
+  
   height: 100%;
   background: $violet-light;
   padding: 8px 0;
@@ -64,9 +79,27 @@ li:nth-child(3).active ~ .follow {
 
 @keyframes animation-footer-fadeIn {
   50% {
-      opacity: 0;
+    opacity: 0;
   }
   100% {
-      opacity: 100;
+    opacity: 100;
+  }
+}
+
+@keyframes notificationEffect {
+  0% {
+    transform: scale(0);
+  }
+  60% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(1.5);
+  }
+  80% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
   }
 }

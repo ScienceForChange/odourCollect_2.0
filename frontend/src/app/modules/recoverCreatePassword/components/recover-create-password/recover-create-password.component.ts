@@ -53,9 +53,6 @@ export class RecoverCreatePasswordComponent {
     }
   }
 
-  ngOnInit() {
-  }
-
   get passwordMatchError() {
     return (
       this.createPasswordRecover.getError('mismatch') &&
@@ -90,9 +87,10 @@ export class RecoverCreatePasswordComponent {
       .subscribe({
         next: () => {
           this.loading = false;
+
           this.router.navigate(['/login']);
         },
-        error: ({ resp }) => {
+        error: ( resp ) => {
           if (resp.status == 422) {
             Object.keys(resp.error.errors)
               .map((key) => key)

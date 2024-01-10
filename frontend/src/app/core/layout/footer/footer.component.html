@@ -25,7 +25,7 @@
       >
     </li>
     <li [class.active]="rlaprofile.isActive">
-      <a routerLink="/profile" routerLinkActive #rlaprofile="routerLinkActive"
+      <a routerLink="/profile" routerLinkActive #rlaprofile="routerLinkActive" [ngClass]="{ 'newNotification' : newNotification }"
         ><icon-profile
           [class]="
             rlaprofile.isActive

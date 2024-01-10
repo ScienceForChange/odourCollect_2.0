@@ -43,7 +43,6 @@ export class RequestInterceptor implements HttpInterceptor {
         },
       });
     }
-    
     return next.handle(req).pipe(
       //en caso de que se de caulquier error comprobamos de que se trata
       catchError((error) => {

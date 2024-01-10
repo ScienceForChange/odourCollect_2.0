@@ -48,9 +48,12 @@ export class EditAvatarComponent implements OnDestroy{
   public updateAvatar(){
     if(this.user &&  this.user.avatar_id != this.newAvatar ) this.user.avatar_id = this.newAvatar
     this.updateUser$ = this.userService.update().subscribe({
-      next:() => { 
+      next: () => { 
         this.route.navigate(['/profile']); 
         this.alertService.success('¡Avatar actualizado!', {autoClose: true})
+      },
+      error: () => {
+        this.alertService.error('Hubo un error, pruebalo de nuevo más tarde', { keepAfterRouteChange: false, autoClose: true });
       }
     })
   }

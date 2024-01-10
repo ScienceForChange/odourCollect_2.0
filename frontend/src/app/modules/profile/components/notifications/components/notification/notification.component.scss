@@ -1,0 +1,52 @@
+@import '../../../../../../../styles/colors';
+
+.notification{
+    background-color: $violet-lighter;
+    padding: 18px 15px;
+    border-radius: 20px;
+    gap: 10px;
+    color: $grey;
+    position: relative;
+    box-shadow: 1px 1px 10.5px 1px rgba(0, 0, 0, 0.05);
+    transition: all 0.5s ease-in-out;
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    &.new{
+        &::after{
+            content: '';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 7px;
+            height: 7px;
+            background-color: $red;
+            border-radius: 50%;
+        }
+    }
+    &.is-added{
+        opacity: 0;
+        animation: is-added 0.3s ease-out forwards;
+    }
+    .header{
+        h6{ 
+            color: $black;
+        }
+    }
+}
+@keyframes is-added{
+    0%{ max-height: 0;
+        opacity: 0;
+        padding-bottom: 0;
+        margin-bottom: -20px;
+    }
+    50%{ 
+        opacity: 1;
+        padding-bottom: 18px;
+        margin-bottom: 0;
+    }
+    100%{
+        opacity: 1;
+        max-height: 110px;
+    }
+}

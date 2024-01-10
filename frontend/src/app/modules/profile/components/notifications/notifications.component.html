@@ -1,0 +1,18 @@
+<div id="header" class="d-flex gap-3 justify-content-between align-items-center">
+    <app-back-btn [route]="'profile'"/>
+    <ul id="notifications-menu">
+        <li class="option" [ngClass]="{'new': newSfcNotification}">
+            <a routerLink="sfc" routerLinkActive="active-notification-option" class="label-l">
+                Mensajes
+            </a>
+        </li>
+        <li class="option" [ngClass]="{'new': newSocialNotification}">
+            <a routerLink="social" routerLinkActive="active-notification-option" class="label-l">
+                Notificaciones
+            </a>
+        </li>
+        <div #marker id="marker"></div>
+    </ul>
+</div>
+
+<router-outlet />

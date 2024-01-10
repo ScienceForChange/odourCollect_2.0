@@ -419,13 +419,30 @@ export class OdourService {
       );
   }
 
-  public toggleObservationLike(obsId: number) {
-    return this.http.post(`${environment.BACKEND_BASE_URL}api/odour-observations/like`, { odour_observation_id: obsId }, {
+  public addObservationLike(obsId: number) {
+    return this.http.post(`${environment.BACKEND_BASE_URL}api/like`, { 
+      likeable_type: 'App\\Models\\OdourObservation',
+      id: obsId
+     }, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
       withCredentials: true,
+    });
+  }
+
+  public deleteObservationLike(obsId: number) {
+    return this.http.delete(`${environment.BACKEND_BASE_URL}api/like`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      withCredentials: true,
+      body: { 
+        likeable_type: 'App\\Models\\OdourObservation',
+        id: obsId
+      }
     });
   }
 

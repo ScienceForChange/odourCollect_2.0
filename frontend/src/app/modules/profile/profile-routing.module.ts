@@ -10,6 +10,10 @@ import { EditAvatarComponent } from './components/edit-avatar/edit-avatar.compon
 import { BadgesComponent } from './components/badges/badges.component';
 import { MyStudyZonesComponent } from './components/my-study-zones/my-study-zones.component';
 import { StudyZoneComponent } from './components/study-zone/components/study-zone/study-zone.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { SocialNotificationsComponent } from './components/notifications/components/social-notifications/social-notifications.component';
+import { SfcNotificationsComponent } from './components/notifications/components/sfc-notifications/sfc-notifications.component';
+import { MessageComponent } from './components/notifications/components/message/message.component';
 
 const routes: Routes = [
   {
@@ -58,6 +62,28 @@ const routes: Routes = [
       {
         path: 'profile/my-study-zones/id',
         component: StudyZoneComponent,
+      },
+      {
+        path: 'profile/notifications',
+        redirectTo: 'profile/notifications/sfc',
+      },
+      {
+        path: 'profile/notifications',
+        component: NotificationsComponent,
+        children:[
+            {
+              path: 'social',
+              component: SocialNotificationsComponent,
+            },
+            {
+              path: 'sfc',
+              component: SfcNotificationsComponent,
+            },
+          ]
+      },
+      {
+        path: 'profile/notifications/message/:id',
+        component: MessageComponent,
       },
     ],
   },

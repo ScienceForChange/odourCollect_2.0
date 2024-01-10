@@ -73,7 +73,7 @@ const routes: Routes = [
     path: 'verify-email',
     component: VerifyEmailComponent,
     canActivate: [AuthGuardActivate, UnverifyGuardActivate],
-    loadChildren: () =>import('../modules/profile/profile.module').then((m) => m.ProfileModule),
+    loadChildren: () => import('../modules/profile/profile.module').then((m) => m.ProfileModule),
   },
   {
     path: 'map',
@@ -84,8 +84,7 @@ const routes: Routes = [
     path: 'profile',
     component: ProfileComponent,
     canActivate: [AuthGuardActivate, VerifyGuardActivate],
-    loadChildren: () =>
-      import('../modules/profile/profile.module').then((m) => m.ProfileModule),
+    loadChildren: () => import('../modules/profile/profile.module').then((m) => m.ProfileModule),
   },
   {
     path: 'frequently-asked-questions',
