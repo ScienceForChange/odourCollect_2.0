@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router} from '@angular/router';
 import { Subscription, fromEvent } from 'rxjs';
+import { AppNotification } from 'src/app/models/app-notification';
 import { FooterService } from 'src/app/services/footer.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
@@ -16,7 +17,7 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterViewInit 
   private router$!:Subscription;
   private sfcNotifications$!:Subscription;
   private socialNotifications$!:Subscription;
-  public notificaions: any;
+  public notifications!: AppNotification;
   public newSfcNotification:boolean = true;
   public newSocialNotification:boolean = true;
 
@@ -47,13 +48,11 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterViewInit 
     this.sfcNotifications$ = this.notifcationService.sfcNotification.subscribe({
       next: (resp) => {
         this.newSfcNotification = resp.length > 0;
-        console.log(this.notificaions);
       }
     })
     this.socialNotifications$ = this.notifcationService.socialNotification.subscribe({
       next: (resp) => {
         this.newSocialNotification = resp.length > 0;
-        console.log(this.notificaions);
       }
     })
       

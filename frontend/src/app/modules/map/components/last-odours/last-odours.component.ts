@@ -7,6 +7,7 @@ import { Observation } from 'src/app/models/observation';
 import { InfoModalComponent } from 'src/app/modules/modals/info-modal/info-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DangerComponent } from 'src/app/shared/components/Icons/danger/danger.component';
+import { RegisterModalComponent } from 'src/app/modules/modals/register-modal/register-modal.component';
 
 @Component({
   selector: 'app-last-odours',
@@ -42,16 +43,14 @@ export class LastOdoursComponent implements OnInit, OnDestroy {
 
   public onClick(): void {
     if (!this.userService.user) {
-      this.modalService.open(InfoModalComponent, {
+      this.modalService.open(RegisterModalComponent, {
         windowClass: 'default',
         backdropClass: 'default',
         centered: true,
         size: 'sm',
       }).componentInstance.config = {
         icon: DangerComponent,
-        text: 'Debes estar registrado/a para añadir un olor.',
-        acceptButtonText: 'Registrarme',
-        buttonCallBack: () => this.router.navigate(['/login']),
+        text: 'Debes estar registrado/a para añadir un olor.'
       };
       return;
     }

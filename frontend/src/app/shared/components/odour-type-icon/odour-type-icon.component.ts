@@ -8,5 +8,6 @@ import { Component, Input } from '@angular/core';
 export class OdourTypeIconComponent {
   @Input() odourType!:string;
   @Input() odourName!:string
+  @Input() odourSubtypeName: string | null = null;
   @Input() iconClass!:string;  
 }

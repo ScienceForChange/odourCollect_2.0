@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppNotification } from 'src/app/models/app-notification';
 import { MapService } from 'src/app/services/map.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
@@ -9,7 +10,7 @@ import { NotificationService } from 'src/app/services/notification.service';
   styleUrls: ['./notification.component.scss']
 })
 export class NotificationComponent {
-  @Input() notification!:any;
+  @Input() notification!:AppNotification;
 
   constructor( 
     private mapService: MapService,
@@ -20,7 +21,7 @@ export class NotificationComponent {
   public openNotification(){
 
     if(this.notification.type === 'message'){
-      this.route.navigate(['/profile/notifications/message/' + this.notification.messageId]);
+      this.route.navigate(['/profile/notifications/message/' + this.notification.data.resource]);
     }
     else{
       this.mapService.seeMoreAbout(this.notification.data.resource);

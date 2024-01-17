@@ -1,17 +1,31 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, map, tap} from 'rxjs';
+import { BehaviorSubject, Observable, tap} from 'rxjs';
 import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { AppNotification } from '../models/app-notification';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
 
+  /*
+  notificationService: servicio que se encarga de revisar las notificaciones del usuario
+  y almacenarlas en los BehaviorSubject correspondientes
+
+  newNotification: BehaviorSubject que indica si hay notificaciones nuevas
+  sfcNotification: BehaviorSubject que contiene las notificaciones de tipo mensajes de SFC
+  socialNotification: BehaviorSubject que contiene las notificaciones de tipo social, como likes
+
+  refresh: booleano que indica si se debe seguir revisando las notificaciones aun cuando ya hayan notificaciones nuevas
+  timer: tiempo en milisegundos que se espera para revisar las notificaciones cuando está en bucle
+  checking: booleano que indica si se está revisando las notificaciones en bucle para no hacerlo más de una vez
+  
+  */
   public newNotification:     BehaviorSubject<boolean>  = new BehaviorSubject<boolean>(false);
-  public sfcNotification:     BehaviorSubject<any[]>    = new BehaviorSubject<any[]>([]);
-  public socialNotification:  BehaviorSubject<any[]>    = new BehaviorSubject<any[]>([]);
+  public sfcNotification:     BehaviorSubject<AppNotification[]>    = new BehaviorSubject<AppNotification[]>([]);
+  public socialNotification:  BehaviorSubject<AppNotification[]>    = new BehaviorSubject<AppNotification[]>([]);
 
   private login: boolean = false;
   private timer: number = 5000;
@@ -21,14 +35,18 @@ export class NotificationService {
 
   constructor(private authService: AuthService, private http: HttpClient) { 
     authService.isLoggedIn.subscribe({
-      next: (resp) => {
+      next: (resp : boolean) => {
         this.login = resp;
         this.checkNotifications();
       }
     })
   }
 
-  public checkNotifications() {
+  // checkNotifications: método que revisa las notificaciones del usuario
+  // si hay notificaciones nuevas, las clasifica por tipo y las guarda en los BehaviorSubject
+  // si no hay notificaciones nuevas, sigue revisando cada 5 segundos
+  // si hay notificaciones nuevas se deja de revisar si no se indica lo contrario con el atributo refresh
+  public checkNotifications():void {
 
     if(this.login){
 
@@ -46,7 +64,6 @@ export class NotificationService {
       .subscribe({
         next: (resp: any) => {
           if(resp.notifications.length > 0){
-            console.log('new notifications');
             this.classifyNotificationsByType(resp.notifications);
             this.newNotification.next(true);
             if(this.refresh){
@@ -64,19 +81,23 @@ export class NotificationService {
               this.checkNotifications();
             }, this.timer);
           }
+        },
+        error: () => {
+          setTimeout(() => {
+            this.checkNotifications();
+          }, this.timer * 5);
         }
       });
      
     }
-
-    else if(!this.login){
+    else{
       this.newNotification.next(false);
     }
 
   }
 
-
-  public getNotifications():Observable<any> {
+  //getNotifications: método que obtiene las notificaciones del usuario
+  public getNotifications():Observable<AppNotification[]> {
     return this.http.get(`${environment.BACKEND_BASE_URL}api/notifications`,
     {
       headers: {
@@ -84,8 +105,7 @@ export class NotificationService {
         Accept: 'application/json',
       },
       withCredentials: true,
-    }
-    ).pipe(
+    }).pipe(
       tap((resp: any) => {
         if(resp.notifications.length > 0){
           this.classifyNotificationsByType(resp.notifications);
@@ -98,11 +118,12 @@ export class NotificationService {
       })
     )
   }
-  
-  private classifyNotificationsByType(notifications: any[]){
 
-    let socialNotifications: any[] = [];
-    let sfcNotifications: any[] = [];
+  //classifyNotificationsByType: método que clasifica las notificaciones por tipo
+  private classifyNotificationsByType(notifications: AppNotification[]):void{
+
+    let socialNotifications: AppNotification[] = [];
+    let sfcNotifications: AppNotification[] = [];
 
     notifications.forEach((notification) => {
       if(notification.type === 'like'){
@@ -118,6 +139,7 @@ export class NotificationService {
 
   }
 
+  //readNotification: método que marca una notificación como leída
   public readNotification(id: string):void {
 
     this.http.get(`${environment.BACKEND_BASE_URL}api/notifications/${id}`,

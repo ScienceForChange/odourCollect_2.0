@@ -28,6 +28,7 @@ export interface ObservationRelationships {
   odourSubType: OdourSubType;
   odourIntensity: OdourIntensity;
   odourHedonicTone: OdourHedonicTone;
+  comments: [];
   user?: User;
 }
 

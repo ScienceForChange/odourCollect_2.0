@@ -19,7 +19,7 @@ export class SignupComponent {
   public loading: boolean = false;
 
   public years: number[] = [...Array(100).keys()]
-    .map((x) => x + new Date().getFullYear() - 99)
+    .map((x) => x + new Date().getFullYear() - 113)
     .reverse();
   public currentYear: number = new Date().getFullYear();
 

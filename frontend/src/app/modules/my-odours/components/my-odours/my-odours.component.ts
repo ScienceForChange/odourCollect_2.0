@@ -79,7 +79,7 @@ export class MyOdoursComponent implements OnInit {
         );
         this.observations = observationsFiltered;
         this.observationsRef = observationsFiltered;
-        this.alertService.success('Observacion eliminada', {
+        this.alertService.success('Observación eliminada', {
           autoClose: true,
           keepAfterRouteChange: true,
         });

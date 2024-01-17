@@ -15,6 +15,7 @@ textarea {
   border: 1px solid $violet-lighter;
   background-color: $violet-lighter;
   &:focus {
+    box-shadow: none;
     outline: none;
   }
   &.error,

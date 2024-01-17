@@ -7,6 +7,8 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import { BehaviorSubject } from 'rxjs';
+import { NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
+import { InfoObservationOffcanvaComponent } from '../modules/offcanvas/components/info-observation-offcanva/info-observation-offcanva.component';
 
 @Injectable({
   providedIn: 'root',
@@ -42,10 +44,13 @@ export class MapService {
   public showUserObservations: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
+  public infoObservationOffcanva!: NgbOffcanvasRef;
+    
   constructor(
     private userService: UserService,
     private odourService: OdourService,
     private router: Router,
+    private offcanvasService: NgbOffcanvas,
   ) {
     this.getObservations();
   }
@@ -69,9 +74,7 @@ export class MapService {
       : Number(featureSpiderfy[0].id);
 
     if (odourId) {
-      this.odourService.getOdourInfo(odourId).subscribe((res) => {
-        this.odourService.observation$.next(res.data[0]);
-      });
+      this.seeMoreAbout(odourId);
     }
   }
 
@@ -270,17 +273,32 @@ export class MapService {
 
   //Ver más información de la observación seleccionada.
   public seeMoreAbout(observationId: number): void {
+    
+    if(this.infoObservationOffcanva) this.infoObservationOffcanva.dismiss();
+
+    this.infoObservationOffcanva = this.offcanvasService.open(
+      InfoObservationOffcanvaComponent,
+      {
+        position: 'bottom',
+        scroll: true,
+        panelClass: 'default info-observation',
+        backdropClass: 'default info-observation',
+      },
+    );
+    
     if (this.router.url !== '/map') {
       this.router.navigate(['/map']);
     }
+    
     this.odourService.getOdour(observationId).subscribe((observationRes) => {
       const observation = observationRes.data[0];
-      this.odourService.observation$.next(observation);
+      this.infoObservationOffcanva.componentInstance.observation = observation;
       this.centerMap(
         Number(observation.latitude),
         Number(observation.longitude),
       );
     });
+
   }
 
   //Inicio el mapa (Solo se ejecuta una vez)

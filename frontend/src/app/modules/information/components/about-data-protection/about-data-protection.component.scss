@@ -1,0 +1,37 @@
+section{
+    max-width: 100dvw;
+
+    ul{
+        list-style-type: none;
+        padding: 0 0 20px 20px;
+        margin: 0;
+        li{
+            padding: 0.5rem 0;
+            list-style: disc;
+        }
+    }
+    .table-responsive{
+        table{
+            border-collapse: collapse;
+            border-spacing: 0;
+            thead{
+                background-color: #f5f5f5;
+                th{
+                    min-width: 150px;
+                    padding: 0.5rem 1rem;
+                    text-align: left;
+                    border-bottom: 1px solid #ddd;
+                }
+            }
+            tbody{
+                tr{
+                    td{
+                        min-width: max-content;
+                        padding: 0.5rem 1rem;
+                        border-bottom: 1px solid #ddd;
+                    }
+                }
+            }
+        }
+    }
+}

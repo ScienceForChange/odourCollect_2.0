@@ -57,7 +57,7 @@ export class LoginComponent {
     this.authService.login(this.user).subscribe({
       next: () => {
         this.loading = true;
-        this.alertService.success('¡Logeado correctamente!', { keepAfterRouteChange: true, autoClose: true });
+        this.alertService.success('¡Sesión iniciada!', { keepAfterRouteChange: true, autoClose: true });
         if (redirect) this.router.navigate([redirect]);
       },
       error: (resp) => {

@@ -23,6 +23,7 @@ export class AuthService {
   }
 
   set isLoggedIn(status: boolean) {
+    if(status === false) this.user = undefined; //si el usuario no esta logueado, eliminamos el usuario del servicio (para que no se quede el usuario anterior)
     this._isLoggedIn.next(status);
   }
 

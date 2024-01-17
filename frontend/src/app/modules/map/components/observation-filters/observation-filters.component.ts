@@ -10,6 +10,8 @@ import { OdourService } from 'src/app/services/odour.service';
 import { ObservationQuery } from '../../../../models/observation';
 import { Subscription } from 'rxjs';
 import { AlertService } from 'src/app/services/alert.service';
+import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { AboutFiltersComponent } from 'src/app/modules/information/components/about-filters/about-filters.component';
 
 const date = new Date();
 date.setDate(date.getDate() - 1);
@@ -48,7 +50,7 @@ export class ObservationFiltersComponent implements OnInit, OnDestroy {
   public intensityForRange!: string[];
   public hourForRange: string[] = Array.from({ length: 24 }, (_, i) => {
     const hour = i % 12 || 12;
-    const period = i < 12 ? 'am' : 'pm';
+    const period = i < 12 ? ':00 am' : ':00 pm';
     return `${hour < 10 ? '0' + hour : hour}${period}`;
   });
   private hoursToSend = Array.from({ length: 24 }, (_, i) => {
@@ -66,6 +68,7 @@ export class ObservationFiltersComponent implements OnInit, OnDestroy {
     private mapModalsService: MapModalsService,
     private odourService: OdourService,
     private alertService: AlertService,
+    private offcanvasService: NgbOffcanvas,
   ) {
     this.loadingData = true;
   }
@@ -252,6 +255,11 @@ export class ObservationFiltersComponent implements OnInit, OnDestroy {
               autoClose: true,
             });
           }
+          else{
+            this.alertService.success(`Se econtraron ${observations.data.length} observaciones `, {
+              autoClose: true,
+            });
+          }
           this.odourService.updateObservations(observations.data);
           this.loading = false;
           this.toggleFilter();
@@ -266,7 +274,10 @@ export class ObservationFiltersComponent implements OnInit, OnDestroy {
       }),
     );
   }
-
+  public openAboutFiltersOffcanva(): void {
+        this.offcanvasService.open(AboutFiltersComponent, { position: 'start', scroll: false, panelClass: 'about-canvas' });
+  }
+  
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }

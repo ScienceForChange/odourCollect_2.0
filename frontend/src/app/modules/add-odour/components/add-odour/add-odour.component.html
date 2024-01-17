@@ -3,7 +3,7 @@
     <app-back-btn *ngIf="activeStep === 0; else backStep">Volver</app-back-btn>
     <ng-template #backStep>
       <button (click)="goStepBack()" id="stepBackBtn">
-        <icon-arrow-left></icon-arrow-left>Volver
+        <icon-arrow-left></icon-arrow-left>
       </button>
     </ng-template>
   </header>

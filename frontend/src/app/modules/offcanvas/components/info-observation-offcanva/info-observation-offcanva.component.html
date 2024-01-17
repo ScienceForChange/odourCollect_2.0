@@ -1,0 +1,105 @@
+
+<div class="offcanvas-header d-flex justify-content-between">
+    
+    <ng-container *ngIf="observation">
+        
+        <div (click)="openProfileOffcanva()" tabindex="0" (keydown.enter)="openProfileOffcanva()" id="user" class="d-flex justify-center align-items-center gap-3">
+            <img width="48" height="48" [src]="'/assets/images/avatars/' + observation.relationships.user?.avatar_id + '.svg'" alt="user image"/>
+            <p class="label-l">Usuario{{ observation.relationships.user?.id }}</p>
+            <icon-arrow-right2/>
+        </div>
+    
+    </ng-container>
+    
+    <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close" (click)="offcanvas.close()">
+        <span></span>
+        <span></span>
+    </button>
+</div>
+
+
+<ng-container *ngIf="observation">
+
+    <div class="offcanvas-body d-flex flex-column align-items-center">
+        <div id="observation-info" class="d-flex flex-column flex-md-row gap-4">
+            <div class="box-type" [id]="observation.relationships.odourSubType.relationships.odourType.slug">
+                <app-odour-type-icon 
+                [iconClass]="'odour-type-information'" 
+                [odourType]="observation.relationships.odourSubType.relationships.odourType.slug" 
+                [odourName]="observation.relationships.odourSubType.relationships.odourType.name"
+                />
+                <p class="headline-s">
+                    {{ observation.relationships.odourSubType.name }}
+                </p>
+            </div>
+            <div id="observation-data" class="d-flex flex-column gap-3 w-100">
+                <div class="d-flex gap-2">
+                    <icon-intensity />
+                    <div>
+                        <div class="tone-title">
+                            <p class="label-l">Intensidad</p>
+                        </div>
+                        <p class="body-l">
+                            {{ observation.relationships.odourIntensity.name }}
+                        </p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <icon-happy-face />
+                    <div>
+                        <div class="tone-title">
+                            <p class="label-l">Agradabilidad</p>
+                        </div>
+                        <p class="body-l">
+                            {{ observation.relationships.odourHedonicTone.name }}
+                        </p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <icon-calendar />
+                    <div>
+                        <div class="tone-title">
+                            <p class="label-l">Observation date</p>
+                        </div>                    
+                        <p class="body-l">
+                        {{ observation.createdAt | date: 'dd/MM/yyyy, HH:mm' }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="social-data" class="d-flex flex-column gap-1 pt-3 pt-md-0 w-100">
+                <div class="d-flex flex-row gap-2">
+                    <span class="count text-end">{{ observation.likes }}</span> Me gusta
+                </div>
+                <div [ngClass]="{'see-comments-button': !observation.relationships.comments.length}" (click)="openCommentaries()" class="d-flex flex-row align-content-between gap-2">
+                    <span class="count text-end">{{ observation.relationships.comments.length }}</span> 
+                    comentarios
+                    <icon-arrow-right2 *ngIf="!observation.relationships.comments.length"/>
+                </div>
+            </div>
+            <div id="delete" *ngIf="user && user.id === observation.relationships.user?.id" class="d-flex flex-column align-items-start justify-content-center pt-3">
+                <div tabindex="0" (click)="send()" class="d-flex justify-content-start align-items-center gap-3">
+                    <icon-delete [iconClass]="'icon-violet-dark'" />
+                    <p class="color-violet-dark">Eliminar</p>
+                </div>
+            </div>
+        </div>
+        <div id="social">
+            <div class="d-flex flex-row mt-3" [ngClass]="user?.id === observation.relationships.user?.id? 'justify-content-center' : 'justify-content-between justify-content-md-around'">
+                <div class="d-flex justify-content-start align-items-center gap-2" (click)="openCommentaries(true)">
+                    <icon-commentary [iconClass]="'icon-violet-dark'" />
+                    <span class="color-violet-dark">Añadir comentario</span>
+                </div>
+                <div tabindex="0" (click)="toggleObservationLike()"
+                    *ngIf="!user || user.id != observation.relationships.user?.id"
+                    class="d-flex justify-content-start align-items-center gap-2"
+                    [ngClass]="{'liked': observation.liked}"
+                    >
+                    <icon-heart [iconClass]="'icon-violet-dark'" [liked]="observation.liked" />
+                    <span class="color-violet-dark">Me gusta</span>
+                </div>
+            </div>
+        </div>    
+    </div>
+</ng-container>

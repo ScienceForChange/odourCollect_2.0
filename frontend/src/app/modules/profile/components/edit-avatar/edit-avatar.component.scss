@@ -16,10 +16,11 @@
         max-width: max-content;
         display: inline-flex;
         height: auto;
+        color: $grey;
     }
     a{
         text-decoration: none;
-        color: $black;
+        color: $grey;
     }
 }
 article{

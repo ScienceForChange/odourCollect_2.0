@@ -1,12 +1,18 @@
 <section [ngClass]="[isOpen.value ? 'open-filter' : 'closed-filter']">
 <div>
-  <header>
-    <div>
-      <p class="label-l">Filtros</p>
-      <p class="label-m color-gray-dark">Elige los filtros de tu interés</p>
+    <div class="modal-header d-flex align-items-center">
+      <div class="d-flex justify-content-between align-items-center w-100">
+        <div>
+          <p class="label-l">Filtros</p>
+          <p class="label-m color-gray-dark">Elige los filtros de tu interés</p>
+        </div>
+        <icon-info-square class="d-flex" (click)="openAboutFiltersOffcanva()"/>
+      </div>
+      <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close" (click)="toggleFilter()">
+        <span></span>
+        <span></span>
+      </button>
     </div>
-    <button type="button" (click)="toggleFilter()" class="close"></button>
-  </header>
   <main class="modal-body">
     <form *ngIf="filtersForm" [formGroup]="filtersForm">
       <ng-container *ngIf="loadingData; else form">

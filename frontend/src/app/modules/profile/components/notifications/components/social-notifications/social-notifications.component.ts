@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { AppNotification } from 'src/app/models/app-notification';
 import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class SocialNotificationsComponent implements OnInit, OnDestroy {
 
-  public notifications:any[] = [];
+  public notifications:AppNotification[] = this.notificationService.socialNotification.value;
   
   private $notifications!: Subscription;
   private $firstCall: boolean = true;

@@ -7,12 +7,27 @@ ngb-offcanvas-panel.offcanvas.default{
     height: auto;
     max-height: calc(100dvh - 70px);
     
+    &.comments{
+        min-height: calc(100dvh - 70px);
+        overflow-y: unset;
+        .offcanvas-header{
+            position: sticky;
+            top: 0;
+            box-shadow: 0 10px 10px white;
+            #picture{
+                transition: all .25s ease-out;
+            }
+        }
+        .offcanvas-body{
+            padding-top: 10px;
+            overflow-y: auto;
+        }
+    }
     &.public-profile{
         overflow-y: unset;
         .offcanvas-header{
             position: sticky;
             top: 0;
-            min-height: 72px;
             box-shadow: 0 10px 10px $violet-lighter;
             #picture{
                 transition: all .25s ease-out;
@@ -20,6 +35,27 @@ ngb-offcanvas-panel.offcanvas.default{
         }
         .offcanvas-body{
             padding-top: 10px;
+            overflow-y: auto;
+        }
+    }
+    
+    &.info-observation{
+        //max-height: 592px;
+        overflow-y: unset;
+        .offcanvas-header{
+            position: sticky;
+            top: 0;
+            box-shadow: 0 10px 10px white;
+            padding-left: 0;
+            padding-right: 0;
+            padding-bottom: 0;
+            padding-top: 25px;
+        }
+        .offcanvas-body{
+            //min-height: 499px;
+            padding-top: 15px;
+            padding-left: 0;
+            padding-right: 0;
             overflow-y: auto;
         }
     }
@@ -52,6 +88,16 @@ ngb-offcanvas-panel.offcanvas.default{
 
 ngb-offcanvas-backdrop.default{
     background-color: transparent;
+    &.comments,
+    &.public-profile{
+        z-index: 1045;
+        opacity: 1;
+        backdrop-filter: blur(0);
+        transition: backdrop-filter .25s ease-out;
+        &.show{
+            backdrop-filter: blur(8px);
+        }
+    }
 }
 
 ngb-offcanvas-panel.offcanvas.about-canvas{

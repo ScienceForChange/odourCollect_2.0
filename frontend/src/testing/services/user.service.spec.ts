@@ -67,8 +67,10 @@ describe('UserService', () => {
             index: -1,
             name: "Slightly unpleasant",
             slug: "slightly-unpleasant"
-        },
+        },        
       },
+      likes: 0,
+      liked: false,
       description: null,
       origin: null,
       createdAt: new Date("2021-06-14T09:21:16.000000Z"),
