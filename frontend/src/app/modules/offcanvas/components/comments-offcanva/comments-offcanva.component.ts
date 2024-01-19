@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveOffcanvas, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observation } from 'src/app/models/observation';
 import { User } from 'src/app/models/user';
 import { DialogModalComponent } from 'src/app/modules/modals/dialog-modal/dialog-modal.component';
+import { CommentaryService } from 'src/app/services/commentary.service';
 
 @Component({
   selector: 'app-comments-offcanva',
@@ -83,6 +84,7 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
   constructor(
     public offcanvas: NgbActiveOffcanvas,
     private modalService: NgbModal,
+    private commentaryService: CommentaryService,
     ) { }
 
   ngAfterViewInit (): void {
@@ -94,11 +96,24 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
   }
 
   public toggleDeleteButton(event:Event): void {
+    if(this.loadingDelete) return;
+    
+    // Quita la clase 'delete' de todos los elementos que la tengan
+    const elementsWithDeleteClass = document.querySelectorAll('.delete');
+    elementsWithDeleteClass.forEach(element => {
+      if (element !== event.currentTarget) {
+        element.classList.remove('delete');
+      }
+    });
+
+    // Agrega la clase 'delete' al elemento que disparó el evento si no la tiene,
+    // o la quita si ya la tiene
     const comment = event.currentTarget as HTMLElement;
     comment.classList.toggle('delete'); 
+
   }
 
-  public deleteComment(event:Event): void {
+  public deleteComment(event:Event): void {    
     const comment = event.currentTarget as HTMLElement;
     const dialog = this.modalService.open(DialogModalComponent, {
       windowClass: 'default',
@@ -118,15 +133,22 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
   private delete( comment: HTMLElement ){
     
     this.loadingDelete = true;
-    comment.style.height = comment.offsetHeight + 'px';
-    setTimeout(() => {
+    
+    this.commentaryService.deleteCommentary(comment).subscribe({
+      next: (response) => {
+        comment.style.height = comment.offsetHeight + 'px';
         comment.classList.add('deleting');
         comment.style.height = '0';
         this.loadingDelete = false;
         setTimeout(() => {
           comment.remove();
         }, 1000);
-    }, 3000);
+      },
+      error: (error) => {
+        console.log(error);
+        this.loadingDelete = false;
+      }
+    });
   }
 
   public resizeTextArea(): void {
@@ -148,32 +170,63 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
 
   public send(){
     
-    const commentariesContainer = this.commentariesContainer.nativeElement as HTMLTextAreaElement;
+    const commentariesContainer = this.commentariesContainer.nativeElement as HTMLElement;
   
     this.loading = true;
-    setTimeout(() => {
-      this.listComments.unshift({
-        user: {
-          id: 2609,
-          avatar: 1
-        },
-        text: this.commentaryForm.controls['commentary'].value,
-        date: new Date(),
-      });
-      setTimeout(()=>{
-        const lastCommentary = commentariesContainer.firstElementChild?.firstElementChild as HTMLElement;
-        const height = lastCommentary.offsetHeight;
-        lastCommentary.style.height = '0';
-        this.commentaryForm.controls['commentary'].reset();
-        this.loading = false;
-        commentariesContainer.scrollTo(0, 0)
-        lastCommentary.classList.add('new');
-        lastCommentary.style.height = height + 'px';
-        setTimeout(() => {
-          lastCommentary.classList.remove('new');
-        }, 1000);
-      });
+    const text = this.commentaryForm.controls['commentary'].value;
+    
+      this.commentaryService.addCommentary(text).subscribe(
+        {
+          next: (commentary) => {
+            
+            this.listComments.unshift(commentary);
+            this.commentaryForm.controls['commentary'].reset();
+      
+            setTimeout(()=>{
+              const lastCommentary = commentariesContainer.firstElementChild?.firstElementChild as HTMLElement;
+              const height = lastCommentary.offsetHeight;
+              lastCommentary.style.height = '0';
+              lastCommentary.classList.add('new');
+              if(commentariesContainer.scrollTop > 0){
+                commentariesContainer.scrollTo(0, 0)
+                this.scrollTo(commentariesContainer, 0).then(() => {
+                  this.addCommentaryOnlist(height)
+                });
+              }
+              else{
+                this.addCommentaryOnlist(height)
+              }
+              this.resizeTextArea();
+              this.loading = false;
+            });
 
-    }, 2000);
+          },
+          error: (error) => {
+            console.log(error);
+            this.loading = false;
+          }
+        }
+      );
+  }
+
+  private scrollTo(element: HTMLElement, to:number) {
+  
+    element.scrollTo(to, to);
+  
+    return new Promise<void>(function(resolve) {
+      element.addEventListener('scrollend', function() {
+        resolve();
+      }, { once: true });
+    });
+  }
+
+  private addCommentaryOnlist(height:number): void {
+    const commentariesContainer = this.commentariesContainer.nativeElement as HTMLElement;
+    const lastCommentary = commentariesContainer.firstElementChild?.firstElementChild as HTMLElement;
+    lastCommentary.classList.add('newAnimated');
+    lastCommentary.style.height = height + 'px';
+    setTimeout(() => {
+      lastCommentary.classList.remove('new','newAnimated');
+    }, 1000);
   }
 }

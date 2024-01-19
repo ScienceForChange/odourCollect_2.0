@@ -25,6 +25,6 @@ export class OdourCardComponent {
   }
 
   public seeMore() {
-    this.mapService.seeMoreAbout(this.observation.id)
+    this.mapService.seeMoreAbout(this.observation.id, true)
   }
 }

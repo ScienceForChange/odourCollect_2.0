@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import { BehaviorSubject } from 'rxjs';
-import { NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveOffcanvas, NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
 import { InfoObservationOffcanvaComponent } from '../modules/offcanvas/components/info-observation-offcanva/info-observation-offcanva.component';
 
 @Injectable({
@@ -51,6 +51,7 @@ export class MapService {
     private odourService: OdourService,
     private router: Router,
     private offcanvasService: NgbOffcanvas,
+    private offActiveOffCanvas: NgbActiveOffcanvas
   ) {
     this.getObservations();
   }
@@ -272,9 +273,15 @@ export class MapService {
   }
 
   //Ver más información de la observación seleccionada.
-  public seeMoreAbout(observationId: number): void {
+  public seeMoreAbout(observationId: number, centerMap:boolean = false): void {
     
-    if(this.infoObservationOffcanva) this.infoObservationOffcanva.dismiss();
+    if (this.router.url !== '/map') {
+      this.router.navigate(['/map']);
+    }
+    
+    if(this.infoObservationOffcanva && this.infoObservationOffcanva.componentInstance !== undefined && this.infoObservationOffcanva.componentInstance.observation.id === observationId) return;
+    else if(this.infoObservationOffcanva && this.infoObservationOffcanva.componentInstance !== undefined) this.infoObservationOffcanva.componentInstance.offcanvas.close();
+    
 
     this.infoObservationOffcanva = this.offcanvasService.open(
       InfoObservationOffcanvaComponent,
@@ -282,22 +289,21 @@ export class MapService {
         position: 'bottom',
         scroll: true,
         panelClass: 'default info-observation',
+        backdrop: false,
         backdropClass: 'default info-observation',
       },
     );
     
-    if (this.router.url !== '/map') {
-      this.router.navigate(['/map']);
-    }
-    
     this.odourService.getOdour(observationId).subscribe((observationRes) => {
       const observation = observationRes.data[0];
       this.infoObservationOffcanva.componentInstance.observation = observation;
-      this.centerMap(
-        Number(observation.latitude),
-        Number(observation.longitude),
-      );
-    });
+      if(centerMap){
+        this.centerMap(
+          Number(observation.latitude),
+          Number(observation.longitude),
+          );
+        }
+      });
 
   }
 

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgbActiveOffcanvas, NgbModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, filter } from 'rxjs';
 import { Observation } from 'src/app/models/observation';
@@ -14,14 +14,14 @@ import { PublicProfileOffcanvaComponent } from '../public-profile-offcanva/publi
 import { RegisterModalComponent } from 'src/app/modules/modals/register-modal/register-modal.component';
 import { DangerComponent } from 'src/app/shared/components/Icons/danger/danger.component';
 import { NavigationEnd, Router } from '@angular/router';
-import { CommentsOffcanvaComponent } from '../comments-offcanva/comments-offcanva.component';
+import { CommentsOffcanvaComponent } from 'src/app/modules/offcanvas/components/comments-offcanva/comments-offcanva.component';
 
 @Component({
   selector: 'app-info-observation-offcanva',
   templateUrl: './info-observation-offcanva.component.html',
-  styleUrls: ['./info-observation-offcanva.component.scss']
+  styleUrls: ['./info-observation-offcanva.component.scss'],
 })
-export class InfoObservationOffcanvaComponent {
+export class InfoObservationOffcanvaComponent implements OnInit, OnDestroy, AfterViewChecked{
   @ViewChild(HeartComponent) heartIcon!:HeartComponent;
 
   private user$!: Subscription;
@@ -49,7 +49,7 @@ export class InfoObservationOffcanvaComponent {
       this.router.events.pipe(
         filter(event => event instanceof NavigationEnd)
       ).subscribe(() => {
-        this.offcanvas.dismiss();
+        this.offcanvas.close();
       })
     );
   }
@@ -82,6 +82,7 @@ export class InfoObservationOffcanvaComponent {
             autoClose: true,
             keepAfterRouteChange: true,
           });
+          this.offcanvas.close();
         },
         error: () => {
           this.alertService.error('Hubo un error', {
@@ -93,6 +94,13 @@ export class InfoObservationOffcanvaComponent {
     );
   }
 
+  public resizeOffcanva() {
+      const offcanvaBody = document.querySelector('.offcanvas-body') as HTMLElement;
+      offcanvaBody.style.height = offcanvaBody.scrollHeight + 'px';
+  }
+  ngAfterViewChecked() {
+    this.resizeOffcanva();
+  }
   openProfileOffcanva() {
     const offcanva = this.offcanvasService.open(
       PublicProfileOffcanvaComponent,

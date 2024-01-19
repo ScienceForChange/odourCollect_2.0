@@ -1,6 +1,6 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbActiveOffcanvas, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   HTTP_INTERCEPTORS,
   HttpClientModule,
@@ -31,6 +31,8 @@ import { NotificationService } from './services/notification.service';
     }),
   ],
   providers: [
+    NgbActiveOffcanvas,
+    NgbActiveModal,
     {
       provide: APP_INITIALIZER,
       useFactory: appInitializer,

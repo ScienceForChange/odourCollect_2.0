@@ -22,7 +22,7 @@ export class PublicProfileOffcanvaComponent {
   } 
     
   showOnMap(observationId: number) {
-    this.mapService.seeMoreAbout(observationId);
+    this.mapService.seeMoreAbout(observationId, true);
     this.offcanvas.close();
   }
   

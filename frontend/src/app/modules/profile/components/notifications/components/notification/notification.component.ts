@@ -24,7 +24,7 @@ export class NotificationComponent {
       this.route.navigate(['/profile/notifications/message/' + this.notification.data.resource]);
     }
     else{
-      this.mapService.seeMoreAbout(this.notification.data.resource);
+      this.mapService.seeMoreAbout(this.notification.data.resource, true);
       console.log(this.notification.id)
       this.notificationService.readNotification(this.notification.id);
     }

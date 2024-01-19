@@ -48,11 +48,17 @@
             }
         }
         &.own{
-            transition: height 0.5s ease-out;
+            transition: height 0.3s ease-out;
             &.new{
-                animation: newComment 0.5s ease-out;
+                margin-bottom: -1.5rem;
+                transform-origin: bottom right;
+                transform: rotate(70deg) scale(0);
+            }
+            &.new.newAnimated{
+                animation: newComment 0.3s ease-out forwards;
             }
             &.deleting{
+                z-index: 9;
                 animation: deleteComment 0.5s ease-in forwards;
                 .delete-comment{
                     opacity: 0;
@@ -60,7 +66,7 @@
             }
             .text{
                 white-space: pre-wrap;
-                transition: margin-right .25s ease-out;
+                transition: margin-right .3s ease-out;
                 background-color: $orange-lighter;
                 border-radius: 20px 20px 0 20px;
                 text-align: right;
@@ -93,7 +99,6 @@
     form{
         position: relative;
         width: 100%;
-        height: 100%;
         textarea{
             border-radius: 20px;
             padding: 22px 68px 18px 12px ;
@@ -137,15 +142,15 @@
     0%{
         margin-bottom: -1.5rem;
         transform-origin: bottom right;
-        transform: rotate(45deg) scale(0);
+        transform: rotate(70deg) scale(0);
     }
     70%{
         transform-origin: bottom right;
-        transform: rotate(-5deg) scale(1);
+        transform: rotate(-15deg) scale(1);
     }
     90%{
         transform-origin: bottom right;
-        transform: rotate(2deg) scale(1);
+        transform: rotate(4deg) scale(1);
     }
     100%{
         margin-bottom: 0;

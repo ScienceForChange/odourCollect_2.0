@@ -40,7 +40,7 @@
     </div>
 </div>
 
-<div class="offcanvas-footer d-flex flex-column h-100">
+<div class="offcanvas-footer d-flex flex-column">
     <form [formGroup]="commentaryForm" class="d-flex align-items-end justify-content-end gap-2">
         <textarea formControlName="commentary" id="commentary" name="commentary" placeholder="Escribe un comentario..." #commentary (input)="resizeTextArea()" (focus)="focusOnLastCharacter()"></textarea>
         <button type="submit" class="btn btn-primary" [disabled]="!commentaryForm.valid || loading" type="submit" (click)="send()" [ngClass]="{'loading' : loading}"><icon-arrow-right /></button>

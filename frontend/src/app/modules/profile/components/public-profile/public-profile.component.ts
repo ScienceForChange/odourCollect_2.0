@@ -24,7 +24,7 @@ export class PublicProfileComponent {
     this.footerService.visible = true;
   }
   showOnMap(observationId: number) {
-    this.mapService.seeMoreAbout(observationId);
+    this.mapService.seeMoreAbout(observationId, true);
   }
 
   openAboutTrainedOffcanvas() {
