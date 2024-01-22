@@ -1,6 +1,6 @@
 <ul class="error-text">
     <icon-danger/>
-    <li *ngFor="let error of errorList | keyvalue ">
-        {{error.key}}
+    <li *ngFor="let error of errorList | keyvalue " class="text-start">
+        {{getErrorTranslation(error.key)}}
     </li>
 </ul>

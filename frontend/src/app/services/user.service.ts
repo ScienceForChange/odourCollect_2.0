@@ -91,13 +91,11 @@ export class UserService {
 
   public addObservation(obs: Observation) {
     this.user?.relationships.odourObservations.unshift(obs);
-    if (this.user) this.user.total_observations++;
   }
 
   public removeObservation(removedObsId: number) {
     if (this.user) {
       this.user.relationships.odourObservations = this.user.relationships.odourObservations.filter((obs) => obs.id !== removedObsId);
-      this.user.total_observations--;
     }
   }
   

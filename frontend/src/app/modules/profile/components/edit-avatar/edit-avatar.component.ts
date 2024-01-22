@@ -16,6 +16,8 @@ export class EditAvatarComponent implements OnDestroy{
   public user: User | undefined = this.userService.user;
   public newAvatar: number = this.user?.avatar_id ? this.user.avatar_id : 1;
 
+  public loading: boolean = false;
+
   public defaultImg: string =  "url('https://i.stack.imgur.com/l60Hf.png')";
 
   public updateUser$!: Subscription;
@@ -43,17 +45,21 @@ export class EditAvatarComponent implements OnDestroy{
     avatar.classList.add('selected');
      // Actualizar el identificador del nuevo avatar seleccionado
     this.newAvatar = id_avatar;
+    this.updateAvatar();
   }
 
   public updateAvatar(){
+    this.loading = true;
     if(this.user &&  this.user.avatar_id != this.newAvatar ) this.user.avatar_id = this.newAvatar
     this.updateUser$ = this.userService.update().subscribe({
       next: () => { 
         this.route.navigate(['/profile']); 
         this.alertService.success('¡Avatar actualizado!', {autoClose: true})
+        this.loading = false;
       },
       error: () => {
         this.alertService.error('Hubo un error, pruebalo de nuevo más tarde', { keepAfterRouteChange: false, autoClose: true });
+        this.loading = false;
       }
     })
   }

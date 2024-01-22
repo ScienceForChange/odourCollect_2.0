@@ -37,7 +37,6 @@ export class InfoObservationOffcanvaComponent implements OnInit, OnDestroy, Afte
     private authService: AuthService,
     private odourService: OdourService,
     private alertService: AlertService,
-    private mapModalsService: MapModalsService,
     private modalService: NgbModal,
     private offcanvasService: NgbOffcanvas,
     private router: Router,
@@ -74,7 +73,6 @@ export class InfoObservationOffcanvaComponent implements OnInit, OnDestroy, Afte
     this.subscriptions.add(
       this.odourService.deleteObservation(this.observation.id).subscribe({
         next: () => {
-          this.mapModalsService.toggleObservationModal();
           this.userService.removeObservation(this.observation.id);
           // this.mapService.deleteMarker(this.observation.id);
           //DEBERIA ELIMINARLO DEL ARRAY DE OBSERVACIONES

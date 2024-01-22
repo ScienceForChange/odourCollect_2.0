@@ -5,7 +5,6 @@ export class User {
   id:                     undefined | number;
   email:                  string;
   avatar_id:              number;
-  total_observations:     number;
   password?:              undefined | string;
   password_confirmation?: undefined | string;
   relationships:          Relationships
@@ -13,8 +12,7 @@ export class User {
   constructor(element: any){
     this.id                                 = element.id;
     this.email                              = element.email;
-    this.avatar_id                          = element.avatar_id ? element.avatar_id: 1 ;
-    this.total_observations                 = element.total_observations ? element.total_observations: 0 ;
+    this.avatar_id                          = element.avatar_id;
     this.password                           = element.password;
     this.password_confirmation              = element.password_confirmation;
     this.relationships                      = element.relationships;
@@ -57,7 +55,6 @@ export function createDummyUser(): User {
     id: 1,
     email: 'dummy@example.com',
     avatar_id: 1,
-    total_observations: 0,
     password: undefined,
     password_confirmation: undefined,
     relationships: dummyRelationships,

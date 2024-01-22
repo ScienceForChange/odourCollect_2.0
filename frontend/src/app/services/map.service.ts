@@ -44,14 +44,14 @@ export class MapService {
   public showUserObservations: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
 
+  public observation: Observation | null = null;
   public infoObservationOffcanva!: NgbOffcanvasRef;
     
   constructor(
     private userService: UserService,
     private odourService: OdourService,
     private router: Router,
-    private offcanvasService: NgbOffcanvas,
-    private offActiveOffCanvas: NgbActiveOffcanvas
+    private offcanvasService: NgbOffcanvas
   ) {
     this.getObservations();
   }
@@ -279,7 +279,7 @@ export class MapService {
       this.router.navigate(['/map']);
     }
     
-    if(this.infoObservationOffcanva && this.infoObservationOffcanva.componentInstance !== undefined && this.infoObservationOffcanva.componentInstance.observation.id === observationId) return;
+    if(this.infoObservationOffcanva && this.infoObservationOffcanva.componentInstance !== undefined && this.observation?.id === observationId) return;
     else if(this.infoObservationOffcanva && this.infoObservationOffcanva.componentInstance !== undefined) this.infoObservationOffcanva.componentInstance.offcanvas.close();
     
 
@@ -295,12 +295,12 @@ export class MapService {
     );
     
     this.odourService.getOdour(observationId).subscribe((observationRes) => {
-      const observation = observationRes.data[0];
-      this.infoObservationOffcanva.componentInstance.observation = observation;
+      this.observation = observationRes.data[0];
+      this.infoObservationOffcanva.componentInstance.observation = this.observation;
       if(centerMap){
         this.centerMap(
-          Number(observation.latitude),
-          Number(observation.longitude),
+          Number(this.observation.latitude),
+          Number(this.observation.longitude),
           );
         }
       });

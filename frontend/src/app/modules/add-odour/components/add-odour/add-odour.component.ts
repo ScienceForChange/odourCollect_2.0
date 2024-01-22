@@ -121,7 +121,7 @@ export class AddOdourComponent implements OnInit, OnDestroy {
         hedonic_tone: new FormControl(0, [Validators.required]),
       }),
       commentDetails: new FormGroup({
-        know_about_source: new FormControl(''),
+        know_about_source: new FormControl('',[Validators.required]),
         origin: new FormControl(null, [
           Validators.minLength(2),
           Validators.maxLength(255),
@@ -132,7 +132,7 @@ export class AddOdourComponent implements OnInit, OnDestroy {
         ]),
       }),
     });
-
+    
     if (this.params.type && this.params.subtype) {
       this.addOdourForm.patchValue({
         typeDetails: {

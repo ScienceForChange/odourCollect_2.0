@@ -1,4 +1,4 @@
-import { CanActivateFn, CanDeactivateFn, Router } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
 import { HttpXsrfTokenExtractor } from '@angular/common/http';
@@ -20,7 +20,7 @@ export const AuthGuardActivate: CanActivateFn = (route, state) => {
   return router.parseUrl('/map');
 };
 
-export const AuthGuardLogoutActivate: CanActivateFn = (route, state) => {
+export const AuthGuardLogoutActivate: CanActivateFn = () => {
 
   const authService: AuthService  = inject(AuthService);
   const router:Router             = inject(Router);
@@ -29,7 +29,7 @@ export const AuthGuardLogoutActivate: CanActivateFn = (route, state) => {
   return authService.isLoggedIn.value ? router.parseUrl('/map') : true;
 };
 
-export const AuthGuardHomePage: CanActivateFn = (route, state) => {
+export const AuthGuardHomePage: CanActivateFn = () => {
 
   const authService: AuthService                = inject(AuthService);
   const router:Router                           = inject(Router);

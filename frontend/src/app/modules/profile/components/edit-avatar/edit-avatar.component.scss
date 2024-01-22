@@ -1,26 +1,19 @@
 @import "../../../../../styles/colors";
 
 #header{
+    padding: 23px 17px 0;
     position: sticky;
     top: 0;
-    padding: 22px 28px 18px;
-    border-bottom: 1px solid $grey-light;
     background-color: white;
-    button{
-        background-color: transparent !important;
-        border: none;
-        padding: 0;
-        margin: 0;
-        color: $black;
-        max-height: fit-content;
-        max-width: max-content;
-        display: inline-flex;
-        height: auto;
-        color: $grey;
+    box-shadow: 0 10px 10px white;
+    z-index: 1;
+    h1{
+        padding-top: 15px;
     }
-    a{
-        text-decoration: none;
-        color: $grey;
+    &::after {
+        content: " ";
+        display: block;
+        width: 17px;
     }
 }
 article{

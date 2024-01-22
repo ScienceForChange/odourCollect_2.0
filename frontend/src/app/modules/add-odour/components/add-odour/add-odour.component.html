@@ -42,6 +42,7 @@
       Siguiente
     </button>
     <button
+      [disabled]="!addOdourForm.valid"
       class="btn btn-primary btn-lg"
       *ngIf="activeStep === 2"
       (click)="addNewOdor()"
