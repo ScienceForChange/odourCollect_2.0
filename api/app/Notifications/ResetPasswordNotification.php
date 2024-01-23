@@ -12,6 +12,13 @@ class ResetPasswordNotification extends Notification
     use Queueable;
 
     /**
+     * The callback that should be used to create the reset password URL.
+     *
+     * @var (\Closure(mixed, string): string)|null
+     */
+    public static $createUrlCallback;
+
+    /**
      * The password reset token.
      *
      * @var string
@@ -80,9 +87,24 @@ class ResetPasswordNotification extends Notification
      */
     protected function resetUrl($notifiable)
     {
+        if (static::$createUrlCallback) {
+            return call_user_func(static::$createUrlCallback, $notifiable, $this->token);
+        }
+
         return url(route('password.reset', [
             'token' => $this->token,
             'email' => $notifiable->getEmailForPasswordReset(),
         ], false));
+    }
+
+    /**
+     * Set a callback that should be used when creating the reset password button URL.
+     *
+     * @param  \Closure(mixed, string): string  $callback
+     * @return void
+     */
+    public static function createUrlUsing($callback)
+    {
+        static::$createUrlCallback = $callback;
     }
 }
