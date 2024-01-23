@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
             'like' => 'App\Notifications\LikeReceived',
             'comment'  => 'App\Models\Comment',
             'citizen' => 'App\Models\ProfileCitizen',
+            'client' => 'App\Models\ProfileClient',
             'user' => 'App\Models\User',
             'odour' => 'App\Models\OdourObservation',
         ]);
