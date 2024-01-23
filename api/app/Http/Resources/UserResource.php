@@ -24,8 +24,8 @@ class UserResource extends JsonResource
                 'profile'           => $this->whenMorphToLoaded('userable', [
                     // No me preguntes por qué pero no deja usando: ProfileCitizen::class
                     //-> cuando mapea el array no coinciden las keys (por el doble paréntesis)
-                    "App\\Models\\ProfileClient" => ProfileClientResource::class,
-                    "App\\Models\\ProfileCitizen" => ProfileCitizenResource::class
+                    "citizen" => ProfileClientResource::class,
+                    "client" => ProfileCitizenResource::class
                 ]),
                 'odourObservations' => OdourObservationResource::collection($this->whenLoaded('odourObservations'))
             ],
