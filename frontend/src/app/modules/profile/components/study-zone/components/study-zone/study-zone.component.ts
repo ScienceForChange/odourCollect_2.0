@@ -1,9 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FooterService } from '../../../../../../services/footer.service';
 import { OdourService } from '../../../../../../services/odour.service';
 import { MapService } from 'src/app/services/map.service';
 import { Subscription } from 'rxjs';
-
 @Component({
   selector: 'app-study-zone',
   templateUrl: './study-zone.component.html',
@@ -13,11 +11,9 @@ export class StudyZoneComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
-    private footerService: FooterService,
     private odourService: OdourService,
     private mapService: MapService,
   ) {
-    this.footerService.visible = true;
   }
 
   ngOnInit(): void {

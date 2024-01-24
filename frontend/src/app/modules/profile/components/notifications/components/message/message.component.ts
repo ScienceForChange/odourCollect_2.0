@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FooterService } from 'src/app/services/footer.service';
 
 @Component({
   selector: 'app-message',
@@ -8,7 +7,5 @@ import { FooterService } from 'src/app/services/footer.service';
 })
 export class MessageComponent {
   
-  constructor( private footerService:FooterService) {
-    this.footerService.visible = true;
-   }
+  constructor() { }
 }

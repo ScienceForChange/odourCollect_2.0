@@ -3,9 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/services/auth.service';
-import { FooterService } from 'src/app/services/footer.service';
 import { UserService } from 'src/app/services/user.service';
 import { DialogModalComponent } from 'src/app/modules/modals/dialog-modal/dialog-modal.component';
+import { NavigationService } from 'src/app/services/navigation.service';
 @Component({
   selector: 'app-delete-account',
   templateUrl: './delete-account.component.html',
@@ -23,12 +23,13 @@ export class DeleteAccountComponent {
 
   constructor(
     private modalService: NgbModal,
-    private footerService: FooterService,
     private userService: UserService,
     private authService: AuthService,
     private router: Router,
+    private navigationService: NavigationService,
   ) {
-    this.footerService.visible = false;
+    this.navigationService.headerTitle = 'Eliminar mi cuenta';
+    this.navigationService.footerVisible = false;
   }
 
   send() {

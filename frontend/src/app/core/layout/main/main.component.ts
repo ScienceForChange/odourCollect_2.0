@@ -1,8 +1,7 @@
-import { FooterService } from 'src/app/services/footer.service';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { Router, Event, NavigationEnd } from '@angular/router';
-import { MenuService } from 'src/app/services/menu.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { Subscription } from 'rxjs';
 import { MapService } from '../../../services/map.service';
 import { Map, LngLatBounds } from 'maplibre-gl';
@@ -39,15 +38,13 @@ export class MainComponent implements OnInit, OnDestroy {
 
   public isVisible: boolean = false;
   public showMenu: string | undefined = undefined;
-  public displayHeader: boolean = false;
   public displayMap: boolean = false;
 
   private isStudyZoneRoute!: boolean;
 
   constructor(
-    private footerService: FooterService,
     private router: Router,
-    private menuService: MenuService,
+    private navigationService: NavigationService,
     private mapService: MapService,
     private cdr: ChangeDetectorRef,
     private odourService: OdourService,
@@ -55,17 +52,15 @@ export class MainComponent implements OnInit, OnDestroy {
 
   private displayHeaderByRoute(event: NavigationEnd): void {
     if (event.url === '/map') {
-      this.displayHeader = true;
       this.displayMap = true;
     } else if (event.url === '/profile/my-study-zones/id') {
       this.displayMap = true;
       this.isStudyZoneRoute = true;
     } else {
-      this.displayHeader = false;
       this.displayMap = false;
-      this.menuService.updateStateMenu(undefined);
+      this.navigationService.updateStateMenu(undefined);
       if (!this.showMenu) return;
-      this.menuService.updateStateMenu('close');
+      this.navigationService.updateStateMenu('close');
     }
   }
 
@@ -159,12 +154,13 @@ export class MainComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.add(
-      this.footerService.isVisibleState.subscribe((value) => {
+      this.navigationService.footerVisible.subscribe((value) => { 
         this.isVisible = value;
       }),
     );
     this.subscriptions.add(
-      this.menuService.isVisibleState.subscribe((value) => {
+  
+      this.navigationService.isVisibleState.subscribe((value) => {
         this.showMenu = value;
       }),
     );

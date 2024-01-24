@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MenuService } from '../../../../../services/menu.service';
+import { NavigationService } from '../../../../../services/navigation.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -11,10 +11,10 @@ export class HamburguerComponent implements OnInit, OnDestroy {
   public showMenu: string | undefined = undefined;
   private menuServiceSubscription!: Subscription;
 
-  constructor(private menuService: MenuService) {}
+  constructor(private navigationService: NavigationService) {}
 
   ngOnInit(): void {
-    this.menuServiceSubscription = this.menuService.isVisibleState.subscribe(
+    this.menuServiceSubscription = this.navigationService.isVisibleState.subscribe(
       (value) => {
         this.showMenu = value;
       }

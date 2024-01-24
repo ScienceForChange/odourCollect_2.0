@@ -2,9 +2,9 @@ import { Component, OnDestroy } from '@angular/core';
 import { UserLogin } from 'src/app/models/user-login';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { FooterService } from 'src/app/services/footer.service';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-login',
@@ -30,12 +30,12 @@ export class LoginComponent {
   });
 
   constructor(
-    private router:         Router,
-    private authService:    AuthService,
-    private footerService:  FooterService,
-    private alertService:   AlertService
+    private router:             Router,
+    private authService:        AuthService,
+    private navigationService:  NavigationService,
+    private alertService:       AlertService
   ) {
-    this.footerService.visible = false;
+    this.navigationService.footerVisible = false;
   }
 
   toggleShowPassword() {

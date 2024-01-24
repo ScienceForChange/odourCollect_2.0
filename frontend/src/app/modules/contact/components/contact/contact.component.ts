@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FooterService } from 'src/app/services/footer.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-contact',
@@ -17,8 +17,11 @@ export class ContactComponent {
     ]),
   });
 
-  constructor(private footerService: FooterService) {
-    this.footerService.visible = false;
+  constructor(
+    private navigationService: NavigationService,
+    ) {
+    this.navigationService.headerTitle = 'Contacto e incidencias';
+    this.navigationService.footerVisible = false;
   }
 
   send(){

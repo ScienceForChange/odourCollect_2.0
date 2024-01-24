@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FooterService } from 'src/app/services/footer.service';
 import { MapService } from 'src/app/services/map.service';
 import { OdourService } from 'src/app/services/odour.service';
 
@@ -18,11 +17,9 @@ export class MapComponent implements OnInit {
   };
 
   constructor(
-    private footerService: FooterService,
     private odourService: OdourService,
     private mapService: MapService,
   ) {
-    this.footerService.visible = true;
   }
 
   ngOnInit(): void {

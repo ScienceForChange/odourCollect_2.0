@@ -6,7 +6,7 @@ import { AboutEthicalIssuesComponent } from 'src/app/modules/information/compone
 import { AboutOdourCollectComponent } from 'src/app/modules/information/components/about-odour-collect/about-odour-collect.component';
 
 import { AuthService } from 'src/app/services/auth.service';
-import { MenuService } from 'src/app/services/menu.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-menu',
@@ -22,7 +22,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   constructor(
     public authService: AuthService,
-    private menuService: MenuService,
+    private navigationService: NavigationService,
     private offcanvasService: NgbOffcanvas,
   ) {}
 
@@ -33,7 +33,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       }),
     );
     this.subscriptions.add(
-      this.menuService.isVisibleState.subscribe((value) => {
+      this.navigationService.isVisibleState.subscribe((value) => {
         this.showMenu = value;
       }),
     );
@@ -41,7 +41,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   public logout(): void {
     this.authService.logout();
-    this.menuService.toggleVisible();
+    this.navigationService.toggleVisible();
   }
 
   ngOnDestroy(): void {
