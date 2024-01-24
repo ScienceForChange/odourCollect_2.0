@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { User } from 'src/app/models/user';
-import { FooterService } from 'src/app/services/footer.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -13,10 +13,10 @@ export class ProfileSettingsComponent {
   public user: User | undefined = this.userService.user;
 
   constructor(
-    private footerService: FooterService,
-    private userService: UserService
+    private userService: UserService,
+    private navigationService: NavigationService
   ) {
-    this.footerService.visible = true;
+    this.navigationService.headerTitle = 'Configuración de la cuenta';
   }
 
 }

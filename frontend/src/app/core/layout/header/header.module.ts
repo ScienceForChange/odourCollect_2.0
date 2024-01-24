@@ -7,6 +7,8 @@ import { SharedComponentsModule } from 'src/app/shared/components/shared.compone
 import { HttpClientModule } from '@angular/common/http';
 import { CoreRoutingModule } from '../../core-routing.module';
 import { FiltersComponent } from './components/filters/filters.component';
+import { DefaultHeaderComponent } from './components/default-header/default-header.component';
+import { MapHeaderComponent } from './components/map-header/map-header.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,8 @@ import { FiltersComponent } from './components/filters/filters.component';
     HeaderComponent,
     MenuComponent,
     FiltersComponent,
+    DefaultHeaderComponent,
+    MapHeaderComponent,
   ],
   imports: [
     CommonModule,

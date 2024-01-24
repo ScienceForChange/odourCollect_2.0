@@ -8,7 +8,7 @@ import { User } from 'src/app/models/user';
 import { SigninService } from 'src/app/services/signin.service';
 import { Location } from '@angular/common';
 import { ConfirmPasswordValidator } from 'src/app/shared/validators/confirm-password.validator';
-import { FooterService } from 'src/app/services/footer.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-signup',
@@ -19,7 +19,7 @@ export class SignupComponent {
   public loading: boolean = false;
 
   public years: number[] = [...Array(100).keys()]
-    .map((x) => x + new Date().getFullYear() - 113)
+    .map((x) => x + new Date().getFullYear() - 114)
     .reverse();
   public currentYear: number = new Date().getFullYear();
 
@@ -79,9 +79,9 @@ export class SignupComponent {
   constructor(
     private signinService: SigninService,
     private location: Location,
-    private footerService: FooterService
+    private navigationService: NavigationService
   ) {
-    this.footerService.visible = false;
+    this.navigationService.footerVisible = false;
   }
 
   goBack() {

@@ -19,13 +19,13 @@ import {
 } from 'src/app/models/odour-related-data';
 import { InfoModalComponent } from 'src/app/modules/modals/info-modal/info-modal.component';
 
-import { FooterService } from 'src/app/services/footer.service';
 import { OdourService } from 'src/app/services/odour.service';
 import { MapService } from '../../../../services/map.service';
 import { UserService } from 'src/app/services/user.service';
 import { ObservationRes } from 'src/app/models/observation';
 import { TickSquareComponent } from 'src/app/shared/components/Icons/tick-square/tick-square.component';
 import { AlertService } from '../../../../services/alert.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-add-odour',
@@ -60,13 +60,13 @@ export class AddOdourComponent implements OnInit, OnDestroy {
     private odourService: OdourService,
     private modalService: NgbModal,
     private router: Router,
-    private footerService: FooterService,
     private mapService: MapService,
     private userService: UserService,
     private alertService: AlertService,
     private route: ActivatedRoute,
+    private navigationService: NavigationService,
   ) {
-    this.footerService.visible = false;
+    this.navigationService.footerVisible = false;
     const queryParams = this.route.snapshot.queryParams;
     this.params = queryParams;
     if (this.params.type && this.params.subtype) {
@@ -75,6 +75,10 @@ export class AddOdourComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    
+    this.navigationService.mapHeader = false;
+    this.navigationService.defaultHeader = false;
+
     this.subscriptions.add(
       this.odourService.observationRelatedData().subscribe(({ data }) => {
         const filterObservationsSlugs = [
@@ -104,6 +108,7 @@ export class AddOdourComponent implements OnInit, OnDestroy {
         )[0];
         this.dataLoaded = true;
       }),
+      
     );
 
     this.getLocation();

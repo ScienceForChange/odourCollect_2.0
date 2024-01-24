@@ -1,0 +1,16 @@
+header{
+    padding: 23px 45px 0 5px;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    box-shadow: 0 10px 10px white;
+    z-index: 5;
+    h1{
+        padding-top: 15px;
+    }
+    &::after {
+        content: " ";
+        display: block;
+        width: 17px;
+    }
+}

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecoverPasswords } from 'src/app/models/recover-password';
-import { FooterService } from 'src/app/services/footer.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { RecoverCreatePasswordService } from 'src/app/services/recover-create-password.service';
 import { ConfirmPasswordValidator } from 'src/app/shared/validators/confirm-password.validator';
 
@@ -42,9 +42,9 @@ export class RecoverCreatePasswordComponent {
     private route: ActivatedRoute,
     private router: Router,
     private recoverCreatePasswordService: RecoverCreatePasswordService,
-    private footerService: FooterService
+    private navigationService: NavigationService,
   ) {
-    this.footerService.visible = false;
+    this.navigationService.footerVisible = false;
 
     this.token = this.route.snapshot.paramMap.get('token');
     this.email = this.route.snapshot.queryParamMap.get('email');

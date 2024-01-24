@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FooterService } from 'src/app/services/footer.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-activate-account',
@@ -12,8 +12,8 @@ export class ActivateAccountComponent {
   @Input()
   activateAccount!: () => void;
 
-  constructor(private footerService: FooterService) {
-    this.footerService.visible = false;
+  constructor(private navigationService: NavigationService) {
+    this.navigationService.footerVisible = false;
   }
 
 }

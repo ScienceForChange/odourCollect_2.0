@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { ChangePasswords } from 'src/app/models/change-password';
 import { AlertService } from 'src/app/services/alert.service';
-import { FooterService } from 'src/app/services/footer.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { UserService } from 'src/app/services/user.service';
 import { ConfirmPasswordValidator } from 'src/app/shared/validators/confirm-password.validator';
 
@@ -52,10 +52,11 @@ export class ChangePasswordComponent {
   constructor(
     private router: Router,
     private userService: UserService,
-    private footerService: FooterService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private navigationService: NavigationService,
   ) {
-    this.footerService.visible = false;
+    this.navigationService.headerTitle = 'Cambia contraseña';
+    this.navigationService.footerVisible = false;
   }
 
 
