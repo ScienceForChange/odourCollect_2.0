@@ -3,11 +3,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observation } from 'src/app/models/observation';
 import { User } from 'src/app/models/user';
 import { DialogModalComponent } from 'src/app/modules/modals/dialog-modal/dialog-modal.component';
-import { FooterService } from 'src/app/services/footer.service';
 import { UserService } from 'src/app/services/user.service';
 import { OdourService } from '../../../../services/odour.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { BehaviorSubject } from 'rxjs';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 enum SortBy {
   CREATED_DESC = 'createdAt_desc',
@@ -27,13 +27,13 @@ export class MyOdoursComponent implements OnInit {
   public isOpenFilters$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
-    private footerService: FooterService,
     private userService: UserService,
     private modalService: NgbModal,
     private odourService: OdourService,
     private alertService: AlertService,
+    private navigationService: NavigationService,
   ) {
-    this.footerService.visible = true;
+    this.navigationService.headerTitle = 'Mis olores';
   }
 
   ngOnInit(): void {

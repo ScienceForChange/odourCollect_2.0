@@ -25,7 +25,6 @@ export class NotificationComponent {
     }
     else{
       this.mapService.seeMoreAbout(this.notification.data.resource, true);
-      console.log(this.notification.id)
       this.notificationService.readNotification(this.notification.id);
     }
       

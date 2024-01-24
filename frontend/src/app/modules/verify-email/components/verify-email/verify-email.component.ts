@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { FooterService } from 'src/app/services/footer.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-verify-email',
@@ -17,13 +17,13 @@ export class VerifyEmailComponent implements OnDestroy {
   resendVerifymail$!: Subscription;
 
   constructor(
-    private footerService: FooterService,
+    private navigationService: NavigationService,
     private authService: AuthService,
     private alertService: AlertService,
     private router: Router
 
     ) {
-      this.footerService.visible = false;
+    this.navigationService.footerVisible = false;
   }
   
   resendVerifyEmail(){

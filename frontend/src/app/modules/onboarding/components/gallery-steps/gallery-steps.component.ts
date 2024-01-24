@@ -1,18 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FooterService } from 'src/app/services/footer.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-gallery-steps',
   templateUrl: './gallery-steps.component.html',
   styleUrls: ['./gallery-steps.component.scss'],
 })
-export class GalleryStepsComponent {
+export class GalleryStepsComponent implements OnInit {
   public steps: undefined[] = [...Array(5)];
   public step: number | any = 1;
 
-  constructor(private router: Router, private footerService: FooterService) {
-    this.footerService.visible = false;
+  constructor(
+    private router: Router, 
+    private navigationService: NavigationService,) {
+    this.navigationService.footerVisible = false;
 
   }
 
@@ -27,4 +29,9 @@ export class GalleryStepsComponent {
     if (step > 4) this.router.navigate(['/register']);
     else this.step = step;
   };
+  
+  ngOnInit(): void {
+    this.navigationService.mapHeader = false;
+    this.navigationService.defaultHeader = false;
+  }
 }

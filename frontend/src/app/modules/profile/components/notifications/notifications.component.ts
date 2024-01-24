@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } fr
 import { NavigationEnd, Router} from '@angular/router';
 import { Subscription, fromEvent } from 'rxjs';
 import { AppNotification } from 'src/app/models/app-notification';
-import { FooterService } from 'src/app/services/footer.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
@@ -23,11 +23,11 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterViewInit 
 
   constructor( 
     private notifcationService: NotificationService,
-    private footerService: FooterService,
     private router: Router,
+    private navigationService: NavigationService,
    ) { 
-      this.footerService.visible = true;
       this.notifcationService.refresh = true;
+      this.navigationService.backTo = '/profile';
       if(!this.notifcationService.checking) this.notifcationService.checkNotifications();
   }
   
@@ -50,6 +50,7 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterViewInit 
         this.newSfcNotification = resp.length > 0;
       }
     })
+    
     this.socialNotifications$ = this.notifcationService.socialNotification.subscribe({
       next: (resp) => {
         this.newSocialNotification = resp.length > 0;
@@ -66,9 +67,10 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterViewInit 
     this.activeOption = e ? e.target as Element : document.querySelector(`[routerlink="${lastSegment}"]`);
     this.marker.nativeElement.style.width = this.activeOption?.getBoundingClientRect().width + 'px';
     this.marker.nativeElement.style.left = this.activeOption?.getBoundingClientRect().left + 'px';
-    this.marker.nativeElement.style.top = this.activeOption?.getBoundingClientRect().top + 'px';
-    this.marker.nativeElement.style.height = this.activeOption?.getBoundingClientRect().height + 'px';
-    this.marker.nativeElement.classList.add('transition'); 
+    setTimeout(() => {
+      this.marker.nativeElement.classList.add('transition'); 
+    });
+    this.navigationService.backTo = '/profile';
   } 
 
   ngOnDestroy(): void {

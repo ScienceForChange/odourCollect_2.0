@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FooterService } from 'src/app/services/footer.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-faqs',
@@ -8,8 +8,9 @@ import { FooterService } from 'src/app/services/footer.service';
 })
 export class FaqsComponent {
   constructor(
-    private footerService: FooterService
+    private navigationService: NavigationService,
   ) {
-    this.footerService.visible = false;
+    this.navigationService.headerTitle = 'Preguntas frecuentes';
+    this.navigationService.footerVisible = false;
   }
 }

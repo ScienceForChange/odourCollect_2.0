@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FooterService } from 'src/app/services/footer.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { RecoverPasswordService } from 'src/app/services/recover-password.service';
 
 @Component({
@@ -22,9 +22,9 @@ export class RecoverPasswordComponent {
 
   constructor(
     private recoverPasswordService: RecoverPasswordService,
-    private footerService: FooterService
+    private navigationService: NavigationService,
   ) {
-    this.footerService.visible = false;
+    this.navigationService.footerVisible = false;
   }
 
   toggleCheckEmail(): void {

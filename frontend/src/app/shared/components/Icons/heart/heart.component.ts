@@ -87,7 +87,6 @@ export class HeartComponent {
       setTimeout(() => this.removeHearth(i), 1500 + 150 * i);
 
     }
-    console.log(this.hearts);
   }
 
   removeHearth(heart: number) {
