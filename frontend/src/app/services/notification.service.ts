@@ -125,7 +125,7 @@ export class NotificationService {
     let sfcNotifications: AppNotification[] = [];
 
     notifications.forEach((notification) => {
-      if(notification.type === 'like'){
+      if(notification.type === 'like' || notification.type === 'comment'){
         socialNotifications.push(notification);
       }
       else{

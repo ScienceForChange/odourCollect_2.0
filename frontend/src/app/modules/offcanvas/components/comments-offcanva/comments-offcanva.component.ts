@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveOffcanvas, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Alert } from 'src/app/models/alert';
 import { Observation, Comment } from 'src/app/models/observation';
 import { User } from 'src/app/models/user';
 import { DialogModalComponent } from 'src/app/modules/modals/dialog-modal/dialog-modal.component';
+import { AlertService } from 'src/app/services/alert.service';
 import { OdourService } from 'src/app/services/odour.service';
 
 @Component({
@@ -18,8 +20,6 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
   @Input() addCommnetary!: boolean;
   @ViewChild('commentary') inputCommentary!: ElementRef;
   @ViewChild('commentaries') commentariesContainer!: ElementRef;
-
-  public listComments: Comment[] = [];
 
   public loading: boolean = false;
   public loadingDelete: boolean = false;
@@ -36,6 +36,7 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
     public offcanvas: NgbActiveOffcanvas,
     private modalService: NgbModal,
     private odourService: OdourService,
+    private alertService: AlertService,
     ) {
      }
 
@@ -45,7 +46,6 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
           this.inputCommentary.nativeElement.focus();
         }, 100);
       }
-      this.listComments = this.observation.relationships.comments;
   }
 
   public toggleDeleteButton(event:Event): void {
@@ -96,11 +96,16 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
         this.loadingDelete = false;
         setTimeout(() => {comment.style.height = '0'})
         setTimeout(() => {
-          this.listComments = this.listComments.filter(comment => comment.id !== idCommentary);
+          this.observation.relationships.comments = this.observation.relationships.comments.filter(comment => comment.id !== idCommentary);
         }, 1000);
       },
-      error: (error) => {
-        console.log(error);
+      error: () => {
+        this.alertService.error(
+          'No se ha podido eliminar el comentario', {
+            autoClose: true,
+            keepAfterRouteChange: true,
+          }
+        );
         this.loadingDelete = false;
       }
     });
@@ -130,9 +135,9 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
     this.loading = true;
     const text = this.commentaryForm.controls['commentary'].value;
 
-      this.odourService.addCommentary(text, this.observation.id).subscribe(
+      this.odourService.addCommentary(text, this.user.id ? this.user.id : 0 , this.observation.id).subscribe(
         {
-          next: (commentary) => {
+          next: () => {
             let newCommentary: Comment = {
               id: 1,
               body: text,
@@ -140,7 +145,7 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
               odour_observation_id: this.observation.id,
               created_at: new Date(),
             }
-            this.listComments.unshift(newCommentary);
+            this.observation.relationships.comments.unshift(newCommentary);
             this.commentaryForm.controls['commentary'].reset();
       
             setTimeout(()=>{
@@ -162,8 +167,13 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
             });
 
           },
-          error: (error) => {
-            console.log(error);
+          error: () => {
+            this.alertService.error(
+              'No se ha podido enviar el comentario', {
+                autoClose: true,
+                keepAfterRouteChange: true,
+              }
+            );
             this.loading = false;
           }
         }

@@ -273,7 +273,7 @@ export class MapService {
   }
 
   //Ver más información de la observación seleccionada.
-  public seeMoreAbout(observationId: number, centerMap:boolean = false): void {
+  public seeMoreAbout(observationId: number, centerMap:boolean = false, openComments:boolean = false): void {
     
     if (this.router.url !== '/map') {
       this.router.navigate(['/map']);
@@ -301,9 +301,12 @@ export class MapService {
         this.centerMap(
           Number(this.observation.latitude),
           Number(this.observation.longitude),
-          );
-        }
-      });
+        );
+      }
+      if(openComments){
+        this.infoObservationOffcanva.componentInstance.openCommentaries();
+      }
+    });
 
   }
 
