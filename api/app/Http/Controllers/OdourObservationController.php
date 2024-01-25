@@ -104,7 +104,7 @@ class OdourObservationController extends Controller
                 'odourSubType.odourType',
                 'user.userable',
                 'user.odourObservations.odourSubType.odourType',
-                'comments'
+                'comments.user'
             ]))
         ],
         Response::HTTP_OK
