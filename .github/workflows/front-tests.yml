@@ -1,7 +1,7 @@
 name: Frontend Isolated tests
 
 on:
-  push:
+  pull_request:
     branches: [ "frontDev" ]
 
 env:
