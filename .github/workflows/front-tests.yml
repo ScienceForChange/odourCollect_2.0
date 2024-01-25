@@ -1,8 +1,9 @@
 name: Frontend Isolated tests
 
 on:
-  pull_request:
-    branches: [ "frontDev" ]
+  push:
+    branches:
+      - front**
 
 env:
   FRONTEND_IMAGE: carlossfc/odourcollect-frontend:${{ github.sha }}
