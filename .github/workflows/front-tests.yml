@@ -36,7 +36,7 @@ jobs:
         run: docker pull $FRONTEND_IMAGE
       - name: Run tests
         run: |
-          npm install && npm test src/testing
+          npm test src/testing
 
   remove-images:
     needs: [ front-test ]
