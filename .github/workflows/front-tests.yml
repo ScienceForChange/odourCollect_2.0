@@ -1,0 +1,49 @@
+name: Frontend Isolated tests
+
+on:
+  push:
+    branches: [ "frontDev" ]
+
+env:
+  FRONTEND_IMAGE: carlossfc/odourcollect-frontend:${{ github.sha }}
+
+jobs:
+  build-frontend-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build images
+        run: |
+          docker build -t $FRONTEND_IMAGE --target=dev --build-arg user=ubuntu --build-arg uid=1000 -f ./frontend/Dockerfile .
+      - name: Push images
+        run: |
+          docker push $FRONTEND_IMAGE
+
+  front-test:
+    needs: [ build-frontend-image ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Pull FRONTEND image
+        run: docker pull $FRONTEND_IMAGE
+      - name: Run tests
+        run: |
+          npm install && npm test src/testing
+
+  remove-images:
+    needs: [ front-test ]
+    runs-on: ubuntu-latest
+    if: ${{ always() && contains(needs.*.result, 'failure') }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Remove images
+        run: |
+          ./deployment/bin/remove-image.sh carlossfc/odourcollect-frontend ${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }} ${{ secrets.DOCKERHUB_PASSWORD }}
