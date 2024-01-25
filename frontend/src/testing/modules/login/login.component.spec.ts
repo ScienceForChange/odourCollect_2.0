@@ -33,7 +33,7 @@ describe('LoginComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeFalsy();
+    expect(component).toBeTruthy();
   })
 
   it('debería hacer login y redirigir', () => {
