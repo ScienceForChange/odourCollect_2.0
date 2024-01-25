@@ -7,6 +7,7 @@ import {
   OdourCreateForm,
 } from '../models/odour-related-data';
 import {
+  Comment,
   Observation,
   ObservationQuery,
   ObservationRes,
@@ -443,6 +444,30 @@ export class OdourService {
         likeable_type: 'App\\Models\\OdourObservation',
         id: obsId
       }
+    });
+  }
+
+  addCommentary(body: string, user_id: number, odour_observation_id: number):Observable<any> {
+    return this.http.post(`${environment.BACKEND_BASE_URL}api/observation/${odour_observation_id}/comments`, { 
+      likeable_type: 'App\\Models\\OdourObservation',
+      body: body,
+      user_id: user_id
+     }, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      withCredentials: true,
+    });
+  }
+
+  deleteCommentary(idObservation: number, idComentary: number):Observable<any> {
+    return this.http.delete(`${environment.BACKEND_BASE_URL}api/observation/${idObservation}/comments/${idComentary}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      withCredentials: true
     });
   }
 

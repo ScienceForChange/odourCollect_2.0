@@ -28,7 +28,7 @@ export interface ObservationRelationships {
   odourSubType: OdourSubType;
   odourIntensity: OdourIntensity;
   odourHedonicTone: OdourHedonicTone;
-  comments: [];
+  comments: Comment[];
   user?: User;
 }
 
@@ -274,7 +274,14 @@ export interface Profile {
   birthYear: null | string;
   phone: null;
 }
-
+export interface Comment {
+  id: number;
+  body: string;
+  user_id: number | undefined;
+  odour_observation_id: number;
+  created_at: Date ;
+  user_avatar_id: number;
+}
 export enum Gender {
   Female = 'female',
   Male = 'male',

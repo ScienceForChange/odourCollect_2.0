@@ -1,8 +1,9 @@
-name: Backend And Frontend tests
+name: Backend Isolated tests
 
 on:
-  pull_request:
-    branches: [ "develop" ]
+  push:
+    branches:
+      - back**
 
 env:
   API_IMAGE: carlossfc/odourcollect-api:${{ github.sha }}
@@ -47,21 +48,6 @@ jobs:
       - name: Push Mysql image
         run: docker push $MYSQL_IMAGE
 
-  build-frontend-image:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build images
-        run: |
-          docker build -t $FRONTEND_IMAGE --target=dev --build-arg user=ubuntu --build-arg uid=1000 -f ./frontend/Dockerfile .
-      - name: Push images
-        run: |
-          docker push $FRONTEND_IMAGE
-
   back-analyze:
     needs: [build-backend-images, build-mysql]
     runs-on: ubuntu-latest
@@ -98,23 +84,8 @@ jobs:
         run: |
           echo "OK"
 
-  front-test:
-    needs: [ build-frontend-image ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Pull FRONTEND image
-        run: docker pull $FRONTEND_IMAGE
-      - name: Run tests
-        run: |
-          docker run --rm -t $FRONTEND_IMAGE npm test src/testing
-
   remove-images:
-    needs: [ back-analyze, back-test, front-test ]
+    needs: [ back-analyze, back-test ]
     runs-on: ubuntu-latest
     if: ${{ always() && contains(needs.*.result, 'failure') }}
     steps:
@@ -125,4 +96,3 @@ jobs:
           ./deployment/bin/remove-image.sh carlossfc/odourcollect-mysql ${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }} ${{ secrets.DOCKERHUB_PASSWORD }}
           ./deployment/bin/remove-image.sh carlossfc/odourcollect-worker ${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }} ${{ secrets.DOCKERHUB_PASSWORD }}
           ./deployment/bin/remove-image.sh carlossfc/odourcollect-scheduler ${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }} ${{ secrets.DOCKERHUB_PASSWORD }}
-          ./deployment/bin/remove-image.sh carlossfc/odourcollect-frontend ${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }} ${{ secrets.DOCKERHUB_PASSWORD }}

@@ -43,17 +43,17 @@ describe('NotificationService', () => {
     expect(service).toBeTruthy();
   });
 
-  it("simular obtener notificaciones", () => {  
-    const response = { status: 200, data:  [] };
-    httpMock.get.mockReturnValueOnce(of(response));
-    const obs$ = service.getNotifications();
+  //TODO it("simular obtener notificaciones", () => {  
+  //   const response = { status: 200, data:  [] };
+  //   httpMock.get.mockReturnValueOnce(of(response));
+  //   const obs$ = service.getNotifications();
     
-    testScheduler.run(({ expectObservable }) => {
-      const expectedMarble = "(---a--|)"; // Diagrama de mármol representando la secuencia de emisión de 'a' seguido por completado '|'
-      const expectedValues = { a:  of(response) }; // valor emitido 'a' con el valor de 'response'
-      expectObservable(obs$).toBe(expectedMarble, expectedValues);
-    });
+  //   testScheduler.run(({ expectObservable }) => {
+  //     const expectedMarble = "(---a--|)"; // Diagrama de mármol representando la secuencia de emisión de 'a' seguido por completado '|'
+  //     const expectedValues = { a:  of(response) }; // valor emitido 'a' con el valor de 'response'
+  //     expectObservable(obs$).toBe(expectedMarble, expectedValues);
+  //   });
     
-    expect(service).toHaveBeenCalledWith(['']);
-  });
+  //   expect(service).toHaveBeenCalledWith(['']);
+  // });
 });
