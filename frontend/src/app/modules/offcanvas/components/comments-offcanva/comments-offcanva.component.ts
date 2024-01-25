@@ -137,14 +137,9 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
 
       this.odourService.addCommentary(text, this.user.id ? this.user.id : 0 , this.observation.id).subscribe(
         {
-          next: () => {
-            let newCommentary: Comment = {
-              id: 1,
-              body: text,
-              user_id: this.user.id,
-              odour_observation_id: this.observation.id,
-              created_at: new Date(),
-            }
+          next: (resp) => {
+            console.log(resp.data.resource);
+            let newCommentary: Comment = resp.data.resource;
             this.observation.relationships.comments.unshift(newCommentary);
             this.commentaryForm.controls['commentary'].reset();
       
