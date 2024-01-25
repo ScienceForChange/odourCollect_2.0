@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common'
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
@@ -9,7 +9,7 @@ import { NavigationService } from 'src/app/services/navigation.service';
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.scss']
 })
-export class ErrorComponent implements OnDestroy{
+export class ErrorComponent implements OnInit, OnDestroy{
 
   private refreshToken$!: Subscription;
 
@@ -37,9 +37,14 @@ export class ErrorComponent implements OnDestroy{
       }
     });
   }
-
+  
+  ngOnInit(): void {
+    this.navigationService.mapHeader = false;
+    this.navigationService.defaultHeader = false;
+  }
+}
   ngOnDestroy(): void {
-    if(this.refreshToken$) this.refreshToken$.unsubscribe();
+    if(this.refreshToken$) this.refreshToken$.unsubscribe();;;
   }
 
 }
