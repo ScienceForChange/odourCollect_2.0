@@ -447,10 +447,11 @@ export class OdourService {
     });
   }
 
-  addCommentary(body: string, odour_observation_id: number):Observable<any> {
+  addCommentary(body: string, user_id: number, odour_observation_id: number):Observable<any> {
     return this.http.post(`${environment.BACKEND_BASE_URL}api/observation/${odour_observation_id}/comments`, { 
       likeable_type: 'App\\Models\\OdourObservation',
-      body: body
+      body: body,
+      user_id: user_id
      }, {
       headers: {
         'Content-Type': 'application/json',
