@@ -3,7 +3,7 @@ name: Backend Isolated tests
 on:
   push:
     branches:
-      - back*
+      - back**
 
 env:
   API_IMAGE: carlossfc/odourcollect-api:${{ github.sha }}
