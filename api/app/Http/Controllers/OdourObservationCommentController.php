@@ -33,8 +33,9 @@ class OdourObservationCommentController extends Controller
 
         $userToNoify = $odourObservation->user;
 
-        $userToNoify->notify(new CommentReceived($odourObservation, $request->user()));
-        // \App\Models\User::find($notificationObj->user_id)->notify(new LikeReceived($notificationObj));
+        if($userToNoify->id !== $request->user()->id)
+            $userToNoify->notify(new CommentReceived($odourObservation, $request->user()));
+            // \App\Models\User::find($notificationObj->user_id)->notify(new LikeReceived($notificationObj));
 
         return $this->success([
             'message' => 'Comment created successfully.'
