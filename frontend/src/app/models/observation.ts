@@ -280,6 +280,7 @@ export interface Comment {
   user_id: number | undefined;
   odour_observation_id: number;
   created_at: Date ;
+  user_avatar_id: number;
 }
 export enum Gender {
   Female = 'female',
