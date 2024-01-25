@@ -36,7 +36,7 @@ jobs:
         run: docker pull $FRONTEND_IMAGE
       - name: Run tests
         run: |
-          docker-compose -f docker-compose.ci.yml exec -T frontend npm test src/testing
+          docker run --rm -t $FRONTEND_IMAGE npm test src/testing
 
   remove-images:
     needs: [ front-test ]
