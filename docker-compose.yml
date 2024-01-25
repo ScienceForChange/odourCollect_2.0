@@ -28,7 +28,7 @@ services:
   api:
     build:
       args:
-        user: carlos-sfc
+        user: alberto-sfc
         uid: 1000
       context: .
       dockerfile: ./api/Dockerfile
@@ -42,6 +42,7 @@ services:
       - ./api/routes:/usr/src/routes
       - ./api/storage:/usr/src/storage
       - ./api/tests:/usr/src/tests
+      - ./api/resources/views/:/usr/src/resources/views
       - ./api/composer.json:/usr/src/composer.json
       - ./api/composer.lock:/usr/src/composer.lock
       - ./.env:/usr/src/.env
@@ -54,7 +55,7 @@ services:
   scheduler:
     build:
       args:
-          user: carlos-sfc
+          user: alberto-sfc
           uid: 1000
       context: .
       dockerfile: ./api/Dockerfile
@@ -67,6 +68,7 @@ services:
       - ./api/routes:/usr/src/routes
       - ./api/storage:/usr/src/storage
       - ./api/tests:/usr/src/tests
+      - ./api/resources/views/:/usr/src/resources/views
       - ./api/composer.json:/usr/src/composer.json
       - ./api/composer.lock:/usr/src/composer.lock
       - ./.env:/usr/src/.env
@@ -78,7 +80,7 @@ services:
   worker:
     build:
       args:
-        user: carlos-sfc
+        user: alberto-sfc
         uid: 1000
       context: .
       dockerfile: ./api/Dockerfile
@@ -91,6 +93,7 @@ services:
       - ./api/routes:/usr/src/routes
       - ./api/storage:/usr/src/storage
       - ./api/tests:/usr/src/tests
+      - ./api/resources/views/:/usr/src/resources/views
       - ./api/composer.json:/usr/src/composer.json
       - ./api/composer.lock:/usr/src/composer.lock
       - ./.env:/usr/src/.env
@@ -135,7 +138,7 @@ services:
   update:
     build:
       args:
-        user: carlos-sfc
+        user: alberto-sfc
         uid: 1000
       context: .
       dockerfile: ./api/Dockerfile

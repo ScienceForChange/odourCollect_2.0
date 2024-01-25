@@ -6,7 +6,7 @@ use App\Enums\Citizen\Gender;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProfileCitizen>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory\App\Models\ProfileCitizen>
  */
 class ProfileCitizenFactory extends Factory
 {

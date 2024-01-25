@@ -100,8 +100,6 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/observation/{odourObservation}/comments/', [App\Http\Controllers\OdourObservationCommentController::class, 'index'])->name('comments.index');
     Route::post('/observation/{odourObservation}/comments/', [App\Http\Controllers\OdourObservationCommentController::class, 'store'])->name('comments.store');
-    Route::patch('/observation/{odourObservation}/comments/{comment}', [App\Http\Controllers\OdourObservationCommentController::class, 'update'])->name('comments.update');
     Route::delete('/observation/{odourObservation}/comments/{comment}', [App\Http\Controllers\OdourObservationCommentController::class, 'destroy'])->name('comments.destroy');
 });
