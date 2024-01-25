@@ -28,7 +28,7 @@ services:
   api:
     build:
       args:
-        user: alberto-sfc
+        user: ${USER}
         uid: 1000
       context: .
       dockerfile: ./api/Dockerfile
@@ -55,7 +55,7 @@ services:
   scheduler:
     build:
       args:
-          user: alberto-sfc
+          user: ${USER}
           uid: 1000
       context: .
       dockerfile: ./api/Dockerfile
@@ -80,7 +80,8 @@ services:
   worker:
     build:
       args:
-        user: alberto-sfc
+        user: ${USER}
+
         uid: 1000
       context: .
       dockerfile: ./api/Dockerfile
@@ -138,7 +139,7 @@ services:
   update:
     build:
       args:
-        user: alberto-sfc
+        user: ${USER}
         uid: 1000
       context: .
       dockerfile: ./api/Dockerfile
