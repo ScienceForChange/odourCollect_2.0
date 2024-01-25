@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveOffcanvas, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observation } from 'src/app/models/observation';
+import { Observation, Comment } from 'src/app/models/observation';
 import { User } from 'src/app/models/user';
 import { DialogModalComponent } from 'src/app/modules/modals/dialog-modal/dialog-modal.component';
-import { CommentaryService } from 'src/app/services/commentary.service';
+import { OdourService } from 'src/app/services/odour.service';
 
 @Component({
   selector: 'app-comments-offcanva',
@@ -19,56 +19,7 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
   @ViewChild('commentary') inputCommentary!: ElementRef;
   @ViewChild('commentaries') commentariesContainer!: ElementRef;
 
-  public listComments: any[] = [
-    {
-      user: {
-        id: 1,
-        avatar: 9
-      },
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae? Lorem ipsum',
-      date: new Date(),
-    },
-    {
-      user: {
-        id: 2609,
-        avatar: 2
-      },
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae? Lorem ipsum',
-      date: new Date(),
-    },
-    {
-      user: {
-        id: 1,
-        avatar: 3
-      },
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae? Lorem ipsum',
-      date: new Date(),
-    },
-    {
-      user: {
-        id: 2609,
-        avatar: 2
-      },
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae? Lorem ipsum',
-      date: new Date(),
-    },
-    {
-      user: {
-        id: 1,
-        avatar: 1
-      },
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae? Lorem ipsum',
-      date: new Date(),
-    },
-    {
-      user: {
-        id: 1,
-        avatar: 7
-      },
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae? Lorem ipsum',
-      date: new Date(),
-    }
-  ]
+  public listComments: Comment[] = [];
 
   public loading: boolean = false;
   public loadingDelete: boolean = false;
@@ -84,8 +35,9 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
   constructor(
     public offcanvas: NgbActiveOffcanvas,
     private modalService: NgbModal,
-    private commentaryService: CommentaryService,
-    ) { }
+    private odourService: OdourService,
+    ) {
+     }
 
   ngAfterViewInit (): void {
       if(this.addCommnetary){
@@ -93,6 +45,7 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
           this.inputCommentary.nativeElement.focus();
         }, 100);
       }
+      this.listComments = this.observation.relationships.comments;
   }
 
   public toggleDeleteButton(event:Event): void {
@@ -113,8 +66,7 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
 
   }
 
-  public deleteComment(event:Event): void {    
-    const comment = event.currentTarget as HTMLElement;
+  public deleteComment(idCommentary: number): void {    
     const dialog = this.modalService.open(DialogModalComponent, {
       windowClass: 'default',
       backdropClass: 'default',
@@ -126,22 +78,25 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
       acceptButtonText: 'Eliminar',
     };
     dialog.result.catch((reason) => {
-      if (reason === true) this.delete(comment.parentElement as HTMLElement);
+      const comment = document.getElementById('comment-' + idCommentary) as HTMLElement;
+      if (reason === true) this.delete(idCommentary);
     });
   }
+  
+  private delete( idCommentary: number ){
 
-  private delete( comment: HTMLElement ){
-    
+    let comment = document.getElementById('comment-' + idCommentary) as HTMLElement;
+
     this.loadingDelete = true;
     
-    this.commentaryService.deleteCommentary(comment).subscribe({
-      next: (response) => {
+    this.odourService.deleteCommentary(this.observation.id, idCommentary).subscribe({
+      next: () => {
         comment.style.height = comment.offsetHeight + 'px';
         comment.classList.add('deleting');
-        comment.style.height = '0';
         this.loadingDelete = false;
+        setTimeout(() => {comment.style.height = '0'})
         setTimeout(() => {
-          comment.remove();
+          this.listComments = this.listComments.filter(comment => comment.id !== idCommentary);
         }, 1000);
       },
       error: (error) => {
@@ -174,12 +129,18 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
   
     this.loading = true;
     const text = this.commentaryForm.controls['commentary'].value;
-    
-      this.commentaryService.addCommentary(text).subscribe(
+
+      this.odourService.addCommentary(text, this.observation.id).subscribe(
         {
           next: (commentary) => {
-            
-            this.listComments.unshift(commentary);
+            let newCommentary: Comment = {
+              id: 1,
+              body: text,
+              user_id: this.user.id,
+              odour_observation_id: this.observation.id,
+              created_at: new Date(),
+            }
+            this.listComments.unshift(newCommentary);
             this.commentaryForm.controls['commentary'].reset();
       
             setTimeout(()=>{

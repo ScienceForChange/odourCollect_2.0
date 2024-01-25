@@ -71,10 +71,10 @@
                 <div class="d-flex flex-row gap-2">
                     <span class="count text-end">{{ observation.likes }}</span> Me gusta
                 </div>
-                <div [ngClass]="{'see-comments-button': !observation.relationships.comments.length}" (click)="openCommentaries()" class="d-flex flex-row align-content-between gap-2">
+                <div [ngClass]="{'see-comments-button': observation.relationships.comments.length}" (click)="openCommentaries()" class="d-flex flex-row align-content-between gap-2">
                     <span class="count text-end">{{ observation.relationships.comments.length }}</span> 
                     comentarios
-                    <icon-arrow-right2 *ngIf="!observation.relationships.comments.length"/>
+                    <icon-arrow-right2 *ngIf="observation.relationships.comments.length"/>
                 </div>
             </div>
             <div id="delete" *ngIf="user && user.id === observation.relationships.user?.id" class="d-flex flex-column align-items-start justify-content-center pt-3">
