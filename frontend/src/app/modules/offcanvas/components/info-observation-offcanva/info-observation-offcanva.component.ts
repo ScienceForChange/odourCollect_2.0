@@ -6,7 +6,6 @@ import { User } from 'src/app/models/user';
 import { DialogModalComponent } from 'src/app/modules/modals/dialog-modal/dialog-modal.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { MapModalsService } from 'src/app/services/map-modals.service';
 import { OdourService } from 'src/app/services/odour.service';
 import { UserService } from 'src/app/services/user.service';
 import { HeartComponent } from 'src/app/shared/components/Icons/heart/heart.component';

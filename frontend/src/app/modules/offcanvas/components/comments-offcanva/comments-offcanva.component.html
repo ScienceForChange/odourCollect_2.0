@@ -14,24 +14,24 @@
 <div class="offcanvas-body d-flex flex-column align-items-center h-100 pt-4" #commentaries>
     <div *ngIf="commentaries" class="comments d-flex flex-column gap-4">
         <ng-container *ngFor="let comment of listComments">
-            <div *ngIf="comment.user.id == user.id; else otherUserComment" class="comment own d-flex justify-content-end align-items-center gap-3" >
+            <div *ngIf="comment.user_id == user.id; else otherUserComment" [id]="'comment-' + comment.id" class="comment own d-flex justify-content-end align-items-center gap-3" >
                 <div class="text" (click)="toggleDeleteButton($event)" >
                     <p>
-                        {{comment.text}}
+                        {{comment.body}}
                     </p>
                 </div>
-                <button class="btn btn-primary delete-comment" (click)="deleteComment($event)" [ngClass]="{'loading' : loadingDelete}">
+                <button class="btn btn-primary delete-comment" (click)="deleteComment(comment.id)" [ngClass]="{'loading' : loadingDelete}">
                     <icon-delete />
                 </button>
             </div>
             <ng-template #otherUserComment>
                 <div class="comment d-flex justify-content-end align-items-end gap-3" #otherUserComment>
                     <div class="avatar position-sticky">
-                        <img [src]="'/assets/images/avatars/' + comment.user.avatar + '.svg'" alt="OdourCollect" height="64"/>
+                        <img [src]="'/assets/images/avatars/' + 1 + '.svg'" alt="OdourCollect" height="64"/>
                     </div>
                     <div class="text">
                         <p>
-                            {{comment.text}}
+                            {{comment.body}}
                         </p>
                     </div>
                 </div>

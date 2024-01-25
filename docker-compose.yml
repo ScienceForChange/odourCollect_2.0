@@ -81,6 +81,7 @@ services:
     build:
       args:
         user: ${USER}
+
         uid: 1000
       context: .
       dockerfile: ./api/Dockerfile
