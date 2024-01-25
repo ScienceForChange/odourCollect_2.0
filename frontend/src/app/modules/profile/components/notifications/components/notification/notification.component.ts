@@ -24,7 +24,8 @@ export class NotificationComponent {
       this.route.navigate(['/profile/notifications/message/' + this.notification.data.resource]);
     }
     else{
-      this.mapService.seeMoreAbout(this.notification.data.resource, true);
+      if(this.notification.type === 'comment')
+      this.mapService.seeMoreAbout(this.notification.data.resource, true, true);
       this.notificationService.readNotification(this.notification.id);
     }
       
