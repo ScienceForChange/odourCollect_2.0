@@ -23,7 +23,7 @@ class StoreOdourObservationComment extends FormRequest
     {
         return [
             'body' => ['required','string','max:255'],
-            'user_id' => ['required','integer','exists:users,id'],
+            // 'user_id' => ['required','integer','exists:users,id'],
         ];
     }
 }
