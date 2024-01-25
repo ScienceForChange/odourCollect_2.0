@@ -3,7 +3,7 @@ import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AboutTrainedUserComponent } from 'src/app/modules/information/components/about-trained-user/about-trained-user.component';
-import { FooterService } from 'src/app/services/footer.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -18,13 +18,13 @@ export class ProfileComponent implements OnInit, OnDestroy{
   private $newNotification!: Subscription;
 
   constructor(
-    private footerService: FooterService,
     private userService: UserService,
     private offcanvasService: NgbOffcanvas,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private navigationService: NavigationService,
   ) {
-    this.footerService.visible = true;
     this.newNotification = true;
+    this.navigationService.backTo = '/map';
   }
 
   ngOnInit(){

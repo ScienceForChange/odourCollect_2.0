@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AlertService } from 'src/app/services/alert.service';
-import { FooterService } from 'src/app/services/footer.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -24,13 +24,14 @@ export class EditAvatarComponent implements OnDestroy{
 
   
   constructor(
-    private footerService: FooterService,
     private userService: UserService,
     private route: Router,
     private elementRef: ElementRef,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private navigationService: NavigationService
     ) {
-      this.footerService.visible = false;
+      this.navigationService.footerVisible = false;
+      this.navigationService.headerTitle = 'Editar avatar';
   }
   
   public selectNewAvatar(event: MouseEvent, id_avatar:number){

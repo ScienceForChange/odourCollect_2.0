@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreOdourObservationComment;
 use App\Models\Comment;
 use App\Models\OdourObservation;
 use App\Notifications\CommentReceived;
-use App\Http\Resources\CommentResource;
+use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class OdourObservationCommentController extends Controller
 {
+    use ApiResponses;
     /**
      * Display a listing of the resource.
      */
@@ -20,17 +22,9 @@ class OdourObservationCommentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(OdourObservation $odourObservation)
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, OdourObservation $odourObservation)
+    public function store(StoreOdourObservationComment $request, OdourObservation $odourObservation)
     {
         $odourObservation->comments()->create([
             'body' => $request->body,
@@ -41,20 +35,16 @@ class OdourObservationCommentController extends Controller
 
         $userToNoify->notify(new CommentReceived($odourObservation, $request->user()));
         // \App\Models\User::find($notificationObj->user_id)->notify(new LikeReceived($notificationObj));
+
+        return $this->success([
+            'message' => 'Comment created successfully.'
+        ], Response::HTTP_CREATED);
     }
 
     /**
      * Display the specified resource.
      */
     public function show(OdourObservation $odourObservation, Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(OdourObservation $odourObservation, Comment $comment)
     {
         //
     }

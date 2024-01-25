@@ -1,0 +1,29 @@
+<header>
+  <nav>
+    <div>
+      <div>
+        <app-hamburguer (click)="toggleIsOpen()" />
+      </div>
+      <div>
+        <ul class="d-flex align-items-center">
+          <li [class.active]="showUserObservations">
+            <button (click)="toggleUserOdours(true)">Mis olores</button>
+          </li>
+          <li [class.active]="!showUserObservations">
+            <button (click)="toggleUserOdours(false)">Todos los olores</button>
+          </li>
+          <li class="follow"></li>
+        </ul>
+        <!-- <input /> -->
+      </div>
+      <div [style.display]="showMenu === 'open' ? 'none' : ''">
+        <app-filters />
+        <button id="location-btn" (click)="centerToMyLocation()">
+          <icon-location [iconClass]="'md-1'" />
+        </button>
+      </div>
+    </div>
+    <app-menu *ngIf="showMenu" />
+  </nav>
+</header>
+  

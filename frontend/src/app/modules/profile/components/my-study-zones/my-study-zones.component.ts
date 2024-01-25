@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FooterService } from 'src/app/services/footer.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-my-study-zones',
@@ -7,8 +7,8 @@ import { FooterService } from 'src/app/services/footer.service';
   styleUrls: ['./my-study-zones.component.scss'],
 })
 export class MyStudyZonesComponent {
-  constructor(private footerService: FooterService) {
-    this.footerService.visible = true;
-
+  constructor(
+    private navigationService: NavigationService) {
+    this.navigationService.headerTitle = 'Mis zonas de estudio';
   }
 }

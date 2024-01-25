@@ -42,6 +42,7 @@ services:
       - ./api/routes:/usr/src/routes
       - ./api/storage:/usr/src/storage
       - ./api/tests:/usr/src/tests
+      - ./api/resources/views/:/usr/src/resources/views
       - ./api/composer.json:/usr/src/composer.json
       - ./api/composer.lock:/usr/src/composer.lock
       - ./.env:/usr/src/.env
@@ -67,6 +68,7 @@ services:
       - ./api/routes:/usr/src/routes
       - ./api/storage:/usr/src/storage
       - ./api/tests:/usr/src/tests
+      - ./api/resources/views/:/usr/src/resources/views
       - ./api/composer.json:/usr/src/composer.json
       - ./api/composer.lock:/usr/src/composer.lock
       - ./.env:/usr/src/.env
@@ -91,6 +93,7 @@ services:
       - ./api/routes:/usr/src/routes
       - ./api/storage:/usr/src/storage
       - ./api/tests:/usr/src/tests
+      - ./api/resources/views/:/usr/src/resources/views
       - ./api/composer.json:/usr/src/composer.json
       - ./api/composer.lock:/usr/src/composer.lock
       - ./.env:/usr/src/.env

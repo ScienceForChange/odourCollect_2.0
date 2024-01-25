@@ -8,12 +8,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./back-btn.component.scss'],
 })
 export class BackBtnComponent {
-  constructor(private location: Location,private router:Router) {}
+  
+  @Input() route: string | null = null;
 
-  @Input() route!: string;
+  constructor(private location: Location,private router:Router) {}
   
   goBack() {
     if (this.route) this.router.navigate([this.route]);
     else this.location.back();
   }
+
 }

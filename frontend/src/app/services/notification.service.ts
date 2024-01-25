@@ -52,7 +52,6 @@ export class NotificationService {
 
       this.checking = true;
 
-      console.log('checking notifications');
       this.http.get(`${environment.BACKEND_BASE_URL}api/notifications`,
       {
         headers: {

@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common'
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { FooterService } from 'src/app/services/footer.service';
+import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-error',
@@ -17,10 +17,10 @@ export class ErrorComponent implements OnDestroy{
 
   constructor(
     private authService: AuthService,
-    private footerService: FooterService,
     private location: Location,
+    private navigationService: NavigationService,
   ){
-    this.footerService.visible = false;
+    this.navigationService.footerVisible = false;
   }
 
   public retry(){
