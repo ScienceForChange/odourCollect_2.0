@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - back**
-      - 'backDev'
+      - '!backDev'
 
 env:
   API_IMAGE: carlossfc/odourcollect-api:${{ github.sha }}

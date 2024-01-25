@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - front**
-      - 'frontDev'
+      - '!frontDev'
 
 env:
   FRONTEND_IMAGE: carlossfc/odourcollect-frontend:${{ github.sha }}
