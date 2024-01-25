@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOdourObservationComment;
+use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\OdourObservation;
 use App\Notifications\CommentReceived;
@@ -26,18 +27,20 @@ class OdourObservationCommentController extends Controller
      */
     public function store(StoreOdourObservationComment $request, OdourObservation $odourObservation)
     {
-        $odourObservation->comments()->create([
+        $comment = $odourObservation->comments()->create([
             'body' => $request->body,
             'user_id' => $request->user()->id,
         ]);
 
         $userToNoify = $odourObservation->user;
 
-        $userToNoify->notify(new CommentReceived($odourObservation, $request->user()));
-        // \App\Models\User::find($notificationObj->user_id)->notify(new LikeReceived($notificationObj));
+        if($userToNoify->id !== $request->user()->id)
+            $userToNoify->notify(new CommentReceived($odourObservation, $request->user()));
+            // \App\Models\User::find($notificationObj->user_id)->notify(new LikeReceived($notificationObj));
 
         return $this->success([
-            'message' => 'Comment created successfully.'
+            'message' => 'Comment created successfully.',
+            'resource' => new CommentResource($comment),
         ], Response::HTTP_CREATED);
     }
 
