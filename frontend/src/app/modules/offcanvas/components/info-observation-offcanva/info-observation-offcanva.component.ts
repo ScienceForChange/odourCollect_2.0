@@ -14,6 +14,8 @@ import { RegisterModalComponent } from 'src/app/modules/modals/register-modal/re
 import { DangerComponent } from 'src/app/shared/components/Icons/danger/danger.component';
 import { NavigationEnd, Router } from '@angular/router';
 import { CommentsOffcanvaComponent } from 'src/app/modules/offcanvas/components/comments-offcanva/comments-offcanva.component';
+import { MapService } from 'src/app/services/map.service';
+
 
 @Component({
   selector: 'app-info-observation-offcanva',
@@ -25,7 +27,8 @@ export class InfoObservationOffcanvaComponent implements OnInit, OnDestroy, Afte
 
   private user$!: Subscription;
   private subscriptions = new Subscription();  
-  
+  private closeByUser: boolean = false;
+
   public observation!: Observation;
   public isOpen: boolean = false;
   public user: User | undefined = undefined;
@@ -38,6 +41,7 @@ export class InfoObservationOffcanvaComponent implements OnInit, OnDestroy, Afte
     private alertService: AlertService,
     private modalService: NgbModal,
     private offcanvasService: NgbOffcanvas,
+    private mapService: MapService,
     private router: Router,
   ) {}
 
@@ -180,9 +184,13 @@ export class InfoObservationOffcanvaComponent implements OnInit, OnDestroy, Afte
       };
     }
   }
-
+  public close():void{
+    this.closeByUser = true;
+    this.offcanvas.close();
+  }
   ngOnDestroy(): void {
     if (this.user$) this.user$.unsubscribe();
     this.subscriptions.unsubscribe();
+    if(this.closeByUser) this.mapService.observation = null;
   }
 }

@@ -53,7 +53,7 @@ export class RequestInterceptor implements HttpInterceptor {
         // Si la solicitud HTTP devuelve un error de verificado  marcar al usuario como no verificado.
         if (error.status === 409) this.authService.isVerified = false;
         // Si la solicitud HTTP devuelve un error 0 y status ok false, es que se ha perdido la conexión con el servidor
-        if (error.status === 0 && !error.ok){
+        if ((error.status === 0 && !error.ok) || error.status === 502 || error.status === 504){
           // Reenviamos a pantalla de error
           this.authService.error = true;
           this.router.navigate(['/error'])
