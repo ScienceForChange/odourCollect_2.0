@@ -43,7 +43,7 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
   ngAfterViewInit (): void {
       if(this.addCommnetary){
         setTimeout(() => {
-          this.inputCommentary.nativeElement.focus();
+          this.inputCommentary.nativeElement.focus().click();
         }, 100);
       }
   }
@@ -78,7 +78,6 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
       acceptButtonText: 'Eliminar',
     };
     dialog.result.catch((reason) => {
-      const comment = document.getElementById('comment-' + idCommentary) as HTMLElement;
       if (reason === true) this.delete(idCommentary);
     });
   }
