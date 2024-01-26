@@ -52,6 +52,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   private displayHeaderByRoute(event: NavigationEnd): void {
     if (event.url === '/map') {
+      this.mapService.openInfoObservationOffcanva();
       this.displayMap = true;
     } else if (event.url === '/profile/my-study-zones/id') {
       this.displayMap = true;
