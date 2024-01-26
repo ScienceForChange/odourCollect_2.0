@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('birth_year')->nullable();
             $table->string('status_sentence')->nullable();
             $table->text('deleted_because')->nullable();
+            $table->integer('level')->default(0);
+            $table->boolean('is_trained')->default(false);
             $table->timestamps();
         });
     }

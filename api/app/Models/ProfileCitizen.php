@@ -14,7 +14,9 @@ class ProfileCitizen extends Model
         'name',
         'gender',
         'birth_year',
-        'deleted_because'
+        'deleted_because',
+        'level',
+        'is_trained',
     ];
 
     /**
