@@ -21,6 +21,8 @@ class ProfileCitizenResource extends JsonResource
             'gender'        => $this->gender,
             'birthYear'     => $this->birth_year,
             'phone'         => $this->phone,
+            'level'         => $this->level,
+            'isTrained'     => $this->is_trained,
         ];
     }
 }
