@@ -12,6 +12,7 @@ ngb-offcanvas-panel.offcanvas.default{
     &.comments{
         min-height: calc(100dvh - 70px);
         overflow-y: unset;
+        overflow-x: hidden;
         .offcanvas-header{
             position: sticky;
             top: 0;
