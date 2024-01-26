@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\{ Auth, Hash };
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Support\Facades\DB;
+use App\Rules\teenAgeCare;
 
 
 class RegisteredUserController extends Controller
@@ -23,11 +24,13 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'min:3','max:100'],
-            'birth_year' => ['required', 'string'], // Se puede poner una lógica de mínimo de edad, máximo, etc
+            'birth_year' => ['required', 'integer', 'min:1900', new TeenAgeCare],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class.',email'],
             'gender' => ['required', new Enum(\App\Enums\Citizen\Gender::class)],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        return $request->all();
 
 
         DB::transaction(function () use ($request) {
