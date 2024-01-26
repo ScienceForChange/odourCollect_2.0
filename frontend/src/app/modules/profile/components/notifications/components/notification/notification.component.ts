@@ -21,12 +21,19 @@ export class NotificationComponent {
   public openNotification(){
 
     if(this.notification.type === 'message'){
+
       this.route.navigate(['/profile/notifications/message/' + this.notification.data.resource]);
+      
     }
     else{
+
       if(this.notification.type === 'comment')
-      this.mapService.seeMoreAbout(this.notification.data.resource, true, true);
+        this.mapService.seeMoreAbout(this.notification.data.resource, true, true);
+      else
+        this.mapService.seeMoreAbout(this.notification.data.resource, true);
+
       this.notificationService.readNotification(this.notification.id);
+
     }
       
   }
