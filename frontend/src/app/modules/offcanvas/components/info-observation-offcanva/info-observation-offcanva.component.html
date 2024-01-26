@@ -11,7 +11,7 @@
     
     </ng-container>
     
-    <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close" (click)="offcanvas.close()">
+    <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close" (click)="close()">
         <span></span>
         <span></span>
     </button>
@@ -71,33 +71,33 @@
                 <div class="d-flex flex-row gap-2">
                     <span class="count text-end">{{ observation.likes }}</span> Me gusta
                 </div>
-                <div [ngClass]="{'see-comments-button': observation.relationships.comments.length}" (click)="openCommentaries()" class="d-flex flex-row align-content-between gap-2">
+                <button [ngClass]="{'see-comments-button': observation.relationships.comments.length}" (click)="openCommentaries()" class="btn-clean d-flex flex-row align-content-between gap-2">
                     <span class="count text-end">{{ observation.relationships.comments.length }}</span> 
                     comentarios
                     <icon-arrow-right2 *ngIf="observation.relationships.comments.length"/>
-                </div>
+                </button>
             </div>
             <div id="delete" *ngIf="user && user.id === observation.relationships.user?.id" class="d-flex flex-column align-items-start justify-content-center pt-3">
-                <div tabindex="0" (click)="send()" class="d-flex justify-content-start align-items-center gap-3">
+                <button tabindex="0" (click)="send()" class="btn-clean d-flex justify-content-start align-items-center gap-3">
                     <icon-delete [iconClass]="'icon-violet-dark'" />
                     <p class="color-violet-dark">Eliminar</p>
-                </div>
+                </button>
             </div>
         </div>
         <div id="social">
             <div class="d-flex flex-row mt-3" [ngClass]="user?.id === observation.relationships.user?.id? 'justify-content-center' : 'justify-content-between justify-content-md-around'">
-                <div class="d-flex justify-content-start align-items-center gap-2" (click)="openCommentaries(true)">
+                <button class="btn-clean d-flex justify-content-start align-items-center gap-2" (click)="openCommentaries(true)">
                     <icon-commentary [iconClass]="'icon-violet-dark'" />
                     <span class="color-violet-dark">Añadir comentario</span>
-                </div>
-                <div tabindex="0" (click)="toggleObservationLike()"
+                </button>
+                <button tabindex="0" (click)="toggleObservationLike()"
                     *ngIf="!user || user.id != observation.relationships.user?.id"
-                    class="d-flex justify-content-start align-items-center gap-2"
+                    class="btn-clean d-flex justify-content-start align-items-center gap-2"
                     [ngClass]="{'liked': observation.liked}"
                     >
                     <icon-heart [iconClass]="'icon-violet-dark'" [liked]="observation.liked" />
                     <span class="color-violet-dark">Me gusta</span>
-                </div>
+                </button>
             </div>
         </div>    
     </ng-container>
