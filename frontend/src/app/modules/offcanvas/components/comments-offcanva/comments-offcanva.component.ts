@@ -150,6 +150,7 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
               if(commentariesContainer.scrollTop > 0){
                 commentariesContainer.scrollTo(0, 0)
                 this.scrollTo(commentariesContainer, 0).then(() => {
+                  console.log('done')
                   this.addCommentaryOnlist(height)
                 });
               }
@@ -186,6 +187,7 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
   }
 
   private addCommentaryOnlist(height:number): void {
+    console.log(height);
     const commentariesContainer = this.commentariesContainer.nativeElement as HTMLElement;
     const lastCommentary = commentariesContainer.firstElementChild?.firstElementChild as HTMLElement;
     lastCommentary.classList.add('newAnimated');
