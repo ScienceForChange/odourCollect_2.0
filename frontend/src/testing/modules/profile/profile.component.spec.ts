@@ -38,5 +38,6 @@ describe('ProfileComponent', () => {
     expect(spy).toHaveBeenCalledWith(AboutTrainedUserComponent, {  position: 'start', scroll: false, panelClass: 'about-canvas'});
 
     
+
   });
 });
