@@ -1,17 +1,17 @@
 <section class="d-flex flex-column h-100 align-items-center" *ngIf="user">
   <div class="d-flex justify-content-center">
     <div id="picture" [style.background-image]="'url(/assets/images/avatars/' + user.avatar_id + '.svg)'">
-      <icon-verified />
+      <icon-verified *ngIf="user.relationships.profile.isTrained" />
     </div>
   </div>
   <h1 class="body-l text-center mb-2" *ngIf="user">Usuario {{user.id}}</h1>
   <span class="label-m text-center d-flex justify-content-center align-items-center color-grey">Usuario entrenando <icon-info-square class="d-flex p-2" (click)="openAboutTrainedOffcanvas()"/></span>
   <div class="d-flex justify-content-center column-gap-3 mb-4 flex-wrap" (click)="openAboutBadgesOffcanvas()">
-    <icon-trophies [trophy]="0" [color]="true" />
-    <icon-trophies [trophy]="1" [color]="false" />
-    <icon-trophies [trophy]="2" [color]="false" />
-    <icon-trophies [trophy]="3" [color]="false" />
-    <icon-trophies [trophy]="4" [color]="false" />
+    <icon-trophies [trophy]="0" [color]="user.relationships.profile.level > 0 " />
+    <icon-trophies [trophy]="1" [color]="user.relationships.profile.level > 1 " />
+    <icon-trophies [trophy]="2" [color]="user.relationships.profile.level > 2 " />
+    <icon-trophies [trophy]="3" [color]="user.relationships.profile.level > 3 " />
+    <icon-trophies [trophy]="4" [color]="user.relationships.profile.level > 4 " />
   </div>
   <!-- <p class="text-center mb-3">
     El olor a café y tostadas de mi casa al despertarme los domingos :)
