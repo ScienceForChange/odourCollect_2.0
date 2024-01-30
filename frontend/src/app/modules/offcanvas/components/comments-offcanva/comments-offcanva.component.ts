@@ -43,7 +43,8 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
   ngAfterViewInit (): void {
       if(this.addCommnetary){
         setTimeout(() => {
-          this.inputCommentary.nativeElement.focus().click();
+          this.inputCommentary.nativeElement.focus();
+          this.inputCommentary.nativeElement.click();
         }, 100);
       }
   }
