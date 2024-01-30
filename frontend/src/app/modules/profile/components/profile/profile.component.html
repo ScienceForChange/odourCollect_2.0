@@ -1,11 +1,11 @@
-<article class="mt-3">
+<article class="mt-3" *ngIf="user">
   <section class="d-flex flex-column">
     <div class="d-flex justify-content-center" >
-      <div id="picture" [style.background-image]="'url(/assets/images/avatars/' + user?.avatar_id + '.svg)'">
-        <icon-verified/>
+      <div id="picture" [style.background-image]="'url(/assets/images/avatars/' + user.avatar_id + '.svg)'">
+        <icon-verified *ngIf="user.relationships.profile.isTrained"/>
       </div>
     </div>
-    <h1 class="body-l text-center">Usuario {{user?.id}}</h1>
+    <h1 class="body-l text-center">Usuario {{user.id}}</h1>
     <span class="label-m text-center d-flex justify-content-center align-items-center color-grey">Usuario entrenando <icon-info-square class="d-flex p-2" (click)="openInfoOffcanvas()"/></span>
     <a routerLink="edit-avatar" class="label-m text-center color-violet d-flex justify-content-center mb-5 gap-2"><icon-edit/>Editar avatar</a>
     <div id="my-profile-options">
