@@ -54,6 +54,7 @@ export class MapService {
     private router: Router,
     private offcanvasService: NgbOffcanvas,
     private mapModalsService: MapModalsService,
+    private activeOffCanvasService:NgbActiveOffcanvas
   ) {
     this.getObservations();
   }
@@ -281,7 +282,7 @@ export class MapService {
     }
     
     if(this.infoObservationOffcanva && this.infoObservationOffcanva.componentInstance !== undefined && this.observation?.id === observationId) return;
-    else if(this.infoObservationOffcanva && this.infoObservationOffcanva.componentInstance !== undefined) this.infoObservationOffcanva.componentInstance.offcanvas.close();
+    if(this.infoObservationOffcanva && this.infoObservationOffcanva.componentInstance !== undefined) this.infoObservationOffcanva.componentInstance.offcanvas.close();
     
 
     this.infoObservationOffcanva = this.offcanvasService.open(

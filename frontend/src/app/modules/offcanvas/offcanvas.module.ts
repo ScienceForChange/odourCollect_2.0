@@ -4,15 +4,16 @@ import { PublicProfileOffcanvaComponent } from './components/public-profile-offc
 import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
 import { InfoObservationOffcanvaComponent } from './components/info-observation-offcanva/info-observation-offcanva.component';
 import { CommentsOffcanvaComponent } from './components/comments-offcanva/comments-offcanva.component';
+import { ObservationFiltersOffCanvaComponent } from './components/observation-filters-offcanva/observation-filters-offcanva.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 
 
 @NgModule({
   declarations: [
+    ObservationFiltersOffCanvaComponent,
     PublicProfileOffcanvaComponent,
     InfoObservationOffcanvaComponent,
-    CommentsOffcanvaComponent
+    CommentsOffcanvaComponent,
   ],
   imports: [
     SharedComponentsModule,

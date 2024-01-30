@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 
-import { OdourInformationComponent } from './odour-information.component';
+import { ObservationFiltersComponent } from './observation-filters.component';
 
-describe('OdourInformationComponent', () => {
-  let component: OdourInformationComponent;
-  let fixture: ComponentFixture<OdourInformationComponent>;
+describe('ObservationFiltersComponent', () => {
+  let component: ObservationFiltersComponent;
+  let fixture: ComponentFixture<ObservationFiltersComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
-      declarations: [OdourInformationComponent]
+      declarations: [ObservationFiltersComponent]
     });
-    fixture = TestBed.createComponent(OdourInformationComponent);
+    fixture = TestBed.createComponent(ObservationFiltersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
