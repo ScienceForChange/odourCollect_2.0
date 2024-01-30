@@ -1,5 +1,15 @@
-import { AfterViewChecked, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NgbActiveOffcanvas, NgbModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import {
+  AfterViewChecked,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import {
+  NgbActiveOffcanvas,
+  NgbModal,
+  NgbOffcanvas,
+} from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, filter } from 'rxjs';
 import { Observation } from 'src/app/models/observation';
 import { User } from 'src/app/models/user';
@@ -15,24 +25,26 @@ import { DangerComponent } from 'src/app/shared/components/Icons/danger/danger.c
 import { NavigationEnd, Router } from '@angular/router';
 import { CommentsOffcanvaComponent } from 'src/app/modules/offcanvas/components/comments-offcanva/comments-offcanva.component';
 import { MapService } from 'src/app/services/map.service';
-
+import { MapModalsService } from 'src/app/services/map-modals.service';
 
 @Component({
   selector: 'app-info-observation-offcanva',
   templateUrl: './info-observation-offcanva.component.html',
   styleUrls: ['./info-observation-offcanva.component.scss'],
 })
-export class InfoObservationOffcanvaComponent implements OnInit, OnDestroy, AfterViewChecked{
-  @ViewChild(HeartComponent) heartIcon!:HeartComponent;
+export class InfoObservationOffcanvaComponent
+  implements OnInit, OnDestroy, AfterViewChecked
+{
+  @ViewChild(HeartComponent) heartIcon!: HeartComponent;
 
   private user$!: Subscription;
-  private subscriptions = new Subscription();  
+  private subscriptions = new Subscription();
   private closeByUser: boolean = false;
 
   public observation!: Observation;
   public isOpen: boolean = false;
   public user: User | undefined = undefined;
-  
+
   constructor(
     public offcanvas: NgbActiveOffcanvas,
     private userService: UserService,
@@ -43,16 +55,22 @@ export class InfoObservationOffcanvaComponent implements OnInit, OnDestroy, Afte
     private offcanvasService: NgbOffcanvas,
     private mapService: MapService,
     private router: Router,
+    private mapModalsService: MapModalsService,
   ) {}
 
   ngOnInit(): void {
     this.user = this.userService.user;
     this.subscriptions.add(
-      this.router.events.pipe(
-        filter(event => event instanceof NavigationEnd)
-      ).subscribe(() => {
-        this.offcanvas.close();
-      })
+      this.router.events
+        .pipe(filter((event) => event instanceof NavigationEnd))
+        .subscribe(() => {
+          this.offcanvas.close();
+        }),
+    );
+    this.subscriptions.add(
+      this.mapModalsService.isVisibleState.subscribe((value) => {
+        !value.observationInfo && this.offcanvas.close();
+      }),
     );
   }
 
@@ -96,8 +114,10 @@ export class InfoObservationOffcanvaComponent implements OnInit, OnDestroy, Afte
   }
 
   public resizeOffcanva() {
-      const offcanvaBody = document.querySelector('.offcanvas-body') as HTMLElement;
-      offcanvaBody.style.height = offcanvaBody.scrollHeight + 'px';
+    const offcanvaBody = document.querySelector(
+      '.offcanvas-body',
+    ) as HTMLElement;
+    offcanvaBody.style.height = offcanvaBody.scrollHeight + 'px';
   }
   ngAfterViewChecked() {
     this.resizeOffcanva();
@@ -116,37 +136,29 @@ export class InfoObservationOffcanvaComponent implements OnInit, OnDestroy, Afte
   }
 
   toggleObservationLike() {
-    if(this.authService.isLoggedIn.value) {
-
-      if(this.observation.liked)
-      this.odourService.deleteObservationLike(this.observation.id).subscribe({
-        next: (resp: any) => {
-          this.observation.likes = resp.likes;
-          this.observation.liked = false;         
-        }
-      });
-
+    if (this.authService.isLoggedIn.value) {
+      if (this.observation.liked)
+        this.odourService.deleteObservationLike(this.observation.id).subscribe({
+          next: (resp: any) => {
+            this.observation.likes = resp.likes;
+            this.observation.liked = false;
+          },
+        });
       else
-      this.odourService.addObservationLike(this.observation.id).subscribe({
-        next: (resp: any) => {
-          this.observation.likes = resp.likes;
-          this.observation.liked = true;   
-          this.heartIcon.heartsEffect();        
-        }
-      });
-      
-    }
-    else {
-      this.modalService
-      .open(
-        RegisterModalComponent, { 
-          windowClass: 'default', 
-          backdropClass: 'default', 
-          centered : true, 
-          size: 'sm' 
-        }
-      )
-      .componentInstance.config = {
+        this.odourService.addObservationLike(this.observation.id).subscribe({
+          next: (resp: any) => {
+            this.observation.likes = resp.likes;
+            this.observation.liked = true;
+            this.heartIcon.heartsEffect();
+          },
+        });
+    } else {
+      this.modalService.open(RegisterModalComponent, {
+        windowClass: 'default',
+        backdropClass: 'default',
+        centered: true,
+        size: 'sm',
+      }).componentInstance.config = {
         icon: DangerComponent,
         text: "Debes iniciar sesión para poder dar 'Me gusta'",
       };
@@ -154,43 +166,37 @@ export class InfoObservationOffcanvaComponent implements OnInit, OnDestroy, Afte
   }
 
   openCommentaries(addCommnetary: boolean = false) {
-    if(this.userService.user) {
-      const offcanva = this.offcanvasService.open(
-        CommentsOffcanvaComponent,
-        {
-          position: 'bottom',
-          scroll: true,
-          panelClass: 'default comments',
-          backdropClass: 'default comments',
-        },
-      );
+    if (this.userService.user) {
+      const offcanva = this.offcanvasService.open(CommentsOffcanvaComponent, {
+        position: 'bottom',
+        scroll: true,
+        panelClass: 'default comments',
+        backdropClass: 'default comments',
+      });
       offcanva.componentInstance.user = this.user;
       offcanva.componentInstance.observation = this.observation;
       offcanva.componentInstance.addCommnetary = addCommnetary;
-    }
-    else {
-      this.modalService
-      .open(
-        RegisterModalComponent, { 
-          windowClass: 'default', 
-          backdropClass: 'default', 
-          centered : true, 
-          size: 'sm' 
-        }
-      )
-      .componentInstance.config = {
+    } else {
+      this.modalService.open(RegisterModalComponent, {
+        windowClass: 'default',
+        backdropClass: 'default',
+        centered: true,
+        size: 'sm',
+      }).componentInstance.config = {
         icon: DangerComponent,
-        text: "Debes iniciar sesión para poder dejar un comentario",
+        text: 'Debes iniciar sesión para poder dejar un comentario',
       };
     }
   }
-  public close():void{
+  public close(): void {
     this.closeByUser = true;
     this.offcanvas.close();
+    this.mapModalsService.toggleObservationModal();
   }
+
   ngOnDestroy(): void {
     if (this.user$) this.user$.unsubscribe();
     this.subscriptions.unsubscribe();
-    if(this.closeByUser) this.mapService.observation = null;
+    if (this.closeByUser) this.mapService.observation = null;
   }
 }

@@ -9,6 +9,7 @@ import { UserService } from './user.service';
 import { BehaviorSubject } from 'rxjs';
 import { NgbActiveOffcanvas, NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
 import { InfoObservationOffcanvaComponent } from '../modules/offcanvas/components/info-observation-offcanva/info-observation-offcanva.component';
+import { MapModalsService } from './map-modals.service';
 
 @Injectable({
   providedIn: 'root',
@@ -51,7 +52,8 @@ export class MapService {
     private userService: UserService,
     private odourService: OdourService,
     private router: Router,
-    private offcanvasService: NgbOffcanvas
+    private offcanvasService: NgbOffcanvas,
+    private mapModalsService: MapModalsService,
   ) {
     this.getObservations();
   }
@@ -80,7 +82,6 @@ export class MapService {
   }
 
   //Volver a pintar el mapa con nuevo ancho y alto
-
   public resizeMap(): void {
     if (this.map) {
       this.map.resize();
@@ -293,7 +294,9 @@ export class MapService {
         backdropClass: 'default info-observation',
       },
     );
-    
+
+    this.mapModalsService.toggleObservationModal();
+
     this.odourService.getOdour(observationId).subscribe((observationRes) => {
       this.observation = observationRes.data[0];
       this.infoObservationOffcanva.componentInstance.observation = this.observation;
