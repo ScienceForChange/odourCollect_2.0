@@ -26,6 +26,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { CommentsOffcanvaComponent } from 'src/app/modules/offcanvas/components/comments-offcanva/comments-offcanva.component';
 import { MapService } from 'src/app/services/map.service';
 import { MapModalsService } from 'src/app/services/map-modals.service';
+import { OffcanvasService } from 'src/app/services/offcanvas.service';
 
 @Component({
   selector: 'app-info-observation-offcanva',
@@ -52,13 +53,14 @@ export class InfoObservationOffcanvaComponent
     private odourService: OdourService,
     private alertService: AlertService,
     private modalService: NgbModal,
-    private offcanvasService: NgbOffcanvas,
+    private offcanvasService: OffcanvasService,
     private mapService: MapService,
     private router: Router,
     private mapModalsService: MapModalsService,
   ) {}
 
   ngOnInit(): void {
+    console.log('info Odour');
     this.user = this.userService.user;
     this.subscriptions.add(
       this.router.events
@@ -66,11 +68,6 @@ export class InfoObservationOffcanvaComponent
         .subscribe(() => {
           this.offcanvas.close();
         }),
-    );
-    this.subscriptions.add(
-      this.mapModalsService.isVisibleState.subscribe((value) => {
-        !value.observationInfo && this.offcanvas.close();
-      }),
     );
   }
 
@@ -123,16 +120,7 @@ export class InfoObservationOffcanvaComponent
     this.resizeOffcanva();
   }
   openProfileOffcanva() {
-    const offcanva = this.offcanvasService.open(
-      PublicProfileOffcanvaComponent,
-      {
-        position: 'bottom',
-        scroll: true,
-        panelClass: 'default public-profile',
-        backdropClass: 'default public-profile',
-      },
-    );
-    offcanva.componentInstance.user = this.observation.relationships.user;
+    this.offcanvasService.openProfileOffcanva(this.observation);
   }
 
   toggleObservationLike() {
@@ -167,15 +155,11 @@ export class InfoObservationOffcanvaComponent
 
   openCommentaries(addCommnetary: boolean = false) {
     if (this.userService.user) {
-      const offcanva = this.offcanvasService.open(CommentsOffcanvaComponent, {
-        position: 'bottom',
-        scroll: true,
-        panelClass: 'default comments',
-        backdropClass: 'default comments',
-      });
-      offcanva.componentInstance.user = this.user;
-      offcanva.componentInstance.observation = this.observation;
-      offcanva.componentInstance.addCommnetary = addCommnetary;
+      this.offcanvasService.openCommentsOffcanvaComponent(
+        this.user,
+        this.observation,
+        addCommnetary,
+      );
     } else {
       this.modalService.open(RegisterModalComponent, {
         windowClass: 'default',

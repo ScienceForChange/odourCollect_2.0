@@ -6,6 +6,7 @@ import { InfoObservationOffcanvaComponent } from './components/info-observation-
 import { CommentsOffcanvaComponent } from './components/comments-offcanva/comments-offcanva.component';
 import { ObservationFiltersOffCanvaComponent } from './components/observation-filters-offcanva/observation-filters-offcanva.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MenuOffcanvaComponent } from './components/menu-offcanva/menu-offcanva.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     PublicProfileOffcanvaComponent,
     InfoObservationOffcanvaComponent,
     CommentsOffcanvaComponent,
+    MenuOffcanvaComponent,
   ],
   imports: [
     SharedComponentsModule,

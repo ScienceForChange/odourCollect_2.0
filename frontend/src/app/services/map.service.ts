@@ -7,9 +7,14 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import { BehaviorSubject } from 'rxjs';
-import { NgbActiveOffcanvas, NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbActiveOffcanvas,
+  NgbOffcanvas,
+  NgbOffcanvasRef,
+} from '@ng-bootstrap/ng-bootstrap';
 import { InfoObservationOffcanvaComponent } from '../modules/offcanvas/components/info-observation-offcanva/info-observation-offcanva.component';
 import { MapModalsService } from './map-modals.service';
+import { OffcanvasService } from './offcanvas.service';
 
 @Injectable({
   providedIn: 'root',
@@ -47,14 +52,12 @@ export class MapService {
 
   public observation: Observation | null = null;
   public infoObservationOffcanva!: NgbOffcanvasRef;
-    
+
   constructor(
     private userService: UserService,
     private odourService: OdourService,
     private router: Router,
-    private offcanvasService: NgbOffcanvas,
-    private mapModalsService: MapModalsService,
-    private activeOffCanvasService:NgbActiveOffcanvas
+    private offcanvasService: OffcanvasService,
   ) {
     this.getObservations();
   }
@@ -78,7 +81,9 @@ export class MapService {
       : Number(featureSpiderfy[0].id);
 
     if (odourId) {
-      this.seeMoreAbout(odourId);
+      this.odourService.getOdourInfo(odourId).subscribe((res) => {
+        this.offcanvasService.openOdourInformationOffCanvas(res.data[0]);
+      });
     }
   }
 
@@ -275,47 +280,28 @@ export class MapService {
   }
 
   //Ver más información de la observación seleccionada.
-  public seeMoreAbout(observationId: number, centerMap:boolean = false, openComments:boolean = false): void {
-    
+  public seeMoreAbout(
+    observationId: number,
+    centerMap: boolean = false,
+    openComments: boolean = false,
+  ): void {
     if (this.router.url !== '/map') {
       this.router.navigate(['/map']);
     }
-    
-    if(this.infoObservationOffcanva && this.infoObservationOffcanva.componentInstance !== undefined && this.observation?.id === observationId) return;
-    if(this.infoObservationOffcanva && this.infoObservationOffcanva.componentInstance !== undefined) this.infoObservationOffcanva.componentInstance.offcanvas.close();
-    
-
-    this.infoObservationOffcanva = this.offcanvasService.open(
-      InfoObservationOffcanvaComponent,
-      {
-        position: 'bottom',
-        scroll: true,
-        panelClass: 'default info-observation',
-        backdrop: false,
-        backdropClass: 'default info-observation',
-      },
-    );
-
-    this.mapModalsService.toggleObservationModal();
 
     this.odourService.getOdour(observationId).subscribe((observationRes) => {
       this.observation = observationRes.data[0];
-      this.infoObservationOffcanva.componentInstance.observation = this.observation;
-      if(centerMap){
+      this.offcanvasService.openOdourInformationOffCanvas(this.observation);
+      if (centerMap) {
         this.centerMap(
           Number(this.observation.latitude),
           Number(this.observation.longitude),
         );
       }
-      if(openComments){
+      if (openComments) {
         this.infoObservationOffcanva.componentInstance.openCommentaries();
       }
     });
-
-  }
-  //Funcion para abrir el offcanvas de la observación en caso de que no se haya cerrado
-  public openInfoObservationOffcanva(): void {
-    if(this.observation && this.observation.id) this.seeMoreAbout(this.observation.id);
   }
 
   //Inicio el mapa (Solo se ejecuta una vez)

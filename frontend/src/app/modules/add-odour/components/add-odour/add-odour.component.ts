@@ -26,6 +26,7 @@ import { ObservationRes } from 'src/app/models/observation';
 import { TickSquareComponent } from 'src/app/shared/components/Icons/tick-square/tick-square.component';
 import { AlertService } from '../../../../services/alert.service';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { OffcanvasService } from '../../../../services/offcanvas.service';
 
 @Component({
   selector: 'app-add-odour',
@@ -65,6 +66,7 @@ export class AddOdourComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private route: ActivatedRoute,
     private navigationService: NavigationService,
+    private OffcanvasService: OffcanvasService,
   ) {
     this.navigationService.footerVisible = false;
     const queryParams = this.route.snapshot.queryParams;
@@ -250,6 +252,7 @@ export class AddOdourComponent implements OnInit, OnDestroy {
           acceptButtonText: 'Aceptar',
         };
         this.userService.addObservation(observation.data[0]);
+        this.OffcanvasService.openOdourInformationOffCanvas(observation.data[0]);
         this.router.navigate(['/map']);
         this.mapService.centerMap(
           Number(observation.data[0].latitude),

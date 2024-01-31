@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
 import { MapComponent } from './components/map/map.component';
 import { CoreRoutingModule } from 'src/app/core/core-routing.module';
-import { ObservationFiltersComponent } from './components/observation-filters/observation-filters.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   NgbAccordionModule,
@@ -18,7 +17,6 @@ import { LastOdoursComponent } from './components/last-odours/last-odours.compon
 @NgModule({
   declarations: [
     MapComponent,
-    ObservationFiltersComponent,
     AccordionComponent,
     LastOdoursComponent,
   ],
