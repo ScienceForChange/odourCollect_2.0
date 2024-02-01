@@ -9,8 +9,6 @@ import { OffcanvasService } from '../../../../services/offcanvas.service';
   templateUrl: './menu-offcanvas.component.html',
   styleUrls: ['./menu-offcanvas.component.scss'],
 })
-
-
 export class MenuOffcanvasComponent implements OnInit, OnDestroy {
   @Input() showMenu!: string | undefined;
 
@@ -21,7 +19,7 @@ export class MenuOffcanvasComponent implements OnInit, OnDestroy {
   constructor(
     public authService: AuthService,
     private offCanvasService: OffcanvasService,
-    public activeOffcanvas: NgbActiveOffcanvas
+    public activeOffcanvas: NgbActiveOffcanvas,
   ) {}
   ngOnInit(): void {
     this.subscriptions.add(
@@ -50,5 +48,9 @@ export class MenuOffcanvasComponent implements OnInit, OnDestroy {
 
   public openAboutEthicalIssuesOffcanvas(): void {
     this.offCanvasService.openAboutEthicalIssuesOffcanvas();
+  }
+
+  public openFaqsOffcanvas(): void {
+    this.offCanvasService.openFaqsOffcanvas();
   }
 }
