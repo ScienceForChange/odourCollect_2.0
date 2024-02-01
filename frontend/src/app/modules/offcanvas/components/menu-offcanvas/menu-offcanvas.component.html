@@ -1,0 +1,82 @@
+<div class="modal-header d-flex align-items-center justify-content-end">
+  <div>
+    <button
+      type="button"
+      class="close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="activeOffcanvas.close()"
+    >
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</div>
+<ul>
+  <li>
+    <div>
+      <p class="label-l">Mi Idioma: Español</p>
+    </div>
+    <icon-arrow-right2 />
+  </li>
+  <li>
+    <a (click)="openAboutOCOffcanvas()" routerLinkActive="active">
+      <div>
+        <p class="label-l">Sobre OdourCollect</p>
+      </div>
+      <icon-arrow-right2 />
+    </a>
+  </li>
+  <li>
+    <a routerLink="/frequently-asked-questions" routerLinkActive="active">
+      <div>
+        <p class="label-l">Preguntas Frecuentes</p>
+      </div>
+      <icon-arrow-right2 />
+    </a>
+  </li>
+  <li>
+    <a routerLink="/contact" routerLinkActive="active">
+      <div>
+        <p class="label-l">Contacto e incidencias</p>
+      </div>
+      <icon-arrow-right2 />
+    </a>
+  </li>
+  <li>
+    <a
+      (click)="openAboutDataProtectionOffcanvas()"
+      routerLink="/"
+      routerLinkActive="active"
+    >
+      <div>
+        <p class="label-l">Protección de datos personales</p>
+      </div>
+      <icon-arrow-right2 />
+    </a>
+  </li>
+  <li>
+    <a
+      (click)="openAboutEthicalIssuesOffcanvas()"
+      routerLink="/"
+      routerLinkActive="active"
+    >
+      <div>
+        <p class="label-l">Asuntos éticos</p>
+      </div>
+      <icon-arrow-right2 />
+    </a>
+  </li>
+  <li
+    *ngIf="isLoggedIn"
+    id="signout-option"
+    (click)="logout()"
+    tabindex="0"
+    (keydown.enter)="logout()"
+  >
+    <icon-log-out />
+    <div>
+      <p class="label-l">Cerrar sesión</p>
+    </div>
+  </li>
+</ul>

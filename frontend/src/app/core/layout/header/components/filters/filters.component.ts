@@ -1,31 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { MapModalsService } from 'src/app/services/map-modals.service';
+import { Component } from '@angular/core';
+import { OffcanvasService } from 'src/app/services/offcanvas.service';
 
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
   styleUrls: ['./filters.component.scss'],
 })
-
-export class FiltersComponent implements OnInit, OnDestroy {
+export class FiltersComponent {
   public isVisible: boolean = false;
-  private mapModalsServiceSubscription!: Subscription;
 
-  constructor(private mapModalsService: MapModalsService) {}
+  constructor(private offcanvasService: OffcanvasService) {}
 
-  ngOnInit(): void {
-    this.mapModalsServiceSubscription =
-      this.mapModalsService.isVisibleState.subscribe((value) => {
-        this.isVisible = value.filters;
-      });
-  }
-
-  public toggleFilter() {
-    this.mapModalsService.toggleFilterModal();
-  }
-
-  ngOnDestroy(): void {
-    this.mapModalsServiceSubscription.unsubscribe();
+  public openFilter() {
+    this.isVisible = true;
+    this.offcanvasService.openMapFiltersOffCanvas();
   }
 }

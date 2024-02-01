@@ -1,32 +1,29 @@
 import {
   Component,
-  EventEmitter,
   Input,
   OnDestroy,
   OnInit,
-  Output,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject, Subscription, of } from 'rxjs';
+import { Observation } from 'src/app/models/observation';
 import {
   OdourHedonicTone,
   OdourIntensity,
   OdourTypeData,
 } from 'src/app/models/odour-related-data';
-import { AboutFiltersComponent } from 'src/app/modules/information/components/about-filters/about-filters.component';
 import { OdourService } from 'src/app/services/odour.service';
 import { OffcanvasService } from 'src/app/services/offcanvas.service';
 
 @Component({
-  selector: 'app-filters',
-  templateUrl: './filters.component.html',
-  styleUrls: ['./filters.component.scss'],
+  selector: 'app-filters-myodours-offcanvas',
+  templateUrl: './filters-my-odours-offcanvas.component.html',
+  styleUrls: ['./filters-my-odours-offcanvas.component.scss'],
 })
-export class FiltersComponent implements OnInit, OnDestroy {
-  @Input() isOpen!: BehaviorSubject<boolean>;
-  @Output() toggleFilters = new EventEmitter<void>();
-  @Output() filterObservations = new EventEmitter();
-  @Output() resetFilters = new EventEmitter();
+export class FiltersMyOdoursOffcanvasComponent implements OnInit, OnDestroy {
+  @Input() observationsRef!: Observation[] | undefined;
+  @Input() observations$!: BehaviorSubject<Observation[] | undefined>;
 
   public loading: boolean = false;
   public loadingData: boolean = false;
@@ -47,9 +44,14 @@ export class FiltersComponent implements OnInit, OnDestroy {
   constructor(
     private odourService: OdourService,
     private offcanvasService: OffcanvasService,
+    public activeOffCanvas: NgbActiveOffcanvas,
   ) {}
 
   ngOnInit(): void {
+    this.observations$.subscribe((observations) => {
+      console.log('observations', observations)
+      console.log('observationsRef', this.observationsRef)
+    })
     this.subscriptions.add(
       this.odourService.observationRelatedData().subscribe(({ data }) => {
         const filterObservationsSlugs = [
@@ -105,8 +107,8 @@ export class FiltersComponent implements OnInit, OnDestroy {
     );
   }
 
-  public toggleFilter(): void {
-    this.isOpen.next(!this.isOpen.value);
+  public resetFilters(): void {
+    this.observations$.next(this.observationsRef);
   }
 
   public addTypeToForm(typeId: number): void {
@@ -121,15 +123,56 @@ export class FiltersComponent implements OnInit, OnDestroy {
 
     this.filtersForm.get('type')?.setValue(types);
   }
-
+// 
   public resetDefaultFilters(): void {
     this.filtersFormInitialValues.type = [];
-    this.resetFilters.emit();
+    this.resetFilters();
     this.filtersForm.reset(this.filtersFormInitialValues);
   }
 
+  public filterObservations(querys: {
+    type: [];
+    intensity: number[] | null;
+    hedonicTone: number[] | null;
+  }) {
+    const observationsFiltered = this.observationsRef?.filter((observation) => {
+      const observationType =
+        observation.relationships.odourSubType.relationships.odourType.id;
+      const observationIntensity = observation.relationships.odourIntensity.id;
+      const observationHedonicTone =
+        observation.relationships.odourHedonicTone.id;
+
+      const haveSameType = querys.type.length
+        ? querys.type.some((type: number) => type === observationType)
+        : true;
+
+      let haveSameIntensity;
+      let haveSameHedonictone;
+
+      if (querys.intensity !== null) {
+        haveSameIntensity =
+          querys.intensity[0] <= observationIntensity &&
+          querys.intensity[1] >= observationIntensity;
+      }
+
+      if (querys.hedonicTone !== null) {
+        haveSameHedonictone =
+          querys.hedonicTone[0] <= observationHedonicTone &&
+          querys.hedonicTone[1] >= observationHedonicTone;
+      }
+
+      return haveSameType && haveSameIntensity && haveSameHedonictone;
+    });
+
+    this.observations$.next(observationsFiltered);
+  }
+
   public filterOdour(): void {
-    const filters = {
+    const filters: {
+      type: [];
+      intensity: number[] | null;
+      hedonicTone: number[] | null;
+    } = {
       type: this.filtersForm.value.type,
       intensity:
         this.filtersForm.value.intensityMin !== this.intensity[0].power - 1
@@ -146,13 +189,14 @@ export class FiltersComponent implements OnInit, OnDestroy {
             ]
           : null,
     };
-    this.filterObservations.emit(filters);
-    this.toggleFilters.emit();
+    this.filterObservations(filters);
+    this.activeOffCanvas.close();
   }
 
   public openAboutFiltersOffcanva(): void {
     this.offcanvasService.openAboutFiltersOffcanvas();
   }
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
