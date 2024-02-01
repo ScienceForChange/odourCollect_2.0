@@ -57,7 +57,6 @@ export class InfoObservationOffcanvasComponent
   ) {}
 
   ngOnInit(): void {
-    console.log('info Odour');
     this.user = this.userService.user;
     this.subscriptions.add(
       this.router.events

@@ -138,7 +138,6 @@ export class CommentsOffcanvasComponent implements AfterViewInit {
       this.odourService.addCommentary(text, this.user.id ? this.user.id : 0 , this.observation.id).subscribe(
         {
           next: (resp) => {
-            console.log(resp.data.resource);
             let newCommentary: Comment = resp.data.resource;
             this.observation.relationships.comments.unshift(newCommentary);
             this.commentaryForm.controls['commentary'].reset();
@@ -151,7 +150,6 @@ export class CommentsOffcanvasComponent implements AfterViewInit {
               if(commentariesContainer.scrollTop > 0){
                 commentariesContainer.scrollTo(0, 0)
                 this.scrollTo(commentariesContainer, 0).then(() => {
-                  console.log('done')
                   this.addCommentaryOnlist(height)
                 });
               }
@@ -188,7 +186,6 @@ export class CommentsOffcanvasComponent implements AfterViewInit {
   }
 
   private addCommentaryOnlist(height:number): void {
-    console.log(height);
     const commentariesContainer = this.commentariesContainer.nativeElement as HTMLElement;
     const lastCommentary = commentariesContainer.firstElementChild?.firstElementChild as HTMLElement;
     lastCommentary.classList.add('newAnimated');
