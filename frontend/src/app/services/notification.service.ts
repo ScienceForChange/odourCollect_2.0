@@ -23,9 +23,9 @@ export class NotificationService {
   checking: booleano que indica si se está revisando las notificaciones en bucle para no hacerlo más de una vez
   
   */
-  public newNotification:     BehaviorSubject<boolean>  = new BehaviorSubject<boolean>(false);
-  public sfcNotification:     BehaviorSubject<AppNotification[]>    = new BehaviorSubject<AppNotification[]>([]);
-  public socialNotification:  BehaviorSubject<AppNotification[]>    = new BehaviorSubject<AppNotification[]>([]);
+  public newNotification:     BehaviorSubject<boolean>            = new BehaviorSubject<boolean>(false);
+  public sfcNotification:     BehaviorSubject<AppNotification[]>  = new BehaviorSubject<AppNotification[]>([]);
+  public socialNotification:  BehaviorSubject<AppNotification[]>  = new BehaviorSubject<AppNotification[]>([]);
 
   private login: boolean = false;
   private timer: number = 5000;

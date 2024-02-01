@@ -10,7 +10,7 @@ export class NavigationService {
   private isVisible: string | undefined = undefined;
   private _visible: BehaviorSubject<string | undefined>;
   private _defaultHeader: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private _mapHeader: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  private _mapHeader: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private _headerTitle: BehaviorSubject<string | null> = new BehaviorSubject<string | null >(null);
   private _backTo: BehaviorSubject<string | null> = new BehaviorSubject<string | null >(null);
 
