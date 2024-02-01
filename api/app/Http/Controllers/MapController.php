@@ -19,7 +19,6 @@ class MapController extends Controller
 
     public function index()
     {
-        return request()->ip();
         $odourObservations = QueryBuilder::for(OdourObservation::class)
         ->allowedFilters([
             AllowedFilter::custom('hedonicTone', new FilterOdourHedonicTones),
