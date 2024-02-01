@@ -1,13 +1,9 @@
-import { Injectable, inject } from '@angular/core';
-import {
-  NgbActiveOffcanvas,
-  NgbOffcanvas,
-  NgbOffcanvasOptions,
-} from '@ng-bootstrap/ng-bootstrap';
-import { InfoObservationOffcanvaComponent } from '../modules/offcanvas/components/info-observation-offcanva/info-observation-offcanva.component';
-import { ObservationFiltersOffCanvaComponent } from '../modules/offcanvas/components/observation-filters-offcanva/observation-filters-offcanva.component';
+import { Injectable } from '@angular/core';
+import { NgbOffcanvas, NgbOffcanvasOptions } from '@ng-bootstrap/ng-bootstrap';
+import { InfoObservationOffcanvasComponent } from '../modules/offcanvas/components/info-observation-offcanvas/info-observation-offcanvas.component';
+import { ObservationFiltersOffCanvasComponent } from '../modules/offcanvas/components/observation-filters-offcanvas/observation-filters-offcanvas.component';
 import { Observation } from '../models/observation';
-import { MenuOffcanvaComponent } from '../modules/offcanvas/components/menu-offcanva/menu-offcanva.component';
+import { MenuOffcanvasComponent } from '../modules/offcanvas/components/menu-offcanvas/menu-offcanvas.component';
 import { AboutOdourCollectComponent } from '../modules/information/components/about-odour-collect/about-odour-collect.component';
 import { AboutDataProtectionComponent } from '../modules/information/components/about-data-protection/about-data-protection.component';
 import { AboutEthicalIssuesComponent } from '../modules/information/components/about-ethical-issues/about-ethical-issues.component';
@@ -16,10 +12,12 @@ import { AboutTrainedUserComponent } from '../modules/information/components/abo
 import { AboutBadgesComponent } from '../modules/information/components/about-badges/about-badges.component';
 import { AboutOdourSourceComponent } from '../modules/information/components/about-odour-source/about-odour-source.component';
 import { AboutIntensityAndPleasentessComponent } from '../modules/information/components/about-intensity-and-pleasentess/about-intensity-and-pleasentess.component';
-import { PublicProfileOffcanvaComponent } from '../modules/offcanvas/components/public-profile-offcanva/public-profile-offcanva.component';
-import { CommentsOffcanvaComponent } from '../modules/offcanvas/components/comments-offcanva/comments-offcanva.component';
+import { PublicProfileOffcanvasComponent } from '../modules/offcanvas/components/public-profile-offcanvas/public-profile-offcanvas.component';
+import { CommentsOffcanvasComponent } from '../modules/offcanvas/components/comments-offcanvas/comments-offcanvas.component';
 import { User } from '../models/user';
 import { AboutStudyZoneComponent } from '../modules/information/components/about-study-zone/about-study-zone.component';
+import { FiltersMyOdoursOffcanvasComponent } from '../modules/offcanvas/components/filters-my-odours-offcanvas/filters-my-odours-offcanvas.component';
+import { BehaviorSubject } from 'rxjs';
 
 const bottomOffCanvasConfig: NgbOffcanvasOptions = {
   position: 'bottom',
@@ -50,46 +48,42 @@ const aboutOffCanvasConfig: NgbOffcanvasOptions = {
   providedIn: 'root',
 })
 export class OffcanvasService {
-
   constructor(private offcanvasService: NgbOffcanvas) {}
 
   //Map
-
   public openOdourInformationOffCanvas(observation: Observation): void {
     this.offcanvasService.open(
-      InfoObservationOffcanvaComponent,
+      InfoObservationOffcanvasComponent,
       bottomOffCanvasConfig,
     ).componentInstance.observation = observation;
   }
 
   public openMapFiltersOffCanvas(): void {
     this.offcanvasService.open(
-      ObservationFiltersOffCanvaComponent,
+      ObservationFiltersOffCanvasComponent,
       bottomOffCanvasConfig,
     );
   }
 
   public openMenuOffCanvas(): void {
-    this.offcanvasService.open(MenuOffcanvaComponent, menuOffCanvasConfig);
+    this.offcanvasService.open(MenuOffcanvasComponent, menuOffCanvasConfig);
   }
 
   //Profile
-
-  public openProfileOffcanva(observation: Observation) {
+  public openProfileOffcanvas(observation: Observation) {
     this.offcanvasService.open(
-      PublicProfileOffcanvaComponent,
+      PublicProfileOffcanvasComponent,
       profileOffCanvasConfig,
     ).componentInstance.user = observation.relationships.user;
   }
 
   //Comments
-
-  public openCommentsOffcanvaComponent(
+  public openCommentsOffcanvasComponent(
     user: User | undefined,
     observation: Observation,
     addCommnetary: boolean,
   ) {
-    const offcanva = this.offcanvasService.open(CommentsOffcanvaComponent, {
+    const offcanva = this.offcanvasService.open(CommentsOffcanvasComponent, {
       position: 'bottom',
       scroll: true,
       panelClass: 'default comments',
@@ -100,8 +94,20 @@ export class OffcanvasService {
     offcanva.componentInstance.addCommnetary = addCommnetary;
   }
 
-  //About
+  //MyOdours Filter
+  public openMyOdoursFiltersOffCanvas(
+    observationRef: Observation[] | undefined,
+    observations$: BehaviorSubject<Observation[] | undefined>,
+  ): void {
+    const offCanvas = this.offcanvasService.open(
+      FiltersMyOdoursOffcanvasComponent,
+      bottomOffCanvasConfig,
+    );
+    offCanvas.componentInstance.observationsRef = observationRef;
+    offCanvas.componentInstance.observations$ = observations$;
+  }
 
+  //About
   public openAboutOCOffcanvas(): void {
     this.offcanvasService.open(
       AboutOdourCollectComponent,

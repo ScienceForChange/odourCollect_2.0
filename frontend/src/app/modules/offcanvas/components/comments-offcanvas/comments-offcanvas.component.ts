@@ -9,11 +9,11 @@ import { AlertService } from 'src/app/services/alert.service';
 import { OdourService } from 'src/app/services/odour.service';
 
 @Component({
-  selector: 'app-comments-offcanva',
-  templateUrl: './comments-offcanva.component.html',
-  styleUrls: ['./comments-offcanva.component.scss']
+  selector: 'app-comments-offcanvas',
+  templateUrl: './comments-offcanvas.component.html',
+  styleUrls: ['./comments-offcanvas.component.scss']
 })
-export class CommentsOffcanvaComponent implements AfterViewInit {
+export class CommentsOffcanvasComponent implements AfterViewInit {
 
   @Input() user!: User;
   @Input() observation!: Observation;

@@ -32,10 +32,10 @@ const today = new Date()
 
 @Component({
   selector: 'app-observation-filters-offcanva',
-  templateUrl: './observation-filters-offcanva.component.html',
-  styleUrls: ['./observation-filters-offcanva.component.scss'],
+  templateUrl: './observation-filters-offcanvas.component.html',
+  styleUrls: ['./observation-filters-offcanvas.component.scss'],
 })
-export class ObservationFiltersOffCanvaComponent implements OnInit, OnDestroy {
+export class ObservationFiltersOffCanvasComponent implements OnInit, OnDestroy {
   public isOpen: boolean = false;
 
   public loading: boolean = false;

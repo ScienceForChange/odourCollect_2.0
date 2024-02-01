@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
-import { ObservationFiltersOffCanvaComponent } from 'src/app/modules/offcanvas/components/observation-filters-offcanva/observation-filters-offcanva.component';
 import { OffcanvasService } from 'src/app/services/offcanvas.service';
 
 @Component({

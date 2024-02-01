@@ -6,12 +6,12 @@ import { OffcanvasService } from '../../../../services/offcanvas.service';
 
 @Component({
   selector: 'app-menu-offcanva',
-  templateUrl: './menu-offcanva.component.html',
-  styleUrls: ['./menu-offcanva.component.scss'],
+  templateUrl: './menu-offcanvas.component.html',
+  styleUrls: ['./menu-offcanvas.component.scss'],
 })
 
 
-export class MenuOffcanvaComponent implements OnInit, OnDestroy {
+export class MenuOffcanvasComponent implements OnInit, OnDestroy {
   @Input() showMenu!: string | undefined;
 
   public isLoggedIn!: boolean;

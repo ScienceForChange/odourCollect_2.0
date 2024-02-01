@@ -6,10 +6,10 @@ import { OffcanvasService } from 'src/app/services/offcanvas.service';
 
 @Component({
   selector: 'app-public-profile-offcanva',
-  templateUrl: './public-profile-offcanva.component.html',
-  styleUrls: ['./public-profile-offcanva.component.scss'],
+  templateUrl: './public-profile-offcanvas.component.html',
+  styleUrls: ['./public-profile-offcanvas.component.scss'],
 })
-export class PublicProfileOffcanvaComponent {
+export class PublicProfileOffcanvasComponent {
   @Input() user!: User;
 
   constructor(

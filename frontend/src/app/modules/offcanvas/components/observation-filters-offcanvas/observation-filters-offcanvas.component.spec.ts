@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { ObservationFiltersOffCanvasComponent } from './observation-filters-offcanvas.component';
 
-import { ObservationFiltersComponent } from './observation-filters.component';
 
 describe('ObservationFiltersComponent', () => {
-  let component: ObservationFiltersComponent;
-  let fixture: ComponentFixture<ObservationFiltersComponent>;
+  let component: ObservationFiltersOffCanvasComponent;
+  let fixture: ComponentFixture<ObservationFiltersOffCanvasComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
-      declarations: [ObservationFiltersComponent]
+      declarations: [ObservationFiltersOffCanvasComponent]
     });
-    fixture = TestBed.createComponent(ObservationFiltersComponent);
+    fixture = TestBed.createComponent(ObservationFiltersOffCanvasComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

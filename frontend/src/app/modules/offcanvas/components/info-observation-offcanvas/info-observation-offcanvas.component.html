@@ -3,7 +3,7 @@
     
     <ng-container *ngIf="observation">
         
-        <div (click)="openProfileOffcanva()" tabindex="0" (keydown.enter)="openProfileOffcanva()" id="user" class="d-flex justify-center align-items-center gap-3">
+        <div (click)="openProfileOffcanvas()" tabindex="0" (keydown.enter)="openProfileOffcanvas()" id="user" class="d-flex justify-center align-items-center gap-3">
             <img width="48" height="48" [src]="'/assets/images/avatars/' + observation.relationships.user?.avatar_id + '.svg'" alt="user image"/>
             <p class="label-l">Usuario{{ observation.relationships.user?.id }}</p>
             <icon-arrow-right2/>

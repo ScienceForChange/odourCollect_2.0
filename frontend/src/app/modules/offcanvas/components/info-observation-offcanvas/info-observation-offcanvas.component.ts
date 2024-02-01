@@ -8,7 +8,6 @@ import {
 import {
   NgbActiveOffcanvas,
   NgbModal,
-  NgbOffcanvas,
 } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, filter } from 'rxjs';
 import { Observation } from 'src/app/models/observation';
@@ -19,21 +18,19 @@ import { AuthService } from 'src/app/services/auth.service';
 import { OdourService } from 'src/app/services/odour.service';
 import { UserService } from 'src/app/services/user.service';
 import { HeartComponent } from 'src/app/shared/components/Icons/heart/heart.component';
-import { PublicProfileOffcanvaComponent } from '../public-profile-offcanva/public-profile-offcanva.component';
 import { RegisterModalComponent } from 'src/app/modules/modals/register-modal/register-modal.component';
 import { DangerComponent } from 'src/app/shared/components/Icons/danger/danger.component';
 import { NavigationEnd, Router } from '@angular/router';
-import { CommentsOffcanvaComponent } from 'src/app/modules/offcanvas/components/comments-offcanva/comments-offcanva.component';
 import { MapService } from 'src/app/services/map.service';
 import { MapModalsService } from 'src/app/services/map-modals.service';
 import { OffcanvasService } from 'src/app/services/offcanvas.service';
 
 @Component({
-  selector: 'app-info-observation-offcanva',
-  templateUrl: './info-observation-offcanva.component.html',
-  styleUrls: ['./info-observation-offcanva.component.scss'],
+  selector: 'app-info-observation-offcanvas',
+  templateUrl: './info-observation-offcanvas.component.html',
+  styleUrls: ['./info-observation-offcanvas.component.scss'],
 })
-export class InfoObservationOffcanvaComponent
+export class InfoObservationOffcanvasComponent
   implements OnInit, OnDestroy, AfterViewChecked
 {
   @ViewChild(HeartComponent) heartIcon!: HeartComponent;
@@ -119,11 +116,11 @@ export class InfoObservationOffcanvaComponent
   ngAfterViewChecked() {
     this.resizeOffcanva();
   }
-  openProfileOffcanva() {
-    this.offcanvasService.openProfileOffcanva(this.observation);
+  public openProfileOffcanvas() {
+    this.offcanvasService.openProfileOffcanvas(this.observation);
   }
 
-  toggleObservationLike() {
+  public toggleObservationLike() {
     if (this.authService.isLoggedIn.value) {
       if (this.observation.liked)
         this.odourService.deleteObservationLike(this.observation.id).subscribe({
@@ -153,9 +150,9 @@ export class InfoObservationOffcanvaComponent
     }
   }
 
-  openCommentaries(addCommnetary: boolean = false) {
+  public openCommentaries(addCommnetary: boolean = false) {
     if (this.userService.user) {
-      this.offcanvasService.openCommentsOffcanvaComponent(
+      this.offcanvasService.openCommentsOffcanvasComponent(
         this.user,
         this.observation,
         addCommnetary,

@@ -7,13 +7,7 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import { BehaviorSubject } from 'rxjs';
-import {
-  NgbActiveOffcanvas,
-  NgbOffcanvas,
-  NgbOffcanvasRef,
-} from '@ng-bootstrap/ng-bootstrap';
-import { InfoObservationOffcanvaComponent } from '../modules/offcanvas/components/info-observation-offcanva/info-observation-offcanva.component';
-import { MapModalsService } from './map-modals.service';
+import { NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
 import { OffcanvasService } from './offcanvas.service';
 
 @Injectable({
