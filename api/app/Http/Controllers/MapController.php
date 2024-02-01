@@ -16,8 +16,10 @@ use Spatie\QueryBuilder\QueryBuilder;
 class MapController extends Controller
 {
     use ApiResponses;
+
     public function index()
     {
+        return request()->ip();
         $odourObservations = QueryBuilder::for(OdourObservation::class)
         ->allowedFilters([
             AllowedFilter::custom('hedonicTone', new FilterOdourHedonicTones),
