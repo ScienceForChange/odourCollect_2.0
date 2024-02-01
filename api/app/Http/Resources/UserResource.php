@@ -29,8 +29,8 @@ class UserResource extends JsonResource
                 ]),
                 'odourObservations' => OdourObservationResource::collection($this->whenLoaded('odourObservations'))
             ],
-            'createdAt'         => $this->created_at?->format('Y-m-d H:m:s'),
-            'updatedAt'         => $this->updated_at?->format('Y-m-d H:m:s'),
+            'createdAt'         => $this->created_at,
+            'updatedAt'         => $this->updated_at,
         ];
     }
 }
