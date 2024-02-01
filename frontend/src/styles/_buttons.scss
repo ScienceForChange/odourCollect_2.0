@@ -221,3 +221,18 @@ button.close-offcanvas{
     padding: 12px 0!important;
     border: none!important;
 }
+
+button.btn-clean{
+    background: unset;
+    border: none;
+    color: inherit;
+    padding: unset;
+    height: unset;
+    width: max-content;
+    flex-direction: unset;
+    &:hover{
+        background: unset;
+        border: none;
+        color: inherit;
+    }
+}
