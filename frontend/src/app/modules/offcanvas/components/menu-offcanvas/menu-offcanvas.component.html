@@ -28,14 +28,14 @@
     </a>
   </li>
   <li>
-    <a routerLink="/frequently-asked-questions" routerLinkActive="active">
+    <a (click)="openFaqsOffcanvas()" routerLinkActive="active">
       <div>
         <p class="label-l">Preguntas Frecuentes</p>
       </div>
       <icon-arrow-right2 />
     </a>
   </li>
-  <li>
+  <li (click)="activeOffcanvas.close()">
     <a routerLink="/contact" routerLinkActive="active">
       <div>
         <p class="label-l">Contacto e incidencias</p>

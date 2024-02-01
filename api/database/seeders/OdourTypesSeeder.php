@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\OdourType;
+use Illuminate\Support\Facades\DB;
 
 class OdourTypesSeeder extends Seeder
 {
@@ -14,38 +15,10 @@ class OdourTypesSeeder extends Seeder
      */
     public function run()
     {
-        $arrayTypes = [
-            [
-                'name' => 'Waste',
-            ],
-            [
-                'name' => 'Waste Water',
-            ],
-            [
-                'name' => 'Agriculture / Livestock',
-            ],
-            [
-                'name' => 'Food Industries',
-            ],
-            [
-                'name' => 'Industrial',
-            ],
-            [
-                'name' => 'Urban',
-            ],
-            [
-                'name' => 'Nice',
-            ],
-            [
-                'name' => 'Other',
-            ],
-            [
-                'name' => 'No Odor',
-            ]
-        ];
+        // get sql file path
+        $path = database_path('sql_dump_seeder_files/odour_types.sql');
 
-        foreach($arrayTypes as $type){
-            OdourType::create($type);
-        }
+        // execute raw sql from .sql file
+        DB::unprepared(file_get_contents($path));
     }
 }
