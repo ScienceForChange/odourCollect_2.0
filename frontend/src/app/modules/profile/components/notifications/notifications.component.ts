@@ -11,7 +11,7 @@ import { NotificationService } from 'src/app/services/notification.service';
   styleUrls: ['./notifications.component.scss']
 })
 export class NotificationsComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('marker') marker!:ElementRef;
+  @ViewChild('marker') marker!:ElementRef | null;
   private activeOption!:Element | null;
   private resize$!:Subscription;
   private router$!:Subscription;
@@ -35,7 +35,7 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterViewInit 
 
     this.resize$ = fromEvent(window, 'resize').subscribe(() => 
     {
-      this.marker.nativeElement.classList.remove('transition');
+      this.marker?.nativeElement.classList.remove('transition');
       this.moveMarker()
     });
 
@@ -62,14 +62,19 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterViewInit 
     this.moveMarker();
   }
   public moveMarker(e:Event | null = null): void {
+    //console.log('move');
     const url = this.router.url;
     const lastSegment = url.split('/').pop();
     this.activeOption = e ? e.target as Element : document.querySelector(`[routerlink="${lastSegment}"]`);
-    this.marker.nativeElement.style.width = this.activeOption?.getBoundingClientRect().width + 'px';
-    this.marker.nativeElement.style.left = this.activeOption?.getBoundingClientRect().left + 'px';
-    setTimeout(() => {
-      this.marker.nativeElement.classList.add('transition'); 
-    });
+    if(this.marker){
+      this.marker.nativeElement.style.width = this.activeOption?.getBoundingClientRect().width + 'px';
+      this.marker.nativeElement.style.left = this.activeOption?.getBoundingClientRect().left + 'px';
+      setTimeout(() => {
+        if(this.marker?.nativeElement){ 
+          this.marker.nativeElement.classList.add('transition');
+        }
+      });
+    }
     this.navigationService.backTo = '/profile';
   } 
 
