@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   OdourHedonicTone,
@@ -10,8 +10,8 @@ import { OdourService } from 'src/app/services/odour.service';
 import { ObservationQuery } from '../../../../models/observation';
 import { Subscription } from 'rxjs';
 import { AlertService } from 'src/app/services/alert.service';
-import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
-import { AboutFiltersComponent } from 'src/app/modules/information/components/about-filters/about-filters.component';
+import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { OffcanvasService } from 'src/app/services/offcanvas.service';
 
 const date = new Date();
 date.setDate(date.getDate() - 1);
@@ -31,11 +31,11 @@ const today = new Date()
   .replace(/\//g, '-');
 
 @Component({
-  selector: 'app-observation-filters',
-  templateUrl: './observation-filters.component.html',
-  styleUrls: ['./observation-filters.component.scss'],
+  selector: 'app-observation-filters-offcanva',
+  templateUrl: './observation-filters-offcanvas.component.html',
+  styleUrls: ['./observation-filters-offcanvas.component.scss'],
 })
-export class ObservationFiltersComponent implements OnInit, OnDestroy {
+export class ObservationFiltersOffCanvasComponent implements OnInit, OnDestroy {
   public isOpen: boolean = false;
 
   public loading: boolean = false;
@@ -68,18 +68,13 @@ export class ObservationFiltersComponent implements OnInit, OnDestroy {
     private mapModalsService: MapModalsService,
     private odourService: OdourService,
     private alertService: AlertService,
-    private offcanvasService: NgbOffcanvas,
+    private offcanvasService: OffcanvasService,
+    public activeOffcanvas: NgbActiveOffcanvas
   ) {
     this.loadingData = true;
   }
 
   ngOnInit(): void {
-    this.subscriptions.add(
-      this.mapModalsService.isVisibleState.subscribe((value) => {
-        this.isOpen = value.filters;
-      }),
-    );
-
     this.subscriptions.add(
       this.odourService.observationRelatedData().subscribe(({ data }) => {
         const filterObservationsSlugs = [
@@ -147,10 +142,6 @@ export class ObservationFiltersComponent implements OnInit, OnDestroy {
         this.filtersFormInitialValues = this.filtersForm.value;
       }),
     );
-  }
-
-  public toggleFilter(): void {
-    this.mapModalsService.toggleFilterModal();
   }
 
   public addTypeToForm(typeId: number): void {
@@ -254,15 +245,17 @@ export class ObservationFiltersComponent implements OnInit, OnDestroy {
             this.alertService.info('No hay observaciones con esos filtros', {
               autoClose: true,
             });
-          }
-          else{
-            this.alertService.success(`Se econtraron ${observations.data.length} observaciones `, {
-              autoClose: true,
-            });
+          } else {
+            this.alertService.success(
+              `Se econtraron ${observations.data.length} observaciones `,
+              {
+                autoClose: true,
+              },
+            );
           }
           this.odourService.updateObservations(observations.data);
           this.loading = false;
-          this.toggleFilter();
+          this.activeOffcanvas.close();
           this.formChanges = false;
         },
         error: (resp) => {
@@ -274,10 +267,11 @@ export class ObservationFiltersComponent implements OnInit, OnDestroy {
       }),
     );
   }
+
   public openAboutFiltersOffcanva(): void {
-        this.offcanvasService.open(AboutFiltersComponent, { position: 'start', scroll: false, panelClass: 'about-canvas' });
+    this.offcanvasService.openAboutFiltersOffcanvas();
   }
-  
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }

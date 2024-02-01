@@ -70,7 +70,7 @@ class UserFactory extends Factory
         $citizen = ProfileCitizen::factory();
 
         return $this->state(fn (array $attributes) => [
-            'userable_type' => 'App\\Models\\ProfileCitizen',
+            'userable_type' => 'citizen',
             'userable_id' => $citizen
         ]);
     }

@@ -1,0 +1,101 @@
+<section>
+  <div>
+    <div class="modal-header d-flex align-items-center">
+      <div class="d-flex justify-content-between align-items-center w-100">
+        <div>
+          <p class="label-l">Filtros</p>
+          <p class="label-m color-gray-dark">Elige los filtros de tu interés</p>
+        </div>
+        <icon-info-square class="d-flex" (click)="openAboutFiltersOffcanva()" />
+      </div>
+      <button
+        type="button"
+        class="close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        (click)="activeOffCanvas.close()"
+      >
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <main class="modal-body">
+      <form *ngIf="filtersForm" [formGroup]="filtersForm">
+        <ng-container *ngIf="loadingData; else form">
+          <app-spinner />
+        </ng-container>
+        <ng-template #form>
+          <fieldset id="types">
+            <legend class="label-l">Tipos de olor</legend>
+            <div class="d-flex justify-cotent-start flex-wrap">
+              <input
+                *ngFor="let type of types"
+                for="type"
+                [ngClass]="
+                  filtersForm.get('type')?.value.includes(type.id)
+                    ? 'active-type-' + type.slug
+                    : 'type-' + type.slug
+                "
+                class="type-button"
+                type="button"
+                value="{{ type.name }}"
+                (click)="addTypeToForm(type.id)"
+              />
+            </div>
+          </fieldset>
+          <div>
+            <div class="d-flex justify-cotent-center align-items-end gap-2">
+              <icon-chart />
+              <label class="text-start label-l" for="intensity"
+                >¿Cuál es la intensidad de olor?</label
+              >
+            </div>
+            <fieldset>
+              <app-multi-range
+                [minFControl]="this.filtersForm.get('intensityMin')"
+                [maxFControl]="this.filtersForm.get('intensityMax')"
+                [minSegments]="intensityForRange"
+                [maxSegments]="intensityForRange"
+              />
+            </fieldset>
+          </div>
+          <div>
+            <div class="d-flex justify-cotent-center align-items-end gap-2">
+              <icon-chart />
+              <label class="text-start label-l" for="hedonicTone"
+                >¿Es agradable o desagradable?</label
+              >
+            </div>
+            <fieldset>
+              <app-multi-range
+                [minFControl]="this.filtersForm.get('hedonicToneMin')"
+                [maxFControl]="this.filtersForm.get('hedonicToneMax')"
+                [minSegments]="hedonicToneForRange"
+                [maxSegments]="hedonicToneForRange"
+              />
+            </fieldset>
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <button
+              class="btn-secondary"
+              (click)="resetDefaultFilters()"
+              type="button"
+            >
+              Restablecer
+            </button>
+            <button
+              class="btn-primary"
+              (click)="filterOdour()"
+              [disabled]="!formChanges || loading"
+              type="submit"
+              [ngClass]="{ loading: loading }"
+            >
+              Aplicar filtros
+            </button>
+          </div>
+        </ng-template>
+      </form>
+    </main>
+  </div>
+</section>

@@ -3,23 +3,23 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 
-import { PublicProfileOffcanvaComponent } from './public-profile-offcanva.component';
+import { PublicProfileOffcanvasComponent } from './public-profile-offcanvas.component';
 import { createDummyUser } from 'src/app/models/user';
 import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
 
 describe('UserPublicProfileComponent', () => {
-  let component: PublicProfileOffcanvaComponent;
-  let fixture: ComponentFixture<PublicProfileOffcanvaComponent>;
+  let component: PublicProfileOffcanvasComponent;
+  let fixture: ComponentFixture<PublicProfileOffcanvasComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [NgbActiveOffcanvas],
       imports: [HttpClientModule, SharedComponentsModule],
-      declarations: [PublicProfileOffcanvaComponent]
+      declarations: [PublicProfileOffcanvasComponent],
     });
-    fixture = TestBed.createComponent(PublicProfileOffcanvaComponent);
+    fixture = TestBed.createComponent(PublicProfileOffcanvasComponent);
     component = fixture.componentInstance;
-    component.user = createDummyUser()
+    component.user = createDummyUser();
     fixture.detectChanges();
   });
 
