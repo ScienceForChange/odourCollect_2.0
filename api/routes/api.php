@@ -103,3 +103,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/observation/{odourObservation}/comments/', [App\Http\Controllers\OdourObservationCommentController::class, 'store'])->name('comments.store');
     Route::delete('/observation/{odourObservation}/comments/{comment}', [App\Http\Controllers\OdourObservationCommentController::class, 'destroy'])->name('comments.destroy');
 });
+
+Route::get('/map', [App\Http\Controllers\MapController::class, 'index'])->name('map.index');
