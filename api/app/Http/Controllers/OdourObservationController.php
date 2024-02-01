@@ -47,9 +47,9 @@ class OdourObservationController extends Controller
         $odours = $odourObservations
                         ->orderBy('created_at','DESC')->limit($limit)->get();
 
-        if(request()->has('is_inside')) {
+        if(request()->has('is_inside') && request()->has('latitude') && request()->has('longitude')) {
             $filtered = $odours->filter(function (OdourObservation $value) {
-                return $value->haversineGreatCircleDistance() < request()->is_inside;
+                return $value->haversineGreatCircleDistance(request()->latitude, request()->longitude) < request()->is_inside;
             });
 
             return $this->success(

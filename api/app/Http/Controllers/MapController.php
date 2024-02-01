@@ -39,10 +39,10 @@ class MapController extends Controller
         // ->select('id','user_id', 'latitude','longitude') Maybe not needed
         ->get();
 
-        if(request()->has('is_inside')) {
-        $filtered = $odours->filter(function (OdourObservation $value) {
-        return $value->haversineGreatCircleDistance() < request()->is_inside;
-        });
+        if(request()->has('is_inside') && request()->has('latitude') && request()->has('longitude')) {
+            $filtered = $odours->filter(function (OdourObservation $value) {
+                return $value->haversineGreatCircleDistance(request()->latitude, request()->longitude) < request()->is_inside;
+            });
 
         return $this->success(
         MapObservationResource::collection($filtered)
