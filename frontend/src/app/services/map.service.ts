@@ -306,7 +306,6 @@ export class MapService {
       this.centerMapToMyLatLng();
     } else {
       this.odourService.studyZone.subscribe((studyZone) => {
-        console.log('studyZone');
         if (studyZone) {
           const [lat, lon] = studyZone.features[0].geometry.coordinates[0][0];
           this.centerMap(lon, lat, 10);

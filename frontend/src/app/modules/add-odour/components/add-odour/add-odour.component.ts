@@ -38,6 +38,7 @@ export class AddOdourComponent implements OnInit, OnDestroy {
   public dataLoaded: boolean = false;
   public activeStep: number = 0;
   public selectedType!: OdourTypeData;
+  public selectedSubtype: OdourSubType | undefined;
   public types: OdourTypeData[] = [];
   public subtypes: OdourSubType[] = [];
   public hedonicTone: OdourHedonicTone[] = [];
@@ -77,7 +78,6 @@ export class AddOdourComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    
     this.navigationService.mapHeader = false;
     this.navigationService.defaultHeader = false;
 
@@ -110,7 +110,6 @@ export class AddOdourComponent implements OnInit, OnDestroy {
         )[0];
         this.dataLoaded = true;
       }),
-      
     );
 
     this.getLocation();
@@ -128,7 +127,7 @@ export class AddOdourComponent implements OnInit, OnDestroy {
         hedonic_tone: new FormControl(0, [Validators.required]),
       }),
       commentDetails: new FormGroup({
-        know_about_source: new FormControl('',[Validators.required]),
+        know_about_source: new FormControl('', [Validators.required]),
         origin: new FormControl(null, [
           Validators.minLength(2),
           Validators.maxLength(255),
@@ -139,7 +138,7 @@ export class AddOdourComponent implements OnInit, OnDestroy {
         ]),
       }),
     });
-    
+
     if (this.params.type && this.params.subtype) {
       this.addOdourForm.patchValue({
         typeDetails: {
@@ -152,9 +151,9 @@ export class AddOdourComponent implements OnInit, OnDestroy {
     }
 
     this.subscriptions.add(
-      this.addOdourForm.valueChanges.subscribe((value) =>
-        this.goToStep1(value),
-      ),
+      this.addOdourForm.valueChanges.subscribe((value) => {
+        this.goToStep1(value);
+      }),
     );
   }
 
@@ -204,6 +203,13 @@ export class AddOdourComponent implements OnInit, OnDestroy {
   public next(): void {
     if (this.currentGroup.valid) {
       this.activeStep += 1;
+      const selectedSubtype = this.subtypes.find(
+        (subtype) =>
+          subtype.id === this.addOdourForm.get('subtypeDetails.subtype')?.value,
+      );
+      if(selectedSubtype !== undefined){
+        this.selectedSubtype = selectedSubtype
+      }
       return;
     }
 
@@ -252,7 +258,9 @@ export class AddOdourComponent implements OnInit, OnDestroy {
           acceptButtonText: 'Aceptar',
         };
         this.userService.addObservation(observation.data[0]);
-        this.OffcanvasService.openOdourInformationOffCanvas(observation.data[0]);
+        this.OffcanvasService.openOdourInformationOffCanvas(
+          observation.data[0],
+        );
         this.router.navigate(['/map']);
         this.mapService.centerMap(
           Number(observation.data[0].latitude),
