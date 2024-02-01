@@ -43,14 +43,15 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
   ngAfterViewInit (): void {
       if(this.addCommnetary){
         setTimeout(() => {
-          this.inputCommentary.nativeElement.focus().click();
+          this.inputCommentary.nativeElement.focus();
+          this.inputCommentary.nativeElement.click();
         }, 100);
       }
   }
 
   public toggleDeleteButton(event:Event): void {
     if(this.loadingDelete) return;
-    
+
     // Quita la clase 'delete' de todos los elementos que la tengan
     const elementsWithDeleteClass = document.querySelectorAll('.delete');
     elementsWithDeleteClass.forEach(element => {
@@ -62,11 +63,11 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
     // Agrega la clase 'delete' al elemento que disparó el evento si no la tiene,
     // o la quita si ya la tiene
     const comment = event.currentTarget as HTMLElement;
-    comment.classList.toggle('delete'); 
+    comment.classList.toggle('delete');
 
   }
 
-  public deleteComment(idCommentary: number): void {    
+  public deleteComment(idCommentary: number): void {
     const dialog = this.modalService.open(DialogModalComponent, {
       windowClass: 'default',
       backdropClass: 'default',
@@ -81,13 +82,13 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
       if (reason === true) this.delete(idCommentary);
     });
   }
-  
+
   private delete( idCommentary: number ){
 
     let comment = document.getElementById('comment-' + idCommentary) as HTMLElement;
 
     this.loadingDelete = true;
-    
+
     this.odourService.deleteCommentary(this.observation.id, idCommentary).subscribe({
       next: () => {
         comment.style.height = comment.offsetHeight + 'px';
@@ -112,7 +113,7 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
 
   public resizeTextArea(): void {
     const commentary = this.inputCommentary.nativeElement as HTMLTextAreaElement;
-    commentary.style.height='1px'; 
+    commentary.style.height='1px';
     commentary.style.height = commentary.scrollHeight + 'px';
   }
 
@@ -128,9 +129,9 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
   }
 
   public send(){
-    
+
     const commentariesContainer = this.commentariesContainer.nativeElement as HTMLElement;
-  
+
     this.loading = true;
     const text = this.commentaryForm.controls['commentary'].value;
 
@@ -141,7 +142,7 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
             let newCommentary: Comment = resp.data.resource;
             this.observation.relationships.comments.unshift(newCommentary);
             this.commentaryForm.controls['commentary'].reset();
-      
+
             setTimeout(()=>{
               const lastCommentary = commentariesContainer.firstElementChild?.firstElementChild as HTMLElement;
               const height = lastCommentary.offsetHeight;
@@ -150,6 +151,7 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
               if(commentariesContainer.scrollTop > 0){
                 commentariesContainer.scrollTo(0, 0)
                 this.scrollTo(commentariesContainer, 0).then(() => {
+                  console.log('done')
                   this.addCommentaryOnlist(height)
                 });
               }
@@ -175,9 +177,9 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
   }
 
   private scrollTo(element: HTMLElement, to:number) {
-  
+
     element.scrollTo(to, to);
-  
+
     return new Promise<void>(function(resolve) {
       element.addEventListener('scrollend', function() {
         resolve();
@@ -186,6 +188,7 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
   }
 
   private addCommentaryOnlist(height:number): void {
+    console.log(height);
     const commentariesContainer = this.commentariesContainer.nativeElement as HTMLElement;
     const lastCommentary = commentariesContainer.firstElementChild?.firstElementChild as HTMLElement;
     lastCommentary.classList.add('newAnimated');
