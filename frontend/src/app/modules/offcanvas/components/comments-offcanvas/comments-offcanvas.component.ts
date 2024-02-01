@@ -9,11 +9,11 @@ import { AlertService } from 'src/app/services/alert.service';
 import { OdourService } from 'src/app/services/odour.service';
 
 @Component({
-  selector: 'app-comments-offcanva',
-  templateUrl: './comments-offcanva.component.html',
-  styleUrls: ['./comments-offcanva.component.scss']
+  selector: 'app-comments-offcanvas',
+  templateUrl: './comments-offcanvas.component.html',
+  styleUrls: ['./comments-offcanvas.component.scss']
 })
-export class CommentsOffcanvaComponent implements AfterViewInit {
+export class CommentsOffcanvasComponent implements AfterViewInit {
 
   @Input() user!: User;
   @Input() observation!: Observation;
@@ -138,7 +138,6 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
       this.odourService.addCommentary(text, this.user.id ? this.user.id : 0 , this.observation.id).subscribe(
         {
           next: (resp) => {
-            console.log(resp.data.resource);
             let newCommentary: Comment = resp.data.resource;
             this.observation.relationships.comments.unshift(newCommentary);
             this.commentaryForm.controls['commentary'].reset();
@@ -151,7 +150,6 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
               if(commentariesContainer.scrollTop > 0){
                 commentariesContainer.scrollTo(0, 0)
                 this.scrollTo(commentariesContainer, 0).then(() => {
-                  console.log('done')
                   this.addCommentaryOnlist(height)
                 });
               }
@@ -188,7 +186,6 @@ export class CommentsOffcanvaComponent implements AfterViewInit {
   }
 
   private addCommentaryOnlist(height:number): void {
-    console.log(height);
     const commentariesContainer = this.commentariesContainer.nativeElement as HTMLElement;
     const lastCommentary = commentariesContainer.firstElementChild?.firstElementChild as HTMLElement;
     lastCommentary.classList.add('newAnimated');

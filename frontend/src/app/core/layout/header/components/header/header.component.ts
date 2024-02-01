@@ -20,10 +20,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
     private navigationService: NavigationService,
   ) {}
 
-  public toggleIsOpen() {
-    this.navigationService.toggleVisible();
-  }
-
   ngOnInit(): void {
     this.$defaultHeader = this.navigationService.defaultHeader.subscribe((value) => {
       this.showDefaultHeader = value;

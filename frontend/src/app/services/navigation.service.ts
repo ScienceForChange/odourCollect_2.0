@@ -7,16 +7,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class NavigationService {
   private _footerVisible = new BehaviorSubject<boolean>(false);
-  private isVisible: string | undefined = undefined;
-  private _visible: BehaviorSubject<string | undefined>;
   private _defaultHeader: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private _mapHeader: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private _headerTitle: BehaviorSubject<string | null> = new BehaviorSubject<string | null >(null);
   private _backTo: BehaviorSubject<string | null> = new BehaviorSubject<string | null >(null);
 
-  get isVisibleState() {
-    return this._visible.asObservable();
-  }
   get defaultHeader(): BehaviorSubject<boolean> {
     return this._defaultHeader;
   }
@@ -49,7 +44,6 @@ export class NavigationService {
   }
 
   constructor(route: Router) {
-    this._visible = new BehaviorSubject<string | undefined>(undefined);
     route.events.subscribe((event) => {
       if(event instanceof NavigationStart){
         this.headerTitle = null;
@@ -62,20 +56,6 @@ export class NavigationService {
     });
   }
 
-  public toggleVisible(): void {
-    if (this.isVisible === undefined || this.isVisible === 'close') {
-      this.isVisible = 'open';
-      this._visible.next(this.isVisible);
-    } else {
-      this.isVisible = 'close';
-      this._visible.next(this.isVisible);
-    }
-  }
-
-  public updateStateMenu(value: undefined | string): void {
-    this.isVisible = value;
-    this._visible.next(this.isVisible);
-  }
 
   private displayHeaderByRoute(event: NavigationEnd): void {
     if (event.url === '/map') {
@@ -87,7 +67,7 @@ export class NavigationService {
     }
   }
   
-  toggleFooterVisible() {
+ public  toggleFooterVisible() {
     this.footerVisible = !this.footerVisible;
   }
 

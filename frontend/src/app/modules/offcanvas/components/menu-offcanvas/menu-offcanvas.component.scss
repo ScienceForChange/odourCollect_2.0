@@ -1,15 +1,21 @@
-@import "../../../../../../styles/colors";
+@import "../../../../../styles/colors";
 
-article {
-  margin: 0 auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  overflow-x: hidden;
-  background-color: white;
-  height: 100dvh;
-  z-index: 99;
+.modal-header {
+  align-items: flex-end;
+  display: flex;
+  max-height: 42px;
+  padding: 24px;
+  margin-top: 12px;
   width: 100%;
+  button {
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    &::after,
+    &::before {
+      width: 30px;
+    }
+  }
 }
 
 ul {
@@ -19,7 +25,7 @@ ul {
   gap: 7px;
   width: 100%;
   max-width: 425px;
-  margin: 80px auto 0 auto;
+  margin: 32px auto 0 auto;
   padding-left: 32px;
   padding-right: 32px;
   li,
@@ -79,26 +85,4 @@ ul {
 .close-item {
   animation: fade-out-left 0.3s ease-in;
   animation-fill-mode: forwards;
-}
-
-@keyframes fade-in-left {
-  from {
-    width: 0;
-    opacity: 0;
-  }
-  to {
-    width: 100%;
-    opacity: 1;
-  }
-}
-
-@keyframes fade-out-left {
-  from {
-    width: 100%;
-    opacity: 1;
-  }
-  to {
-    width: 0;
-    opacity: 0;
-  }
 }
