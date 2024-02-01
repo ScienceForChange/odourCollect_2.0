@@ -21,7 +21,7 @@ export class User {
 }
 
 export interface Relationships {
-  profile?:           Profile;
+  profile:           Profile;
   odourObservations:  Observation[];  
 }
 export interface Profile {
@@ -32,6 +32,8 @@ export interface Profile {
   birthYear:  number;
   phone:      string | null;
   avatar_id:  number;
+  isTrained:  boolean;
+  level:      number;
 }
 
 export function createDummyUser(): User {
@@ -44,6 +46,8 @@ export function createDummyUser(): User {
     birthYear: 1900,
     phone: null,
     avatar_id: 1,
+    isTrained: true,
+    level: 2,
   };
 
   const dummyRelationships: Relationships = {
