@@ -13,22 +13,21 @@ export class SfcNotificationsComponent {
   public notifications:AppNotification[] = this.notificationService.sfcNotification.value;
   
   private $notifications!: Subscription;
-  private $firstCall: boolean = true;
 
   constructor( private notificationService: NotificationService ) { }
 
   ngOnInit(): void {
     this.$notifications = this.notificationService.sfcNotification.subscribe(value => {
-      // Añade la propiedad isAdded a las nuevas notificaciones
-      this.notifications = value.map(notification => {
-        const existingNotification = this.notifications.find(n => n.id === notification.id);
-        if(!existingNotification && !this.$firstCall) {
-          notification.isAdded = true;
-        }
-        return notification;
-        
+       // Filtra las notificaciones que no están en this.notifications
+       const newNotifications = value.filter(notification => {
+        return !this.notifications.find(n => {
+          return n.id === notification.id
+        });
+      }).map(notification => {
+         notification.isAdded = true;
+         return notification;
       });
-      this.$firstCall = false;
+      this.notifications.unshift(...newNotifications.reverse());
     })
   }
 

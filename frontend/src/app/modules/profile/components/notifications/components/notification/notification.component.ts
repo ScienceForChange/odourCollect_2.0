@@ -44,20 +44,19 @@ export class NotificationComponent {
     
     let diff = Math.abs(date2.getTime() - date1.getTime())/1000;
     
-
     switch(true){
       case diff < 60:
-        return Math.floor(diff) + ' seconds ago';
+        return `Hace ${Math.floor(diff)} segundos`;
       case diff < 3600:
-        return Math.floor(diff / 60) + ' minutes ago';
+        return `Hace ${Math.floor(diff / 60)} minutos`;
       case diff < 86400:
-        return Math.floor(diff / 3600) + ' hours ago';
+        return `Hace ${Math.floor(diff / 3600)} horas`;
       case diff < 2592000:
-        return Math.floor(diff / 86400) + ' days ago';
+        return `Hace ${Math.floor(diff/ 86400)} días`;
       case diff < 31104000:
-        return Math.floor(diff / 2592000) + ' months ago';
+        return `Hace ${Math.floor(diff / 2592000)} meses`;
       default:
-        return Math.floor(diff / 31104000) + ' years ago';
+        return `Hace ${Math.floor(diff / 31104000)} años`;
     }
 
  }
