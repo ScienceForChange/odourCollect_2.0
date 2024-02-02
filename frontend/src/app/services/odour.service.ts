@@ -25,8 +25,6 @@ export class OdourService {
     undefined,
   );
 
-  public observation$ = new Subject<Observation>();
-
   constructor(private http: HttpClient) {}
 
   public get studyZone(): Observable<any> {
@@ -80,7 +78,6 @@ export class OdourService {
       )
       .pipe(
         tap(({ data }) => {
-          this.observation$.next(data[0]);
           const currObservations = this._observations.getValue();
           this._observations.next([...currObservations, data[0]]);
         }),
@@ -447,7 +444,7 @@ export class OdourService {
     });
   }
 
-  addCommentary(body: string, user_id: number, odour_observation_id: number):Observable<any> {
+  public addCommentary(body: string, user_id: number, odour_observation_id: number):Observable<any> {
     return this.http.post(`${environment.BACKEND_BASE_URL}api/observation/${odour_observation_id}/comments`, { 
       likeable_type: 'App\\Models\\OdourObservation',
       body: body,
@@ -461,7 +458,7 @@ export class OdourService {
     });
   }
 
-  deleteCommentary(idObservation: number, idComentary: number):Observable<any> {
+  public deleteCommentary(idObservation: number, idComentary: number):Observable<any> {
     return this.http.delete(`${environment.BACKEND_BASE_URL}api/observation/${idObservation}/comments/${idComentary}`, {
       headers: {
         'Content-Type': 'application/json',

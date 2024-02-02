@@ -4,6 +4,7 @@ import { User } from 'src/app/models/user';
 import { AboutBadgesComponent } from 'src/app/modules/information/components/about-badges/about-badges.component';
 import { AboutTrainedUserComponent } from 'src/app/modules/information/components/about-trained-user/about-trained-user.component';
 import { MapService } from 'src/app/services/map.service';
+import { OffcanvasService } from 'src/app/services/offcanvas.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -17,18 +18,17 @@ export class PublicProfileComponent {
   constructor(
     private userService: UserService,
     private mapService: MapService,
-    private offcanvasService: NgbOffcanvas,
-  ) {
-  }
+    private offcanvasService: OffcanvasService,
+  ) {}
   showOnMap(observationId: number) {
     this.mapService.seeMoreAbout(observationId, true);
   }
 
   openAboutTrainedOffcanvas() {
-    this.offcanvasService.open(AboutTrainedUserComponent, { position: 'start', scroll: false, panelClass: 'about-canvas' });
+    this.offcanvasService.openAboutTrainedOffcanvas();
   }
 
   openAboutBadgesOffcanvas() {
-    this.offcanvasService.open(AboutBadgesComponent, { position: 'start', scroll: false, panelClass: 'about-canvas' });
+    this.offcanvasService.openAboutBadgesOffcanvas();
   }
 }
