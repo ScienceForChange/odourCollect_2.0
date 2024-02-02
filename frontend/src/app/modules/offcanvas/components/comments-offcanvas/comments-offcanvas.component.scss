@@ -13,7 +13,7 @@
 
 }
 .offcanvas-header{
-    padding: 16px 0;
+    padding: 35px 0 15px;
     z-index: 3;
 }
 .offcanvas-body{
@@ -43,16 +43,16 @@
                 box-shadow: 1px 1px 10.5px 1px rgba(0, 0, 0, 0.05);
                 .comment-header{
                     display: flex;
-                    justify-content: start;
-                    align-items: start;
+                    justify-content: flex-start;
+                    align-items: flex-start;
                     padding-left: 3px;
                     color: rgba(0, 0, 0, 0.70);
                     font-size: 12px;
                 }
                 .comment-footer{
                     display: flex;
-                    justify-content: end;
-                    align-items: end;
+                    justify-content: flex-end;
+                    align-items: flex-end;
                     font-size: 10px;
                     color: rgba(0, 0, 0, 0.50);
                 }
