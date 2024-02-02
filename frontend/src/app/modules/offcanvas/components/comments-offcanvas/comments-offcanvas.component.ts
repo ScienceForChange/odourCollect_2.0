@@ -194,4 +194,28 @@ export class CommentsOffcanvasComponent implements AfterViewInit {
       lastCommentary.classList.remove('new','newAnimated');
     }, 1000);
   }
+
+  public timeAgo(created_at:Date): string {
+
+    const date1 = new Date(created_at);
+    const date2 = new Date();
+    
+    let diff = Math.abs(date2.getTime() - date1.getTime())/1000;
+    
+    switch(true){
+      case diff < 60:
+        return `Hace ${Math.floor(diff)} segundos`;
+      case diff < 3600:
+        return `Hace ${Math.floor(diff / 60)} minutos`;
+      case diff < 86400:
+        return `Hace ${Math.floor(diff / 3600)} horas`;
+      case diff < 2592000:
+        return `Hace ${Math.floor(diff/ 86400)} días`;
+      case diff < 31104000:
+        return `Hace ${Math.floor(diff / 2592000)} meses`;
+      default:
+        return `Hace ${Math.floor(diff / 31104000)} años`;
+    }
+
+ }
 }
