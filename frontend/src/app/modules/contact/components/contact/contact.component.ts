@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavigationService } from 'src/app/services/navigation.service';
 
@@ -8,6 +8,7 @@ import { NavigationService } from 'src/app/services/navigation.service';
   styleUrls: ['./contact.component.scss'],
 })
 export class ContactComponent {
+  @ViewChild('comment') inputComment!: ElementRef;
   public loading: boolean = false;
 
   public contactForm: FormGroup = new FormGroup({
@@ -27,5 +28,12 @@ export class ContactComponent {
   send(){
     this.loading = true;
     this.loading = false;
+  }
+  
+
+  public resizeTextArea(): void {
+    const commentary = this.inputComment.nativeElement as HTMLTextAreaElement;
+    commentary.style.height = '1px';
+    commentary.style.height = commentary.scrollHeight + 'px';
   }
 }

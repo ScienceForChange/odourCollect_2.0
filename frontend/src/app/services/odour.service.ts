@@ -347,7 +347,7 @@ export class OdourService {
   public getAllOdours(): void {
     this.http
       .get<ObservationRes>(
-        `${environment.BACKEND_BASE_URL}api/observations?include=odourSubType.odourType,user`,
+        `${environment.BACKEND_BASE_URL}api/observations?include=odourSubType.odourType,user&limit=10000`,
       )
       .subscribe((observations) => {
         this.updateObservations(observations.data);
