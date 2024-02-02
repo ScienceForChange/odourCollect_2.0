@@ -19,6 +19,7 @@ class MapObservationResource extends JsonResource
             'user_id' => $this->user_id,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
+            'color' => $this->generateColor(),
         ];
     }
 }

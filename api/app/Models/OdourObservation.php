@@ -92,6 +92,25 @@ class OdourObservation extends Model implements Likeable
         $query->whereBetween('created_at', [Carbon::parse($start), Carbon::parse($end)]);
     }
 
+    public function generateColor(): int
+    {
+        // se hace la conversión de id a index o power
+        // En hedonic_tone por ejemplo el id 1 hace referencia al -4 de index
+        // En intensity el id 2 hace referencia al 1 de power TODO: hablar con Johana esto
+
+        $color = array(
+            2 => [1 => 6, 2 => 5, 3 => 5, 4 => 4, 5 => 3, 6 => 3, 7 => 2, 8 => 1, 9 => 1],
+            3 => [1 => 6, 2 => 6, 3 => 5, 4 => 4, 5 => 4, 6 => 3, 7 => 2, 8 => 2, 9 => 1],
+            4 => [1 => 7, 2 => 6, 3 => 5, 4 => 5, 5 => 4, 6 => 4, 7 => 3, 8 => 2, 9 => 2],
+            5 => [1 => 7, 2 => 7, 3 => 6, 4 => 5, 5 => 5, 6 => 4, 7 => 3, 8 => 3, 9 => 2],
+            6 => [1 => 7, 2 => 7, 3 => 6, 4 => 6, 5 => 5, 6 => 4, 7 => 4, 8 => 3, 9 => 2],
+            7 => [1 => 7, 2 => 7, 3 => 7, 4 => 6, 5 => 5, 6 => 5, 7 => 4, 8 => 4, 9 => 3],
+        );
+
+        // 8 lo pondré como valor default si no se ha podido calcualr el color, por lo de que la tabla de intensidad no corresponde con la matriz.
+        return $color[$this->odour_intensity_id][$this->odour_hedonic_tone_id] ?? 8;
+    }
+
     public function haversineGreatCircleDistance(
         //41.3776, 2.1530
         $latitudeFrom = '41.3776', $longitudeFrom = '2.1530', $earthRadius = 6371000)
