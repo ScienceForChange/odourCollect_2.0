@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UsersSeeder::class,
-            ProfileCitizenSeeder::class,
+            // ProfileCitizenSeeder::class,
             OdourIntensitiesSeeder::class,
             OdourHedonicTonesSeeder::class,
             OdourTypesSeeder::class,
