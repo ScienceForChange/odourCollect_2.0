@@ -19,7 +19,7 @@ class OdourObservationResource extends JsonResource
             'id'                        => $this->id,
             'latitude'                  => $this->latitude,
             'longitude'                 => $this->longitude,
-            'color'                    => $this->generateColor(),
+            'color'                     => $this->generateColor(),
             'relationships'             => [
                 'odourSubType'      => new OdourSubTypeResource($this->whenLoaded('odourSubType')),
                 'odourIntensity'    => new OdourIntensityResource($this->whenLoaded('odourIntensity')),
