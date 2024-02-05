@@ -19,6 +19,7 @@ import { AboutStudyZoneComponent } from '../modules/information/components/about
 import { FiltersMyOdoursOffcanvasComponent } from '../modules/offcanvas/components/filters-my-odours-offcanvas/filters-my-odours-offcanvas.component';
 import { BehaviorSubject } from 'rxjs';
 import { FaqsComponent } from '../modules/faqs/components/faqs/faqs.component';
+import { LegendOffcanvasComponent } from '../modules/offcanvas/components/legend-offcanvas/legend-offcanvas.component';
 
 const bottomOffCanvasConfig: NgbOffcanvasOptions = {
   position: 'bottom',
@@ -68,6 +69,10 @@ export class OffcanvasService {
 
   public openMenuOffCanvas(): void {
     this.offcanvasService.open(MenuOffcanvasComponent, menuOffCanvasConfig);
+  }
+
+  public openLegendOffCanvas(): void {
+    this.offcanvasService.open(LegendOffcanvasComponent, aboutOffCanvasConfig);
   }
 
   //Profile

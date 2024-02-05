@@ -1,4 +1,4 @@
-@import '../../../../../../styles/colors';
+@import "../../../../../../styles/colors";
 
 header {
   position: fixed;
@@ -39,7 +39,8 @@ header {
       }
       > div:nth-child(3) {
         position: relative;
-        #location-btn {
+        #location-btn,
+        #legend-btn {
           background-color: white;
           border-radius: 50%;
           border: none;
@@ -47,8 +48,17 @@ header {
           padding: 5px;
           position: absolute;
           right: -15px;
-          top: 75px;
           z-index: 3;
+        }
+        #location-btn {
+          top: 75px;
+        }
+        #legend-btn {
+          top: 135px;
+          font-size: 40px;
+          color: $violet;
+          width: 44px;
+          height: 44px;
         }
       }
     }
