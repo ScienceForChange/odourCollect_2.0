@@ -2,7 +2,7 @@
   <nav>
     <div>
       <div>
-        <app-hamburguer (click)="toggleIsOpen()" />
+        <app-hamburguer (click)="openMenuOffCanvas()" />
       </div>
       <div>
         <ul class="d-flex align-items-center">
@@ -23,7 +23,6 @@
         </button>
       </div>
     </div>
-    <app-menu *ngIf="showMenu" />
   </nav>
 </header>
     

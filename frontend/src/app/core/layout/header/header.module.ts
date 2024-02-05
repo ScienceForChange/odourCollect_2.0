@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HamburguerComponent } from './components/hamburguer/hamburguer.component';
 import { HeaderComponent } from './components/header/header.component';
-import { MenuComponent } from './components/menu/menu.component';
 import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreRoutingModule } from '../../core-routing.module';
@@ -14,7 +13,6 @@ import { MapHeaderComponent } from './components/map-header/map-header.component
   declarations: [
     HamburguerComponent,
     HeaderComponent,
-    MenuComponent,
     FiltersComponent,
     DefaultHeaderComponent,
     MapHeaderComponent,
@@ -25,6 +23,6 @@ import { MapHeaderComponent } from './components/map-header/map-header.component
     HttpClientModule,
     CoreRoutingModule,
   ],
-  exports: [HeaderComponent, MenuComponent],
+  exports: [HeaderComponent],
 })
 export class HeaderModule {}

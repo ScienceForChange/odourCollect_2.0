@@ -50,18 +50,14 @@ export class MainComponent implements OnInit, OnDestroy {
     private odourService: OdourService,
   ) {}
 
-  private displayHeaderByRoute(event: NavigationEnd): void {
+  private displayMapByRoute(event: NavigationEnd): void {
     if (event.url === '/map') {
-      this.mapService.openInfoObservationOffcanva();
       this.displayMap = true;
     } else if (event.url === '/profile/my-study-zones/id') {
       this.displayMap = true;
       this.isStudyZoneRoute = true;
     } else {
       this.displayMap = false;
-      this.navigationService.updateStateMenu(undefined);
-      if (!this.showMenu) return;
-      this.navigationService.updateStateMenu('close');
     }
   }
 
@@ -155,16 +151,11 @@ export class MainComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.add(
-      this.navigationService.footerVisible.subscribe((value) => { 
+      this.navigationService.footerVisible.subscribe((value) => {
         this.isVisible = value;
       }),
     );
-    this.subscriptions.add(
-  
-      this.navigationService.isVisibleState.subscribe((value) => {
-        this.showMenu = value;
-      }),
-    );
+
     this.subscriptions.add(
       this.router.events
         .pipe(
@@ -174,7 +165,7 @@ export class MainComponent implements OnInit, OnDestroy {
           ),
         )
         .subscribe((event: NavigationEnd) => {
-          this.displayHeaderByRoute(event);
+          this.displayMapByRoute(event);
         }),
     );
   }

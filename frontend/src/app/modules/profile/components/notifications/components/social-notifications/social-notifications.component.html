@@ -1,3 +1,8 @@
-<div id="notifications-list" class="container-fluid d-flex flex-column gap-3">
+<div id="notifications-list" class="container-fluid d-flex flex-column gap-3" *ngIf="notifications.length; else noNotifications">
     <app-notification [notification]="notification" *ngFor="let notification of notifications"/>
 </div>
+<ng-template #noNotifications>
+    <h1 id="noNotifications" class="title-l">
+        No tienes notificaciones
+    </h1>
+</ng-template>

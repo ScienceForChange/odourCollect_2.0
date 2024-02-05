@@ -6,11 +6,10 @@ article {
   max-width: 425px;
   margin: 0 auto;
   > section {
-    padding-left: 40px;
-    padding-right: 40px;
+    margin-top: 20px;
+    padding: 0;
     display: flex;
     flex-direction: column;
     gap: 50px;
   }
 }
-
