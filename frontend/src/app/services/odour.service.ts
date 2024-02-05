@@ -365,7 +365,7 @@ export class OdourService {
 
   //Conseguir los olores filtrados
   public filterOdours(querys: ObservationQuery): Observable<ObservationRes> {
-    const baseUrl = `${environment.BACKEND_BASE_URL}api/observations/?include=odourSubType.odourType,user.userable&`;
+    const baseUrl = `${environment.BACKEND_BASE_URL}api/map`;
 
     const filters = Object.entries(querys)
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -376,6 +376,8 @@ export class OdourService {
         );
       })
       .join('&');
+
+      console.log('filters', filters)
 
     const url = baseUrl + filters;
 
