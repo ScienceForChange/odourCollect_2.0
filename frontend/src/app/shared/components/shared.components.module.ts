@@ -16,6 +16,7 @@ import { SingleRangeComponent } from './form/single-range/single-range.component
 import { MultiRangeComponent } from './form/multi-range/multi-range.component';
 import { DateRangeComponent } from './form/date-range/date-range.component';
 import { FormsModule } from '@angular/forms';
+import { AccordionMapFilterComponent } from './accordion-map-filter/accordion-map-filter.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { FormsModule } from '@angular/forms';
     SingleRangeComponent,
     MultiRangeComponent,
     DateRangeComponent,
+    AccordionMapFilterComponent
   ],
   exports: [
     IconModule,
@@ -40,6 +42,7 @@ import { FormsModule } from '@angular/forms';
     SingleRangeComponent,
     MultiRangeComponent,
     DateRangeComponent,
+    AccordionMapFilterComponent,
   ],
   imports: [
     CommonModule,

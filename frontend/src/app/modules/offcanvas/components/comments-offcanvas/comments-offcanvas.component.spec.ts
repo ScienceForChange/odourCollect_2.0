@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CommentsOffcanvaComponent } from './comments-offcanva.component';
+import { CommentsOffcanvasComponent } from './comments-offcanvas.component';
 
 describe('CommentsOffcanvasComponent', () => {
-  let component: CommentsOffcanvaComponent;
-  let fixture: ComponentFixture<CommentsOffcanvaComponent>;
+  let component: CommentsOffcanvasComponent;
+  let fixture: ComponentFixture<CommentsOffcanvasComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CommentsOffcanvaComponent]
+      declarations: [CommentsOffcanvasComponent],
     });
-    fixture = TestBed.createComponent(CommentsOffcanvaComponent);
+    fixture = TestBed.createComponent(CommentsOffcanvasComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

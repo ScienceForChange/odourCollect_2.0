@@ -13,7 +13,7 @@
 
 }
 .offcanvas-header{
-    padding: 16px 0;
+    padding: 35px 0 15px;
     z-index: 3;
 }
 .offcanvas-body{
@@ -38,18 +38,32 @@
                 font-size: 14px;
                 color: $black;
                 background-color: $violet-lighter;
-                padding: 24px;
+                padding: 15px 24px 10px;
                 border-radius: 20px 20px 20px 5px;
                 box-shadow: 1px 1px 10.5px 1px rgba(0, 0, 0, 0.05);
+                .comment-header{
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                    padding-left: 3px;
+                    color: rgba(0, 0, 0, 0.70);
+                    font-size: 12px;
+                }
+                .comment-footer{
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: flex-end;
+                    font-size: 10px;
+                    color: rgba(0, 0, 0, 0.50);
+                }
                 p{
                     overflow-wrap: anywhere;
-                    margin-bottom: 20px;
                     &:last-child{
                         margin-bottom: 0;
                     }
                 }
             }
-            &.own{
+            &.own{                
                 transition: height 0.3s ease-out;
                 &.new{
                     margin-bottom: -1.5rem;
@@ -67,6 +81,7 @@
                     }
                 }
                 .text{
+                    padding: 24px 24px 10px;
                     white-space: pre-wrap;
                     transition: margin-right .3s ease-out;
                     background-color: $orange-lighter;

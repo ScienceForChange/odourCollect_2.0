@@ -33,6 +33,15 @@
             color: $black;
         }
     }
+    .avatar{
+        height: 64px;
+        width: 64px;
+        img{
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+        }
+    }
 }
 @keyframes is-added{
     0%{ max-height: 0;

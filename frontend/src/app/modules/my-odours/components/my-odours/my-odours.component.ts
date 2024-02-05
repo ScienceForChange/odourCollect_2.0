@@ -8,6 +8,7 @@ import { OdourService } from '../../../../services/odour.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { BehaviorSubject } from 'rxjs';
 import { NavigationService } from 'src/app/services/navigation.service';
+import { OffcanvasService } from '../../../../services/offcanvas.service';
 
 enum SortBy {
   CREATED_DESC = 'createdAt_desc',
@@ -22,9 +23,11 @@ enum SortBy {
 export class MyOdoursComponent implements OnInit {
   public user!: User | undefined;
   private observationsRef: Observation[] | undefined = [];
-  public observations: Observation[] | undefined = [];
+  public observations$: BehaviorSubject<Observation[] | undefined> =
+    new BehaviorSubject<Observation[] | undefined>([]);
   public sorting: SortBy = SortBy.CREATED_DESC;
-  public isOpenFilters$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isOpenFilters$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   constructor(
     private userService: UserService,
@@ -32,6 +35,7 @@ export class MyOdoursComponent implements OnInit {
     private odourService: OdourService,
     private alertService: AlertService,
     private navigationService: NavigationService,
+    private offcanvasService: OffcanvasService,
   ) {
     this.navigationService.headerTitle = 'Mis olores';
   }
@@ -39,16 +43,16 @@ export class MyOdoursComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.userService.user;
     this.observationsRef = this.user?.relationships.odourObservations;
-    this.observations = this.user?.relationships.odourObservations;
+    this.observations$.next(this.user?.relationships.odourObservations);
   }
 
-  public toggleFilters = (): void => {
-    this.isOpenFilters$.next(!this.isOpenFilters$.value);
+
+  public openFilters = (): void => {
+    this.offcanvasService.openMyOdoursFiltersOffCanvas(
+      this.observationsRef,
+      this.observations$,
+    );
   };
-
-  public resetFilters(): void {
-    this.observations = this.observationsRef;
-  }
 
   public send(id: number) {
     //Llamamos al modal de confirmación
@@ -74,11 +78,15 @@ export class MyOdoursComponent implements OnInit {
     this.odourService.deleteObservation(id).subscribe({
       next: () => {
         this.userService.removeObservation(id);
-        const observationsFiltered = this.observations?.filter(
+        const observationsFiltered = this.observations$.value?.filter(
           (observation) => observation.id !== id,
         );
-        this.observations = observationsFiltered;
-        this.observationsRef = observationsFiltered;
+        const observationsUpdated = this.observationsRef?.filter(
+          (observation) => observation.id !== id,
+        );
+
+        this.observations$.next(observationsFiltered);
+        this.observationsRef = observationsUpdated;
         this.alertService.success('Observación eliminada', {
           autoClose: true,
           keepAfterRouteChange: true,
@@ -93,57 +101,30 @@ export class MyOdoursComponent implements OnInit {
     });
   }
 
-  public filterObservations(querys: {
-    type: [];
-    intensity: number[];
-    hedonicTone: number[];
-  }) {
-
-    const observationsFiltered = this.observationsRef?.filter((observation) => {
-      const observationType =
-        observation.relationships.odourSubType.relationships.odourType.id;
-      const observationIntensity = observation.relationships.odourIntensity.id;
-      const observationHedonicTone =
-        observation.relationships.odourHedonicTone.id;
-
-      const haveSameType = querys.type.length
-        ? querys.type.some((type: number) => type === observationType)
-        : true;
-
-      const haveSameIntensity =
-        querys.intensity[0] <= observationIntensity &&
-        querys.intensity[1] >= observationIntensity;
-
-      const haveSameHedonictone =
-        querys.hedonicTone[0] <= observationHedonicTone &&
-        querys.hedonicTone[1] >= observationHedonicTone;
-
-      return haveSameType && haveSameIntensity && haveSameHedonictone;
-    });
-
-    this.observations = observationsFiltered;
-  }
-
   public sortedBy(event: any) {
+    const observations = this.observations$.value;
+
     switch (event.target.value) {
       case SortBy.CREATED_ASC:
-        this.observations = this.observations?.sort(
+        const sortAsc = observations?.sort(
           (a, b) =>
             new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
         );
+        this.observations$.next(sortAsc);
         break;
       case SortBy.CREATED_DESC:
-        this.observations = this.observations?.sort(
+        const sortDesc = observations?.sort(
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         );
+        this.observations$.next(sortDesc);
         break;
     }
   }
 
   public filterByName(term: string) {
     if (term.length) {
-      this.observations = this.observations?.filter((ob) => {
+      const filtered = this.observations$.value?.filter((ob) => {
         const observationType =
           ob.relationships.odourSubType.relationships.odourType.name.toLowerCase();
         const observationSubtype =
@@ -153,8 +134,9 @@ export class MyOdoursComponent implements OnInit {
           observationSubtype.includes(term.toLowerCase())
         );
       });
+      this.observations$.next(filtered);
     } else {
-      this.observations = this.observationsRef;
+      this.observations$.next(this.observationsRef);
     }
   }
 }

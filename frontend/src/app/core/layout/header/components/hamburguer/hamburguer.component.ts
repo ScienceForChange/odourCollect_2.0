@@ -1,27 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NavigationService } from '../../../../../services/navigation.service';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-hamburguer',
   templateUrl: './hamburguer.component.html',
   styleUrls: ['./hamburguer.component.scss'],
 })
-export class HamburguerComponent implements OnInit, OnDestroy {
+export class HamburguerComponent {
   public showMenu: string | undefined = undefined;
-  private menuServiceSubscription!: Subscription;
 
-  constructor(private navigationService: NavigationService) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.menuServiceSubscription = this.navigationService.isVisibleState.subscribe(
-      (value) => {
-        this.showMenu = value;
-      }
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.menuServiceSubscription.unsubscribe();
-  }
 }

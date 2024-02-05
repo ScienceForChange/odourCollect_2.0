@@ -19,6 +19,9 @@
                     <p>
                         {{comment.body}}
                     </p>
+                    <div class="comment-footer d-flex">
+                        <h4 class="date">{{timeAgo(comment.created_at)}}</h4>
+                    </div>
                 </div>
                 <button class="btn btn-primary delete-comment" (click)="deleteComment(comment.id)" [ngClass]="{'loading' : loadingDelete}">
                     <icon-delete />
@@ -30,9 +33,15 @@
                         <img [src]="'/assets/images/avatars/' + comment.user_avatar_id + '.svg'" alt="OdourCollect" height="64"/>
                     </div>
                     <div class="text">
+                        <div class="comment-header d-flex">
+                            <h4>Usuario{{comment.user_id}}</h4>
+                        </div>
                         <p>
                             {{comment.body}}
                         </p>
+                        <div class="comment-footer d-flex">
+                        <h4 class="date">{{timeAgo(comment.created_at)}}</h4>
+                        </div>
                     </div>
                 </div>
             </ng-template>

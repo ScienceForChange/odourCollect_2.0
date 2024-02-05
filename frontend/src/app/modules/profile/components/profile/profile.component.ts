@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
-import { AboutTrainedUserComponent } from 'src/app/modules/information/components/about-trained-user/about-trained-user.component';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { OffcanvasService } from 'src/app/services/offcanvas.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -12,14 +11,14 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent implements OnInit, OnDestroy{
+export class ProfileComponent implements OnInit, OnDestroy {
   public user: User | undefined = this.userService.user;
-  public newNotification:boolean = false;
+  public newNotification: boolean = false;
   private $newNotification!: Subscription;
 
   constructor(
     private userService: UserService,
-    private offcanvasService: NgbOffcanvas,
+    private offcanvasService: OffcanvasService,
     private notificationService: NotificationService,
     private navigationService: NavigationService,
   ) {
@@ -27,17 +26,18 @@ export class ProfileComponent implements OnInit, OnDestroy{
     this.navigationService.backTo = '/map';
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.$newNotification = this.notificationService.newNotification.subscribe({
       next: (resp) => {
         this.newNotification = resp;
-      }
-    })
-  }
-  openInfoOffcanvas(){
-    this.offcanvasService.open(AboutTrainedUserComponent, {  position: 'start', scroll: false, panelClass: 'about-canvas'});
+      },
+    });
   }
   
+  openInfoOffcanvas() {
+    this.offcanvasService.openAboutTrainedOffcanvas();
+  }
+
   ngOnDestroy(): void {
     this.$newNotification.unsubscribe();
   }
