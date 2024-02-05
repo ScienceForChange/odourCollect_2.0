@@ -63,15 +63,15 @@ header {
       padding: 8px 12px;
     }
 
-    .type-agriculture-livestock {
+    .type-country-and-nature {
       background-color: $green-lighter;
       color: $grey-dark;
     }
-    .type-food-industries {
+    .type-food {
       background-color: $violet-lighter;
       color: $grey-dark;
     }
-    .type-industrial {
+    .type-industry {
       background-color: $orange-lighter;
       color: $grey-dark;
     }
@@ -79,21 +79,21 @@ header {
       background-color: $yellow-lighter;
       color: $grey-dark;
     }
-    .type-waste-water {
+    .type-wastewater-and-waste {
       background-color: $blue-lighter;
       color: $grey-dark;
     }
 
-    .active-type-agriculture-livestock {
+    .active-type-country-and-nature {
       background-color: $green;
       color: $black;
     }
-    .active-type-food-industries {
+    .active-type-food {
       background-color: $violet;
       color: $black;
     }
 
-    .active-type-industrial {
+    .active-type-industry {
       background-color: $orange;
       color: $black;
     }
@@ -103,7 +103,7 @@ header {
       color: $black;
     }
 
-    .active-type-waste-water {
+    .active-type-wastewater-and-waste {
       background-color: $blue;
       color: $black;
     }

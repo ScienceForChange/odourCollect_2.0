@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import * as M from 'maplibre-gl';
 import { OdourService } from './odour.service';
-import { Observation, ObservationGeoJSON } from '../models/observation';
+import {
+  MapObservation,
+  Observation,
+  ObservationGeoJSON,
+} from '../models/observation';
 import { Map, LngLat, LngLatBounds, GeoJSONSource } from 'maplibre-gl';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -227,14 +231,14 @@ export class MapService {
   }
 
   //Create GeoJson
-  private createGeoJSON(observations: Observation[]): void {
+  private createGeoJSON(observations: MapObservation[]): void {
     const userID = this.userService.user?.id;
 
     this.showUserObservations.subscribe((show) => {
       let obsGeoJson = observations;
       if (show && userID) {
         obsGeoJson = observations.filter(
-          (observation) => observation.relationships.user?.id === userID,
+          (observation) => observation.user_id === userID,
         );
       }
 
@@ -242,13 +246,10 @@ export class MapService {
         type: 'FeatureCollection',
         features: obsGeoJson.map((observation) => ({
           id: observation.id,
-          observationType:
-            observation.relationships.odourSubType.relationships.odourType.slug,
           type: 'Feature',
           properties: {
             ...observation,
-            type: observation.relationships.odourSubType.relationships.odourType
-              .slug,
+            color:observation.color + ''
           },
           geometry: {
             type: 'Point',
@@ -313,20 +314,14 @@ export class MapService {
       });
     }
 
-    [
-      'agriculture-livestock',
-      'food-industries',
-      'urban',
-      'waste-water',
-      'industrial',
-    ].forEach((type) => {
-      const imageURL = `../../assets/images/markers/${type}.png`;
+    [...Array(8)].forEach((_, numberColor) => {
+      const imageURL = `../../assets/images/markers/marker-${numberColor}.png`;
       this.map.loadImage(imageURL, (error, image) => {
         if (error || !image)
           return console.error(
             `Failed to load image from URL "${imageURL}": ${error}`,
           );
-        this.map.addImage(type + '-icon', image);
+        this.map.addImage(numberColor + '-icon', image);
       });
     });
   }
