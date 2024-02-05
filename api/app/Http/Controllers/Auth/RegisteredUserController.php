@@ -30,9 +30,6 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        return $request->all();
-
-
         DB::transaction(function () use ($request) {
             $citizen = ProfileCitizen::create([
                 'name' => $request->name,

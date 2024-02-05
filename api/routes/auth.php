@@ -25,7 +25,7 @@ Route::post('/reset-password', [NewPasswordController::class, 'store'])
 
 // endpoint al que se llama cuando se hace click en el enlace de "verificar email" del correo de verificación y verifica el correo
 Route::get('/verify-email/{id}/{hash}', VerifyEmailController::class)
-                ->middleware(['auth', 'signed', 'throttle:6,1'])
+                ->middleware(['signed', 'throttle:6,1'])
                 ->name('verification.verify');
 
 // endpoint para reeviar la verificación de email
