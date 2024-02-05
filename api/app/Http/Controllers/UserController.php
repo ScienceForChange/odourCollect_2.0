@@ -74,9 +74,15 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $user->update(
-            $request->validated()
-        );
+        if(! $user->userable) { //no tiene perfil asociado
+            $user->userable()->create(
+                $request->validated()
+            );
+        } else { // tiene perfil asociado
+            $user->userable()->update(
+                $request->validated()
+            );
+        }
 
         return $this->success([
             new UserResource($user)
@@ -138,6 +144,19 @@ class UserController extends Controller
         #Update the new Password
         User::whereId(auth()->user()->id)->update([
             'password' => Hash::make($request->validated('new_password'))
+        ]);
+
+        return response()->noContent();
+    }
+
+    public function changeAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar_id' => 'required|digits_between:1,18',
+        ]);
+
+        User::whereId(auth()->user()->id)->update([
+            'avatar_id' => $request->avatar_id
         ]);
 
         return response()->noContent();
