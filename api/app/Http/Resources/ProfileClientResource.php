@@ -14,6 +14,10 @@ class ProfileClientResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        if (is_null($this->resource)) {
+            return [];
+        }
+
         return [
             'type'          => 'Client',    //TODO mejorar
             'id'            => $this->id,

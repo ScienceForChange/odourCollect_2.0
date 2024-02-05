@@ -74,9 +74,15 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $user->update(
-            $request->validated()
-        );
+        if(! $user->userable) { //no tiene perfil asociado
+            $user->userable()->create(
+                $request->validated()
+            );
+        } else { // tiene perfil asociado
+            $user->userable()->update(
+                $request->validated()
+            );
+        }
 
         return $this->success([
             new UserResource($user)

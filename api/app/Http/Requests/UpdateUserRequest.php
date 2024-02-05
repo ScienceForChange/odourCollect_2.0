@@ -25,12 +25,9 @@ class UpdateUserRequest extends FormRequest
     {
         // TODO REFACTOR WHEN YOU CREATE A CLIENTPROFILE OR CITIZENPROFILE
         return [
-            'name'      => ['sometimes', 'required', 'min:5','max:255'],
-            'email'     => ['sometimes', 'required', 'string', Rule::unique('users')->ignore(request()->user()->id),],
+            'name'      => ['sometimes', 'min:5','max:255'],
             'gender'    => ['sometimes', 'string'],
             'birth_year' => ['sometimes', 'string'],
-            'password'  => ['sometimes', 'required', 'confirmed', Rules\Password::defaults()],
-            'avatar_id' => ['sometimes'],
         ];
     }
 }
