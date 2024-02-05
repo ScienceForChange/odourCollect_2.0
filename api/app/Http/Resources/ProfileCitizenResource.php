@@ -14,6 +14,10 @@ class ProfileCitizenResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        if (is_null($this->resource)) {
+            return [];
+        }
+
         return [
             'type'          => 'Citizen', //TODO: ver de mejorar
             'name'          => $this->name,
