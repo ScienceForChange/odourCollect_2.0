@@ -148,4 +148,17 @@ class UserController extends Controller
 
         return response()->noContent();
     }
+
+    public function changeAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar_id' => 'required|digits_between:1,18',
+        ]);
+
+        User::whereId(auth()->user()->id)->update([
+            'avatar_id' => $request->avatar_id
+        ]);
+
+        return response()->noContent();
+    }
 }
