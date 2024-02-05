@@ -1,13 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-odour-type-icon',
   templateUrl: './odour-type-icon.component.html',
-  styleUrls: ['./odour-type-icon.component.scss'],
+  styleUrls: ['./odour-type-icon.component.scss']
 })
-export class OdourTypeIconComponent {
-  @Input() odourType!: string;
-  @Input() odourName!: string;
+export class OdourTypeIconComponent implements OnInit{
+  @Input() odourType!:string;
+  @Input() odourName!:string
   @Input() odourSubtypeName: string | undefined = undefined;
-  @Input() iconClass!: string;
+  @Input() iconClass!:string;  
+
+  ngOnInit(): void {
+    console.log('odourSubtypeName', this.odourSubtypeName)
+  }
 }

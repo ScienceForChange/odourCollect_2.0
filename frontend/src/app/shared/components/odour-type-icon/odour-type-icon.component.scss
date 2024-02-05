@@ -14,9 +14,9 @@
   }
 
   &.type-urban,
-  &.type-country-and-nature,
-  &.type-wastewater-and-waste,
-  &.type-industry {
+  &.type-agriculture-livestock,
+  &.type-waste-water,
+  &.type-industrial {
     align-items: center;
   }
 
@@ -25,22 +25,22 @@
     height: 129px;
   }
 
-  &.type-country-and-nature {
+  &.type-agriculture-livestock {
     width: 131px;
     height: 131px;
   }
 
-  &.type-industry {
+  &.type-industrial {
     width: 135px;
     height: 135px;
   }
 
-  &.type-wastewater-and-waste {
+  &.type-waste-water {
     width: 140px;
     height: 140px;
   }
 
-  &.type-food {
+  &.type-food-industries {
     > div {
       margin-top: 12px;
     }
@@ -61,16 +61,16 @@
   &.type-urban {
     background-image: url("../../../../assets/images/yellow-bolb.svg");
   }
-  &.type-country-and-nature {
+  &.type-agriculture-livestock {
     background-image: url("../../../../assets/images/green-bolb.svg");
   }
-  &.type-food {
+  &.type-food-industries {
     background-image: url("../../../../assets/images/pink-bolb.svg");
   }
-  &.type-industry {
+  &.type-industrial {
     background-image: url("../../../../assets/images/orange-bolb.svg");
   }
-  &.type-wastewater-and-waste {
+  &.type-waste-water {
     background-image: url("../../../../assets/images/blue-bolb.svg");
   }
   > div {
@@ -102,22 +102,22 @@
       background-image: url("../../../../assets/images/yellow-bolb.svg");
     }
   }
-  &.type-country-and-nature {
+  &.type-agriculture-livestock {
     & > div {
       background-image: url("../../../../assets/images/green-bolb.svg");
     }
   }
-  &.type-food {
+  &.type-food-industries {
     & > div {
       background-image: url("../../../../assets/images/pink-bolb.svg");
     }
   }
-  &.type-industry {
+  &.type-industrial {
     & > div {
       background-image: url("../../../../assets/images/orange-bolb.svg");
     }
   }
-  &.type-wastewater-and-waste {
+  &.type-waste-water {
     & > div {
       background-image: url("../../../../assets/images/blue-bolb.svg");
     }
@@ -144,19 +144,19 @@
     border-color: $yellow-light;
     background-color: $yellow-light;
   }
-  &.type-country-and-nature {
+  &.type-agriculture-livestock {
     border-color: $green-light;
     background-color: $green-light;
   }
-  &.type-food {
+  &.type-food-industries {
     border-color: $violet-light;
     background-color: $violet-light;
   }
-  &.type-industry {
+  &.type-industrial {
     border-color: $orange-light;
     background-color: $orange-light;
   }
-  &.type-wastewater-and-waste {
+  &.type-waste-water {
     border-color: $blue-light;
     background-color: $blue-light;
   }

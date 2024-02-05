@@ -13,19 +13,19 @@
   <form [formGroup]="contactForm" class="d-flex flex-column gap-4 align-items-center">
     <div class="d-flex justify-content-start flex-column w-100">
       <textarea
-        #comment
+        #message
         (input)="resizeTextArea()"
         rows="5"
         required
-        formControlName="comment"
-        aria-label="comment"
+        formControlName="message"
+        aria-label="message"
       ></textarea>
       <app-form-error-list
         *ngIf="
-          contactForm.get('comment')?.touched &&
-          contactForm.get('comment')?.errors
+          contactForm.get('message')?.touched &&
+          contactForm.get('message')?.errors
         "
-        [errorList]="contactForm.get('comment')?.errors"
+        [errorList]="contactForm.get('message')?.errors"
       />
     </div>
     <button

@@ -5,6 +5,7 @@ import {
   OdourIntensity,
   OdourTypeData,
 } from 'src/app/models/odour-related-data';
+import { MapModalsService } from 'src/app/services/map-modals.service';
 import { OdourService } from 'src/app/services/odour.service';
 import { ObservationQuery } from '../../../../models/observation';
 import { Subscription } from 'rxjs';
@@ -64,10 +65,11 @@ export class ObservationFiltersOffCanvasComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
+    private mapModalsService: MapModalsService,
     private odourService: OdourService,
     private alertService: AlertService,
     private offcanvasService: OffcanvasService,
-    public activeOffcanvas: NgbActiveOffcanvas,
+    public activeOffcanvas: NgbActiveOffcanvas
   ) {
     this.loadingData = true;
   }
@@ -76,13 +78,12 @@ export class ObservationFiltersOffCanvasComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.odourService.observationRelatedData().subscribe(({ data }) => {
         const filterObservationsSlugs = [
-          'wastewater-and-waste',
+          'waste-water',
           'urban',
-          'country-and-nature',
-          'food',
-          'industry',
+          'agriculture-livestock',
+          'food-industries',
+          'industrial',
         ];
-
         this.types = data.OdourType.filter((odourType) =>
           filterObservationsSlugs.some((type) => type === odourType.slug),
         );

@@ -14,19 +14,19 @@ fieldset {
     font-size: 14px;
     line-height: 16px;
     letter-spacing: 0.6px;
-    &.type-country-and-nature {
+    &.type-agriculture-livestock {
       &:hover,
       &:active {
         background-color: $green;
       }
     }
-    &.type-food {
+    &.type-food-industries {
       &:hover,
       &:active {
         background-color: $violet;
       }
     }
-    &.type-industry {
+    &.type-industrial {
       &:hover,
       &:active {
         background-color: $orange;
@@ -38,26 +38,26 @@ fieldset {
         background-color: $yellow;
       }
     }
-    &.type-wastewater-and-waste {
+    &.type-waste-water {
       &:hover,
       &:active {
         background-color: $blue;
       }
     }
 
-    &.type-country-and-nature.selected {
+    &.type-agriculture-livestock.selected {
       background-color: $green;
     }
-    &.type-food.selected {
+    &.type-food-industries.selected {
       background-color: $violet;
     }
-    &.type-industry.selected {
+    &.type-industrial.selected {
       background-color: $orange;
     }
     &.type-urban.selected {
       background-color: $yellow;
     }
-    &.type-wastewater-and-waste.selected {
+    &.type--waste-water.selected {
       background-color: $blue;
     }
   }
