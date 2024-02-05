@@ -39,6 +39,7 @@ export class ContactComponent implements OnDestroy{
       next: (response: any) => {
         this.alertService.success('Tu mensaje ha sido enviado',{autoClose: true, keepAfterRouteChange: true});
         this.loading = false;
+        this.contactForm.reset();
       },
       error: () => {
         this.alertService.error('Ha ocurrido un error al enviar el mensaje',{autoClose: true, keepAfterRouteChange: false});
@@ -55,7 +56,7 @@ export class ContactComponent implements OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this.contact$.unsubscribe();
+    if(this.contact$) this.contact$.unsubscribe();
   }
 
 }
