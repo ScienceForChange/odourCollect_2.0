@@ -12,13 +12,13 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./contact.component.scss'],
 })
 export class ContactComponent implements OnDestroy{
-  @ViewChild('comment') inputComment!: ElementRef;
+  @ViewChild('message') inputComment!: ElementRef;
   public loading: boolean = false;
 
   private contact$!: Subscription;
   
   public contactForm: FormGroup = new FormGroup({
-    comment: new FormControl('', [
+    message: new FormControl('', [
       Validators.required,
       Validators.minLength(5),
     ]),
@@ -35,7 +35,7 @@ export class ContactComponent implements OnDestroy{
 
   send(){
     this.loading = true;
-    this.contact$ = this.http.post(`${environment.BACKEND_BASE_URL}/contact`, this.contactForm.value).subscribe({
+    this.contact$ = this.http.post(`${environment.BACKEND_BASE_URL}api/contact`, this.contactForm.value).subscribe({
       next: (response: any) => {
         this.alertService.success('Tu mensaje ha sido enviado',{autoClose: true, keepAfterRouteChange: true});
         this.loading = false;
