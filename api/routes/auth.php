@@ -40,3 +40,6 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
 Route::post('/change-password', [UserController::class, 'changePassword'])
                 ->middleware(['auth','verified','throttle:6,1'])
                 ->name('password.change');
+
+Route::patch('/change-avatar', [UserController::class, 'changeAvatar'])
+                ->middleware(['auth','verified'])->whereNumber('user')->name('changePassword');
