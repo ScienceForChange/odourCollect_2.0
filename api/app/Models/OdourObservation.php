@@ -108,7 +108,7 @@ class OdourObservation extends Model implements Likeable
         );
 
         // 8 lo pondré como valor default si no se ha podido calcualr el color, por lo de que la tabla de intensidad no corresponde con la matriz.
-        return $color[$this->odour_intensity_id][$this->odour_hedonic_tone_id] ?? 8;
+        return $color[$this->odour_intensity_id][$this->odour_hedonic_tone_id] ?? 0;
     }
 
     public function haversineGreatCircleDistance(
