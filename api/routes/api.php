@@ -105,3 +105,6 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('/map', [App\Http\Controllers\MapController::class, 'index'])->middleware('dev-env')->name('map.index');
+
+Route::post('/contact', [App\Http\Controllers\ContactController::class, 'sendRequestToEmail'])
+            ->middleware(['auth:sanctum'])->name('contact.sendRequestToEmail');
