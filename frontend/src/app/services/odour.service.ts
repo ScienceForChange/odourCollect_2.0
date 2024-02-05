@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
   OdourRelatedDataRes,
@@ -83,7 +83,7 @@ export class OdourService {
           const currObservations = this._observations.getValue();
           if (data[0].relationships.user?.id !== undefined) {
             const mapObservation = {
-              color: '0',
+              color:'0',
               id: data[0].id,
               latitude: data[0].latitude,
               longitude: data[0].longitude,
@@ -376,8 +376,6 @@ export class OdourService {
         );
       })
       .join('&');
-
-      console.log('filters', filters)
 
     const url = baseUrl + filters;
 

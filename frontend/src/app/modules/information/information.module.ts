@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
 import { HttpClientModule } from '@angular/common/http';
-import { AboutOddourComponent } from './components/about-oddour/about-oddour.component';
 import { AboutTrainedUserComponent } from './components/about-trained-user/about-trained-user.component';
 import { AboutBadgesComponent } from './components/about-badges/about-badges.component';
 import { AboutStudyZoneComponent } from './components/about-study-zone/about-study-zone.component';
@@ -17,7 +16,6 @@ import { AboutFiltersComponent } from './components/about-filters/about-filters.
 
 @NgModule({
   declarations: [
-    AboutOddourComponent,
     AboutTrainedUserComponent,
     AboutBadgesComponent,
     AboutStudyZoneComponent,
