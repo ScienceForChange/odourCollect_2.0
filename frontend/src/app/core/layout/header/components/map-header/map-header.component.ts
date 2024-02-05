@@ -28,6 +28,10 @@ export class MapHeaderComponent {
     this.OffcanvasService.openMenuOffCanvas();
   }
 
+  public openLegendOffCanvas(): void {
+    this.OffcanvasService.openLegendOffCanvas();
+  }
+
   public toggleUserOdours(show: boolean) {
     if (!this.userService.user) {
       this.modalService.open(InfoModalComponent, {
