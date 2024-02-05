@@ -62,6 +62,7 @@ export class NotificationsComponent implements OnInit, OnDestroy, AfterViewInit 
     this.moveMarker();
   }
   public moveMarker(e:Event | null = null): void {
+    //console.log('move');
     const url = this.router.url;
     const lastSegment = url.split('/').pop();
     this.activeOption = e ? e.target as Element : document.querySelector(`[routerlink="${lastSegment}"]`);

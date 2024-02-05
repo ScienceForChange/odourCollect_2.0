@@ -5,23 +5,11 @@ import {
 } from './odour-related-data';
 import { User } from './user';
 
-export interface MapObservationRes {
-  status: string;
-  data: MapObservation[];
-}
-
-export interface MapObservation {
-  id: number;
-  user_id: number;
-  latitude: string;
-  longitude: string;
-  color: number | string;
-}
-
 export interface ObservationRes {
   status: string;
   data: Observation[];
 }
+
 //La observación principal
 export interface Observation {
   id: number;
@@ -50,13 +38,14 @@ export interface Geometry {
 }
 
 interface ObservationSpiderfyGeoJson extends Observation {
-  iconOffset: [number, number];
+  iconOffset: [number,number];
 }
 
 export interface Feature {
   id: number;
+  observationType: string;
   type: string;
-  properties: ObservationSpiderfyGeoJson | MapObservation;
+  properties: ObservationSpiderfyGeoJson | Observation;
   geometry: Geometry;
 }
 
@@ -290,7 +279,7 @@ export interface Comment {
   body: string;
   user_id: number | undefined;
   odour_observation_id: number;
-  created_at: Date;
+  created_at: Date ;
   user_avatar_id: number;
 }
 export enum Gender {

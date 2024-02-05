@@ -14,6 +14,8 @@ import {
   AuthGuardHomePage,
   AuthGuardLogoutActivate,
 } from '../guards/auth.guard';
+import { AboutOddourComponent } from '../modules/information/components/about-oddour/about-oddour.component';
+import { FaqsComponent } from '../modules/faqs/components/faqs/faqs.component';
 import { VerifyEmailComponent } from '../modules/verify-email/components/verify-email/verify-email.component';
 import {
   UnverifyGuardActivate,
@@ -85,9 +87,17 @@ const routes: Routes = [
     loadChildren: () => import('../modules/profile/profile.module').then((m) => m.ProfileModule),
   },
   {
+    path: 'frequently-asked-questions',
+    component: FaqsComponent,
+  },
+  {
     path: 'my-odours',
     component: MyOdoursComponent,
     canActivate: [AuthGuardActivate, VerifyGuardActivate],
+  },
+  {
+    path: 'about-odourcollect',
+    component: AboutOddourComponent,
   },
   {
     path: 'create-odour',

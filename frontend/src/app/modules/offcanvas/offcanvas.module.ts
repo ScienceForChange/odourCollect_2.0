@@ -10,7 +10,6 @@ import { CommentsOffcanvasComponent } from './components/comments-offcanvas/comm
 import { ObservationFiltersOffCanvasComponent } from './components/observation-filters-offcanvas/observation-filters-offcanvas.component';
 import { MenuOffcanvasComponent } from './components/menu-offcanvas/menu-offcanvas.component';
 import { FiltersMyOdoursOffcanvasComponent } from './components/filters-my-odours-offcanvas/filters-my-odours-offcanvas.component';
-import { LegendOffcanvasComponent } from './components/legend-offcanvas/legend-offcanvas.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +19,6 @@ import { LegendOffcanvasComponent } from './components/legend-offcanvas/legend-o
     MenuOffcanvasComponent,
     ObservationFiltersOffCanvasComponent,
     PublicProfileOffcanvasComponent,
-    LegendOffcanvasComponent,
   ],
   imports: [
     CommonModule,

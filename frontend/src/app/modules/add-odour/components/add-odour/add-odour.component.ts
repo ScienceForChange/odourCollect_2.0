@@ -84,11 +84,11 @@ export class AddOdourComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.odourService.observationRelatedData().subscribe(({ data }) => {
         const filterObservationsSlugs = [
-          'wastewater-and-waste',
+          'waste-water',
           'urban',
-          'country-and-nature',
-          'food',
-          'industry',
+          'agriculture-livestock',
+          'food-industries',
+          'industrial',
         ];
 
         const filteredObservations = data.OdourType.filter((observation) =>
@@ -207,8 +207,8 @@ export class AddOdourComponent implements OnInit, OnDestroy {
         (subtype) =>
           subtype.id === this.addOdourForm.get('subtypeDetails.subtype')?.value,
       );
-      if (selectedSubtype !== undefined) {
-        this.selectedSubtype = selectedSubtype;
+      if(selectedSubtype !== undefined){
+        this.selectedSubtype = selectedSubtype
       }
       return;
     }
