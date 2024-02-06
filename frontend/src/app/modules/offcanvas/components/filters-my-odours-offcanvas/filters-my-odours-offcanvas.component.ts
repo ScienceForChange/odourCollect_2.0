@@ -54,11 +54,11 @@ export class FiltersMyOdoursOffcanvasComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.odourService.observationRelatedData().subscribe(({ data }) => {
         const filterObservationsSlugs = [
-          'waste-water',
+          'wastewater-and-waste',
           'urban',
-          'agriculture-livestock',
-          'food-industries',
-          'industrial',
+          'country-and-nature',
+          'food',
+          'industry',
         ];
         this.types = data.OdourType?.filter((odourType) =>
           filterObservationsSlugs.some((type) => type === odourType.slug),
