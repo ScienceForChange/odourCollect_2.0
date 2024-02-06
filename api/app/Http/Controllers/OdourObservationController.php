@@ -78,7 +78,8 @@ class OdourObservationController extends Controller
                 'odourHedonicTone',
                 'odourIntensity',
                 'odourSubType.odourType',
-                'user'
+                'user',
+                'comments'
             ]))
         ],
         Response::HTTP_CREATED
