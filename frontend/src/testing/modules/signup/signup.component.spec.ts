@@ -40,23 +40,13 @@ describe('SigninComponent', () => {
       password_confirmation: new FormControl('123123123'),
       dpo: new FormControl(true),
       etic: new FormControl(true),
-
-      relationships: new FormGroup({
-        
-        profile: new FormGroup({
-
-          name: new FormControl('dummy'),
-          birth_year: new FormControl('01/01/2001'),
-          gender: new FormControl(''),
-
-        }),
-
-      }),
-
+      name: new FormControl('dummy'),
+      birth_year: new FormControl('01/01/2001'),
+      gender: new FormControl(''),
     });
 
     jest.spyOn(signinService, 'postNewUser').mockReturnValueOnce(of({ status: 200, data: [createDummyUser()] }));
-    
+
     component.send();
 
     fixture.detectChanges();
@@ -67,26 +57,26 @@ describe('SigninComponent', () => {
   });
 
   it('debería enviarse el formulario y devolver error', () => {
-      
+
       component.signUpForm = new FormGroup({
         email: new FormControl('dummy@dummy.com'),
         password: new FormControl('123123123'),
         password_confirmation: new FormControl('123123123'),
         dpo: new FormControl(true),
         etic: new FormControl(true),
-  
+
         relationships: new FormGroup({
-          
+
           profile: new FormGroup({
-  
+
             name: new FormControl('dummy'),
             birth_year: new FormControl('01/01/2001'),
             gender: new FormControl(''),
-  
+
           }),
-  
+
         }),
-  
+
       });
 
       const errorResponse = {
@@ -107,6 +97,6 @@ describe('SigninComponent', () => {
       expect(component.activateAccount).toBeFalsy();
       expect(component.signUpForm.controls['email'].setErrors).toHaveBeenCalled()
       expect(fixture.debugElement.nativeElement.querySelector('app-activate-account')).toBeFalsy()
-      
+
   });
 });
