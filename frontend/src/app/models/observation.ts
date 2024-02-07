@@ -25,6 +25,7 @@ export interface ObservationRes {
 //La observación principal
 export interface Observation {
   id: number;
+  color:number,
   latitude: string;
   longitude: string;
   relationships: ObservationRelationships;
@@ -309,4 +310,7 @@ export interface ObservationQuery {
   hedonicTone: number[] | null;
   createdBetween: string | null;
   createdTodayBetween: string[] | null;
+  is_inside: number | null;
+  latitude: number | null;
+  longitude: number | null;
 }
