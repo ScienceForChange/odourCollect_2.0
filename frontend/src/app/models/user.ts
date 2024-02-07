@@ -24,6 +24,7 @@ export interface Relationships {
   profile:           Profile;
   odourObservations:  Observation[];  
 }
+
 export interface Profile {
   type:       string;
   name:       string;
@@ -65,4 +66,13 @@ export function createDummyUser(): User {
   };
 
   return dummyUser;
+}
+
+export interface SingUpUser {
+  email: string;
+  password: string;
+  password_confirmation: string;
+  name:       string;
+  gender:     string;
+  birthYear:  number;
 }
