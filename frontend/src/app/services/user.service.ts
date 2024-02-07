@@ -98,9 +98,9 @@ export class UserService {
       this.user.relationships.odourObservations = this.user.relationships.odourObservations.filter((obs) => obs.id !== removedObsId);
     }
   }
-  
+
   public addLikeToObservation(obsId: number) {
-    return this.http.post(`${environment.BACKEND_BASE_URL}/like`, { 
+    return this.http.post(`${environment.BACKEND_BASE_URL}/like`, {
       likeable_type: 'App\\Models\\OdourObservation',
       id: obsId
      },
@@ -114,5 +114,27 @@ export class UserService {
     );
   }
 
+  downloadObservations(): void {
+    this.http.get(`${environment.BACKEND_BASE_URL}api/observations/export`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        responseType: 'blob'
+      },
+      withCredentials: true
+    }).subscribe({
+      next: (resp:any) => {
+        const url = window.URL.createObjectURL(resp);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'observations.csv';
+        a.click();
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    }
+    );
+  }
 
 }
