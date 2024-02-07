@@ -5,10 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import {
-  NgbActiveOffcanvas,
-  NgbModal,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveOffcanvas, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, filter } from 'rxjs';
 import { Observation } from 'src/app/models/observation';
 import { User } from 'src/app/models/user';
@@ -115,7 +112,6 @@ export class InfoObservationOffcanvasComponent
     this.resizeOffcanva();
   }
   public openProfileOffcanvas() {
-    // this.activeOffcanvas.close();
     this.offcanvasService.openProfileOffcanvas(this.observation);
   }
 
