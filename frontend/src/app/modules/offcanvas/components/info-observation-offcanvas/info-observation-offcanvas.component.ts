@@ -40,11 +40,10 @@ export class InfoObservationOffcanvasComponent
   private closeByUser: boolean = false;
 
   public observation!: Observation;
-  public isOpen: boolean = false;
   public user: User | undefined = undefined;
 
   constructor(
-    public offcanvas: NgbActiveOffcanvas,
+    private activeOffcanvas: NgbActiveOffcanvas,
     private userService: UserService,
     private authService: AuthService,
     private odourService: OdourService,
@@ -62,7 +61,7 @@ export class InfoObservationOffcanvasComponent
       this.router.events
         .pipe(filter((event) => event instanceof NavigationEnd))
         .subscribe(() => {
-          this.offcanvas.close();
+          this.activeOffcanvas.close();
         }),
     );
   }
@@ -94,7 +93,7 @@ export class InfoObservationOffcanvasComponent
             autoClose: true,
             keepAfterRouteChange: true,
           });
-          this.offcanvas.close();
+          this.activeOffcanvas.close();
         },
         error: () => {
           this.alertService.error('Hubo un error', {
@@ -116,6 +115,7 @@ export class InfoObservationOffcanvasComponent
     this.resizeOffcanva();
   }
   public openProfileOffcanvas() {
+    // this.activeOffcanvas.close();
     this.offcanvasService.openProfileOffcanvas(this.observation);
   }
 
@@ -170,7 +170,7 @@ export class InfoObservationOffcanvasComponent
   }
   public close(): void {
     this.closeByUser = true;
-    this.offcanvas.close();
+    this.activeOffcanvas.close();
     this.mapModalsService.toggleObservationModal();
   }
 
