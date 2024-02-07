@@ -119,16 +119,11 @@ export class UserService {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        responseType: 'blob'
       },
       withCredentials: true
     }).subscribe({
       next: (resp:any) => {
-        const url = window.URL.createObjectURL(resp);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'observations.csv';
-        a.click();
+        console.log(resp);
       },
       error: (err) => {
         console.log(err);
