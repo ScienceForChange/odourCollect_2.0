@@ -5,7 +5,7 @@ import { of } from "rxjs";
 import { TestScheduler } from "rxjs/testing";
 
 import { SigninService } from '../../app/services/signin.service';
-import { createDummyUser } from '../../app/models/user';
+import { createDummySingUpUser, createDummyUser } from '../../app/models/user';
 
 describe('SigninService', () => {
   let service: SigninService;
@@ -32,22 +32,22 @@ describe('SigninService', () => {
 
   it("simular registro de usuario", () => {
 
-    const newUser =  createDummyUser();
+    const newUser =  createDummySingUpUser();
     const response = { status: 200, data:  createDummyUser() };
 
     httpMock.post.mockReturnValueOnce(of(response));
 
     const obs$ = service.postNewUser(newUser);
-    
+
     testScheduler.run(({ expectObservable }) => {
 
       const expectedMarble = "(---a--|)"; // Diagrama de mármol representando la secuencia de emisión de 'a' seguido por completado '|'
 			const expectedValues = { a: { status: 200, data:  createDummyUser() } }; // valor emitido 'a' con el valor de 'response'
-      
+
       expectObservable(obs$).toBe(expectedMarble, expectedValues);
     });
 
   });
 
 });
-  
+

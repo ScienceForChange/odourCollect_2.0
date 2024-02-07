@@ -22,7 +22,7 @@ export class User {
 
 export interface Relationships {
   profile:           Profile;
-  odourObservations:  Observation[];  
+  odourObservations:  Observation[];
 }
 
 export interface Profile {
@@ -76,3 +76,16 @@ export interface SingUpUser {
   gender:     string;
   birthYear:  number;
 }
+
+export function createDummySingUpUser(): SingUpUser {
+  const dummySingUpUser: SingUpUser = {
+    email: 'dummy@example.com',
+    password: '123123123',
+    password_confirmation: '123123123',
+    name: 'Dummy',
+    gender: 'Mujer',
+    birthYear: 1990,
+  };
+  return dummySingUpUser;
+}
+
