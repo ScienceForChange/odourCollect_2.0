@@ -48,9 +48,6 @@ export class FiltersMyOdoursOffcanvasComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.observations$.subscribe((observations) => {
-
-    })
     this.subscriptions.add(
       this.odourService.observationRelatedData().subscribe(({ data }) => {
         const filterObservationsSlugs = [
