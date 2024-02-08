@@ -146,7 +146,7 @@ export class UserService {
         const link = document.createElement('a');
         link.href = fileURL;
         const date = new Date();
-        const dateSlug = `${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}-${date.toISOString()}`;
+        const dateSlug = `${date.toISOString().slice(0,10)}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
         link.download = `misObservaciones-${ dateSlug }.csv`;
         link.click();
         link.remove();
