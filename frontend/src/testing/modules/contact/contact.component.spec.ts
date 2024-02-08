@@ -32,8 +32,8 @@ describe('ContactComponent', () => {
 
   it('debería pasar todo el proceso de envíar un mensaje correctamente', () => {
 
-    // Añadimos texto al control comment
-    component.contactForm.controls['comment'].setValue('This is a test comment');
+    // Añadimos texto al control message
+    component.contactForm.controls['message'].setValue('This is a test message');
 
     // Crear un espía para alertService.success
     const spy = jest.spyOn(alertService, 'success');
@@ -47,7 +47,7 @@ describe('ContactComponent', () => {
     component.send();
     
     // Esperamos que se haya hecho una petición POST a la URL correcta
-    const req = http.expectOne(`${environment.BACKEND_BASE_URL}/contact`);
+    const req = http.expectOne(`${environment.BACKEND_BASE_URL}api/contact`);
     expect(req.request.method).toBe('POST');
     req.flush({success: true});
 
@@ -56,14 +56,14 @@ describe('ContactComponent', () => {
     
     fixture.detectChanges();
 
-    // Esperamos que el control comment esté vacío
-    expect(component.contactForm.controls['comment'].value).toBe(null);
+    // Esperamos que el control message esté vacío
+    expect(component.contactForm.controls['message'].value).toBe(null);
   });
 
   it('debería dar error al enviar el mensaje', () => {
 
-    // Añadimos texto al control comment
-    component.contactForm.controls['comment'].setValue('This is a test comment');
+    // Añadimos texto al control message
+    component.contactForm.controls['message'].setValue('This is a test message');
 
     // Crear un espía para alertService.error
     const spy = jest.spyOn(alertService, 'error');
@@ -77,7 +77,7 @@ describe('ContactComponent', () => {
     component.send();
     
     // Esperamos que se haya hecho una petición POST a la URL correcta
-    const req = http.expectOne(`${environment.BACKEND_BASE_URL}/contact`);
+    const req = http.expectOne(`${environment.BACKEND_BASE_URL}api/contact`);
     expect(req.request.method).toBe('POST');
     req.error(new ErrorEvent('Error'));
 
@@ -86,7 +86,7 @@ describe('ContactComponent', () => {
     
     fixture.detectChanges();
 
-    // Esperamos que el control comment no esté vacío
-    expect(component.contactForm.controls['comment'].value).toBe('This is a test comment');
+    // Esperamos que el control message no esté vacío
+    expect(component.contactForm.controls['message'].value).toBe('This is a test message');
   });
 });

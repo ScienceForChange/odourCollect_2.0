@@ -78,12 +78,10 @@ export class OdourService {
       )
       .pipe(
         tap(({ data }) => {
-          //TODO CARLOS
-          //Necesito que cuando cree una observación me devuelva el color también
           const currObservations = this._observations.getValue();
           if (data[0].relationships.user?.id !== undefined) {
             const mapObservation = {
-              color:'0',
+              color: data[0].color,
               id: data[0].id,
               latitude: data[0].latitude,
               longitude: data[0].longitude,
@@ -365,19 +363,28 @@ export class OdourService {
 
   //Conseguir los olores filtrados
   public filterOdours(querys: ObservationQuery): Observable<ObservationRes> {
-    const baseUrl = `${environment.BACKEND_BASE_URL}api/map?`;
+    const baseUrl = `${environment.BACKEND_BASE_URL}api/map`;
 
-    const filters = Object.entries(querys)
+    let distanceUrl;
+
+    if (querys.is_inside) {
+      distanceUrl = `is_inside=${querys.is_inside}&latitude=${querys.latitude}&longitude=${querys.longitude}`;
+    }
+
+    const { is_inside, latitude, longitude, ...querysFiltered } = querys;
+
+    const filters = Object.entries(querysFiltered)
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .filter(([_, value]) => value)
       .map(([key, value]) => {
-        return (
-          value && `filter[${key}]=${value?.length ? value.join(',') : value}`
-        );
+        if (Array.isArray(value)) {
+          return `filter[${key}]=${value.join(',')}`;
+        }
+        return `filter[${key}]=${value}`;
       })
       .join('&');
 
-    const url = baseUrl + filters;
+    const url = baseUrl + '?' + filters + distanceUrl
 
     return this.http.get<ObservationRes>(url);
   }

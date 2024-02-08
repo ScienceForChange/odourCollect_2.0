@@ -42,10 +42,13 @@ export class MyOdoursComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.user;
-    this.observationsRef = this.user?.relationships.odourObservations;
-    this.observations$.next(this.user?.relationships.odourObservations);
+    const observationsSorted = this.user?.relationships.odourObservations.sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
+    this.observationsRef = observationsSorted;
+    this.observations$.next(observationsSorted);
   }
-
 
   public openFilters = (): void => {
     this.offcanvasService.openMyOdoursFiltersOffCanvas(

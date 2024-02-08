@@ -23,8 +23,8 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'min:3','max:100'],
-            'birth_year' => ['required', 'integer', 'min:1900', new TeenAgeCare],
+            'name' => ['required', 'string','alpha', 'min:3','max:100'],
+            'birth_year' => ['required', 'integer', 'min:1900', new TeenAgeCare(15)],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class.',email'],
             'gender' => ['required', new Enum(\App\Enums\Citizen\Gender::class)],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],

@@ -7,6 +7,7 @@
     [center]="mapSettings.centerMapLocation"
     [minZoom]="mapSettings.minZoom"
     [maxZoom]="mapSettings.maxZoom"
+    [preserveDrawingBuffer]="true"
     (mapLoad)="onMapLoad($event)"
     (zoomStart)="deletePointsSpiderfy($event)"
     (mapTouchStart)="deletePointsSpiderfy($event)"
@@ -135,6 +136,14 @@
         }"
       />
     </ng-container>
+    <!-- Esto funciona pero no pinta el circulo en el mapa -->
+    <!-- <mgl-control 
+      mglGeolocate
+      [positionOptions]="{
+        enableHighAccuracy: true
+      }"
+      [trackUserLocation]="true"
+    /> -->
   </mgl-map>
   <router-outlet />
 </main>
