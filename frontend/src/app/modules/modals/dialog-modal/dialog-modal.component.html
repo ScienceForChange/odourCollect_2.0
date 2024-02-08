@@ -15,7 +15,7 @@
     <button type="button" class="btn btn-primary" [class]="config.acceptButtonClass" (click)="modal.dismiss(true)">
         {{config.acceptButtonText || 'Aceptar'}}
     </button>
-    <button type="button" class="btn btn-outline-primary" (click)="modal.dismiss(false)">
+    <button type="button" class="btn btn-outline-primary" [class]="config.cancelButtonClass" (click)="modal.dismiss(false)">
         {{config.cancelButtonText || 'Cancelar'}}
     </button>
 </div>

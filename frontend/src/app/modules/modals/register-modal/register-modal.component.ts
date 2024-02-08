@@ -10,26 +10,24 @@ import { InfoSquareComponent } from 'src/app/shared/components/Icons/info-square
 })
 export class RegisterModalComponent {
 
-  @Input() config!: {
+  @Input() config: {
     icon:                 Type<any> | null, //Componente icon para monstrar en la parte superior
     text:                 string | null,    //Texto a mostrar en el modal
-    registerButtonText:   string | null,    //Texto a mostrar en el botón Aceptar
-    loginButtonText:    string | null,    //Clase css para el botón Aceptar
-  };
+    registerButtonText:   string | null,    //Texto a mostrar en el botón Registrarse
+    loginButtonText:    string | null,    //Texto a mostrar en el botón Login
+  } = {
+    icon: InfoCircleComponent,
+    text: null,
+    registerButtonText: null,
+    loginButtonText: null
+
+  }
 
   public iconInputs:{} = {
     iconClass : 'xl icon-violet'
   }
 
-  constructor(
-    public modal: NgbActiveModal
-  ) {
-    this.config = {
-      icon: InfoCircleComponent,
-      text: null,
-      registerButtonText: null,
-      loginButtonText: null
+  constructor( public modal: NgbActiveModal ) {
+  }
 
-    }
-  } 
 }
