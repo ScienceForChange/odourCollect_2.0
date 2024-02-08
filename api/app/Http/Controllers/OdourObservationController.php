@@ -18,6 +18,9 @@ use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Http\JsonResponse;
 use Spatie\QueryBuilder\AllowedFilter;
 use App\Filters\OdourObservations\{ FilterOdourTypes, FilterOdourHedonicTones, FilterOdourIntensities };
+use App\Exports\OdourExport;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OdourObservationController extends Controller
 {
@@ -145,5 +148,11 @@ class OdourObservationController extends Controller
             'OdourHedonicTone' => OdourHedonicToneResource::collection(OdourHedonicTone::get())
         ],
         Response::HTTP_OK);
+    }
+
+    public function export()
+    {
+        $id = auth()->user()->id;
+        return Excel::download(new OdourExport($id), 'odours.csv');
     }
 }

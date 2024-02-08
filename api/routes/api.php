@@ -44,8 +44,8 @@ Route::controller(App\Http\Controllers\OdourObservationController::class)
             Route::GET('/observations/related-data', 'showRelatedData')->name('relatedData');
         });
 
-// Odour Observations CRUD endpoints
-Route::middleware(['auth:sanctum', 'verified'])
+        // Odour Observations CRUD endpoints
+        Route::middleware(['auth:sanctum', 'verified'])
         ->controller(App\Http\Controllers\OdourObservationController::class)
         ->name('odourObservations.')
         ->group(function () {
@@ -53,6 +53,7 @@ Route::middleware(['auth:sanctum', 'verified'])
             Route::PATCH('/observations/{odourObservation}', 'update')->whereNumber('odourObservation')->name('update');
             Route::DELETE('/observations/{odourObservation}', 'destroy')->whereNumber('odourObservation')->name('delete');
             Route::POST('/observations/{trashed_observation}', 'restore')->whereNumber('trashed_observation')->name('restore');
+            Route::GET('/observations/export', 'export')->name('export');
         });
 
 // User Logged check
@@ -108,3 +109,4 @@ Route::get('/map', [App\Http\Controllers\MapController::class, 'index'])->middle
 
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'sendRequestToEmail'])
             ->middleware(['auth:sanctum'])->name('contact.sendRequestToEmail');
+
