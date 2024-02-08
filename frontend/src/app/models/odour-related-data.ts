@@ -1,4 +1,3 @@
-
 //Esto es lo que recibo del observationRelatedData
 export interface OdourRelatedDataRes {
   status: string;
@@ -30,16 +29,17 @@ export interface OdourTypeData {
   name: string;
   slug: string;
   relationships: {
-    odourSubTypes: OdourSubType[]
+    odourSubTypes: OdourSubType[];
   };
 }
 
 export interface OdourSubType {
   id: number;
+  odourTypeId: number;
   name: string;
   slug: string;
   relationships: {
-    odourType: OdourTypeData
+    odourType: OdourTypeData;
   };
 }
 
