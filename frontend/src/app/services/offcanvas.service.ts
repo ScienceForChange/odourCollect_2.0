@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { NgbOffcanvas, NgbOffcanvasOptions } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbOffcanvas,
+  NgbOffcanvasOptions,
+  NgbOffcanvasRef,
+} from '@ng-bootstrap/ng-bootstrap';
 import { InfoObservationOffcanvasComponent } from '../modules/offcanvas/components/info-observation-offcanvas/info-observation-offcanvas.component';
 import { ObservationFiltersOffCanvasComponent } from '../modules/offcanvas/components/observation-filters-offcanvas/observation-filters-offcanvas.component';
 import { Observation } from '../models/observation';
@@ -50,14 +54,22 @@ const aboutOffCanvasConfig: NgbOffcanvasOptions = {
   providedIn: 'root',
 })
 export class OffcanvasService {
+  private openOdourInfoOffCanvasRef!: NgbOffcanvasRef;
+
   constructor(private offcanvasService: NgbOffcanvas) {}
 
   //Map
   public openOdourInformationOffCanvas(observation: Observation): void {
-    this.offcanvasService.open(
+    if (this.openOdourInfoOffCanvasRef) {
+      this.openOdourInfoOffCanvasRef.close();
+    }
+    const componentRef = this.offcanvasService.open(
       InfoObservationOffcanvasComponent,
       bottomOffCanvasConfig,
-    ).componentInstance.observation = observation;
+    );
+    componentRef.componentInstance.observation = observation;
+
+    this.openOdourInfoOffCanvasRef = componentRef;
   }
 
   public openMapFiltersOffCanvas(): void {
