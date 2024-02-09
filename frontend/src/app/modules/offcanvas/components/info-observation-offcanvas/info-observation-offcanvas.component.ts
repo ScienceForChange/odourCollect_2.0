@@ -19,7 +19,6 @@ import { RegisterModalComponent } from 'src/app/modules/modals/register-modal/re
 import { DangerComponent } from 'src/app/shared/components/Icons/danger/danger.component';
 import { NavigationEnd, Router } from '@angular/router';
 import { MapService } from 'src/app/services/map.service';
-import { MapModalsService } from 'src/app/services/map-modals.service';
 import { OffcanvasService } from 'src/app/services/offcanvas.service';
 
 @Component({
@@ -49,8 +48,7 @@ export class InfoObservationOffcanvasComponent
     private offcanvasService: OffcanvasService,
     private mapService: MapService,
     private router: Router,
-    private mapModalsService: MapModalsService,
-  ) {}
+ ) {}
 
   ngOnInit(): void {
     this.user = this.userService.user;
@@ -167,7 +165,6 @@ export class InfoObservationOffcanvasComponent
   public close(): void {
     this.closeByUser = true;
     this.activeOffcanvas.close();
-    this.mapModalsService.toggleObservationModal();
   }
 
   ngOnDestroy(): void {
