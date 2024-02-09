@@ -1,7 +1,6 @@
-import { TestBed } from '@angular/core/testing';
-import { HttpClientModule, HttpXsrfTokenExtractor } from '@angular/common/http';
+import { HttpXsrfTokenExtractor } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
 import { UserService } from '../../app/services/user.service';
