@@ -97,6 +97,7 @@ const routes: Routes = [
   {
     path: 'contact',
     component: ContactComponent,
+    canActivate: [AuthGuardActivate, VerifyGuardActivate],
   },
   {
     path: 'error',
