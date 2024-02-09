@@ -1,45 +1,38 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
 import { InfoModalComponent } from 'src/app/modules/modals/info-modal/info-modal.component';
 import { MapService } from 'src/app/services/map.service';
-import { NavigationService } from 'src/app/services/navigation.service';
 import { UserService } from 'src/app/services/user.service';
 import { DangerComponent } from 'src/app/shared/components/Icons/danger/danger.component';
+import { OffcanvasService } from '../../../../../services/offcanvas.service';
 
 @Component({
   selector: 'app-map-header',
   templateUrl: './map-header.component.html',
   styleUrls: ['./map-header.component.scss']
 })
-export class MapHeaderComponent implements OnInit, OnDestroy {
+export class MapHeaderComponent {
   public showMenu: string | undefined = undefined;
   public showUserObservations: boolean = false;
-  private menuServiceSubscription!: Subscription;
 
   constructor(
-    private navigationService: NavigationService,
     private mapService: MapService,
     private userService: UserService,
     private router: Router,
     private modalService: NgbModal,
+    private OffcanvasService:OffcanvasService
   ) {}
 
-  ngOnInit(): void {
-    this.menuServiceSubscription = this.navigationService.isVisibleState.subscribe(
-      (value) => {
-        this.showMenu = value;
-      },
-    );
+  public openMenuOffCanvas() {
+    this.OffcanvasService.openMenuOffCanvas();
   }
 
-  public toggleIsOpen() {
-    this.navigationService.toggleVisible();
+  public openLegendOffCanvas(): void {
+    this.OffcanvasService.openLegendOffCanvas();
   }
 
   public toggleUserOdours(show: boolean) {
-    //I've to see if user is logged. If not, I've to show a message
     if (!this.userService.user) {
       this.modalService.open(InfoModalComponent, {
         windowClass: 'default',
@@ -75,9 +68,5 @@ export class MapHeaderComponent implements OnInit, OnDestroy {
 
   public centerToMyLocation() {
     this.mapService.centerMapToMyLatLng();
-  }
-
-  ngOnDestroy(): void {
-    this.menuServiceSubscription.unsubscribe();
   }
 }

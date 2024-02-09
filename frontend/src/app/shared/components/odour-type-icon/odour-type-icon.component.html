@@ -2,19 +2,19 @@
 
   <!-- Box del tipo con el bolb y el icono -->
   <div [class]="'type-' + odourType + ' ' + iconClass">
-    <div *ngIf="odourType === 'agriculture-livestock'">
+    <div *ngIf="odourType === 'country-and-nature'">
       <icon-nature class="odour-icon" />
     </div>
-    <div *ngIf="odourType === 'food-industries'">
+    <div *ngIf="odourType === 'food'">
       <icon-food class="odour-icon" />
     </div>
-    <div *ngIf="odourType === 'industrial'">
+    <div *ngIf="odourType === 'industry'">
       <icon-factory class="odour-icon" />
     </div>
     <div *ngIf="odourType === 'urban'">
       <icon-urban class="odour-icon" />
     </div>
-    <div *ngIf="odourType === 'waste-water'">
+    <div *ngIf="odourType === 'wastewater-and-waste'">
       <icon-waste class="odour-icon" />
     </div>
     <p
@@ -24,6 +24,7 @@
           : 'label-l'
       "
     >
-      {{ odourName }} {{ odourSubtypeName ? '- ' + odourSubtypeName : ''}}
+      {{ odourName }}
+      {{ odourSubtypeName ? '- ' + odourSubtypeName : ''}}
     </p>
   </div>

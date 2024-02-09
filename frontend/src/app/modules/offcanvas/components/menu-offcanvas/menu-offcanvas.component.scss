@@ -1,0 +1,88 @@
+@import "../../../../../styles/colors";
+
+.modal-header {
+  align-items: flex-end;
+  display: flex;
+  max-height: 42px;
+  padding: 24px;
+  margin-top: 12px;
+  width: 100%;
+  button {
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    &::after,
+    &::before {
+      width: 30px;
+    }
+  }
+}
+
+ul {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 100%;
+  max-width: 425px;
+  margin: 32px auto 0 auto;
+  padding-left: 32px;
+  padding-right: 32px;
+  li,
+  a,
+  li div {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  li,
+  a {
+    width: 100%;
+  }
+  li > div {
+    gap: 7px;
+    width: 100%;
+  }
+  li {
+    background: $violet-lighter;
+    border-radius: 33px;
+    box-shadow: 1px 1px 10.5px 1px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    padding: 12px 16px;
+    p {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    a {
+      text-decoration: none;
+      color: $black;
+      div {
+        gap: 6px;
+      }
+      * {
+        display: flex;
+      }
+    }
+  }
+  #signout-option {
+    background-color: transparent;
+    justify-content: flex-start;
+    gap: 8.5px;
+    box-shadow: none;
+    p {
+      color: $violet;
+      text-decoration: underline;
+    }
+  }
+}
+
+.open-item {
+  animation: fade-in-left 0.3s ease-in;
+}
+
+.close-item {
+  animation: fade-out-left 0.3s ease-in;
+  animation-fill-mode: forwards;
+}

@@ -7,8 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, of } from 'rxjs';
 import {
   OdourHedonicTone,
   OdourIntensity,
@@ -16,6 +15,7 @@ import {
 } from 'src/app/models/odour-related-data';
 import { AboutFiltersComponent } from 'src/app/modules/information/components/about-filters/about-filters.component';
 import { OdourService } from 'src/app/services/odour.service';
+import { OffcanvasService } from 'src/app/services/offcanvas.service';
 
 @Component({
   selector: 'app-filters',
@@ -46,8 +46,8 @@ export class FiltersComponent implements OnInit, OnDestroy {
 
   constructor(
     private odourService: OdourService,
-    private offcanvasService: NgbOffcanvas,
-    ) {}
+    private offcanvasService: OffcanvasService,
+  ) {}
 
   ngOnInit(): void {
     this.subscriptions.add(
@@ -151,7 +151,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
   }
 
   public openAboutFiltersOffcanva(): void {
-    this.offcanvasService.open(AboutFiltersComponent, { position: 'start', scroll: false, panelClass: 'about-canvas' });
+    this.offcanvasService.openAboutFiltersOffcanvas();
   }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();

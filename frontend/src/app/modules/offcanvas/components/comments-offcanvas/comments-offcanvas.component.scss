@@ -1,0 +1,194 @@
+@import "../../../../../styles/colors";
+:host{
+    display: flex;
+    flex: 1;
+    padding-bottom: 0;
+    padding-left: 32px;
+    padding-right: 32px;
+    border-radius: 40px 40px 0 0;
+    background-color: white;
+    max-height: inherit;
+    flex-direction: column;
+    height: calc(100dvh - 70px);
+
+}
+.offcanvas-header{
+    padding: 35px 0 15px;
+    z-index: 3;
+}
+.offcanvas-body{
+    scroll-behavior: smooth;
+    padding: 16px 0;
+    margin: 0 -15px;
+    .comments{
+        width: 100%;
+        .comment{
+            margin: 0 15px;
+            .avatar{
+                bottom: 0;
+                display: flex;
+                img{
+                    height: 42px;
+                    width: 42px;
+                }
+            }
+            .text{
+                white-space: pre-wrap;
+                width: 100%;
+                font-size: 14px;
+                color: $black;
+                background-color: $violet-lighter;
+                padding: 15px 24px 10px;
+                border-radius: 20px 20px 20px 5px;
+                box-shadow: 1px 1px 10.5px 1px rgba(0, 0, 0, 0.05);
+                .comment-header{
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                    padding-left: 3px;
+                    color: rgba(0, 0, 0, 0.70);
+                    font-size: 12px;
+                }
+                .comment-footer{
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: flex-end;
+                    font-size: 10px;
+                    color: rgba(0, 0, 0, 0.50);
+                }
+                p{
+                    overflow-wrap: anywhere;
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
+                }
+            }
+            &.own{                
+                transition: height 0.3s ease-out;
+                &.new{
+                    margin-bottom: -1.5rem;
+                    transform-origin: bottom right;
+                    transform: rotate(70deg) scale(0);
+                }
+                &.new.newAnimated{
+                    animation: newComment 0.3s ease-out forwards;
+                }
+                &.deleting{
+                    z-index: 9;
+                    animation: deleteComment 0.5s ease-in forwards;
+                    .delete-comment{
+                        opacity: 0;
+                    }
+                }
+                .text{
+                    padding: 24px 24px 10px;
+                    white-space: pre-wrap;
+                    transition: margin-right .3s ease-out;
+                    background-color: $orange-lighter;
+                    border-radius: 20px 20px 5px 20px;
+                    text-align: right;
+                    max-width: calc(100% - 58px);
+                    z-index: 2;
+                    margin-right: -58px;
+                    &.delete{
+                        margin-right: 0;
+                    }
+                }
+                .delete-comment{
+                    border:none;
+                    background-color: rgba(211, 63, 63, 0.5);
+                    height: 42px;
+                    width: 42px;
+                    padding: 10px;
+                    z-index: 1;
+                    opacity: 1;
+                    transition: opacity 0.25s ease-out;
+                    &.loading *{
+                        display: none;
+                    }
+                }
+            }
+            &:last-child{
+                height: max-content !important;
+                &.deleting{
+                    height: max-content !important;
+                }
+            }
+        }
+    }
+}
+.offcanvas-footer{
+    padding: 16px 0;
+    border-top: 1px solid $violet-dark;
+    form{
+        position: relative;
+        width: 100%;
+        textarea{
+            border-radius: 20px;
+            padding: 22px 68px 18px 12px ;
+            scroll-padding: 18px;
+            border: 1px solid $violet-dark;
+            background-color: transparent;
+            min-height: 68px;
+            height: 68px;
+            resize: none;
+            margin: 0;
+            width: 100%;
+            line-height: 20px;            
+            max-height: 120px;
+            transition: background-color 0.25s ease-out;
+            &:focus{
+                background-color: $violet-lighter;
+            }
+        }
+        button{
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            margin-left: -80px;
+            padding: 12px;
+            height: 48px;
+            width: 48px;
+            opacity: 1;
+            transition: all 0.25s ease-out;
+            &:disabled:not(.loading){
+                opacity: 0;
+                right: 0;
+            }
+            &.loading *{
+                background-color: $violet-dark;
+                display: none;
+            }
+        }
+    }
+}
+@keyframes newComment{
+    0%{
+        margin-bottom: -1.5rem;
+        transform-origin: bottom right;
+        transform: rotate(70deg) scale(0);
+    }
+    70%{
+        transform-origin: bottom right;
+        transform: rotate(-15deg) scale(1);
+    }
+    90%{
+        transform-origin: bottom right;
+        transform: rotate(4deg) scale(1);
+    }
+    100%{
+        margin-bottom: 0;
+        transform-origin: bottom right;
+        transform: rotate(0deg) scale(1);
+    }
+}
+@keyframes deleteComment{
+    0%{
+        margin-bottom: 0;
+        transform: translateX(0);
+    }
+    100%{
+        margin-bottom: -1.5rem;
+        transform: translateX(100vw);
+    }
+}

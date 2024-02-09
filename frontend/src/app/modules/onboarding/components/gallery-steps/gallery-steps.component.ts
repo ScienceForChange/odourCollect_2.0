@@ -12,13 +12,13 @@ export class GalleryStepsComponent implements OnInit {
   public step: number | any = 1;
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private navigationService: NavigationService,) {
     this.navigationService.footerVisible = false;
 
   }
 
-  
+
   public goForward = async () => {
     const lastStep = this.step === 4;
     if (lastStep) this.router.navigate(['/register']);
@@ -29,7 +29,7 @@ export class GalleryStepsComponent implements OnInit {
     if (step > 4) this.router.navigate(['/register']);
     else this.step = step;
   };
-  
+
   ngOnInit(): void {
     this.navigationService.mapHeader = false;
     this.navigationService.defaultHeader = false;

@@ -1,4 +1,7 @@
 @import "../../../../styles/colors";
+:host,nav {
+  pointer-events: none;
+}
 
 nav {
   display: flex;
@@ -6,7 +9,7 @@ nav {
   width: 100%;
   opacity: 0;
   transition: opacity;
-  animation: animation-footer-fadeIn 600ms ease-in-out forwards!important;
+  animation: animation-footer-fadeIn 600ms ease-in-out forwards !important;
   ul {
     background: linear-gradient(199deg, #fff 51.2%, #f4f5fa 98.99%);
     border-radius: 40px;
@@ -14,6 +17,7 @@ nav {
     display: flex;
     min-width: 321px;
     position: relative;
+    pointer-events: fill;
     li {
       flex: 1;
       a {
@@ -57,7 +61,7 @@ nav {
   top: 0;
   display: flex;
   transition: all 0.3s ease-out;
-  
+
   height: 100%;
   background: $violet-light;
   padding: 8px 0;

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
   OdourRelatedDataRes,
@@ -8,6 +8,7 @@ import {
 } from '../models/odour-related-data';
 import {
   Comment,
+  MapObservation,
   Observation,
   ObservationQuery,
   ObservationRes,
@@ -16,16 +17,12 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-
 export class OdourService {
-  private _observations: BehaviorSubject<Observation[]> = new BehaviorSubject<
-    Observation[]
-  >([]);
+  private _observations: BehaviorSubject<MapObservation[]> =
+    new BehaviorSubject<MapObservation[]>([]);
   private _studyZone: BehaviorSubject<any> = new BehaviorSubject<any>(
     undefined,
   );
-
-  public observation$ = new Subject<Observation>();
 
   constructor(private http: HttpClient) {}
 
@@ -37,16 +34,17 @@ export class OdourService {
     this._studyZone.next(studyZone);
   }
 
-  public get observations(): Observable<Observation[]> {
+  public get observations(): Observable<MapObservation[]> {
     return this._observations.asObservable();
   }
 
-  public getObservations(): Observable<Observation[]> {
+  public getObservations(): Observable<MapObservation[]> {
     return this._observations;
   }
 
   //Actualizo las observaciones
-  public updateObservations(observations: Observation[] | any): void {
+  public updateObservations(observations: MapObservation[] | any): void {
+    //Cambiar Observation X Map_observation
     this._observations.next(observations);
   }
 
@@ -80,9 +78,17 @@ export class OdourService {
       )
       .pipe(
         tap(({ data }) => {
-          this.observation$.next(data[0]);
           const currObservations = this._observations.getValue();
-          this._observations.next([...currObservations, data[0]]);
+          if (data[0].relationships.user?.id !== undefined) {
+            const mapObservation = {
+              color: data[0].color,
+              id: data[0].id,
+              latitude: data[0].latitude,
+              longitude: data[0].longitude,
+              user_id: data[0].relationships.user.id,
+            };
+            this._observations.next([...currObservations, mapObservation]);
+          }
         }),
       );
   }
@@ -349,12 +355,38 @@ export class OdourService {
   //Conseguir todos los olores en el constructor
   public getAllOdours(): void {
     this.http
-      .get<ObservationRes>(
-        `${environment.BACKEND_BASE_URL}api/observations?include=odourSubType.odourType,user`,
-      )
+      .get<ObservationRes>(`${environment.BACKEND_BASE_URL}api/map`)
       .subscribe((observations) => {
         this.updateObservations(observations.data);
       });
+  }
+
+  //Conseguir los olores filtrados
+  public filterOdours(querys: ObservationQuery): Observable<ObservationRes> {
+    const baseUrl = `${environment.BACKEND_BASE_URL}api/map`;
+
+    let distanceUrl;
+
+    if (querys.is_inside) {
+      distanceUrl = `is_inside=${querys.is_inside}&latitude=${querys.latitude}&longitude=${querys.longitude}`;
+    }
+
+    const { is_inside, latitude, longitude, ...querysFiltered } = querys;
+
+    const filters = Object.entries(querysFiltered)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .filter(([_, value]) => value)
+      .map(([key, value]) => {
+        if (Array.isArray(value)) {
+          return `filter[${key}]=${value.join(',')}`;
+        }
+        return `filter[${key}]=${value}`;
+      })
+      .join('&');
+
+    const url = baseUrl + '?' + filters + distanceUrl
+
+    return this.http.get<ObservationRes>(url);
   }
 
   //Conseguir los datos de un olor en particular
@@ -369,25 +401,6 @@ export class OdourService {
         withCredentials: true,
       },
     );
-  }
-
-  //Conseguir los olores filtrados
-  public filterOdours(querys: ObservationQuery): Observable<ObservationRes> {
-    const baseUrl = `${environment.BACKEND_BASE_URL}api/observations/?include=odourSubType.odourType,user.userable&`;
-
-    const filters = Object.entries(querys)
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .filter(([_, value]) => value)
-      .map(([key, value]) => {
-        return (
-          value && `filter[${key}]=${value?.length ? value.join(',') : value}`
-        );
-      })
-      .join('&');
-
-    const url = baseUrl + filters;
-
-    return this.http.get<ObservationRes>(url);
   }
 
   //Conseguir un olor
@@ -421,16 +434,20 @@ export class OdourService {
   }
 
   public addObservationLike(obsId: number) {
-    return this.http.post(`${environment.BACKEND_BASE_URL}api/like`, { 
-      likeable_type: 'App\\Models\\OdourObservation',
-      id: obsId
-     }, {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+    return this.http.post(
+      `${environment.BACKEND_BASE_URL}api/like`,
+      {
+        likeable_type: 'App\\Models\\OdourObservation',
+        id: obsId,
       },
-      withCredentials: true,
-    });
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        withCredentials: true,
+      },
+    );
   }
 
   public deleteObservationLike(obsId: number) {
@@ -440,35 +457,48 @@ export class OdourService {
         Accept: 'application/json',
       },
       withCredentials: true,
-      body: { 
+      body: {
         likeable_type: 'App\\Models\\OdourObservation',
-        id: obsId
-      }
-    });
-  }
-
-  addCommentary(body: string, user_id: number, odour_observation_id: number):Observable<any> {
-    return this.http.post(`${environment.BACKEND_BASE_URL}api/observation/${odour_observation_id}/comments`, { 
-      likeable_type: 'App\\Models\\OdourObservation',
-      body: body,
-      user_id: user_id
-     }, {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        id: obsId,
       },
-      withCredentials: true,
     });
   }
 
-  deleteCommentary(idObservation: number, idComentary: number):Observable<any> {
-    return this.http.delete(`${environment.BACKEND_BASE_URL}api/observation/${idObservation}/comments/${idComentary}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+  public addCommentary(
+    body: string,
+    user_id: number,
+    odour_observation_id: number,
+  ): Observable<any> {
+    return this.http.post(
+      `${environment.BACKEND_BASE_URL}api/observation/${odour_observation_id}/comments`,
+      {
+        likeable_type: 'App\\Models\\OdourObservation',
+        body: body,
+        user_id: user_id,
       },
-      withCredentials: true
-    });
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        withCredentials: true,
+      },
+    );
   }
 
+  public deleteCommentary(
+    idObservation: number,
+    idComentary: number,
+  ): Observable<any> {
+    return this.http.delete(
+      `${environment.BACKEND_BASE_URL}api/observation/${idObservation}/comments/${idComentary}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        withCredentials: true,
+      },
+    );
+  }
 }

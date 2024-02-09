@@ -1,0 +1,62 @@
+@import "../../../../../styles/colors";
+:host{
+    display: flex;
+    flex: 1;
+    padding-bottom: 0;
+    padding-left: 32px;
+    padding-right: 32px;
+    border-radius: 40px 40px 0 0;
+    background-color: $violet-lighter;
+    max-height: inherit;
+    flex-direction: column;
+}
+.offcanvas-header{
+    padding: 0;
+    &::before{
+        content: " ";
+        display: block;
+        width: 40px;
+    }
+    #picture{
+        height: 124px;
+        width: 124px;
+        background-size: cover;
+        background-position: center;
+        border-radius: 65px;
+        margin-top: -52px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        margin-bottom: 20px;
+        icon-verified{
+            margin-right: -5px;
+        }
+    }
+    button.close{
+        margin-left: 0;
+        &::before,
+        &::after{
+            background-color: $violet-dark;
+        }
+    }
+}
+.offcanvas-body {
+    overflow: scroll;
+    flex: 1;
+    padding: 0 0 40px;
+    .odour-stats {
+        align-items: center;
+        background-color: $violet;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 15px;
+        text-align: center;
+        max-width: max-content;
+    }
+    #recent-oudours a{
+        min-width: max-content;
+        cursor: pointer;
+    }
+}

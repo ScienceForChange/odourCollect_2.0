@@ -24,13 +24,13 @@ class UserResource extends JsonResource
                 'profile'           => $this->whenMorphToLoaded('userable', [
                     // No me preguntes por qué pero no deja usando: ProfileCitizen::class
                     //-> cuando mapea el array no coinciden las keys (por el doble paréntesis)
-                    "App\\Models\\ProfileClient" => ProfileClientResource::class,
-                    "App\\Models\\ProfileCitizen" => ProfileCitizenResource::class
+                    "client" => ProfileClientResource::class,
+                    "citizen" => ProfileCitizenResource::class
                 ]),
                 'odourObservations' => OdourObservationResource::collection($this->whenLoaded('odourObservations'))
             ],
-            'createdAt'         => $this->created_at?->format('Y-m-d H:m:s'),
-            'updatedAt'         => $this->updated_at?->format('Y-m-d H:m:s'),
+            'createdAt'         => $this->created_at,
+            'updatedAt'         => $this->updated_at,
         ];
     }
 }

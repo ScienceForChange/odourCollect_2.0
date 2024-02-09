@@ -1,4 +1,5 @@
 <article *ngIf="!activateAccount; else notActivate">
+  
   <section>
     <h1 class="headline-m">
       ¡Te damos la<br />
@@ -10,51 +11,46 @@
       para crear tu cuenta
     </p>
   </section>
+
   <form [formGroup]="signUpForm">
-    <ng-container formGroupName="relationships">
-      <div formGroupName="profile">
-        <div class="mb-3">
-        
-          <label for="name" class="label-l">Nombre</label>
-          <input formControlName="name" type="text" class="border-input" name="name"/>
-          <app-form-error-list *ngIf="signUpForm.get('userable.name')?.touched && signUpForm.get('userable.name')?.errors" [errorList]="signUpForm.get('userable.name')?.errors"/>
-          
-        </div>      
-        <div class="mb-3 d-flex gap-3 justify-content-between">
-          <div class="d-flex flex-column justify-content-between">
-
-            <label for="birth_year" class="label-l">Año de nacimiento</label>
-            <select formControlName="birth_year" name="birth_year" class="form-select">
-              <option value="{{ year }}" *ngFor="let year of years">
-                {{ year }}
-              </option>
-            </select>
-            <app-form-error-list *ngIf="signUpForm.get('userable.birth_year')?.touched && signUpForm.get('userable.birth_year')?.errors" [errorList]="signUpForm.get('userable.birth_year')?.errors"/>
-
-          </div>
-          <div class="d-flex flex-column justify-content-between">
-            
-            <label for="gender" class="label-l">Género</label>
-            <select formControlName="gender" name="gender" class="form-select">
-              <option value="mujer">Mujer</option>
-              <option value="hombre">Hombre</option>
-              <option value="no binarie">No binarie</option>
-              <option value="otros">Otros</option>
-              <option value="prefiere no decir">Prefiere no decir</option>
-            </select>
-            <app-form-error-list *ngIf="signUpForm.get('userable.gender')?.touched && signUpForm.get('userable.gender')?.errors" [errorList]="signUpForm.get('userable.gender')?.errors"/>
-
+    <div class="mb-3">
+    
+      <label for="name" class="label-l">Nombre</label>
+      <input formControlName="name" type="text" class="border-input" name="name"/>
+      <app-form-error-list *ngIf="signUpForm.get('name')?.touched && signUpForm.get('name')?.errors" [field]="'name'" [errorList]="signUpForm.get('name')?.errors"/>
       
-          </div>
-        </div>
+    </div>      
+    <div class="mb-3 d-flex gap-3 justify-content-between">
+      <div class="d-flex flex-column justify-content-between">
+
+        <label for="birth_year" class="label-l">Año de nacimiento</label>
+        <select formControlName="birth_year" name="birth_year" class="form-select">
+          <option value="{{ year }}" *ngFor="let year of years">
+            {{ year }}
+          </option>
+        </select>
+        <app-form-error-list *ngIf="signUpForm.get('birth_year')?.touched && signUpForm.get('birth_year')?.errors" [field]="'birth_year'" [errorList]="signUpForm.get('birth_year')?.errors"/>
+
       </div>
-    </ng-container>
+      <div class="d-flex flex-column justify-content-between">
+        
+        <label for="gender" class="label-l">Género</label>
+        <select formControlName="gender" name="gender" class="form-select">
+          <option value="mujer">Mujer</option>
+          <option value="hombre">Hombre</option>
+          <option value="no binarie">No binarie</option>
+          <option value="otros">Otros</option>
+          <option value="prefiere no decir">Prefiere no decir</option>
+        </select>
+        <app-form-error-list *ngIf="signUpForm.get('gender')?.touched && signUpForm.get('gender')?.errors" [field]="'gender'" [errorList]="signUpForm.get('gender')?.errors"/>
+
+      </div>
+    </div>
     <div class="mb-3">
 
       <label for="email" class="label-l">Correo electrónico</label>
       <input formControlName="email" type="email" class="border-input" name="email"/>
-      <app-form-error-list *ngIf="signUpForm.get('email')?.touched && signUpForm.get('email')?.errors" [errorList]="signUpForm.get('email')?.errors"/>
-
+      <app-form-error-list *ngIf="signUpForm.get('email')?.touched && signUpForm.get('email')?.errors" [field]="'email'" [errorList]="signUpForm.get('email')?.errors"/>
 
     </div>
     <div class="mb-3">
@@ -67,7 +63,7 @@
           <icon-close-eye *ngIf="showPassword"></icon-close-eye>
         </button>
       </div>
-      <app-form-error-list *ngIf="signUpForm.get('password')?.touched && signUpForm.get('password')?.errors" [errorList]="signUpForm.get('password')?.errors"/>
+      <app-form-error-list *ngIf="signUpForm.get('password')?.touched && signUpForm.get('password')?.errors" [field]="'password'" [errorList]="signUpForm.get('password')?.errors"/>
 
     </div>
     <div class="mb-3">
@@ -80,7 +76,7 @@
           <icon-close-eye *ngIf="showConfirmPassword"></icon-close-eye>
         </button>
       </div>
-      <app-form-error-list *ngIf="signUpForm.get('password_confirmation')?.touched && signUpForm.get('password_confirmation')?.errors" [errorList]="signUpForm.get('password_confirmation')?.errors"/>
+      <app-form-error-list *ngIf="signUpForm.get('password_confirmation')?.touched && signUpForm.get('password_confirmation')?.errors" [field]="'password_confirmation'" [errorList]="signUpForm.get('password_confirmation')?.errors"/>
 
     </div>    
     <div class="d-flex flex-column mb-3">
@@ -92,7 +88,6 @@
         </label>
       </div>
       <app-form-error-list *ngIf="signUpForm.get('dpo')?.touched && signUpForm.get('dpo')?.errors" [errorList]="signUpForm.get('dpo')?.errors"/>
-
 
     </div>
     <div class="d-flex flex-column mb-3">
@@ -113,6 +108,7 @@
     </div>
   </form>
 </article>
+
 <ng-template #notActivate>
   <app-activate-account
     [activateAccount]="toggleActivateAccount"

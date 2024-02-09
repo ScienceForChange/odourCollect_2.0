@@ -7,6 +7,7 @@
     [center]="mapSettings.centerMapLocation"
     [minZoom]="mapSettings.minZoom"
     [maxZoom]="mapSettings.maxZoom"
+    [preserveDrawingBuffer]="true"
     (mapLoad)="onMapLoad($event)"
     (zoomStart)="deletePointsSpiderfy($event)"
     (mapTouchStart)="deletePointsSpiderfy($event)"
@@ -60,18 +61,24 @@
         [layout]="{
           'icon-image': [
             'match',
-            ['get', 'type'],
-            'agriculture-livestock',
-            'agriculture-livestock-icon',
-            'food-industries',
-            'food-industries-icon',
-            'urban',
-            'urban-icon',
-            'waste-water',
-            'waste-water-icon',
-            'industrial-icon'
+            ['get', 'color'],
+            '1',
+            '1-icon',
+            '2',
+            '2-icon',
+            '3',
+            '3-icon',
+            '4',
+            '4-icon',
+            '5',
+            '5-icon',
+            '6',
+            '6-icon',
+            '7',
+            '7-icon',
+            '0-icon'
           ],
-          'icon-size': 0.7,
+          'icon-size': 0.8,
           'icon-allow-overlap': true,
           'icon-ignore-placement': true
         }"
@@ -92,18 +99,24 @@
         [layout]="{
           'icon-image': [
             'match',
-            ['get', 'type'],
-            'agriculture-livestock',
-            'agriculture-livestock-icon',
-            'food-industries',
-            'food-industries-icon',
-            'urban',
-            'urban-icon',
-            'waste-water',
-            'waste-water-icon',
-            'industrial-icon'
+            ['get', 'color'],
+            '1',
+            '1-icon',
+            '2',
+            '2-icon',
+            '3',
+            '3-icon',
+            '4',
+            '4-icon',
+            '5',
+            '5-icon',
+            '6',
+            '6-icon',
+            '7',
+            '7-icon',
+            '0-icon'
           ],
-          'icon-size': 0.7,
+          'icon-size': 0.8,
           'icon-allow-overlap': true,
           'icon-ignore-placement': true,
           'icon-offset': ['get', 'iconOffset']
@@ -123,6 +136,14 @@
         }"
       />
     </ng-container>
+    <!-- Esto funciona pero no pinta el circulo en el mapa -->
+    <!-- <mgl-control 
+      mglGeolocate
+      [positionOptions]="{
+        enableHighAccuracy: true
+      }"
+      [trackUserLocation]="true"
+    /> -->
   </mgl-map>
   <router-outlet />
 </main>

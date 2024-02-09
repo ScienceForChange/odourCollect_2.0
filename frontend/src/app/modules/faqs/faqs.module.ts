@@ -17,7 +17,7 @@ import { FaqsTechnicsComponent } from './components/faqs-technics/faqs-technics.
     HttpClientModule,
     SharedComponentsModule,
     CoreRoutingModule,
-    NgbAccordionModule
+    NgbAccordionModule,
   ],
 })
 export class FaqsModule {}

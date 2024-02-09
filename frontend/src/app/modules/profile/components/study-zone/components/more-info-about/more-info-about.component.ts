@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OdourService } from 'src/app/services/odour.service';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { AboutStudyZoneComponent } from '../about-study-zone/about-study-zone.component';
+import { OffcanvasService } from 'src/app/services/offcanvas.service';
 
 @Component({
   selector: 'app-more-info-about',
@@ -14,7 +15,7 @@ export class MoreInfoAboutComponent implements OnInit {
 
   constructor(
     private odourService: OdourService,
-    private offcanvasService: NgbOffcanvas,
+    private offcanvasService: OffcanvasService,
   ) {}
 
   ngOnInit(): void {
@@ -26,11 +27,7 @@ export class MoreInfoAboutComponent implements OnInit {
   }
 
   public openModalAbout(): void {
-    this.offcanvasService.open(AboutStudyZoneComponent, {
-      position: 'start',
-      scroll: false,
-      panelClass: 'about-canvas',
-    });
+    this.offcanvasService.openAboutStudyZoneComponentOffCanvas();
   }
 
   public openModal(): void {

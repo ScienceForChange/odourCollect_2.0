@@ -10,24 +10,27 @@
       <p class="label-l">¿En qué te podemos ayudar?</p>
     </div>
   </div>
-  <form [formGroup]="contactForm">
-    <textarea
-      rows="5"
-      required
-      formControlName="comment"
-      aria-label="comment"
-    ></textarea>
-    <app-form-error-list
-      *ngIf="
-        contactForm.get('comment')?.touched &&
-        contactForm.get('comment')?.errors
-      "
-      [errorList]="contactForm.get('comment')?.errors"
-    />
-
+  <form [formGroup]="contactForm" class="d-flex flex-column gap-4 align-items-center">
+    <div class="d-flex justify-content-start flex-column w-100">
+      <textarea
+        #message
+        (input)="resizeTextArea()"
+        rows="5"
+        required
+        formControlName="message"
+        aria-label="message"
+      ></textarea>
+      <app-form-error-list
+        *ngIf="
+          contactForm.get('message')?.touched &&
+          contactForm.get('message')?.errors
+        "
+        [errorList]="contactForm.get('message')?.errors"
+      />
+    </div>
     <button
       type="submit"
-      class="btn"
+      class="btn btn-primary btn-lg"
       [disabled]="!contactForm.valid || loading"
       (click)="send()"
       [ngClass]="{ loading: loading }"

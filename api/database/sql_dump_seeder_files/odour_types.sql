@@ -3,46 +3,36 @@ INSERT INTO
 VALUES
     (
         1,
-        'Waste',
-        'waste'
+        'Country And Nature',
+        'country-and-nature'
     ),
     (
         2,
-        'Waste Water',
-        'waste-water'
-    ),
-    (
-        3,
-        'Agriculture / Livestock',
-        'agriculture-livestock'
-    ),
-    (
-        4,
-        'Food Industries',
-        'food-industries'
-    ),
-    (
-        5,
-        'Industrial',
-        'insdustrial'
-    ),
-    (
-        6,
         'Urban',
         'urban'
     ),
     (
-        7,
-        'Nice',
-        'nice'
+        3,
+        'Food',
+        'food'
     ),
     (
-        8,
+        4,
+        'Industry',
+        'industry'
+    ),
+    (
+        5,
+        'Wastewater and Waste',
+        'wastewater-and-waste'
+    ),
+    (
+        6,
         'Other',
         'other'
     ),
     (
-        9,
-        'No Odor',
-        'no-odor'
+        7,
+        'No Odour',
+        'no-odour'
     );
