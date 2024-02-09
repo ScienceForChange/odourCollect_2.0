@@ -13,4 +13,20 @@ describe('MenuService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should subscrition to footerVisible', () => {
+
+    let bool = false;
+
+    service.footerVisible.subscribe((value) => {
+      bool = value;
+      console.log('value', value);
+    expect(bool).toBe(true);
+
+    });
+    service.footerVisible = true;
+    expect(bool).toBe(true);
+  });
+
+
 });

@@ -49,7 +49,7 @@ export class NavigationService {
         this.headerTitle = null;
         this.backTo = null;
         this.footerVisible = true;
-      } 
+      }
       else if (event instanceof NavigationEnd) {
         this.displayHeaderByRoute(event);
       }
@@ -66,7 +66,7 @@ export class NavigationService {
       this.mapHeader = false;
     }
   }
-  
+
  public  toggleFooterVisible() {
     this.footerVisible = !this.footerVisible;
   }
