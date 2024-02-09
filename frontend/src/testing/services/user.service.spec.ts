@@ -41,6 +41,7 @@ describe('UserService', () => {
       longitude: '2.11150',
       relationships: {
         odourSubType: {
+          odourTypeId:1,
           id: 11,
           name: 'Rotten eggs',
           slug: 'rotten-eggs',
@@ -73,8 +74,8 @@ describe('UserService', () => {
       liked: false,
       description: null,
       origin: null,
-      createdAt: new Date('2021-06-14T09:21:16.000000Z'),
-      updatedAt: new Date('2021-06-14T09:21:16.000000Z'),
+      createdAt: '2021-06-14T09:21:16.000000Z',
+      updatedAt: '2021-06-14T09:21:16.000000Z',
     };
 
     testScheduler = new TestScheduler((actual, expected) => {

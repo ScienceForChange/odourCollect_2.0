@@ -384,7 +384,7 @@ export class OdourService {
       })
       .join('&');
 
-    const url = baseUrl + '?' + filters + distanceUrl
+    const url = baseUrl + '?' + filters + distanceUrl;
 
     return this.http.get<ObservationRes>(url);
   }
@@ -428,7 +428,7 @@ export class OdourService {
           const observations = this._observations
             .getValue()
             .filter((observation) => observation.id !== observationId);
-          this._observations.next(observations);
+          this.updateObservations(observations);
         }),
       );
   }

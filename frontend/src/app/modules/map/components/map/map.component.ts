@@ -8,13 +8,6 @@ import { OdourService } from 'src/app/services/odour.service';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-  public showMenu: string | undefined = undefined;
-
-  toggleShowMenu = (): void => {
-    if (this.showMenu === undefined || this.showMenu === 'close')
-      this.showMenu = 'open';
-    else this.showMenu = 'close';
-  };
 
   constructor(
     private odourService: OdourService,

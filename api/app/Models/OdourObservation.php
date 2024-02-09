@@ -96,9 +96,10 @@ class OdourObservation extends Model implements Likeable
     {
         // se hace la conversión de id a index o power
         // En hedonic_tone por ejemplo el id 1 hace referencia al -4 de index
-        // En intensity el id 2 hace referencia al 1 de power TODO: hablar con Johana esto
+        // En intensity el id 2 hace referencia al 1 de power
 
         $color = array(
+            1 => [1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0, 8 => 0, 9 => 0],
             2 => [1 => 6, 2 => 5, 3 => 5, 4 => 4, 5 => 3, 6 => 3, 7 => 2, 8 => 1, 9 => 1],
             3 => [1 => 6, 2 => 6, 3 => 5, 4 => 4, 5 => 4, 6 => 3, 7 => 2, 8 => 2, 9 => 1],
             4 => [1 => 7, 2 => 6, 3 => 5, 4 => 5, 5 => 4, 6 => 4, 7 => 3, 8 => 2, 9 => 2],
@@ -108,7 +109,7 @@ class OdourObservation extends Model implements Likeable
         );
 
         // 8 lo pondré como valor default si no se ha podido calcualr el color, por lo de que la tabla de intensidad no corresponde con la matriz.
-        return $color[$this->odour_intensity_id][$this->odour_hedonic_tone_id] ?? 8;
+        return $color[$this->odour_intensity_id][$this->odour_hedonic_tone_id] ?? -1;
     }
 
     public function haversineGreatCircleDistance(
