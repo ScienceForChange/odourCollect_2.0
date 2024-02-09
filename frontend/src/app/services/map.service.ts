@@ -320,10 +320,6 @@ export class MapService {
       }
     });
   }
-  //Funcion para abrir el offcanvas de la observación en caso de que no se haya cerrado
-  public openInfoObservationOffcanva(): void {
-    if(this.observation && this.observation.id) this.seeMoreAbout(this.observation.id);
-  }
 
   //Inicio el mapa (Solo se ejecuta una vez)
   public initializeMap(map: Map, isStudyZone: boolean): void {
