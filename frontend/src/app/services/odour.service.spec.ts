@@ -838,21 +838,6 @@ describe('OdourService', () => {
     });
   });
 
-  // it('createNewOdour() updates the observation$ Subject', async () => {
-  //   httpMock.post.mockReturnValueOnce(
-  //     of({ status: 'success', data: observationsMock }),
-  //   );
-
-  //   const spyObservation = jest.spyOn(service.observation$, 'next');
-
-  //   const obs = service.createNewOdour(odourCreateFormMock);
-  //   const result = await firstValueFrom(obs);
-
-  //   expect(spyObservation).toHaveBeenCalledWith(result.data[0]);
-  // });
-
-  //TODO getStudyZone()
-
   //getAllOdours()
   it('getAllOdours() updates _observation BehaviorSubject', () => {
     httpMock.get.mockReturnValueOnce(
