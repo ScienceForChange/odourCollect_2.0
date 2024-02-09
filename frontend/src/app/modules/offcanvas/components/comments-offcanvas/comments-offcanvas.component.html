@@ -1,8 +1,8 @@
 <div class="offcanvas-header d-flex justify-content-between">
     <app-odour-type-icon 
     [iconClass]="'inline-type'" 
-    [odourType]="observation.relationships.odourSubType.relationships.odourType.slug" 
-    [odourName]="observation.relationships.odourSubType.relationships.odourType.name"
+    [odourType]="observation.relationships.odourSubType.relationships?.odourType?.slug || ''" 
+    [odourName]="observation.relationships.odourSubType.relationships?.odourType?.name || ''"
     />
     
     <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close" (click)="offcanvas.close()">

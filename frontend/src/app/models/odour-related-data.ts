@@ -38,9 +38,7 @@ export interface OdourSubType {
   odourTypeId: number;
   name: string;
   slug: string;
-  relationships: {
-    odourType: OdourTypeData;
-  };
+  relationships?: { odourType: OdourTypeData };
 }
 
 //Esto es lo que envio al back para crear una observación
