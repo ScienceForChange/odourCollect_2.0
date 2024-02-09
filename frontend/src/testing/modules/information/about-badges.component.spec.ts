@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgbActiveOffcanvas, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 
-import { AboutBadgesComponent } from './about-badges.component';
+import { AboutBadgesComponent } from '../../../app/modules/information/components/about-badges/about-badges.component';
 import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
 
 describe('AboutBadgesComponent', () => {

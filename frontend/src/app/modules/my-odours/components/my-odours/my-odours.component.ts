@@ -42,10 +42,13 @@ export class MyOdoursComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.user;
-    this.observationsRef = this.user?.relationships.odourObservations;
-    this.observations$.next(this.user?.relationships.odourObservations);
+    const observationsSorted = this.user?.relationships.odourObservations.sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
+    this.observationsRef = observationsSorted;
+    this.observations$.next(observationsSorted);
   }
-
 
   public openFilters = (): void => {
     this.offcanvasService.openMyOdoursFiltersOffCanvas(
@@ -126,13 +129,13 @@ export class MyOdoursComponent implements OnInit {
     if (term.length) {
       const filtered = this.observations$.value?.filter((ob) => {
         const observationType =
-          ob.relationships.odourSubType.relationships.odourType.name.toLowerCase();
+          ob?.relationships?.odourSubType?.relationships?.odourType.name.toLowerCase();
         const observationSubtype =
           ob.relationships.odourSubType.name.toLowerCase();
-        return (
-          observationType.includes(term.toLowerCase()) ||
-          observationSubtype.includes(term.toLowerCase())
-        );
+        if (observationType) {
+          return observationType.includes(term.toLowerCase());
+        }
+        return observationSubtype.includes(term.toLowerCase());
       });
       this.observations$.next(filtered);
     } else {

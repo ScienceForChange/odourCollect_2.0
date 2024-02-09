@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { ValidationErrors } from '@angular/forms';
 
 @Component({
   selector:`app-form-error-list`,
@@ -8,15 +7,15 @@ import { ValidationErrors } from '@angular/forms';
 })
 export class FormErrorListComponent {
 
-  
-  @Input() errorList: ValidationErrors | null | undefined;
+
+  @Input() errorList:any;
   @Input() field: string | null | undefined = null;
-  
+
   public errorTranslations: { [key: string]: string } = {
     'minlength':`Mínimo 8 caracteres.`,
     'noMatch':`Las contraseñas no coinciden.`,
-    
-    'pattern': `Inválido.`,    
+
+    'pattern': `Inválido.`,
     'accepted' :`Debe ser aceptado.`,
     'accepted_if' :`Debe ser aceptado cuando :other es :value.`,
     'active_url' :`No es una URL válida.`,
@@ -29,14 +28,14 @@ export class FormErrorListComponent {
     'ascii' :`Solo debe contener símbolos y caracteres alfanuméricos de un solo byte.`,
     'before' :`Debe ser una fecha antes de :date.`,
     'before_or_equal' :`Debe ser una fecha antes o igual a :date.`,
-    
+
     'boolean' :`Debe ser verdadero o falso.`,
     'confirmed' :`El campo de confirmación no coincide.`,
     'current_password' :`La contraseña actual no es correcta`,
     'date' :`No es una fecha válida.`,
     'date_equals' :`Debe ser una fecha igual a :date.`,
     'date_format' :`No corresponde con el formato :format.`,
-     'decimal' :`Debe tener :decimal decimales.`,
+    'decimal' :`Debe tener :decimal decimales.`,
     'declined' :`Debe marcar como rechazado.`,
     'declined_if' :`Debe marcar como rechazado cuando :other es :value.`,
     'different' :`Deben ser diferentes.`,
@@ -52,7 +51,7 @@ export class FormErrorListComponent {
     'exists' :`No es válido.`,
     'file' :`Debe ser un archivo.`,
     'filled' :`Es requerido.`,
-    
+
     'image' :`Debe ser una imagen.`,
     'in' :`No es válido.`,
     'in_array' :`No existe en :other.`,
@@ -61,8 +60,8 @@ export class FormErrorListComponent {
     'ipv4' :`Debe ser una dirección IPv4 válida.`,
     'ipv6' :`Debe ser una dirección IPv6 válida.`,
     'json' :`Debe ser una cadena JSON válida.`,
-    'lowercase' :`Debe ser minusculas.`, 
-        
+    'lowercase' :`Debe ser minusculas.`,
+
     'mac_address' :`Debe ser una dirección MAC válida.`,
     'max_digits' :`No puede superar los :max dígitos.`,
     'mimes' :`Debe ser un archivo de tipo: :values.`,
@@ -73,7 +72,7 @@ export class FormErrorListComponent {
     'missing_if' :`Debe faltar cuando :other es :value`,
     'missing_unless' :`Debe faltar a menos que :other sea :value.`,
     'missing_with' :`Debe faltar cuando :values está presente.`,
-    'missing_with_all' :`Debe faltar cuando :values están presentes`, 
+    'missing_with_all' :`Debe faltar cuando :values están presentes`,
     'multiple_of' :`Debe ser un múltiplo de :value.`,
     'not_in' :`La selección no es invalida.`,
     'not_regex' :`El formato no es válido.`,
@@ -93,22 +92,22 @@ export class FormErrorListComponent {
     'required_without' :`Es requerido cuando :values no está presente.`,
     'required_without_all' :`Es requerido cuando ningún :values está presente.`,
     'same' :`Debe coincidir.`,
-    
+
     'starts_with' :`Debe empezar con uno de los siguientes valores :values`,
     'string' :`Debe ser una cadena.`,
     'timezone' :`Debe ser una zona válida.`,
     'unique' :`Ya ha sido tomado.`,
     'uploaded' :`No ha podido ser cargado.`,
-    'uppercase' :`Debe estar en mayúsculas`, 
+    'uppercase' :`Debe estar en mayúsculas`,
     'url' :`El formato no es válido.`,
-    'ulid' :`Debe ser un ULID valido.`, 
+    'ulid' :`Debe ser un ULID valido.`,
     'uuid' :`Debe ser un UUID valido.`,
-    
+
     'min.numeric' : `Debe tener al menos :min.`,
     'min.file' : `Debe tener al menos :min kilobytes.`,
     'min.string' : `Debe tener al menos :min caracteres.`,
     'min.array' : `Debe tener al menos :min elementos.`,
-    
+
     'between.numeric' :`Debe estar entre :min - :max.`,
     'between.file' :`Debe estar entre :min - :max kilobytes.`,
     'between.string' :`Debe estar entre :min - :max caracteres.`,
@@ -118,12 +117,12 @@ export class FormErrorListComponent {
     'lt.file' : `Debe ser menor que :max kilobytes.`,
     'lt.string' : `Debe ser menor que :max caracteres.`,
     'lt.array' : `Puede tener hasta :max elementos.`,
-  
+
     'lte.numeric' : `Debe ser menor o igual que :max.`,
     'lte.file' : `Debe ser menor o igual que :max kilobytes.`,
     'lte.string' : `Debe ser menor o igual que :max caracteres.`,
     'lte.array' : `No puede tener más que :max elementos.`,
-    
+
     'max.numeric' : `Debe ser menor que :max.`,
     'max.file' : `Debe ser menor que :max kilobytes.`,
     'max.string' : `Debe ser menor que :max caracteres.`,
@@ -133,7 +132,7 @@ export class FormErrorListComponent {
     'gt.file' : `Debe ser mayor que :value kilobytes.`,
     'gt.string' : `Debe ser mayor que :value caracteres.`,
     'gt.array' : `Puede tener hasta :value elementos.`,
-    
+
     'gte.numeric' : `Debe ser mayor o igual que :value.`,
     'gte.file' : `Debe ser mayor o igual que :value kilobytes.`,
     'gte.string' : `Debe ser mayor o igual que :value caracteres.`,
@@ -151,144 +150,161 @@ export class FormErrorListComponent {
     'password.uncompromised' :`La contraseña ha aparecido en una fuga de datos. Elija una contraseña diferente.`,
   }
   public errorTranslationsWithNameField: { [key: string]: string } = {
-    'pattern': `${this.field} inválido.`,    
-    'accepted' :`El campo ${this.field} debe ser aceptado.`,
-    'accepted_if' :`El campo ${this.field} debe ser aceptado cuando :other es :value.`,
-    'active_url' :`El campo ${this.field} no es una URL válida.`,
-    'after' :`El campo ${this.field} debe ser una fecha después de :date.`,
-    'after_or_equal' :`El campo ${this.field} debe ser una fecha después o igual a :date.`,
-    'alpha' :`El campo ${this.field} sólo puede contener letras.`,
-    'alpha_dash' :`El campo ${this.field} sólo puede contener letras, números y guiones.`,
-    'alpha_num' :`El campo ${this.field} sólo puede contener letras y números.`,
-    'array' :`El campo ${this.field} debe ser un arreglo.`,
-    'ascii' :`El ${this.field} solo debe contener símbolos y caracteres alfanuméricos de un solo byte.`,
-    'before' :`El campo ${this.field} debe ser una fecha antes de :date.`,
-    'before_or_equal' :`El campo ${this.field} debe ser una fecha antes o igual a :date.`,
-    
-    'boolean' :`El campo ${this.field} debe ser verdadero o falso.`,
-    'confirmed' :`El campo de confirmación de ${this.field} no coincide.`,
+    'pattern': `:attribute inválido.`,
+    'accepted' :`El campo :attribute debe ser aceptado.`,
+    'accepted_if' :`El campo :attribute debe ser aceptado cuando :other es :value.`,
+    'active_url' :`El campo :attribute no es una URL válida.`,
+    'after' :`El campo :attribute debe ser una fecha después de :date.`,
+    'after_or_equal' :`El campo :attribute debe ser una fecha después o igual a :date.`,
+    'alpha' :`El campo :attribute sólo puede contener letras.`,
+    'alpha_dash' :`El campo :attribute sólo puede contener letras, números y guiones.`,
+    'alpha_num' :`El campo :attribute sólo puede contener letras y números.`,
+    'array' :`El campo :attribute debe ser un arreglo.`,
+    'ascii' :`El :attribute solo debe contener símbolos y caracteres alfanuméricos de un solo byte.`,
+    'before' :`El campo :attribute debe ser una fecha antes de :date.`,
+    'before_or_equal' :`El campo :attribute debe ser una fecha antes o igual a :date.`,
+
+    'boolean' :`El campo :attribute debe ser verdadero o falso.`,
+    'confirmed' :`El campo de confirmación de :attribute no coincide.`,
     'current_password' :`La contraseña actual no es correcta`,
-    'date' :`El campo ${this.field} no es una fecha válida.`,
-    'date_equals' :`El campo ${this.field} debe ser una fecha igual a :date.`,
-    'date_format' :`El campo ${this.field} no corresponde con el formato :format.`,
-     'decimal' :`El ${this.field} debe tener :decimal decimales.`,
-    'declined' :`El campo ${this.field} debe marcar como rechazado.`,
-    'declined_if' :`El campo ${this.field} debe marcar como rechazado cuando :other es :value.`,
-    'different' :`Los campos ${this.field} y :other deben ser diferentes.`,
-    'digits' :`El campo ${this.field} debe ser de :digits dígitos.`,
-    'digits_between' :`El campo ${this.field} debe tener entre :min y :max dígitos.`,
-    'dimensions' :`El campo ${this.field} no tiene una dimensión válida.`,
-    'distinct' :`El campo ${this.field} tiene un valor duplicado.`,
-    'doesnt_end_with' :`El campo ${this.field} no puede finalizar con uno de los siguientes valores: :values.`,
-    'doesnt_start_with' :`El campo ${this.field} no puede comenzar con uno de los siguientes valores: :values.`,
-    'email' :`El formato del ${this.field} no es válido.`,
-    'ends_with' :`El campo ${this.field} debe terminar con alguno de los valores: :values.`,
-    'enum' :`El campo seleccionado en ${this.field} no es válido.`,
-    'exists' :`El campo ${this.field} seleccionado no es válido.`,
-    'file' :`El campo ${this.field} debe ser un archivo.`,
-    'filled' :`El campo ${this.field} es requerido.`,
-    
-    'image' :`El campo ${this.field} debe ser una imagen.`,
-    'in' :`El campo ${this.field} seleccionado no es válido.`,
-    'in_array' :`El campo ${this.field} no existe en :other.`,
-    'integer' :`El campo ${this.field} debe ser un entero.`,
-    'ip' :`El campo ${this.field} debe ser una dirección IP válida.`,
-    'ipv4' :`El campo ${this.field} debe ser una dirección IPv4 válida.`,
-    'ipv6' :`El campo ${this.field} debe ser una dirección IPv6 válida.`,
-    'json' :`El campo ${this.field} debe ser una cadena JSON válida.`,
-    'lowercase' :`El ${this.field} debe ser minusculas.`, 
-        
-    'mac_address' :`El campo ${this.field} debe ser una dirección MAC válida.`,
-    'max_digits' :`El campo ${this.field} no puede superar los :max dígitos.`,
-    'mimes' :`El campo ${this.field} debe ser un archivo de tipo: :values.`,
-    'mimetypes' :`El campo ${this.field} debe ser un archivo de tipo: :values.`,
+    'date' :`El campo :attribute no es una fecha válida.`,
+    'date_equals' :`El campo :attribute debe ser una fecha igual a :date.`,
+    'date_format' :`El campo :attribute no corresponde con el formato :format.`,
+    'decimal' :`El :attribute debe tener :decimal decimales.`,
+    'declined' :`El campo :attribute debe marcar como rechazado.`,
+    'declined_if' :`El campo :attribute debe marcar como rechazado cuando :other es :value.`,
+    'different' :`Los campos :attribute y :other deben ser diferentes.`,
+    'digits' :`El campo :attribute debe ser de :digits dígitos.`,
+    'digits_between' :`El campo :attribute debe tener entre :min y :max dígitos.`,
+    'dimensions' :`El campo :attribute no tiene una dimensión válida.`,
+    'distinct' :`El campo :attribute tiene un valor duplicado.`,
+    'doesnt_end_with' :`El campo :attribute no puede finalizar con uno de los siguientes valores: :values.`,
+    'doesnt_start_with' :`El campo :attribute no puede comenzar con uno de los siguientes valores: :values.`,
+    'email' :`El formato del :attribute no es válido.`,
+    'ends_with' :`El campo :attribute debe terminar con alguno de los valores: :values.`,
+    'enum' :`El campo seleccionado en :attribute no es válido.`,
+    'exists' :`El campo :attribute seleccionado no es válido.`,
+    'file' :`El campo :attribute debe ser un archivo.`,
+    'filled' :`El campo :attribute es requerido.`,
 
-    'min_digits' :`El campo ${this.field} debe ser como mínimo de :min dígitos.`,
-    'missing' :`El campo ${this.field} debe faltar.`,
-    'missing_if' :`El campo ${this.field} debe faltar cuando :other es :value`,
-    'missing_unless' :`El campo ${this.field} debe faltar a menos que :other sea :value.`,
-    'missing_with' :`El campo ${this.field} debe faltar cuando :values está presente.`,
-    'missing_with_all' :`El campo ${this.field} debe faltar cuando :values están presentes`, 
-    'multiple_of' :`El campo ${this.field} debe ser un múltiplo de :value.`,
-    'not_in' :`El campo ${this.field} seleccionado es invalido.`,
-    'not_regex' :`El formato del campo ${this.field} no es válido.`,
-    'numeric' :`El campo ${this.field} debe ser un número.`,
-    'present' :`El campo ${this.field} debe estar presente.`,
-    'prohibited' :`El campo ${this.field} no está permitido.`,
-    'prohibited_if' :`El campo ${this.field} no está permitido cuando :other es :value.`,
-    'prohibited_unless' :`El campo ${this.field} no está permitido si :other no está en :values.`,
-    'prohibits' :`El campo ${this.field} no permite que :other esté presente.`,
-    'regex' :`El formato del campo ${this.field} no es válido.`,
-    'required' :`El campo ${this.field} es requerido.`,
-    'required_array_keys' :`El campo ${this.field} debe contener entradas para: :values.`,
-    'required_if' :`El campo ${this.field} es requerido cuando el campo :other es :value.`,
-    'required_unless' :`El campo ${this.field} es requerido a menos que :other esté presente en :values.`,
-    'required_with' :`El campo ${this.field} es requerido cuando :values está presente.`,
-    'required_with_all' :`El campo ${this.field} es requerido cuando :values está presente.`,
-    'required_without' :`El campo ${this.field} es requerido cuando :values no está presente.`,
-    'required_without_all' :`El campo ${this.field} es requerido cuando ningún :values está presente.`,
-    'same' :`El campo ${this.field} y :other debe coincidir.`,
-    
-    'starts_with' :`El ${this.field} debe empezar con uno de los siguientes valores :values`,
-    'string' :`El campo ${this.field} debe ser una cadena.`,
-    'timezone' :`El campo ${this.field} debe ser una zona válida.`,
-    'unique' :`El campo ${this.field} ya ha sido tomado.`,
-    'uploaded' :`El campo ${this.field} no ha podido ser cargado.`,
-    'uppercase' :`El ${this.field} debe estar en mayúsculas`, 
-    'url' :`El formato de ${this.field} no es válido.`,
-    'ulid' :`El ${this.field} debe ser un ULID valido.`, 
-    'uuid' :`El ${this.field} debe ser un UUID valido.`,
-    
-    'min.numeric' : `El campo ${this.field} debe tener al menos :min.`,
-    'min.file' : `El campo ${this.field} debe tener al menos :min kilobytes.`,
-    'min.string' : `El campo ${this.field} debe tener al menos :min caracteres.`,
-    'min.array' : `El campo ${this.field} debe tener al menos :min elementos.`,
-    
-    'between.numeric' :`El campo ${this.field} debe estar entre :min - :max.`,
-    'between.file' :`El campo ${this.field} debe estar entre :min - :max kilobytes.`,
-    'between.string' :`El campo ${this.field} debe estar entre :min - :max caracteres.`,
-    'between.array' :`El campo ${this.field} debe tener entre :min y :max elementos.`,
+    'image' :`El campo :attribute debe ser una imagen.`,
+    'in' :`El campo :attribute seleccionado no es válido.`,
+    'in_array' :`El campo :attribute no existe en :other.`,
+    'integer' :`El campo :attribute debe ser un entero.`,
+    'ip' :`El campo :attribute debe ser una dirección IP válida.`,
+    'ipv4' :`El campo :attribute debe ser una dirección IPv4 válida.`,
+    'ipv6' :`El campo :attribute debe ser una dirección IPv6 válida.`,
+    'json' :`El campo :attribute debe ser una cadena JSON válida.`,
+    'lowercase' :`El :attribute debe ser minusculas.`,
 
-    'lt.numeric' : `El campo ${this.field} debe ser menor que :max.`,
-    'lt.file' : `El campo ${this.field} debe ser menor que :max kilobytes.`,
-    'lt.string' : `El campo ${this.field} debe ser menor que :max caracteres.`,
-    'lt.array' : `El campo ${this.field} puede tener hasta :max elementos.`,
-  
-    'lte.numeric' : `El campo ${this.field} debe ser menor o igual que :max.`,
-    'lte.file' : `El campo ${this.field} debe ser menor o igual que :max kilobytes.`,
-    'lte.string' : `El campo ${this.field} debe ser menor o igual que :max caracteres.`,
-    'lte.array' : `El campo ${this.field} no puede tener más que :max elementos.`,
-    
-    'max.numeric' : `El campo ${this.field} debe ser menor que :max.`,
-    'max.file' : `El campo ${this.field} debe ser menor que :max kilobytes.`,
-    'max.string' : `El campo ${this.field} debe ser menor que :max caracteres.`,
-    'max.array' : `El campo ${this.field} puede tener hasta :max elementos.`,
+    'mac_address' :`El campo :attribute debe ser una dirección MAC válida.`,
+    'max_digits' :`El campo :attribute no puede superar los :max dígitos.`,
+    'mimes' :`El campo :attribute debe ser un archivo de tipo: :values.`,
+    'mimetypes' :`El campo :attribute debe ser un archivo de tipo: :values.`,
 
-    'gt.numeric' : `El campo ${this.field} debe ser mayor que :value.`,
-    'gt.file' : `El campo ${this.field} debe ser mayor que :value kilobytes.`,
-    'gt.string' : `El campo ${this.field} debe ser mayor que :value caracteres.`,
-    'gt.array' : `El campo ${this.field} puede tener hasta :value elementos.`,
-    
-    'gte.numeric' : `El campo ${this.field} debe ser mayor o igual que :value.`,
-    'gte.file' : `El campo ${this.field} debe ser mayor o igual que :value kilobytes.`,
-    'gte.string' : `El campo ${this.field} debe ser mayor o igual que :value caracteres.`,
-    'gte.array' : `El campo ${this.field} puede tener :value elementos o más.`,
+    'min_digits' :`El campo :attribute debe ser como mínimo de :min dígitos.`,
+    'missing' :`El campo :attribute debe faltar.`,
+    'missing_if' :`El campo :attribute debe faltar cuando :other es :value`,
+    'missing_unless' :`El campo :attribute debe faltar a menos que :other sea :value.`,
+    'missing_with' :`El campo :attribute debe faltar cuando :values está presente.`,
+    'missing_with_all' :`El campo :attribute debe faltar cuando :values están presentes`,
+    'multiple_of' :`El campo :attribute debe ser un múltiplo de :value.`,
+    'not_in' :`El campo :attribute seleccionado es invalido.`,
+    'not_regex' :`El formato del campo :attribute no es válido.`,
+    'numeric' :`El campo :attribute debe ser un número.`,
+    'present' :`El campo :attribute debe estar presente.`,
+    'prohibited' :`El campo :attribute no está permitido.`,
+    'prohibited_if' :`El campo :attribute no está permitido cuando :other es :value.`,
+    'prohibited_unless' :`El campo :attribute no está permitido si :other no está en :values.`,
+    'prohibits' :`El campo :attribute no permite que :other esté presente.`,
+    'regex' :`El formato del campo :attribute no es válido.`,
+    'required' :`El campo :attribute es requerido.`,
+    'required_array_keys' :`El campo :attribute debe contener entradas para: :values.`,
+    'required_if' :`El campo :attribute es requerido cuando el campo :other es :value.`,
+    'required_unless' :`El campo :attribute es requerido a menos que :other esté presente en :values.`,
+    'required_with' :`El campo :attribute es requerido cuando :values está presente.`,
+    'required_with_all' :`El campo :attribute es requerido cuando :values está presente.`,
+    'required_without' :`El campo :attribute es requerido cuando :values no está presente.`,
+    'required_without_all' :`El campo :attribute es requerido cuando ningún :values está presente.`,
+    'same' :`El campo :attribute y :other debe coincidir.`,
 
-    'size.numeric' :`El campo ${this.field} debe ser :size.`,
-    'size.file' :`El campo ${this.field} debe tener :size kilobytes.`,
-    'size.string' :`El campo ${this.field} debe tener :size caracteres.`,
-    'size.array' :`El campo ${this.field} debe contener :size elementos.`,
+    'starts_with' :`El :attribute debe empezar con uno de los siguientes valores :values`,
+    'string' :`El campo :attribute debe ser una cadena.`,
+    'timezone' :`El campo :attribute debe ser una zona válida.`,
+    'unique' :`El campo :attribute ya ha sido tomado.`,
+    'uploaded' :`El campo :attribute no ha podido ser cargado.`,
+    'uppercase' :`El :attribute debe estar en mayúsculas`,
+    'url' :`El formato de :attribute no es válido.`,
+    'ulid' :`El :attribute debe ser un ULID valido.`,
+    'uuid' :`El :attribute debe ser un UUID valido.`,
 
-    'password.mixed' :`El ${this.field} debe contener al menos una letra mayúscula y una minúscula.`,
-    'password.letters' :`El ${this.field} debe contener al menos una letra.`,
-    'password.symbols' :`El ${this.field} debe contener al menos un símbolo.`,
-    'password.numbers' :`El ${this.field} debe contener al menos un número.`,
-    'password.uncompromised' :`El atributo ${this.field}  ha aparecido en una fuga de datos. Elija un ${this.field} diferente.`,
+    'min.numeric' : `El campo :attribute debe tener al menos :min.`,
+    'min.file' : `El campo :attribute debe tener al menos :min kilobytes.`,
+    'min.string' : `El campo :attribute debe tener al menos :min caracteres.`,
+    'min.array' : `El campo :attribute debe tener al menos :min elementos.`,
+
+    'between.numeric' :`El campo :attribute debe estar entre :min - :max.`,
+    'between.file' :`El campo :attribute debe estar entre :min - :max kilobytes.`,
+    'between.string' :`El campo :attribute debe estar entre :min - :max caracteres.`,
+    'between.array' :`El campo :attribute debe tener entre :min y :max elementos.`,
+
+    'lt.numeric' : `El campo :attribute debe ser menor que :max.`,
+    'lt.file' : `El campo :attribute debe ser menor que :max kilobytes.`,
+    'lt.string' : `El campo :attribute debe ser menor que :max caracteres.`,
+    'lt.array' : `El campo :attribute puede tener hasta :max elementos.`,
+
+    'lte.numeric' : `El campo :attribute debe ser menor o igual que :max.`,
+    'lte.file' : `El campo :attribute debe ser menor o igual que :max kilobytes.`,
+    'lte.string' : `El campo :attribute debe ser menor o igual que :max caracteres.`,
+    'lte.array' : `El campo :attribute no puede tener más que :max elementos.`,
+
+    'max.numeric' : `El campo :attribute debe ser menor que :max.`,
+    'max.file' : `El campo :attribute debe ser menor que :max kilobytes.`,
+    'max.string' : `El campo :attribute debe ser menor que :max caracteres.`,
+    'max.array' : `El campo :attribute puede tener hasta :max elementos.`,
+
+    'gt.numeric' : `El campo :attribute debe ser mayor que :value.`,
+    'gt.file' : `El campo :attribute debe ser mayor que :value kilobytes.`,
+    'gt.string' : `El campo :attribute debe ser mayor que :value caracteres.`,
+    'gt.array' : `El campo :attribute puede tener hasta :value elementos.`,
+
+    'gte.numeric' : `El campo :attribute debe ser mayor o igual que :value.`,
+    'gte.file' : `El campo :attribute debe ser mayor o igual que :value kilobytes.`,
+    'gte.string' : `El campo :attribute debe ser mayor o igual que :value caracteres.`,
+    'gte.array' : `El campo :attribute puede tener :value elementos o más.`,
+
+    'size.numeric' :`El campo :attribute debe ser :size.`,
+    'size.file' :`El campo :attribute debe tener :size kilobytes.`,
+    'size.string' :`El campo :attribute debe tener :size caracteres.`,
+    'size.array' :`El campo :attribute debe contener :size elementos.`,
+
+    'password.mixed' :`El :attribute debe contener al menos una letra mayúscula y una minúscula.`,
+    'password.letters' :`El :attribute debe contener al menos una letra.`,
+    'password.symbols' :`El :attribute debe contener al menos un símbolo.`,
+    'password.numbers' :`El :attribute debe contener al menos un número.`,
+    'password.uncompromised' :`El atributo :attribute  ha aparecido en una fuga de datos. Elija un :attribute diferente.`,
+
+    //custom
+    'min_age' : `Debe ser mayor de :min años.`,
   }
 
-  public getErrorTranslation(error: string): string {
-    error = error.replace('validation.','');
-    if(!this.errorTranslations[error]) return error;
-    return this.errorTranslationsWithNameField[error] && this.field ? this.errorTranslationsWithNameField[error] : this.errorTranslations[error];
+  public getErrorTranslation(error: any, required: any = '0'): any {
+
+    if(this.errorTranslationsWithNameField[error] && this.field ){
+      let message =  this.errorTranslationsWithNameField[error].replace(':attribute', this.field);
+      for(let key in required){
+        message = message.replace(`:${key}`, required[key]);
+      }
+      return message;
+    }
+    else if(this.errorTranslations[error] && this.field ){
+      return this.errorTranslations[error].replace(':attribute', this.field);
+    }
+    else if(this.errorTranslations[error]){
+      return this.errorTranslations[error];
+    }
+
+    return error;
+
   }
 }

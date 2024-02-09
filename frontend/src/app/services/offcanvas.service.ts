@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { NgbOffcanvas, NgbOffcanvasOptions } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbOffcanvas,
+  NgbOffcanvasOptions,
+  NgbOffcanvasRef,
+} from '@ng-bootstrap/ng-bootstrap';
 import { InfoObservationOffcanvasComponent } from '../modules/offcanvas/components/info-observation-offcanvas/info-observation-offcanvas.component';
 import { ObservationFiltersOffCanvasComponent } from '../modules/offcanvas/components/observation-filters-offcanvas/observation-filters-offcanvas.component';
 import { Observation } from '../models/observation';
@@ -19,6 +23,7 @@ import { AboutStudyZoneComponent } from '../modules/information/components/about
 import { FiltersMyOdoursOffcanvasComponent } from '../modules/offcanvas/components/filters-my-odours-offcanvas/filters-my-odours-offcanvas.component';
 import { BehaviorSubject } from 'rxjs';
 import { FaqsComponent } from '../modules/faqs/components/faqs/faqs.component';
+import { LegendOffcanvasComponent } from '../modules/offcanvas/components/legend-offcanvas/legend-offcanvas.component';
 
 const bottomOffCanvasConfig: NgbOffcanvasOptions = {
   position: 'bottom',
@@ -49,14 +54,22 @@ const aboutOffCanvasConfig: NgbOffcanvasOptions = {
   providedIn: 'root',
 })
 export class OffcanvasService {
+  private openOdourInfoOffCanvasRef!: NgbOffcanvasRef;
+
   constructor(private offcanvasService: NgbOffcanvas) {}
 
   //Map
   public openOdourInformationOffCanvas(observation: Observation): void {
-    this.offcanvasService.open(
+    if (this.openOdourInfoOffCanvasRef) {
+      this.openOdourInfoOffCanvasRef.close();
+    }
+    const componentRef = this.offcanvasService.open(
       InfoObservationOffcanvasComponent,
       bottomOffCanvasConfig,
-    ).componentInstance.observation = observation;
+    );
+    componentRef.componentInstance.observation = observation;
+
+    this.openOdourInfoOffCanvasRef = componentRef;
   }
 
   public openMapFiltersOffCanvas(): void {
@@ -68,6 +81,10 @@ export class OffcanvasService {
 
   public openMenuOffCanvas(): void {
     this.offcanvasService.open(MenuOffcanvasComponent, menuOffCanvasConfig);
+  }
+
+  public openLegendOffCanvas(): void {
+    this.offcanvasService.open(LegendOffcanvasComponent, aboutOffCanvasConfig);
   }
 
   //Profile

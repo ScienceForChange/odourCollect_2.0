@@ -1,20 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap'; 
 
-import { AboutOdourSourceComponent } from './about-odour-source.component';
+import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+
+import { AboutFiltersComponent } from '../../../app/modules/information/components/about-filters/about-filters.component';
 import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
 
-describe('AboutOdourSourceComponent', () => {
-  let component: AboutOdourSourceComponent;
-  let fixture: ComponentFixture<AboutOdourSourceComponent>;
+describe('AboutFiltersComponent', () => {
+  let component: AboutFiltersComponent;
+  let fixture: ComponentFixture<AboutFiltersComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [NgbActiveOffcanvas],
       imports: [SharedComponentsModule],
-      declarations: [AboutOdourSourceComponent]
+      declarations: [AboutFiltersComponent]
     });
-    fixture = TestBed.createComponent(AboutOdourSourceComponent);
+    fixture = TestBed.createComponent(AboutFiltersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

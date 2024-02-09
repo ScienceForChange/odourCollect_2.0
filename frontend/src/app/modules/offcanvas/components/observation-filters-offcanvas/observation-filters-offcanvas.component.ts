@@ -5,13 +5,14 @@ import {
   OdourIntensity,
   OdourTypeData,
 } from 'src/app/models/odour-related-data';
-import { MapModalsService } from 'src/app/services/map-modals.service';
 import { OdourService } from 'src/app/services/odour.service';
 import { ObservationQuery } from '../../../../models/observation';
 import { Subscription } from 'rxjs';
 import { AlertService } from 'src/app/services/alert.service';
 import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { OffcanvasService } from 'src/app/services/offcanvas.service';
+import { MapService } from 'src/app/services/map.service';
+import { LngLat } from 'maplibre-gl';
 
 const date = new Date();
 date.setDate(date.getDate() - 1);
@@ -57,7 +58,10 @@ export class ObservationFiltersOffCanvasComponent implements OnInit, OnDestroy {
     return i < 10 ? '0' + i + ':00' : i + ':00';
   });
   public distanceRange: string[] = ['1km', '3km', '5km', '7km', '9km', '10km'];
+  private distanceRangeToSend: number[] = [1000, 3000, 5000, 7000, 9000, 10000];
   public dateRange: string[] = [yesterday, today];
+
+  private userLatLng!: LngLat | undefined;
 
   public filtersForm!: FormGroup;
   private filtersFormInitialValues!: any;
@@ -65,25 +69,31 @@ export class ObservationFiltersOffCanvasComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
-    private mapModalsService: MapModalsService,
     private odourService: OdourService,
     private alertService: AlertService,
     private offcanvasService: OffcanvasService,
-    public activeOffcanvas: NgbActiveOffcanvas
+    public activeOffcanvas: NgbActiveOffcanvas,
+    private mapService: MapService,
   ) {
     this.loadingData = true;
   }
 
   ngOnInit(): void {
     this.subscriptions.add(
+      this.mapService.userLatLng$.subscribe((userLatLng) => {
+        this.userLatLng = userLatLng;
+      }),
+    );
+    this.subscriptions.add(
       this.odourService.observationRelatedData().subscribe(({ data }) => {
         const filterObservationsSlugs = [
-          'waste-water',
+          'wastewater-and-waste',
           'urban',
-          'agriculture-livestock',
-          'food-industries',
-          'industrial',
+          'country-and-nature',
+          'food',
+          'industry',
         ];
+
         this.types = data.OdourType.filter((odourType) =>
           filterObservationsSlugs.some((type) => type === odourType.slug),
         );
@@ -168,13 +178,18 @@ export class ObservationFiltersOffCanvasComponent implements OnInit, OnDestroy {
   public filterOdour(): void {
     this.loading = true;
     const formValues = this.filtersForm.value;
+
     let querysSelected: ObservationQuery = {
       type: null,
       intensity: null,
       hedonicTone: null,
       createdBetween: null,
       createdTodayBetween: null,
+      is_inside: null,
+      latitude: null,
+      longitude: null,
     };
+
     for (const control in this.filtersForm.controls) {
       if (this.filtersForm.controls[control].valid) {
         switch (control) {
@@ -228,6 +243,12 @@ export class ObservationFiltersOffCanvasComponent implements OnInit, OnDestroy {
             }
             break;
           case 'distance':
+            querysSelected = {
+              ...querysSelected,
+              is_inside: this.distanceRangeToSend[formValues.distance],
+              latitude: this.userLatLng?.lat as number,
+              longitude: this.userLatLng?.lng as number,
+            };
             break;
           default:
             querysSelected = {

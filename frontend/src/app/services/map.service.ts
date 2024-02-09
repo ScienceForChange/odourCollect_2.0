@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import * as M from 'maplibre-gl';
 import { OdourService } from './odour.service';
-import { Observation, ObservationGeoJSON } from '../models/observation';
+import {
+  MapObservation,
+  Observation,
+  ObservationGeoJSON,
+} from '../models/observation';
 import { Map, LngLat, LngLatBounds, GeoJSONSource } from 'maplibre-gl';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -27,12 +31,16 @@ export class MapService {
     zoom: [4],
     mapStyle:
       'https://api.maptiler.com/maps/ed420585-427b-4078-8edf-7be43d23b4b7/style.json?key=XN4QD60Rt7rui111PDwQ',
-    centerMapLocation: [2.1487613, 41.3776589],
+    centerMapLocation:[2.1487613, 41.3776589],
     minZoom: 2,
     maxZoom: 17,
     bounds: new LngLatBounds(new LngLat(-90, 90), new LngLat(90, -90)),
     clusterMaxZoom: 17,
   };
+
+  public userLatLng$: BehaviorSubject<LngLat | undefined> = new BehaviorSubject<
+    LngLat | undefined
+  >(undefined);
 
   public GeoJSON$: Subject<ObservationGeoJSON> =
     new Subject<ObservationGeoJSON>();
@@ -88,17 +96,35 @@ export class MapService {
     }
   }
 
+  public watchUserGeoPosition() {
+    let reqCount = 0;
+    const successCallback = (position: any) => {
+      const { accuracy, latitude, longitude, altitude, heading, speed } =
+        position.coords;
+      this.userLatLng$.next(new LngLat(longitude, latitude));
+      if(reqCount === 0){
+        this.centerMapToMyLatLng();
+      }
+      reqCount++;
+    };
+    const errorCallback = () => {};
+    const options = {
+      enableHighAccuracy: true,
+    };
+    navigator.geolocation.watchPosition(
+      successCallback,
+      errorCallback,
+      options,
+    );
+  }
+
   //Para centrar el mapa en mi ubicación
   public centerMapToMyLatLng(): void {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const lngLat = new LngLat(
-          position.coords.longitude,
-          position.coords.latitude,
-        );
-        this.map.easeTo({ duration: 3 * 1000, center: lngLat, zoom: 10 });
-      });
-    }
+    this.map.easeTo({
+      duration: 3 * 1000,
+      center: this.userLatLng$.getValue(),
+      zoom: 10,
+    });
   }
 
   //para centrar el mapa
@@ -227,14 +253,14 @@ export class MapService {
   }
 
   //Create GeoJson
-  private createGeoJSON(observations: Observation[]): void {
+  private createGeoJSON(observations: MapObservation[]): void {
     const userID = this.userService.user?.id;
 
     this.showUserObservations.subscribe((show) => {
       let obsGeoJson = observations;
       if (show && userID) {
         obsGeoJson = observations.filter(
-          (observation) => observation.relationships.user?.id === userID,
+          (observation) => observation.user_id === userID,
         );
       }
 
@@ -242,13 +268,10 @@ export class MapService {
         type: 'FeatureCollection',
         features: obsGeoJson.map((observation) => ({
           id: observation.id,
-          observationType:
-            observation.relationships.odourSubType.relationships.odourType.slug,
           type: 'Feature',
           properties: {
             ...observation,
-            type: observation.relationships.odourSubType.relationships.odourType
-              .slug,
+            color: observation.color + '',
           },
           geometry: {
             type: 'Point',
@@ -302,9 +325,7 @@ export class MapService {
   public initializeMap(map: Map, isStudyZone: boolean): void {
     this.map = map;
 
-    if (!isStudyZone) {
-      this.centerMapToMyLatLng();
-    } else {
+    if (isStudyZone) {
       this.odourService.studyZone.subscribe((studyZone) => {
         if (studyZone) {
           const [lat, lon] = studyZone.features[0].geometry.coordinates[0][0];
@@ -313,21 +334,16 @@ export class MapService {
       });
     }
 
-    [
-      'agriculture-livestock',
-      'food-industries',
-      'urban',
-      'waste-water',
-      'industrial',
-    ].forEach((type) => {
-      const imageURL = `../../assets/images/markers/${type}.png`;
+    [...Array(8)].forEach((_, numberColor) => {
+      const imageURL = `../../assets/images/markers/marker-${numberColor}.png`;
       this.map.loadImage(imageURL, (error, image) => {
         if (error || !image)
           return console.error(
             `Failed to load image from URL "${imageURL}": ${error}`,
           );
-        this.map.addImage(type + '-icon', image);
+        this.map.addImage(numberColor + '-icon', image);
       });
     });
+    this.watchUserGeoPosition();
   }
 }

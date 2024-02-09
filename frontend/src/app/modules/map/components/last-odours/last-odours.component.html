@@ -20,7 +20,7 @@
               routerLink="/create-odour"
               [queryParams]="{
                 type: observation.relationships.odourSubType.relationships
-                  .odourType.id,
+                  ?.odourType?.id,
                 subtype: observation.relationships.odourSubType.id
               }"
               class="body-l"

@@ -1,9 +1,4 @@
-import {
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject, Subscription, of } from 'rxjs';
@@ -48,17 +43,14 @@ export class FiltersMyOdoursOffcanvasComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.observations$.subscribe((observations) => {
-
-    })
     this.subscriptions.add(
       this.odourService.observationRelatedData().subscribe(({ data }) => {
         const filterObservationsSlugs = [
-          'waste-water',
+          'wastewater-and-waste',
           'urban',
-          'agriculture-livestock',
-          'food-industries',
-          'industrial',
+          'country-and-nature',
+          'food',
+          'industry',
         ];
         this.types = data.OdourType?.filter((odourType) =>
           filterObservationsSlugs.some((type) => type === odourType.slug),
@@ -122,7 +114,7 @@ export class FiltersMyOdoursOffcanvasComponent implements OnInit, OnDestroy {
 
     this.filtersForm.get('type')?.setValue(types);
   }
-// 
+  //
   public resetDefaultFilters(): void {
     this.filtersFormInitialValues.type = [];
     this.resetFilters();
@@ -136,10 +128,10 @@ export class FiltersMyOdoursOffcanvasComponent implements OnInit, OnDestroy {
   }) {
     const observationsFiltered = this.observationsRef?.filter((observation) => {
       const observationType =
-        observation.relationships.odourSubType.relationships.odourType.id;
-      const observationIntensity = observation.relationships.odourIntensity.id;
+        observation?.relationships?.odourSubType?.relationships?.odourType.id;
+      const observationIntensity = observation?.relationships?.odourIntensity?.id;
       const observationHedonicTone =
-        observation.relationships.odourHedonicTone.id;
+        observation?.relationships?.odourHedonicTone?.id;
 
       const haveSameType = querys.type.length
         ? querys.type.some((type: number) => type === observationType)
@@ -148,13 +140,13 @@ export class FiltersMyOdoursOffcanvasComponent implements OnInit, OnDestroy {
       let haveSameIntensity;
       let haveSameHedonictone;
 
-      if (querys.intensity !== null) {
+      if (querys.intensity !== null && observationIntensity) {
         haveSameIntensity =
           querys.intensity[0] <= observationIntensity &&
           querys.intensity[1] >= observationIntensity;
       }
 
-      if (querys.hedonicTone !== null) {
+      if (querys.hedonicTone !== null && observationHedonicTone) {
         haveSameHedonictone =
           querys.hedonicTone[0] <= observationHedonicTone &&
           querys.hedonicTone[1] >= observationHedonicTone;

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 
-import { AboutIntensityAndPleasentessComponent } from './about-intensity-and-pleasentess.component';
+import { AboutIntensityAndPleasentessComponent } from '../../../app/modules/information/components/about-intensity-and-pleasentess/about-intensity-and-pleasentess.component';
 import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
 
 describe('AboutIntensityAndPleasentessComponent', () => {
