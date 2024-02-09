@@ -285,7 +285,7 @@ export class FormErrorListComponent {
     'password.uncompromised' :`El atributo :attribute  ha aparecido en una fuga de datos. Elija un :attribute diferente.`,
 
     //custom
-    'min_age' : `Debe ser mayor de :max años.`,
+    'min_age' : `Debe ser mayor de :min años.`,
   }
 
   public getErrorTranslation(error: any, required: any = '0'): any {
