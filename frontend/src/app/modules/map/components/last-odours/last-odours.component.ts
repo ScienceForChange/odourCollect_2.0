@@ -1,10 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { MapModalsService } from 'src/app/services/map-modals.service';
 import { UserService } from '../../../../services/user.service';
 import { Observation } from 'src/app/models/observation';
-import { InfoModalComponent } from 'src/app/modules/modals/info-modal/info-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DangerComponent } from 'src/app/shared/components/Icons/danger/danger.component';
 import { RegisterModalComponent } from 'src/app/modules/modals/register-modal/register-modal.component';
@@ -15,30 +12,22 @@ import { RegisterModalComponent } from 'src/app/modules/modals/register-modal/re
   styleUrls: ['./last-odours.component.scss'],
 })
 export class LastOdoursComponent implements OnInit, OnDestroy {
-  private subscriptions = new Subscription();
-
   public isOpen: boolean = false;
   public userObservations!: Observation[] | undefined;
 
   constructor(
-    private mapModalsService: MapModalsService,
     private router: Router,
     private userService: UserService,
     private modalService: NgbModal,
   ) {}
 
   ngOnInit(): void {
-    this.subscriptions.add(
-      this.mapModalsService.isVisibleState.subscribe((value) => {
-        this.isOpen = value.lastOdours;
-      }),
-    );
     this.userObservations =
       this.userService.user?.relationships.odourObservations.slice(0, 3);
   }
 
   public toggleLastOdours(): void {
-    this.mapModalsService.toggleLastOdoursModal();
+    this.isOpen = !this.isOpen;
   }
 
   public onClick(): void {
@@ -50,7 +39,7 @@ export class LastOdoursComponent implements OnInit, OnDestroy {
         size: 'sm',
       }).componentInstance.config = {
         icon: DangerComponent,
-        text: 'Debes estar registrado/a para añadir un olor.'
+        text: 'Debes estar registrado/a para añadir un olor.',
       };
       return;
     }
@@ -64,9 +53,9 @@ export class LastOdoursComponent implements OnInit, OnDestroy {
       this.userService.user?.relationships.odourObservations.slice(0, 3);
 
     if (!this.isOpen) {
-      return this.mapModalsService.toggleLastOdoursModal();
+      this.isOpen = !this.isOpen;
+      return;
     }
-
     if (this.isOpen) {
       this.router.navigate(['/create-odour']);
     }
