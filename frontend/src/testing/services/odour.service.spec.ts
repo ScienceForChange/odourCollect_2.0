@@ -1,14 +1,14 @@
-import { OdourService } from './odour.service';
+import { OdourService } from '../../app/services/odour.service';
 import {
   OdourCreateForm,
   OdourRelatedDataRes,
-} from '../models/odour-related-data';
+} from '../../app/models/odour-related-data';
 import { firstValueFrom, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Observation } from '../models/observation';
+import { Observation } from '../../app/models/observation';
 
 import { HttpClient } from '@angular/common/http';
-import { createDummyUser } from '../models/user';
+import { createDummyUser } from '../../app/models/user';
 
 const odourRelatedDataMock: OdourRelatedDataRes = {
   status: 'success',
