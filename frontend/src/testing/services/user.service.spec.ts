@@ -158,11 +158,14 @@ describe('UserService', () => {
   });
 
   it('Añadir y eliminar obs al perfil de usuario', () => {
+
     expect(authService.user.value).toBeTruthy();
 
     service.addObservation(observation);
-    //TODO expect(authService.user.value?.total_observations).toBe(1);
+    expect(authService.user.value?.relationships.odourObservations.length).toBe(1);
+
     service.removeObservation(observation.id);
-    //TODO expect(authService.user.value?.total_observations).toBe(0);
+    expect(authService.user.value?.relationships.odourObservations.length).toBe(0);
+
   });
 });
