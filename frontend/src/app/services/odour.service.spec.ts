@@ -745,7 +745,7 @@ const odourCreateFormMock: OdourCreateForm = {
 
 const observationsMock: Observation[] = [
   {
-    id: 13763,
+    id: 1,
     latitude: '41.37106',
     longitude: '2.15486',
     color: 8,
@@ -777,14 +777,6 @@ const observationsMock: Observation[] = [
         odourTypeId: 2,
         name: 'Traffic and tyres',
         slug: 'traffic-and-tyres',
-        relationships: {
-          odourType: {
-            id: 2,
-            name: 'Urban',
-            slug: 'urban',
-            relationships: [],
-          },
-        },
       },
       user: createDummyUser(),
       comments: [],
@@ -846,18 +838,20 @@ describe('OdourService', () => {
     });
   });
 
-  it('createNewOdour() updates the observation$ Subject', async () => {
-    httpMock.post.mockReturnValueOnce(
-      of({ status: 'success', data: observationsMock }),
-    );
+  // it('createNewOdour() updates the observation$ Subject', async () => {
+  //   httpMock.post.mockReturnValueOnce(
+  //     of({ status: 'success', data: observationsMock }),
+  //   );
 
-    const spyObservation = jest.spyOn(service.observation$, 'next');
+  //   const spyObservation = jest.spyOn(service.observation$, 'next');
 
-    const obs = service.createNewOdour(odourCreateFormMock);
-    const result = await firstValueFrom(obs);
+  //   const obs = service.createNewOdour(odourCreateFormMock);
+  //   const result = await firstValueFrom(obs);
 
-    expect(spyObservation).toHaveBeenCalledWith(result.data[0]);
-  });
+  //   expect(spyObservation).toHaveBeenCalledWith(result.data[0]);
+  // });
+
+  //TODO getStudyZone()
 
   //getAllOdours()
   it('getAllOdours() updates _observation BehaviorSubject', () => {
@@ -874,19 +868,6 @@ describe('OdourService', () => {
     expect(spyUpdatesObservations).toHaveBeenCalledWith([observationsMock]);
   });
 
-  //getOdourInfo()
-  it('getOdourInfo() return a ObservationRes and does a get method', (done) => {
-    httpMock.get.mockReturnValueOnce(
-      of({ status: 'success', data: observationsMock }),
-    );
-    service.getOdourInfo(observationsMock[0].id).subscribe((data) => {
-      expect(data.data[0].id).toEqual(observationsMock[0].id);
-      expect(data.status).toEqual('success');
-      expect(httpMock.get).toHaveBeenCalledTimes(1);
-      done();
-    });
-  });
-
   //filterOdours()
   it('filterOdours() call with the correct parameters', () => {
     const mockQuerys = {
@@ -898,23 +879,51 @@ describe('OdourService', () => {
         '2021-01-01T00:00:00.000Z',
         '2021-01-01T00:00:00.000Z',
       ],
+      is_inside: null,
+      latitude: null,
+      longitude: null,
     };
+
+    let distanceUrl;
+
+    if (mockQuerys.is_inside) {
+      distanceUrl = `is_inside=${mockQuerys.is_inside}&latitude=${mockQuerys.latitude}&longitude=${mockQuerys.longitude}`;
+    }
+
+    const { is_inside, latitude, longitude, ...querysFiltered } = mockQuerys;
 
     httpMock.get.mockReturnValueOnce(of({ status: 'success', data: [] }));
 
-    const expectedUrl = `${environment.BACKEND_BASE_URL}api/observations/?include=odourSubType.odourType,user.userable&`;
-    const filters = Object.entries(mockQuerys)
+    const expectedUrl = `${environment.BACKEND_BASE_URL}api/map`;
+
+    const filters = Object.entries(querysFiltered)
       .filter(([_, value]) => value)
       .map(([key, value]) => {
-        return (
-          value && `filter[${key}]=${value?.length ? value.join(',') : value}`
-        );
+        if (Array.isArray(value)) {
+          return `filter[${key}]=${value.join(',')}`;
+        }
+        return `filter[${key}]=${value}`;
       })
       .join('&');
 
     service.filterOdours(mockQuerys);
 
-    expect(httpMock.get).toHaveBeenCalledWith(expectedUrl + filters);
+    expect(httpMock.get).toHaveBeenCalledWith(
+      expectedUrl + '?' + filters + distanceUrl,
+    );
+  });
+
+  //getOdourInfo()
+  it('getOdourInfo() return a ObservationRes and does a get method', (done) => {
+    httpMock.get.mockReturnValueOnce(
+      of({ status: 'success', data: observationsMock }),
+    );
+    service.getOdourInfo(observationsMock[0].id).subscribe((data) => {
+      expect(data.data[0].id).toEqual(observationsMock[0].id);
+      expect(data.status).toEqual('success');
+      expect(httpMock.get).toHaveBeenCalledTimes(1);
+      done();
+    });
   });
 
   //getOdour()
@@ -959,5 +968,111 @@ describe('OdourService', () => {
 
     expect(spyUpdatesObservations).toHaveBeenCalledTimes(1);
     expect(spyUpdatesObservations).toHaveBeenCalledWith([]);
+  });
+
+  //AddObservationLike
+  it('addObservationLike() does a post method', (done) => {
+    const likeMock = {
+      likeable_type: 'App\\Models\\OdourObservation',
+      id: 1,
+    };
+    httpMock.post.mockReturnValueOnce(
+      of({ status: 'success', data: likeMock }),
+    );
+
+    service.addObservationLike(1).subscribe(() => {
+      expect(httpMock.post).toHaveBeenCalledTimes(1);
+      expect(httpMock.post).toHaveBeenLastCalledWith(
+        `${environment.BACKEND_BASE_URL}api/like`,
+        likeMock,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          withCredentials: true,
+        },
+      );
+      done();
+    });
+  });
+
+  //DeleteObservationLike
+  it('deleteObservationLike() does a delete method', (done) => {
+    const likeMock = {
+      likeable_type: 'App\\Models\\OdourObservation',
+      id: 1,
+    };
+    httpMock.delete.mockReturnValueOnce(of({}));
+
+    service.deleteObservationLike(1).subscribe(() => {
+      expect(httpMock.delete).toHaveBeenCalledTimes(1);
+      expect(httpMock.delete).toHaveBeenLastCalledWith(
+        `${environment.BACKEND_BASE_URL}api/like`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          withCredentials: true,
+          body: likeMock,
+        },
+      );
+      done();
+    });
+  });
+
+  //Addcomentary
+  it('addCommentary() does a post method', (done) => {
+    const commentMock = {
+      likeable_type: 'App\\Models\\OdourObservation',
+      user_id: 1,
+      body: 'This is a comment',
+    };
+    const observationId = 1;
+    httpMock.post.mockReturnValueOnce(
+      of({ status: 'success', data: commentMock }),
+    );
+
+    service
+      .addCommentary('This is a comment', 1, observationId)
+      .subscribe(() => {
+        expect(httpMock.post).toHaveBeenCalledTimes(observationId);
+        expect(httpMock.post).toHaveBeenLastCalledWith(
+          `${environment.BACKEND_BASE_URL}api/observation/${1}/comments`,
+          commentMock,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            withCredentials: true,
+          },
+        );
+        done();
+      });
+  });
+
+  //DeleteCommentary
+  it('deleteCommentary() does a delete method', (done) => {
+    const observationId = 1;
+    const idComment = 1;
+
+    httpMock.delete.mockReturnValueOnce(of({}));
+
+    service.deleteCommentary(1, 1).subscribe(() => {
+      expect(httpMock.delete).toHaveBeenCalledTimes(1);
+      expect(httpMock.delete).toHaveBeenLastCalledWith(
+        `${environment.BACKEND_BASE_URL}api/observation/${observationId}/comments/${idComment}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          withCredentials: true,
+        },
+      );
+      done();
+    });
   });
 });

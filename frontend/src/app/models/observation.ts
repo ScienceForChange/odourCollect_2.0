@@ -101,7 +101,7 @@ export interface ObservationQuery {
   type: number[] | null;
   intensity: number[] | null;
   hedonicTone: number[] | null;
-  createdBetween: string | null;
+  createdBetween: string[] | null;
   createdTodayBetween: string[] | null;
   is_inside: number | null;
   latitude: number | null;
