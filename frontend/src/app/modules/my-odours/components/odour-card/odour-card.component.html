@@ -1,13 +1,13 @@
 <article
   [class]="
     'type-' +
-    observation.relationships.odourSubType.relationships.odourType.slug
+    observation.relationships.odourSubType.relationships?.odourType?.slug
   "
 >
   <header>
     <h2 class="body-l">
       {{
-        observation.relationships.odourSubType.relationships.odourType.name
+        observation.relationships.odourSubType.relationships?.odourType?.name
       }}:{{ observation.relationships.odourSubType.name }}
     </h2>
     <button (click)="onDeleteClick()">
@@ -17,12 +17,12 @@
   <ul>
     <li>
       <icon-chart />
-      <p class="label-l">{{ observation.relationships.odourIntensity.name }}</p>
+      <p class="label-l">{{ observation.relationships.odourIntensity?.name }}</p>
     </li>
     <li>
       <icon-happy-face />
       <p class="label-l">
-        {{ observation.relationships.odourHedonicTone.name }}
+        {{ observation.relationships.odourHedonicTone?.name }}
       </p>
     </li>
     <li>
