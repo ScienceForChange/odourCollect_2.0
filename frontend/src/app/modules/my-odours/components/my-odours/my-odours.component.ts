@@ -129,13 +129,13 @@ export class MyOdoursComponent implements OnInit {
     if (term.length) {
       const filtered = this.observations$.value?.filter((ob) => {
         const observationType =
-          ob.relationships.odourSubType.relationships.odourType.name.toLowerCase();
+          ob?.relationships?.odourSubType?.relationships?.odourType.name.toLowerCase();
         const observationSubtype =
           ob.relationships.odourSubType.name.toLowerCase();
-        return (
-          observationType.includes(term.toLowerCase()) ||
-          observationSubtype.includes(term.toLowerCase())
-        );
+        if (observationType) {
+          return observationType.includes(term.toLowerCase());
+        }
+        return observationSubtype.includes(term.toLowerCase());
       });
       this.observations$.next(filtered);
     } else {

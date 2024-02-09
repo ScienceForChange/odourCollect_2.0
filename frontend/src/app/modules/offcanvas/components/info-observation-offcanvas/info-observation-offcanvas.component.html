@@ -40,16 +40,16 @@
       <div
         class="box-type"
         [id]="
-          observation.relationships.odourSubType.relationships.odourType.slug
+          observation.relationships.odourSubType.relationships?.odourType?.slug
         "
       >
         <app-odour-type-icon
           [iconClass]="'odour-type-information'"
           [odourType]="
-            observation.relationships.odourSubType.relationships.odourType.slug
+            observation.relationships.odourSubType.relationships?.odourType?.slug || ''
           "
           [odourName]="
-            observation.relationships.odourSubType.relationships.odourType.name
+            observation.relationships.odourSubType.relationships?.odourType?.name || ''
           "
         />
         <p class="headline-s">
@@ -64,7 +64,7 @@
               <p class="label-l">Intensidad</p>
             </div>
             <p class="body-l">
-              {{ observation.relationships.odourIntensity.name }}
+              {{ observation.relationships.odourIntensity?.name }}
             </p>
           </div>
         </div>
@@ -75,7 +75,7 @@
               <p class="label-l">Agradabilidad</p>
             </div>
             <p class="body-l">
-              {{ observation.relationships.odourHedonicTone.name }}
+              {{ observation.relationships.odourHedonicTone?.name }}
             </p>
           </div>
         </div>
@@ -83,7 +83,7 @@
           <icon-calendar />
           <div>
             <div class="tone-title">
-              <p class="label-l">Observation date</p>
+              <p class="label-l">Fecha de la observación</p>
             </div>
             <p class="body-l">
               {{ observation.createdAt | date: "dd/MM/yyyy, HH:mm" }}
