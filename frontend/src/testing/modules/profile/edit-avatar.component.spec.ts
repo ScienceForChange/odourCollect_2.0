@@ -21,7 +21,7 @@ describe('EditAvatarComponent', () => {
       imports: [HttpClientModule, RouterTestingModule],
       declarations: [EditAvatarComponent]
     });
-    
+
     routerMock = TestBed.inject(Router);
     userService = TestBed.inject(UserService) as jest.Mocked<UserService>;
 
@@ -36,51 +36,24 @@ describe('EditAvatarComponent', () => {
   });
 
   it('Al hacer clic en un avatar deberia cambiar el id en el componente', () => {
+
     component.user = createDummyUser();
+    const response = { status: 200, value: [] };
+
+    jest.spyOn(userService, 'update').mockReturnValueOnce(of(response));
+    jest.spyOn(routerMock, 'navigate');
+
     fixture.detectChanges();
     let avatar = fixture.debugElement.nativeElement.querySelectorAll('img');
+
     expect(component.newAvatar).toBe(1);
+
     avatar[avatar.length - 1].click();
+
     expect(component.newAvatar).toBeGreaterThan(1);
+    expect(userService.update).toHaveBeenCalled();
+    expect(routerMock.navigate).toHaveBeenCalledWith(['/profile']);
+
   });
-
-  //TODO it('Al hacer clic en "Hecho" deberia actualizar el avatar', () => {
-
-  //   component.user = createDummyUser();
-  //   const response = { status: 200, value: [] };
-
-  //   jest.spyOn(userService, 'update').mockReturnValueOnce(of(response));
-  //   jest.spyOn(routerMock, 'navigate');
-
-  //   fixture.detectChanges();
-  //   let button = fixture.debugElement.nativeElement.querySelector('button');
-  //   component.newAvatar = 2;
-  //   button.click();
-
-  //   expect(userService.update).toHaveBeenCalled();
-  //   expect(routerMock.navigate).toHaveBeenCalledWith(['/profile']);
-    
-  // });
-
-  //TODO it('Al hacer clic en "Hecho" deberia dar error y alertar', () => {
-
-  //   component.user = createDummyUser();
-	// 	const errorResponse = {
-  //     status: 422,
-  //     message: 'Unprocessable Entity',
-  //   };
-
-  //   jest.spyOn(userService, 'update').mockReturnValueOnce(throwError(() => errorResponse));
-  //   const spyModal = jest.spyOn(AlertService.prototype, 'error');
-
-  //   fixture.detectChanges();
-  //   let button = fixture.debugElement.nativeElement.querySelector('button');
-  //   component.newAvatar = 2;
-  //   button.click();
-
-  //   expect(userService.update).toHaveBeenCalled();
-  //   expect(spyModal).toHaveBeenCalled();
-    
-  // });
 
 });
