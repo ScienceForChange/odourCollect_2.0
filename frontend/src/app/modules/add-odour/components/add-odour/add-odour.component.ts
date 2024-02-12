@@ -184,7 +184,7 @@ export class AddOdourComponent implements OnInit, OnDestroy {
     }
   }
 
-  public goStepBack(): void {
+  public goStepBack = (): void => {
     if (this.activeStep === 1)
       this.addOdourForm.get('subtypeDetails')?.reset({
         subtype: 0,
@@ -198,6 +198,7 @@ export class AddOdourComponent implements OnInit, OnDestroy {
         description: null,
       });
     if (this.activeStep > 0) this.activeStep--;
+    return;
   }
 
   public next(): void {
