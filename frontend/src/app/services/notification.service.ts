@@ -4,6 +4,8 @@ import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AppNotification } from '../models/app-notification';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GamingModalComponent } from '../modules/modals/gaming-modal/gaming-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +23,7 @@ export class NotificationService {
   refresh: booleano que indica si se debe seguir revisando las notificaciones aun cuando ya hayan notificaciones nuevas
   timer: tiempo en milisegundos que se espera para revisar las notificaciones cuando está en bucle
   checking: booleano que indica si se está revisando las notificaciones en bucle para no hacerlo más de una vez
-  
+
   */
   public newNotification:     BehaviorSubject<boolean>            = new BehaviorSubject<boolean>(false);
   public sfcNotification:     BehaviorSubject<AppNotification[]>  = new BehaviorSubject<AppNotification[]>([]);
@@ -33,7 +35,10 @@ export class NotificationService {
   public refresh: boolean = false;
   public checking: boolean = true;
 
-  constructor(private authService: AuthService, private http: HttpClient) { 
+  constructor(
+    private authService: AuthService,
+    private http: HttpClient,
+    private modalService: NgbModal) {
     authService.isLoggedIn.subscribe({
       next: (resp : boolean) => {
         this.login = resp;
@@ -87,7 +92,7 @@ export class NotificationService {
           }, this.timer * 5);
         }
       });
-     
+
     }
     else{
       this.newNotification.next(false);
@@ -97,6 +102,7 @@ export class NotificationService {
 
   //getNotifications: método que obtiene las notificaciones del usuario
   public getNotifications():Observable<AppNotification[]> {
+
     return this.http.get(`${environment.BACKEND_BASE_URL}api/notifications`,
     {
       headers: {
@@ -128,6 +134,11 @@ export class NotificationService {
       if(notification.type === 'like' || notification.type === 'comment'){
         socialNotifications.push(notification);
       }
+      else if(notification.type === 'gaming'){
+        //TODO: terminar de implementar el modal de gaming con lo que se recibe en del endpoint
+        this.showGamingNotificationModal();
+        this.readNotification(notification.id);
+      }
       else{
         sfcNotifications.push(notification);
       }
@@ -156,6 +167,10 @@ export class NotificationService {
 
     if(this.socialNotification.value.length === 0 && this.sfcNotification.value.length === 0) this.newNotification.next(false);
 
+  }
+
+  private showGamingNotificationModal():void {
+    this.modalService.open(GamingModalComponent, { windowClass: 'default', backdropClass: 'default', centered : true, size: 'sm' } )
   }
 
 }
