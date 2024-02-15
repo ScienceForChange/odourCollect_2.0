@@ -15,25 +15,25 @@ button.btn{
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 16px; 
+    line-height: 16px;
     letter-spacing: 0.2px;
     margin-left: 0;
     margin-right: 0;
     &:hover{
-        background-color: $white;
+        background-color: white;
         color: $black;
-        
+
     }
     &:active,
     &:first-child:active {
-        background-color: $white;
+        background-color: white;
         color: $black;
     }
     &:focus {
         outline: none !important;
         box-shadow: none !important;
     }
- } 
+ }
 .btn.btn-primary,
 input[type=button].btn-primary,
 button.btn-primary{
@@ -68,7 +68,7 @@ button.btn-primary{
         background-color: $grey-light;
     }
  }
- 
+
  input[type=button].btn-grey,
  button.btn-grey{
     background-color: $grey;
@@ -116,7 +116,7 @@ button.btn-primary{
         color: $black;
     }
     &:disabled{
-        background-color: $white;
+        background-color: white;
     }
  }
 .btn.btn-white,
@@ -140,7 +140,7 @@ button.btn-white{
 
  input[type=button].btn-xs,
  button.btn-sm{
-    min-width: max-content;    
+    min-width: max-content;
     height: 42px;
     padding: 12px;
     font-size: 14px;
@@ -149,7 +149,7 @@ button.btn-white{
  input[type=button].btn-sm,
  button.btn-sm{
     width: 100%;
-    max-width: 118px;    
+    max-width: 118px;
     height: 42px;
     padding: 12px 16px;
  }
@@ -161,7 +161,7 @@ button.btn-white{
     height: 48px;
     padding: 12px 16px;
  }
- 
+
  input[type=button].loading,
  button.loading{
     position: relative;
