@@ -104,7 +104,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/observation/{odourObservation}/comments/{comment}', [App\Http\Controllers\OdourObservationCommentController::class, 'destroy'])->name('comments.destroy');
 });
 
-Route::get('/map', [App\Http\Controllers\MapController::class, 'index'])->middleware('dev-env')->name('map.index');
+Route::get('/map', [App\Http\Controllers\MapController::class, 'index'])->name('map.index');
 
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'sendRequestToEmail'])
             ->middleware(['auth:sanctum'])->name('contact.sendRequestToEmail');
