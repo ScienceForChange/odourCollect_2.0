@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
         'dev-env' => \App\Http\Middleware\RedirectIfProduction::class,
+        'checkGamificationLevel' => \App\Http\Middleware\CheckGamificationLevel::class,
     ];
 }
