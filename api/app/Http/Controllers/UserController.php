@@ -85,7 +85,7 @@ class UserController extends Controller
         }
 
         return $this->success([
-            new UserResource($user)
+            new UserResource($user->refresh())
         ],
         Response::HTTP_OK);
     }
