@@ -5,16 +5,12 @@ article {
   animation: slidein 1s ease;
   display: flex;
   flex-direction: column;
-  height: 100dvh;
+  height: calc(100vh - 63px);
   justify-content: space-between;
   padding-bottom: 100px;
   padding-top: 10px;
   text-align: center;
   width: 100%;
-  header{
-    padding-left: 45px;
-    width: 100%;
-  }
   section {
     display: flex;
     flex-direction: column;
@@ -24,7 +20,7 @@ article {
     padding-left: 45px;
     padding-right: 45px;
   }
-  section:nth-child(2) {
+  section:nth-child(1) {
     div:nth-child(1) {
       align-items: center;
       display: flex;
@@ -42,7 +38,7 @@ article {
         margin-bottom: 18px;
         margin-top: 54px;
       }
-      
+
       button {
         background-color: $violet;
         border: none;
