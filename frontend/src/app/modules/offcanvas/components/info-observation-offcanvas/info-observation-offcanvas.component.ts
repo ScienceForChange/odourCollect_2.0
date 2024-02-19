@@ -5,10 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import {
-  NgbActiveOffcanvas,
-  NgbModal,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveOffcanvas, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, filter } from 'rxjs';
 import { Observation } from 'src/app/models/observation';
 import { User } from 'src/app/models/user';
@@ -22,7 +19,6 @@ import { RegisterModalComponent } from 'src/app/modules/modals/register-modal/re
 import { DangerComponent } from 'src/app/shared/components/Icons/danger/danger.component';
 import { NavigationEnd, Router } from '@angular/router';
 import { MapService } from 'src/app/services/map.service';
-import { MapModalsService } from 'src/app/services/map-modals.service';
 import { OffcanvasService } from 'src/app/services/offcanvas.service';
 
 @Component({
@@ -40,11 +36,10 @@ export class InfoObservationOffcanvasComponent
   private closeByUser: boolean = false;
 
   public observation!: Observation;
-  public isOpen: boolean = false;
   public user: User | undefined = undefined;
 
   constructor(
-    public offcanvas: NgbActiveOffcanvas,
+    private activeOffcanvas: NgbActiveOffcanvas,
     private userService: UserService,
     private authService: AuthService,
     private odourService: OdourService,
@@ -53,8 +48,7 @@ export class InfoObservationOffcanvasComponent
     private offcanvasService: OffcanvasService,
     private mapService: MapService,
     private router: Router,
-    private mapModalsService: MapModalsService,
-  ) {}
+ ) {}
 
   ngOnInit(): void {
     this.user = this.userService.user;
@@ -62,7 +56,7 @@ export class InfoObservationOffcanvasComponent
       this.router.events
         .pipe(filter((event) => event instanceof NavigationEnd))
         .subscribe(() => {
-          this.offcanvas.close();
+          this.activeOffcanvas.close();
         }),
     );
   }
@@ -94,7 +88,7 @@ export class InfoObservationOffcanvasComponent
             autoClose: true,
             keepAfterRouteChange: true,
           });
-          this.offcanvas.close();
+          this.activeOffcanvas.close();
         },
         error: () => {
           this.alertService.error('Hubo un error', {
@@ -170,8 +164,7 @@ export class InfoObservationOffcanvasComponent
   }
   public close(): void {
     this.closeByUser = true;
-    this.offcanvas.close();
-    this.mapModalsService.toggleObservationModal();
+    this.activeOffcanvas.close();
   }
 
   ngOnDestroy(): void {

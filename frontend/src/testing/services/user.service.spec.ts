@@ -1,7 +1,6 @@
-import { TestBed } from '@angular/core/testing';
-import { HttpClientModule, HttpXsrfTokenExtractor } from '@angular/common/http';
+import { HttpXsrfTokenExtractor } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
 import { UserService } from '../../app/services/user.service';
@@ -41,6 +40,7 @@ describe('UserService', () => {
       longitude: '2.11150',
       relationships: {
         odourSubType: {
+          odourTypeId:1,
           id: 11,
           name: 'Rotten eggs',
           slug: 'rotten-eggs',
@@ -73,8 +73,8 @@ describe('UserService', () => {
       liked: false,
       description: null,
       origin: null,
-      createdAt: new Date('2021-06-14T09:21:16.000000Z'),
-      updatedAt: new Date('2021-06-14T09:21:16.000000Z'),
+      createdAt: '2021-06-14T09:21:16.000000Z',
+      updatedAt: '2021-06-14T09:21:16.000000Z',
     };
 
     testScheduler = new TestScheduler((actual, expected) => {
@@ -159,11 +159,14 @@ describe('UserService', () => {
   });
 
   it('Añadir y eliminar obs al perfil de usuario', () => {
+
     expect(authService.user.value).toBeTruthy();
 
     service.addObservation(observation);
-    //TODO expect(authService.user.value?.total_observations).toBe(1);
+    expect(authService.user.value?.relationships.odourObservations.length).toBe(1);
+
     service.removeObservation(observation.id);
-    //TODO expect(authService.user.value?.total_observations).toBe(0);
+    expect(authService.user.value?.relationships.odourObservations.length).toBe(0);
+
   });
 });

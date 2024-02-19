@@ -199,9 +199,9 @@ export class CommentsOffcanvasComponent implements AfterViewInit {
 
     const date1 = new Date(created_at);
     const date2 = new Date();
-    
+
     let diff = Math.abs(date2.getTime() - date1.getTime())/1000;
-    
+
     switch(true){
       case diff < 60:
         return `Hace ${Math.floor(diff)} segundos`;

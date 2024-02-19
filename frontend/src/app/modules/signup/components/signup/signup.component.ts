@@ -33,32 +33,32 @@ export class SignupComponent {
 
   public signUpForm: FormGroup = new FormGroup(
     {
-      name: new FormControl('dd', [
+      name: new FormControl('', [
         Validators.required,
         Validators.minLength(1),
       ]),
-      birth_year: new FormControl('1990', [
+      birth_year: new FormControl('', [
         Validators.required,
         Validators.minLength(1),
       ]),
-      gender: new FormControl('mujer', [
+      gender: new FormControl('', [
         Validators.required,
         Validators.minLength(1),
       ]),
-      email: new FormControl('test@scienceforchange.eu', [
+      email: new FormControl('', [
         Validators.required,
         Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
       ]),
-      password: new FormControl('123123123', [
+      password: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
       ]),
-      password_confirmation: new FormControl('123123123', [
+      password_confirmation: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
       ]),
-      dpo: new FormControl(true, [Validators.requiredTrue]),
-      etic: new FormControl(true, [Validators.requiredTrue]),
+      dpo: new FormControl(false, [Validators.requiredTrue]),
+      etic: new FormControl(false, [Validators.requiredTrue]),
     },
     [
       ConfirmPasswordValidator.MatchValidator(
@@ -104,16 +104,16 @@ export class SignupComponent {
       error: (resp) => {
         this.loading = false;
         if (resp.status == 422) {
-          
+
           this.signUpForm.controls['password'].reset();
           this.signUpForm.controls['password_confirmation'].reset();
-          
+
           Object.keys(resp.error.errors).forEach((field:string) => {
 
             let errors = resp.error.errors[field];
-            
+
             errors = errorFormater(errors);
-              
+
             this.signUpForm.controls[field].setErrors(errors);
             this.signUpForm.controls[field].markAsTouched();
           });

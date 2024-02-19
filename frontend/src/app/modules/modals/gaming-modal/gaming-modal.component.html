@@ -1,0 +1,30 @@
+<div class="modal-header align-items-center justify-between pb-0">
+  <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close" (click)="modal.close()">
+      <span></span>
+      <span></span>
+  </button>
+</div>
+
+<div class="modal-body d-flex flex-column align-items-center justify-content-center">
+  <h1 class="text-center headline-m mb-3">
+    {{config.title || '¡Felicidades!'}}
+  </h1>
+  <h2 class="text-center mb-5">
+    {{config.text || 'Has completado el nivel'}}
+  </h2>
+  <div id="trophy">
+    <icon-trophies class="trophy" [trophy]="config.id" [color]="true" />
+  </div>
+  <h2 id="trophyName">
+    {{trophyName[config.id]}}
+  </h2>
+</div>
+
+<div class="modal-footer mt-4 px-0 gap-4 justify-content-center">
+  <button type="button" class="btn btn-primary" (click)="modal.dismiss(true)">
+      Aceptar
+  </button>
+  <button type="button" class="btn btn-white" (click)="openAboutBadgesOffcanvas()">
+      Saber más
+  </button>
+</div>

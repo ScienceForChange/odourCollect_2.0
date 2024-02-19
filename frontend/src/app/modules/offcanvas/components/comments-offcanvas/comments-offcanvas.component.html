@@ -1,10 +1,10 @@
 <div class="offcanvas-header d-flex justify-content-between">
-    <app-odour-type-icon 
-    [iconClass]="'inline-type'" 
-    [odourType]="observation.relationships.odourSubType.relationships.odourType.slug" 
-    [odourName]="observation.relationships.odourSubType.relationships.odourType.name"
+    <app-odour-type-icon
+    [iconClass]="'inline-type'"
+    [odourType]="observation.relationships.odourSubType.relationships?.odourType?.slug || ''"
+    [odourName]="observation.relationships.odourSubType.relationships?.odourType?.name || ''"
     />
-    
+
     <button type="button" class="close" data-bs-dismiss="modal"  aria-label="Close" (click)="offcanvas.close()">
         <span></span>
         <span></span>
@@ -48,7 +48,7 @@
         </ng-container>
     </div>
     <ng-template #noComments>
-        <h1 class="title-l mt-5 text-center">
+        <h1 class="title-l mt-5 mx-4 text-center">
             Sé la primera persona en comentar.
         </h1>
     </ng-template>
