@@ -49,7 +49,7 @@ Route::middleware(['auth:sanctum', 'verified'])
         ->controller(App\Http\Controllers\OdourObservationController::class)
         ->name('odourObservations.')
         ->group(function () {
-            Route::POST('/observations', 'store')->name('store');
+            Route::POST('/observations', 'store')->middleware('checkGamificationLevel')->name('store');
             Route::PATCH('/observations/{odourObservation}', 'update')->whereNumber('odourObservation')->name('update');
             Route::DELETE('/observations/{odourObservation}', 'destroy')->whereNumber('odourObservation')->name('delete');
             Route::POST('/observations/{trashed_observation}', 'restore')->whereNumber('trashed_observation')->name('restore');
@@ -90,7 +90,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/user-data', function (Req
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('like', [App\Http\Controllers\LikeController::class, 'like'])->name('like');
+    Route::post('like', [App\Http\Controllers\LikeController::class, 'like'])->middleware('checkGamificationLevel')->name('like');
     Route::delete('like', [App\Http\Controllers\LikeController::class, 'unlike'])->name('unlike');
 });
 
@@ -100,7 +100,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/observation/{odourObservation}/comments/', [App\Http\Controllers\OdourObservationCommentController::class, 'store'])->name('comments.store');
+    Route::post('/observation/{odourObservation}/comments/', [App\Http\Controllers\OdourObservationCommentController::class, 'store'])->middleware('checkGamificationLevel')->name('comments.store');
     Route::delete('/observation/{odourObservation}/comments/{comment}', [App\Http\Controllers\OdourObservationCommentController::class, 'destroy'])->name('comments.destroy');
 });
 
