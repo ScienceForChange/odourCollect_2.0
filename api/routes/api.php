@@ -30,6 +30,7 @@ Route::middleware(['auth:sanctum'])
             Route::GET('users/{user}', 'show')->whereNumber('user')->name('show');
             Route::POST('/users', 'store')->name('store');
             Route::PATCH('/users/{user}', 'update')->whereNumber('user')->name('update');
+            Route::PATCH('/users/u/{user}', 'fullUpdate')->whereNumber('user')->name('full-update');
             // Delete method does not allow a body in he http request, so if he send the deleted_because im f.
             Route::POST('/users/{user}', 'destroy')->whereNumber('user')->name('delete');
             Route::POST('/users/{trashed_user}', 'restore')->whereNumber('trashed_user')->name('restore');
