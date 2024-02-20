@@ -19,6 +19,7 @@ export class GamingModalComponent {
     text:               'Has ganado una insignia',
   };
   public trophyName : string[] = [
+    '',
     'Informador/a',
     'Explorador/a',
     'Comunidad',

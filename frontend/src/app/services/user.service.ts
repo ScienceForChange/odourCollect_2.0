@@ -157,4 +157,10 @@ export class UserService {
     });
   }
 
+  public uplevel(level:number) {
+    if (this.user && this.user.relationships && this.user.relationships.profile && (this.user.relationships.profile.level  && this.user.relationships.profile.level < level)) {
+      this.user.relationships.profile.level = level;
+    }
+  }
+
 }
