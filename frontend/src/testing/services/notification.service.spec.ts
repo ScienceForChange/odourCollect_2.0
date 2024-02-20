@@ -6,11 +6,13 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from 'src/app/services/user.service';
 
 describe('NotificationService', () => {
   let service: NotificationService;
   let httpMock: jest.Mocked<HttpClient>;
   let authService:  jest.Mocked<AuthService>;
+  let userService:  jest.Mocked<UserService>;
   let testScheduler: TestScheduler;
   let modalService: NgbModal;
 
@@ -30,7 +32,7 @@ describe('NotificationService', () => {
       isLoggedIn: new BehaviorSubject<boolean>(true),
     } as unknown  as jest.Mocked<AuthService>;
 
-    service = new NotificationService(authService, httpMock, modalService);
+    service = new NotificationService(userService, authService, httpMock, modalService);
 
     testScheduler = new TestScheduler((actual, expected) => {
 			expect(actual).toEqual(expected);
