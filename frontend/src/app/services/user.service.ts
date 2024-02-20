@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { Observable, map, of } from 'rxjs';
@@ -98,9 +98,9 @@ export class UserService {
       this.user.relationships.odourObservations = this.user.relationships.odourObservations.filter((obs) => obs.id !== removedObsId);
     }
   }
-  
+
   public addLikeToObservation(obsId: number) {
-    return this.http.post(`${environment.BACKEND_BASE_URL}/like`, { 
+    return this.http.post(`${environment.BACKEND_BASE_URL}/like`, {
       likeable_type: 'App\\Models\\OdourObservation',
       id: obsId
      },
@@ -114,5 +114,47 @@ export class UserService {
     );
   }
 
+  downloadObservations(): void {
+    const options: {
+      headers?: HttpHeaders;
+      observe?: 'body';
+      params?: HttpParams;
+      reportProgress?: boolean;
+      responseType: 'arraybuffer';
+      withCredentials?: boolean;
+  } = {
+      responseType: 'arraybuffer'
+  };
+
+    this.http.get(`${environment.BACKEND_BASE_URL}api/observations/export`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      withCredentials: true,
+      responseType: 'arraybuffer'
+    })
+    .pipe(
+      map((file: ArrayBuffer) => {
+          return file;
+      })
+    )
+    .subscribe({
+      next: (resp:any) => {
+        const blob = new Blob([resp], { type: "text/csv;charset=utf-8" });
+        const fileURL = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = fileURL;
+        const date = new Date();
+        const dateSlug = `${date.toISOString().slice(0,10)}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
+        link.download = `misObservaciones-${ dateSlug }.csv`;
+        link.click();
+        link.remove();
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
 
 }

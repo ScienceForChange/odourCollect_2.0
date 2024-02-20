@@ -33,7 +33,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
       },
     });
   }
-  
+
+  downloadObservations() {
+    this.userService.downloadObservations();
+  };
+
   openInfoOffcanvas() {
     this.offcanvasService.openAboutTrainedOffcanvas();
   }
