@@ -3,36 +3,36 @@ INSERT INTO
 VALUES
     (
         1,
-        'Country And Nature',
+        'Campo y naturaleza',
         'country-and-nature'
     ),
     (
         2,
-        'Urban',
+        'Urbano',
         'urban'
     ),
     (
         3,
-        'Food',
+        'Comida',
         'food'
     ),
     (
         4,
-        'Industry',
+        'Industrial',
         'industry'
     ),
     (
         5,
-        'Wastewater and Waste',
+        'Aguas residuales y residuos',
         'wastewater-and-waste'
     ),
     (
         6,
-        'Other',
+        'Otros',
         'other'
     ),
     (
         7,
-        'No Odour',
+        'No lo sé',
         'no-odour'
     );

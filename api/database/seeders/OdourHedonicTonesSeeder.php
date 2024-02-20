@@ -18,19 +18,19 @@ class OdourHedonicTonesSeeder extends Seeder
         $arrayHedonicTones = [
             [
                 'index' => '-4',
-                'name' => 'Extremely unpleasant',
+                'name' => 'Extremadamente desagradable',
             ],
             [
                 'index' => '-3',
-                'name' => 'Very unpleasant',
+                'name' => 'Muy desagradable',
             ],
             [
                 'index' => '-2',
-                'name' => 'Unpleasant',
+                'name' => 'Desagradable',
             ],
             [
                 'index' => '-1',
-                'name' => 'Slightly unpleasant',
+                'name' => 'Ligeramente desagradable',
             ],
             [
                 'index' => '0',
@@ -38,19 +38,19 @@ class OdourHedonicTonesSeeder extends Seeder
             ],
             [
                 'index' => '1',
-                'name' => 'Slightly pleasant',
+                'name' => 'Ligeramente agradable',
             ],
             [
                 'index' => '2',
-                'name' => 'Pleasant',
+                'name' => 'Agradable',
             ],
             [
                 'index' => '3',
-                'name' => 'Vary pleasant',
+                'name' => 'Muy agradable',
             ],
             [
                 'index' => '4',
-                'name' => 'Extremely pleasant',
+                'name' => 'Extremadamente agradable',
             ]
         ];
 

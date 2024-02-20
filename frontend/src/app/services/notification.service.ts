@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { AppNotification } from '../models/app-notification';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GamingModalComponent } from '../modules/modals/gaming-modal/gaming-modal.component';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,7 @@ export class NotificationService {
   public checking: boolean = true;
 
   constructor(
+    private userService: UserService,
     private authService: AuthService,
     private http: HttpClient,
     private modalService: NgbModal) {
@@ -130,14 +132,13 @@ export class NotificationService {
     let socialNotifications: AppNotification[] = [];
     let sfcNotifications: AppNotification[] = [];
 
-    notifications.forEach((notification) => {
+    notifications.forEach((notification:AppNotification) => {
       if(notification.type === 'like' || notification.type === 'comment'){
         socialNotifications.push(notification);
       }
       else if(notification.type === 'gaming'){
-        //TODO: terminar de implementar el modal de gaming con lo que se recibe en del endpoint
-        this.showGamingNotificationModal();
-        this.readNotification(notification.id);
+        this.userService.uplevel(notification.data.resource);
+        this.showGamingNotificationModal(notification);
       }
       else{
         sfcNotifications.push(notification);
@@ -160,17 +161,27 @@ export class NotificationService {
       },
       withCredentials: true,
     }
-    ).subscribe();
+    )
+    .pipe(
+      tap(() => {
+        this.checkNotifications();
+      })
+    )
+    .subscribe();
 
-    this.socialNotification.next(this.socialNotification.value.filter((notification) => notification.id !== id));
-    this.sfcNotification.next(this.sfcNotification.value.filter((notification) => notification.id !== id));
-
-    if(this.socialNotification.value.length === 0 && this.sfcNotification.value.length === 0) this.newNotification.next(false);
 
   }
 
-  private showGamingNotificationModal():void {
-    this.modalService.open(GamingModalComponent, { windowClass: 'default', backdropClass: 'default', centered : true, size: 'sm' } )
+  private showGamingNotificationModal(notification:AppNotification):void {
+    this.modalService.open(GamingModalComponent,
+    { windowClass: 'default', backdropClass: 'default', centered : true, size: 'sm' } )
+    .componentInstance
+    .config = {
+      id:                 notification.data.resource,
+      title:              '¡Felicidades!',
+      text:               'Has ganado una insignia',
+    };
+    this.readNotification(notification.id);
   }
 
 }

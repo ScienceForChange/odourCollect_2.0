@@ -105,6 +105,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Global "Contact" Address
+    |--------------------------------------------------------------------------
+    |
+    | You may wish for all contact e-mails sent by your application to be sent
+    | to the same address. Here, you may specify address that is used globally
+    | for all e-mails that are sent by your application to a contact address.
+    |
+    */
+
+    'contact' => [
+        'address' => env('MAIL_CONTACT_ADDRESS', 'hello@example.com')
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Markdown Mail Settings
     |--------------------------------------------------------------------------
     |
