@@ -21,7 +21,7 @@ class ContactController extends Controller
         ];
 
         try{
-            Mail::to('carlos.millan@scienceforchange.eu')->send(new FeedbackReceived($data));
+            Mail::to(config('mail.contact.address'))->send(new FeedbackReceived($data));
         }catch (\Exception $e){
             return response()->json(['message' => 'Error sending email'], 500);
         }
