@@ -8,11 +8,11 @@
         <h1 class="body-l text-center">Usuario {{user.id}}</h1>
         <span class="label-m text-center d-flex justify-content-center align-items-center color-grey mb-5">Usuario entrenando <icon-info-square class="d-flex p-2" (click)="openAboutTrainedOffcanvas()"/></span>
         <div class="d-flex justify-content-center column-gap-4 flex-wrap mb-4" (click)="openAboutBadgesOffcanvas()">
-            <icon-trophies [trophy]="0" [color]="user.relationships.profile.level > 0 " />
-            <icon-trophies [trophy]="1" [color]="user.relationships.profile.level > 1 " />
-            <icon-trophies [trophy]="2" [color]="user.relationships.profile.level > 2 " />
-            <icon-trophies [trophy]="3" [color]="user.relationships.profile.level > 3 " />
-            <icon-trophies [trophy]="4" [color]="user.relationships.profile.level > 4 " />
+            <icon-trophies [trophy]="1" [color]="user.relationships.profile.level > 0 " />
+            <icon-trophies [trophy]="2" [color]="user.relationships.profile.level > 1 " />
+            <icon-trophies [trophy]="3" [color]="user.relationships.profile.level > 2 " />
+            <icon-trophies [trophy]="4" [color]="user.relationships.profile.level > 3 " />
+            <icon-trophies [trophy]="5" [color]="user.relationships.profile.level > 4 " />
         </div>
         <p class="d-flex justify-content-center gap-3 mb-3" (click)="openAboutBadgesOffcanvas()">
             ¿Qué son las insignias? <icon-arrow-right/>
