@@ -21,7 +21,7 @@ class CheckGamificationLevel
         $observationCount = auth()->user()->odourObservations()->count();
         $likesCount = auth()->user()->likes()->count();
         $commentsCount = auth()->user()->comments()->count();
-        $currentLevel = auth()->user()->userable->max_level_reached;
+        $currentLevel = auth()->user()->userable->level;
 
         if ($observationCount >= 60 && $likesCount >= 24 && $commentsCount >= 12){
             if($currentLevel >= 5) {
