@@ -141,7 +141,7 @@ export class UserService {
     )
     .subscribe({
       next: (resp:any) => {
-        const blob = new Blob([resp], { type: 'application/octet-stream' });
+        const blob = new Blob([resp], { type: "text/csv;charset=utf-8" });
         const fileURL = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = fileURL;
