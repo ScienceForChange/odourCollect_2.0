@@ -153,6 +153,8 @@ class OdourObservationController extends Controller
     public function export()
     {
         $id = auth()->user()->id;
-        return Excel::download(new OdourExport($id), 'odours.csv');
+        return Excel::download(new OdourExport($id), 'odours.csv', \Maatwebsite\Excel\Excel::CSV, [
+            'Content-Type' => 'text/csv',
+      ]);
     }
 }
