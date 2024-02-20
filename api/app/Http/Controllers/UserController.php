@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\{ UserResource, UserCollection };
 use App\Http\Requests\{ StoreUserRequest, UpdateUserPasswordRequest, UpdateUserRequest };
+use App\Rules\teenAgeCare;
 use App\Traits\ApiResponses;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Enum;
 
 class UserController extends Controller
 {
@@ -83,6 +85,27 @@ class UserController extends Controller
                 $request->validated()
             );
         }
+
+        return $this->success([
+            new UserResource($user->refresh())
+        ],
+        Response::HTTP_OK);
+    }
+
+    public function fullUpdate(Request $request, User $user)
+    {
+        $validator = Validator::make($request->all(),[
+            'name'      => ['sometimes', 'min:5','max:255'],
+            'birth_year' => ['required', 'integer', 'min:1900', new teenAgeCare(15)],
+            'gender' => ['required', new Enum(\App\Enums\Citizen\Gender::class)],
+            'is_trained' => ['sometimes', 'boolean'],
+        ]);
+
+        $user->userable()->update(
+            $validator->validate()
+        );
+
+        $user->userable;
 
         return $this->success([
             new UserResource($user->refresh())
