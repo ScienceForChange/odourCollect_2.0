@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { Observable, map, of } from 'rxjs';
@@ -115,21 +115,46 @@ export class UserService {
   }
 
   downloadObservations(): void {
+    const options: {
+      headers?: HttpHeaders;
+      observe?: 'body';
+      params?: HttpParams;
+      reportProgress?: boolean;
+      responseType: 'arraybuffer';
+      withCredentials?: boolean;
+  } = {
+      responseType: 'arraybuffer'
+  };
+
     this.http.get(`${environment.BACKEND_BASE_URL}api/observations/export`, {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      withCredentials: true
-    }).subscribe({
+      withCredentials: true,
+      responseType: 'arraybuffer'
+    })
+    .pipe(
+      map((file: ArrayBuffer) => {
+          return file;
+      })
+    )
+    .subscribe({
       next: (resp:any) => {
-        console.log(resp);
+        const blob = new Blob([resp], { type: "text/csv;charset=utf-8" });
+        const fileURL = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = fileURL;
+        const date = new Date();
+        const dateSlug = `${date.toISOString().slice(0,10)}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
+        link.download = `misObservaciones-${ dateSlug }.csv`;
+        link.click();
+        link.remove();
       },
       error: (err) => {
         console.log(err);
       }
-    }
-    );
+    });
   }
 
 }
