@@ -68,7 +68,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function likes()
     {
-        return $this->morphMany(Like::class, 'likeable');
+        return $this->hasMany(Like::class);
     }
 
     public function like(Likeable $likeable)
@@ -111,6 +111,11 @@ class User extends Authenticatable implements MustVerifyEmail
                     $q->where('id', $this->id);
                 })
                 ->exists();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     /**
