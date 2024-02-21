@@ -17,31 +17,31 @@ class OdourIntensitiesSeeder extends Seeder
         $arrayIntensities = [
             [
                 'power' => '0',
-                'name' => 'Not perceptible',
+                'name' => 'Imperceptible',
             ],
             [
                 'power' => '1',
-                'name' => 'Very weak',
+                'name' => 'Muy débil',
             ],
             [
                 'power' => '2',
-                'name' => 'Weak',
+                'name' => 'Débil',
             ],
             [
                 'power' => '3',
-                'name' => 'Distinct',
+                'name' => 'Indiferente',
             ],
             [
                 'power' => '4',
-                'name' => 'Strong',
+                'name' => 'Fuerte',
             ],
             [
                 'power' => '5',
-                'name' => 'Very strong',
+                'name' => 'Muy fuerte',
             ],
             [
                 'power' => '6',
-                'name' => 'Extremely strong',
+                'name' => 'Extremadamente fuerte',
             ]
         ];
 
