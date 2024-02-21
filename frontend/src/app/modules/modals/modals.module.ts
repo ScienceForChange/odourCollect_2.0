@@ -6,6 +6,8 @@ import { RegisterModalComponent } from './register-modal/register-modal.componen
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { GamingModalComponent } from './gaming-modal/gaming-modal.component';
 import { SharedComponentsModule } from 'src/app/shared/components/shared.components.module';
+import { CompleteProfileModalComponent } from './complete-profile-modal/complete-profile-modal.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -15,9 +17,12 @@ import { SharedComponentsModule } from 'src/app/shared/components/shared.compone
     InfoModalComponent,
     RegisterModalComponent,
     GamingModalComponent,
+    CompleteProfileModalComponent,
   ],
   imports: [
     NgComponentOutlet,
+    ReactiveFormsModule,
+    FormsModule,
     CommonModule,
     AppRoutingModule,
     SharedComponentsModule
