@@ -5,6 +5,7 @@ import { TestScheduler } from "rxjs/testing";
 import { AuthService } from '../../app/services/auth.service';
 import { createDummyUser } from '../../app/models/user';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 describe('LoginService', () => {
   let service: AuthService;
@@ -12,10 +13,11 @@ describe('LoginService', () => {
   let routerMock: jest.Mocked<Router>;
   let httpMock: jest.Mocked<HttpClient>;
   let xsrfTokenExtractorMock: jest.Mocked<HttpXsrfTokenExtractor>;
+  let modalService: jest.Mocked<NgbModal>;
 
 
   beforeEach(() => {
-    
+
     httpMock = {
       post: jest.fn(),
       get:  jest.fn(),
@@ -29,7 +31,7 @@ describe('LoginService', () => {
       getToken: jest.fn(),
     } as jest.Mocked<HttpXsrfTokenExtractor>;
 
-    service = new AuthService(httpMock, routerMock, xsrfTokenExtractorMock);
+    service = new AuthService(httpMock, routerMock, xsrfTokenExtractorMock,modalService);
 
     testScheduler = new TestScheduler((actual, expected) => {
 			expect(actual).toEqual(expected);
@@ -52,28 +54,28 @@ describe('LoginService', () => {
     expect(service.isLoggedIn.value).toBeFalsy();
 
     const obs$ = service.login(userLogin);
-    
+
     testScheduler.run(({ expectObservable }) => {
 
       const expectedMarble = "(---a--|)"; // Diagrama de mármol representando la secuencia de emisión de 'a' seguido por completado '|'
 			const expectedValues = { a: { status: 200, data:  createDummyUser() } }; // valor emitido 'a' con el valor de 'response'
-      
+
       expectObservable(obs$).toBe(expectedMarble, expectedValues);
 
     });
-    
+
     // Verificar logueo
     expect(service.isLoggedIn.value).toBeTruthy();
     // Verificar que el método navigate ha sido llamado
     expect(routerMock.navigate).toHaveBeenCalledWith(['/map']);
   });
-  
+
   it("simular proceso de logout", () => {
-    
+
     service.isLoggedIn = true;
-    
+
     expect(service.isLoggedIn.value).toBeTruthy();
-    
+
     httpMock.post.mockReturnValue(of(null));
     service.logout('/map');
 
@@ -87,7 +89,7 @@ describe('LoginService', () => {
 
     const userLogin =  { email: 'test@test.com', password: 'testpassword' };
 		const errorResponse = new Error("Error de autenticación");// Simular un error de HttpClient
-		
+
     expect(service.isLoggedIn.value).toBeFalsy();
 
 		httpMock.post.mockReturnValueOnce(throwError(() => errorResponse));
@@ -114,57 +116,57 @@ describe('LoginService', () => {
     const obs$ = service.refreshToken();
 
     testScheduler.run(({ expectObservable }) => {
-        
+
         const expectedMarble = "(--a-|)"; // Diagrama de mármol representando la secuencia de emisión de 'a' seguido por completado '|'
         const expectedValues = { a: { status: 200, data:  createDummyUser() } }; // valor emitido 'a' con el valor de 'response'
-        
+
         expectObservable(obs$).toBe(expectedMarble, expectedValues);
     });
-    
+
     // Verificar logueo
     expect(service.isLoggedIn.value).toBeTruthy();
   });
 
   it("simular error refresh token", () => {
-    
+
     xsrfTokenExtractorMock.getToken.mockReturnValue('fakeXsrfToken');
     const errorResponse = { status: 401, message: 'Error de autenticación' };
 		httpMock.get.mockReturnValue( throwError(() => errorResponse) );
     const obs$ = service.refreshToken();
 
     testScheduler.run(({ expectObservable }) => {
-        
+
         const expectedMarble = "(--a-|)"; // Diagrama de mármol representando la secuencia de emisión de 'a' seguido por completado '|'
         const expectedValues = { a: false }; // valor emitido 'a' con el valor de 'response'
 
         expectObservable(obs$).toBe(expectedMarble,  expectedValues);
     });
-    
+
     // Verificar logueo
     expect(service.isLoggedIn.value).toBeFalsy();
   });
 
   it("simular refresh token con redireccion", () => {
-  
+
     xsrfTokenExtractorMock.getToken.mockReturnValueOnce(null);
     const errorResponse = { status: 401, message: 'Error de autenticación' };
 		httpMock.get.mockReturnValue(throwError(() => errorResponse) );
     service.refreshToken();
-  
+
     // Verificar que el método navigate ha sido llamado
     expect(routerMock.navigate).toHaveBeenCalledWith(['']);
-    
+
   });
 
   it("simular refresh token permite navegar", () => {
-  
+
     xsrfTokenExtractorMock.getToken.mockReturnValue('fakeXsrfToken');
     const errorResponse = { status: 401, message: 'Error de autenticación' };
 		httpMock.get.mockReturnValue(throwError(() => errorResponse) );
     const obs$ = service.refreshToken(true);
 
     testScheduler.run(({ expectObservable }) => {
-        
+
         const expectedMarble = "(a|)"; // Diagrama de mármol representando la secuencia de emisión de 'a' seguido por completado '|'
         const expectedValues = { a: true }; // valor emitido 'a' con el valor de 'response'
 

@@ -134,7 +134,6 @@ export class AuthService {
         tap((resp: { status: number, data: User }) => {
           this.user = new User(resp.data);
           this._isLoggedIn.next(true);
-          console.log(this.user.value?.relationships);
           if(!this.user.value?.relationships.profile || !this.user.value?.relationships.profile.name)
             this.showCompleteProfileModal();
         }),
