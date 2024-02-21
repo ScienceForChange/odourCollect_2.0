@@ -4,7 +4,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { User, SingUpUser } from 'src/app/models/user';
+import { SingUpUser } from 'src/app/models/user';
 import { SigninService } from 'src/app/services/signin.service';
 import { Location } from '@angular/common';
 import { ConfirmPasswordValidator } from 'src/app/shared/validators/confirm-password.validator';

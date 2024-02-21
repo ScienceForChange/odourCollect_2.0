@@ -5,6 +5,8 @@ import { environment } from '../../environments/environment';
 import { UserLogin } from '../models/user-login';
 import { Router } from '@angular/router';
 import { User } from '../models/user';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CompleteProfileModalComponent } from '../modules/modals/complete-profile-modal/complete-profile-modal.component';
 
 @Injectable({
   providedIn: 'root',
@@ -63,6 +65,7 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private tokenExtractor: HttpXsrfTokenExtractor,
+    private modalService: NgbModal
   ) { }
 
   login(user: UserLogin): Observable<Object> {
@@ -80,6 +83,11 @@ export class AuthService {
       .pipe(
         tap((resp: { status: number, data: User }) => {
           this.user = new User(resp.data);
+          console.log(this.user.value?.relationships);
+          if(!this.user.value?.relationships.profile || !this.user.value?.relationships.profile.name){
+            this._routeToRedirect = null;
+            this.showCompleteProfileModal();
+          }
           this._routeToRedirect ? this.router.navigate([this._routeToRedirect]) : this.router.navigate(['/map']);
           this._routeToRedirect = null;
           this._isLoggedIn.next(true);
@@ -126,6 +134,8 @@ export class AuthService {
         tap((resp: { status: number, data: User }) => {
           this.user = new User(resp.data);
           this._isLoggedIn.next(true);
+          if(!this.user.value?.relationships.profile || !this.user.value?.relationships.profile.name)
+            this.showCompleteProfileModal();
         }),
         catchError((error) => {
           if (error.status === 401 && fromErrorPage) { //si es error 401 le devolvemos a la pagina de error un true, para que permita navegar, ya que no es un error de servidor
@@ -148,6 +158,10 @@ export class AuthService {
         withCredentials: true,
       }
     );
+  }
+
+  showCompleteProfileModal() {
+    this.modalService.open(CompleteProfileModalComponent, { windowClass: 'default', centered: true, backdrop: 'static', keyboard: false });
   }
 
 }

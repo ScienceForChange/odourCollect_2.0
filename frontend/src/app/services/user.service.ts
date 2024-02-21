@@ -122,9 +122,9 @@ export class UserService {
       reportProgress?: boolean;
       responseType: 'arraybuffer';
       withCredentials?: boolean;
-  } = {
+    } = {
       responseType: 'arraybuffer'
-  };
+    };
 
     this.http.get(`${environment.BACKEND_BASE_URL}api/observations/export`, {
       headers: {
@@ -155,6 +155,24 @@ export class UserService {
         console.log(err);
       }
     });
+  }
+
+  public completeProfileUser(profile: any): Observable<Object> {
+    return this.http.patch(`${environment.BACKEND_BASE_URL}api/users/u/${this.user?.id}`, { ...profile },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        withCredentials: true,
+      }
+    ).pipe(
+      map((resp: any) => {
+        this.user = new User(resp.data[0]);
+        console.log(resp.data[0])
+        return resp;
+      })
+    );
   }
 
   public uplevel(level:number) {
