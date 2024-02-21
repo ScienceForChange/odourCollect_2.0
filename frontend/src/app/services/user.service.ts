@@ -168,8 +168,8 @@ export class UserService {
       }
     ).pipe(
       map((resp: any) => {
-        this.user = new User(resp.data);
-        console.log(resp)
+        this.user = new User(resp.data[0]);
+        console.log(resp.data[0])
         return resp;
       })
     );
