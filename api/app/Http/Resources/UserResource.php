@@ -29,7 +29,7 @@ class UserResource extends JsonResource
                 ]),
                 'odourObservations' => OdourObservationResource::collection($this->whenLoaded('odourObservations'))
             ],
-            'isReadLegal'       => $this->is_read_legal,
+            'AcceptedLegalAt'       => $this->accepted_legal_at,
             'createdAt'         => $this->created_at,
             'updatedAt'         => $this->updated_at,
         ];

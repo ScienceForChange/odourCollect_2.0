@@ -28,7 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'avatar_id',
-        'is_read_legal',
+        'accepted_legal_at',
     ];
 
     /**
@@ -48,7 +48,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'is_read_legal' => 'datetime',
+        'accepted_legal_at' => 'datetime',
         'password' => 'hashed',
     ];
 
