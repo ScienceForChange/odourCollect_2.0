@@ -40,9 +40,10 @@ class RegisteredUserController extends Controller
             $user = $citizen->user()->create([
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                'is_read_legal' => now(),
             ]);
 
-            event(new Registered($user));
+            //event(new Registered($user));
 
             Auth::login($user);
         });
