@@ -75,7 +75,6 @@ export class SignupComponent {
     private location: Location,
     private navigationService: NavigationService,
     private offCanvasService: OffcanvasService,
-    public activeOffcanvas: NgbActiveOffcanvas,
   ) {
     this.navigationService.footerVisible = false;
   }
