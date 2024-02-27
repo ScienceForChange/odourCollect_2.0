@@ -43,7 +43,7 @@ class RegisteredUserController extends Controller
                 'accepted_legal_at' => now(),
             ]);
 
-            //event(new Registered($user));
+            event(new Registered($user));
 
             Auth::login($user);
         });
