@@ -8,11 +8,13 @@ import { SigninService } from 'src/app/services/signin.service';
 import { of, throwError } from 'rxjs';
 import { createDummyUser } from 'src/app/models/user';
 import { ActivateAccountComponent } from 'src/app/modules/signup/components/activate-account/activate-account.component';
+import { OffcanvasService } from 'src/app/services/offcanvas.service';
 
 describe('SigninComponent', () => {
   let component: SignupComponent;
   let fixture: ComponentFixture<SignupComponent>;
   let signinService: SigninService;
+  let offcanvasService: OffcanvasService;
 
   beforeEach(() => {
 
