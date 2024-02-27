@@ -86,7 +86,7 @@
       <div class="d-flex gap-2">
         <input formControlName="dpo" type="checkbox" name="dpo" id="dpo">
         <label class="label-l">
-          Documento de Información Voluntaria sobre la <span (click)="openAboutDataProtectionOffcanvas()">Protección de Datos Peronales</span>.
+          Documento de Información Voluntaria sobre la <span (click)="openAboutDataProtectionOffcanvas()">Protección de Datos Personales</span>.
         </label>
       </div>
       <app-form-error-list *ngIf="signUpForm.get('dpo')?.touched && signUpForm.get('dpo')?.errors" [errorList]="signUpForm.get('dpo')?.errors"/>
