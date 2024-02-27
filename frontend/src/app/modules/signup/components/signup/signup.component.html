@@ -85,8 +85,8 @@
 
       <div class="d-flex gap-2">
         <input formControlName="dpo" type="checkbox" name="dpo" id="dpo">
-        <label class="label-l" for="dpo">
-          Documento de Información Voluntaria sobre la Protección de Datos Peronales.
+        <label class="label-l">
+          Documento de Información Voluntaria sobre la <span (click)="openAboutDataProtectionOffcanvas()">Protección de Datos Peronales</span>.
         </label>
       </div>
       <app-form-error-list *ngIf="signUpForm.get('dpo')?.touched && signUpForm.get('dpo')?.errors" [errorList]="signUpForm.get('dpo')?.errors"/>
@@ -96,8 +96,8 @@
 
       <div class="d-flex gap-2">
         <input formControlName="etic" type="checkbox" name="etic" id="etic">
-        <label class="label-l" for="etic">
-          Documento de Información Voluntaria sobre Cuestiones Humanas y Otras Cuestiones Éticas.
+        <label class="label-l">
+          Documento de Información Voluntaria sobre <span (click)="openAboutEthicalIssuesOffcanvas()">Cuestiones Humanas y Otras Cuestiones Éticas</span>.
         </label>
       </div>
       <app-form-error-list *ngIf="signUpForm.get('etic')?.touched && signUpForm.get('etic')?.errors" [errorList]="signUpForm.get('etic')?.errors"/>
