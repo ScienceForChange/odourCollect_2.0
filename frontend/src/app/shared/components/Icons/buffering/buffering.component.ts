@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'icon-buffering',
@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
       height="252"
       viewBox="0 0 254 252"
       fill="none"
+      [ngClass]="iconClass"
     >
       <path
         d="M160.919 109.419C155.605 109.419 151.134 105.292 150.783 99.9114C150.416 94.3058 154.665 89.4681 160.27 89.1018C182.322 87.6612 200.177 87.6452 199.007 87.6452C204.575 87.6452 209.115 92.1297 209.174 97.7089C209.231 103.323 204.727 107.927 199.11 107.984C186.617 108.112 173.995 108.589 161.59 109.397C161.367 109.41 161.142 109.419 160.919 109.419Z"
@@ -73,4 +74,6 @@ import { Component } from '@angular/core';
   `,
   styleUrls: [],
 })
-export class BufferingComponent {}
+export class BufferingComponent {
+  @Input() public iconClass = '';
+}
