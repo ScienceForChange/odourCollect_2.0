@@ -110,10 +110,10 @@
 
 .painted {
   background-color: $violet !important;
-  transition: all 0.5s ease;
+  transition: all 0.5s ease-in-out;
   width: 20px;
   height: 20px;
-  top: -10px;
+  transform: translateY(-10px);
   position: relative;
 }
 
