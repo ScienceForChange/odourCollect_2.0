@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'icon-search-world',
@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
       height="254"
       viewBox="0 0 251 254"
       fill="none"
+      [ngClass]="iconClass"
     >
       <path
         d="M240.137 157.27C215.478 214.514 149.235 237.88 95.3748 213.758H95.3152C58.8825 198.006 35.4259 162.103 31.2679 128.579C18.8036 44.6803 103 -22.8655 182.101 7.32926C211.086 18.2181 235.254 40.7762 244.899 70.7818C254.006 98.877 251.923 130.246 240.137 157.27Z"
@@ -61,4 +62,6 @@ import { Component } from '@angular/core';
   `,
   styleUrls: [],
 })
-export class SearchWorldComponent {}
+export class SearchWorldComponent {
+  @Input() public iconClass = '';
+}
