@@ -34,19 +34,9 @@
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
     > * {
       flex: 1;
-    }
-    section {
-      align-items: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      text-align: center;
-      strong {
-        font-weight: 700;
-      }
     }
   }
 }
@@ -55,8 +45,8 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  gap: 50px;
-  justify-content: flex-end;
+  justify-content: space-between;
+  max-height: 100px;
   div {
     display: flex;
     justify-content: center;
@@ -88,13 +78,22 @@
   display: flex;
   flex-direction: row;
   max-width: 100dvw;
-  overflow-x: auto;
+  overflow-x: scroll;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
-  min-height: 500px;
+  scroll-behavior: smooth;
+  min-height: 380px;
   section {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+    strong {
+      font-weight: 700;
+    }
+    scroll-snap-align: center;
     flex: 1;
-    scroll-snap-align: start;
     min-width: 100%;
     padding-left: 25px;
     padding-right: 25px;
@@ -105,7 +104,7 @@
 
     animation-name: slidein;
     animation-duration: 1ms;
-    animation-range: entry 0% cover 50%;
+    animation-range: entry 10% cover 50%;
   }
 }
 

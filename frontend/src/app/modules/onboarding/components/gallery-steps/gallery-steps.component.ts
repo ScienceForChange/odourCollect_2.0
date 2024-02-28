@@ -31,6 +31,8 @@ export class GalleryStepsComponent implements OnInit {
 
   public updateStep() {
     const scrollLeft = this.scrollingDiv.nativeElement.scrollLeft;
+    const containerWidth = this.scrollingDiv.nativeElement.offsetWidth;
+
     if (this.timeoutId) {
       clearTimeout(this.timeoutId);
     }
@@ -39,13 +41,13 @@ export class GalleryStepsComponent implements OnInit {
         if (scrollLeft === 0) {
           return (this.step = 1);
         }
-        if (scrollLeft > 389 && scrollLeft < 779) {
+        if (scrollLeft === containerWidth) {
           return (this.step = 2);
         }
-        if (scrollLeft > 779 && scrollLeft < 1169) {
+        if (scrollLeft === containerWidth * 2) {
           return (this.step = 3);
         }
-        if (scrollLeft > 1169) {
+        if (scrollLeft === containerWidth * 3) {
           return (this.step = 4);
         }
         return;
