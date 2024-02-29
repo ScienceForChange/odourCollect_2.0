@@ -1,0 +1,54 @@
+<div class="modal-header align-items-center justify-content-center pb-0">
+  <h1 class="text-center title-l">
+    ¡Tenemos nueva App!
+  </h1>
+</div>
+
+<!-- <div class="d-flex justify-content-center pb-4" *ngIf="config.icon">
+  <div *ngComponentOutlet="config.icon; inputs: iconInputs"></div>
+</div> -->
+<div class="modal-body">
+  <p class="text-center body-m mb-3">
+      Necesitamos que completes tu perfil para que puedas disfrutar de todas las nuevas funcionalidades.
+  </p>
+
+  <form [formGroup]="completeProfileForm">
+    <div class="mb-3">
+
+      <label for="name" class="label-l">Nombre</label>
+      <input formControlName="name" type="text" class="border-input" name="name"/>
+      <app-form-error-list *ngIf="completeProfileForm.get('name')?.touched && completeProfileForm.get('name')?.errors" [field]="'nombre'" [errorList]="completeProfileForm.get('name')?.errors"/>
+
+    </div>
+    <div class="mb-3">
+
+      <label for="birth_year" class="label-l">Año de nacimiento</label>
+      <select formControlName="birth_year" name="birth_year" class="form-select">
+        <option value="{{ year }}" *ngFor="let year of years">
+          {{ year }}
+        </option>
+      </select>
+      <app-form-error-list *ngIf="completeProfileForm.get('birth_year')?.touched && completeProfileForm.get('birth_year')?.errors" [field]="'año de nacimiento'" [errorList]="completeProfileForm.get('birth_year')?.errors"/>
+
+    </div>
+    <div class="mb-3">
+
+      <label for="gender" class="label-l">Género</label>
+      <select formControlName="gender" name="gender" class="form-select">
+        <option value="mujer">Mujer</option>
+        <option value="hombre">Hombre</option>
+        <option value="no binarie">No binarie</option>
+        <option value="otros">Otros</option>
+        <option value="prefiere no decir">Prefiere no decir</option>
+      </select>
+      <app-form-error-list *ngIf="completeProfileForm.get('gender')?.touched && completeProfileForm.get('gender')?.errors" [field]="'genero'" [errorList]="completeProfileForm.get('gender')?.errors"/>
+
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer mt-4 px-0 gap-2 flex-column justify-content-center">
+  <button type="button" [disabled]="!completeProfileForm.valid || loading" class="btn btn-lg btn-primary" (click)="send()" [ngClass]="{ loading: loading }">
+      {{'Guardar y continuar'}}
+  </button>
+</div>

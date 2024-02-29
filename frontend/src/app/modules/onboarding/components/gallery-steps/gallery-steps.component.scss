@@ -1,6 +1,6 @@
 @import "../../../../../styles/colors";
 
-article {
+:host {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
@@ -29,75 +29,102 @@ article {
   }
   > section {
     flex: 1;
-    padding-left: 45px;
-    padding-right: 45px;
+    padding-left: 0;
+    padding-right: 0;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
     > * {
       flex: 1;
     }
-    section:nth-child(1) {
-      align-items: center;
-      animation: slidein 1s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      text-align: center;
-      strong {
-        font-weight: 700;
-      }
+  }
+}
+
+#carrousel-btns {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-height: 100px;
+  div {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    button {
+      background-color: transparent;
+      border-radius: 100%;
+      border: 1px solid $violet;
+      width: 15px;
+      height: 15px;
+      min-width: auto;
+      padding: 0;
     }
-    section:nth-child(2) {
-      align-items: center;
-      display: flex;
-      flex-direction: column;
-      gap: 50px;
-      justify-content: flex-end;
-      div {
-        display: flex;
-        justify-content: center;
-        gap: 25px;
-        button {
-          background-color: transparent;
-          border-radius: 100%;
-          border: 1px solid $violet;
-          height: 15px;
-          min-width: auto;
-          padding: 0;
-          width: 15px;
-          &:hover,
-          &:active {
-            background-color: $violet;
-          }
-        }
-      }
-      button {
-        align-items: center;
-        background-color: $violet;
-        border-radius: 100%;
-        border: none;
-        display: flex;
-        justify-content: center;
-        min-width: auto;
-        padding: 12px;
-        width: fit-content;
-      }
+  }
+  button {
+    align-items: center;
+    background-color: $violet;
+    border-radius: 100%;
+    border: none;
+    display: flex;
+    justify-content: center;
+    min-width: auto;
+    padding: 12px;
+    width: fit-content;
+  }
+}
+
+#container {
+  display: flex;
+  flex-direction: row;
+  max-width: 100dvw;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  min-height: 380px;
+  section {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+    strong {
+      font-weight: 700;
     }
+    scroll-snap-align: center;
+    flex: 1;
+    min-width: 100%;
+    padding-left: 25px;
+    padding-right: 25px;
+
+    view-timeline-name: --carrousel;
+    view-timeline-axis: inline;
+    animation-timeline: --carrousel;
+
+    animation-name: slidein;
+    animation-duration: 1ms;
+    animation-range: entry 10% cover 50%;
   }
 }
 
 .painted {
   background-color: $violet !important;
+  transition: all 0.5s ease-in-out;
+  width: 20px;
+  height: 20px;
+  transform: translateY(-10px);
+  position: relative;
 }
 
 @keyframes slidein {
   from {
     opacity: 0;
+    scale: 25%;
   }
 
   to {
     opacity: 1;
+    scale: 100%;
   }
 }

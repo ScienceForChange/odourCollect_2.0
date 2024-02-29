@@ -28,6 +28,8 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class.',email'],
             'gender' => ['required', new Enum(\App\Enums\Citizen\Gender::class)],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'dpo' => 'accepted',
+            'ethics' => 'accepted',
         ]);
 
         DB::transaction(function () use ($request) {
@@ -40,6 +42,7 @@ class RegisteredUserController extends Controller
             $user = $citizen->user()->create([
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                'accepted_legal_at' => now(),
             ]);
 
             event(new Registered($user));

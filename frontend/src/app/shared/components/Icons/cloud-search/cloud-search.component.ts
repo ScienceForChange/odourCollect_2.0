@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'icon-cloud-search',
@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
       height="206"
       viewBox="0 0 254 206"
       fill="none"
+      [ngClass]="iconClass"
     >
       <path
         d="M222.492 65.8432C228.698 45.3361 212.407 20.7793 185.091 18.2843C173.389 17.2155 160.804 20.4392 150.717 26.4675C136.509 -2.53689 95.0094 -10.1324 65.5707 15.9527C53.1893 26.9236 44.4878 40.0986 40.6882 56.1989C28.1734 55.0072 15.5067 61.5211 8.20243 71.7518C-8.73726 95.478 1.43435 134.607 30.6695 142.041C41.5129 144.799 53.163 144.87 64.2731 145.812C104.461 149.269 184.584 158.985 223.047 141.55C242.654 132.663 259.678 110.36 250.566 88.121C248.205 82.359 243.868 77.4174 238.537 74.2158C235.597 72.4494 222.048 70.5554 221.956 68.5344C221.914 67.6206 222.225 66.7258 222.492 65.8432Z"
@@ -53,4 +54,6 @@ import { Component } from '@angular/core';
   `,
   styleUrls: [],
 })
-export class CloudSearchComponent {}
+export class CloudSearchComponent {
+  @Input() public iconClass = '';
+}

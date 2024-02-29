@@ -51,6 +51,10 @@ article {
       margin-bottom: 5px;
       text-align: start;
       width: 100%;
+      span{
+        color: $violet-dark;
+        text-decoration: underline;
+      }
     }
     select {
       width: 100%;

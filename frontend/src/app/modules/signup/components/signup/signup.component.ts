@@ -4,12 +4,14 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { User, SingUpUser } from 'src/app/models/user';
+import { SingUpUser } from 'src/app/models/user';
 import { SigninService } from 'src/app/services/signin.service';
 import { Location } from '@angular/common';
+import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmPasswordValidator } from 'src/app/shared/validators/confirm-password.validator';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { errorFormater } from 'src/app/models/errorFormater';
+import { OffcanvasService } from '../../../../services/offcanvas.service';
 
 @Component({
   selector: 'app-signup',
@@ -71,7 +73,8 @@ export class SignupComponent {
   constructor(
     private signinService: SigninService,
     private location: Location,
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
+    private offCanvasService: OffcanvasService,
   ) {
     this.navigationService.footerVisible = false;
   }
@@ -91,6 +94,14 @@ export class SignupComponent {
   toggleActivateAccount = (): void => {
     this.activateAccount = !this.activateAccount;
   };
+
+  public openAboutDataProtectionOffcanvas(): void {
+    this.offCanvasService.openAboutDataProtectionOffcanvas();
+  }
+
+  public openAboutEthicalIssuesOffcanvas(): void {
+    this.offCanvasService.openAboutEthicalIssuesOffcanvas();
+  }
 
   send(): void {
     this.user = this.signUpForm.value;
@@ -121,5 +132,7 @@ export class SignupComponent {
       },
     });
   }
+
+
 
 }

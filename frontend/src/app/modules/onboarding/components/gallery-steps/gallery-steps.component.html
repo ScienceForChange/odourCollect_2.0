@@ -1,15 +1,15 @@
-<article>
-  <header>
-    <a [routerLink]="['/register']">
-      <button>Saltar</button>
-    </a>
-  </header>
-  <section>
-    <section *ngIf="step === 1">
-      <icon-cloud-search></icon-cloud-search>
+<header>
+  <a [routerLink]="['/register']">
+    <button>Saltar</button>
+  </a>
+</header>
+<section>
+  <div #scrollingDiv id="container" (scroll)="updateStep()">
+    <section id="1">
+      <icon-cloud-search [iconClass]="'onboarding'" />
       <h1 class="headline-s">
         Te damos la bienvenida a <strong>OdourCollect</strong>.
-        <br/>
+        <br />
         ¡Nos <strong>olíamos</strong> tu llegada!
       </h1>
       <p class="body-l">
@@ -17,36 +17,39 @@
         ciudadana?
       </p>
     </section>
-    <section *ngIf="step === 2">
-      <icon-location-tracking></icon-location-tracking>
+    <section id="2">
+      <icon-location-tracking [iconClass]="'onboarding'" />
       <p class="body-l">
         Mapea, valora y comparte observaciones de olor en cualquier momento y
         cualquier lugar.
       </p>
     </section>
-    <section *ngIf="step === 3">
-      <icon-buffering></icon-buffering>
+    <section id="3">
+      <icon-buffering [iconClass]="'onboarding'" />
       <p class="body-l">
         También puedes anotar las características del olor de una forma
         intuitiva, sencilla y rápida.
       </p>
     </section>
-    <section *ngIf="step === 4">
-      <icon-search-world></icon-search-world>
+    <section id="4">
+      <icon-search-world [iconClass]="'onboarding'" />
       <p class="body-l">
         Además, puedes consultar otros olores registrados y así saber la
         situación odorífera del lugar que te interese en tiempo real.
       </p>
     </section>
-    <section>
-      <div>
-        <button
-          *ngFor="let steps of steps; index as idx"
-          [ngClass]="idx + 1 === step ? 'painted' : ''"
-          (click)="moveTo(idx + 1)"
-        ></button>
-      </div>
-      <button (click)="goForward()"><icon-arrow-right></icon-arrow-right></button>
-    </section>
+  </div>
+  <section id="carrousel-btns">
+    <div>
+      <button
+        #carrouselBtn
+        *ngFor="let steps of steps; index as idx"
+        [ngClass]="idx + 1 === step ? 'painted' : ''"
+        (click)="moveTo(idx + 1)"
+      ></button>
+    </div>
+    <button (click)="moveTo(step + 1)">
+      <icon-arrow-right></icon-arrow-right>
+    </button>
   </section>
-</article>
+</section>
