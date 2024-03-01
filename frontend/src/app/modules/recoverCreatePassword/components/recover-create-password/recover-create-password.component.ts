@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RecoverPasswords } from 'src/app/models/recover-password';
+import { InfoModalComponent } from 'src/app/modules/modals/info-modal/info-modal.component';
 import { NavigationService } from 'src/app/services/navigation.service';
 import { RecoverCreatePasswordService } from 'src/app/services/recover-create-password.service';
+import { DangerComponent } from 'src/app/shared/components/Icons/danger/danger.component';
 import { ConfirmPasswordValidator } from 'src/app/shared/validators/confirm-password.validator';
 
 @Component({
@@ -43,6 +46,7 @@ export class RecoverCreatePasswordComponent {
     private router: Router,
     private recoverCreatePasswordService: RecoverCreatePasswordService,
     private navigationService: NavigationService,
+    private modalService: NgbModal,
   ) {
     this.navigationService.footerVisible = false;
 
@@ -91,16 +95,33 @@ export class RecoverCreatePasswordComponent {
           this.router.navigate(['/login']);
         },
         error: ( resp ) => {
+          console.log(resp);
           if (resp.status == 422) {
             Object.keys(resp.error.errors)
               .map((key) => key)
               .forEach((field) => {
-                let errors: { [error: string]: true } = resp.error.errors[field].reduce((acc:any, error:string) => {
-                  acc[error] = true;
-                  return acc;
-                }, {});
-                this.createPasswordRecover.controls[field].setErrors(errors);
-                this.createPasswordRecover.controls[field].markAsTouched();
+                if(field !== 'email'){
+                  let errors: { [error: string]: true } = resp.error.errors[field].reduce((acc:any, error:string) => {
+                    acc[error] = true;
+                    return acc;
+                  }, {});
+                  this.createPasswordRecover.controls[field].setErrors(errors);
+                  this.createPasswordRecover.controls[field].markAsTouched();
+                }
+                else{
+                  this.modalService.open(InfoModalComponent, {
+                    windowClass: 'default',
+                    backdropClass: 'default',
+                    centered: true,
+                    size: 'sm',
+                  }).componentInstance.config = {
+                    icon: DangerComponent,
+                    text: 'Ha caducado el tiempo para cambiar la contraseña. Por favor, solicita un nuevo email.',
+                    acceptButtonText: 'Volver a solicitar',
+                    buttonCallBack: () => this.router.navigate(['/recover-password']),
+                  };
+
+                }
               });
           }
           this.loading = false;
