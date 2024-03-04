@@ -76,7 +76,7 @@ export interface Profile {
   name: string;
   surname: null;
   gender: Gender | null;
-  birthYear: null | string;
+  birth_year: null | string;
   phone: null;
 }
 export interface Comment {

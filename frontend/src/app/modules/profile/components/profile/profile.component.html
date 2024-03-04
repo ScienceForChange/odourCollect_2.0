@@ -6,7 +6,7 @@
       </div>
     </div>
     <h1 class="body-l text-center">Usuario {{user.id}}</h1>
-    <span class="label-m text-center d-flex justify-content-center align-items-center color-grey">Usuario entrenando <icon-info-square class="d-flex p-2" (click)="openInfoOffcanvas()"/></span>
+    <span *ngIf="user.relationships.profile.isTrained" class="label-m text-center d-flex justify-content-center align-items-center color-grey">Usuario entrenando <icon-info-square class="d-flex p-2" (click)="openInfoOffcanvas()"/></span>
     <a routerLink="edit-avatar" class="label-m text-center color-violet d-flex justify-content-center mb-5 gap-2"><icon-edit/>Editar avatar</a>
     <div id="my-profile-options">
       <ul>
