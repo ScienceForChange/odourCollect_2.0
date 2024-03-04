@@ -4,13 +4,14 @@ fieldset{
     display: flex;
     flex-direction: column;
     flex: auto;
-    display: flex;
     position: relative;
     justify-content: center;
     align-items: center;
     gap: 16px;
     margin-top: 5dvh;
     height: 100%;
+    flex-wrap: nowrap;
+    align-items: stretch;
 
     .oudor-types{
         display: flex;
