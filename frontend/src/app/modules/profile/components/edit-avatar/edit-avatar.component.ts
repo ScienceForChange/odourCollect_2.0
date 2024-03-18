@@ -22,7 +22,7 @@ export class EditAvatarComponent implements OnDestroy{
 
   public updateUser$!: Subscription;
 
-  
+
   constructor(
     private userService: UserService,
     private route: Router,
@@ -33,7 +33,7 @@ export class EditAvatarComponent implements OnDestroy{
       this.navigationService.footerVisible = false;
       this.navigationService.headerTitle = 'Editar avatar';
   }
-  
+
   public selectNewAvatar(event: MouseEvent, id_avatar:number){
     // Buscar todos los elementos con la clase CSS 'selected'
     const selectedElements = this.elementRef.nativeElement.querySelectorAll('.selected');
@@ -53,8 +53,8 @@ export class EditAvatarComponent implements OnDestroy{
     this.loading = true;
     if(this.user &&  this.user.avatar_id != this.newAvatar ) this.user.avatar_id = this.newAvatar
     this.updateUser$ = this.userService.update().subscribe({
-      next: () => { 
-        this.route.navigate(['/profile']); 
+      next: () => {
+        this.route.navigate(['/profile']);
         this.alertService.success('¡Avatar actualizado!', {autoClose: true})
         this.loading = false;
       },

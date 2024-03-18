@@ -30,7 +30,7 @@ export interface Profile {
   name:       string;
   surname:    string | null;
   gender:     string;
-  birthYear:  number;
+  birth_year:  number;
   phone:      string | null;
   avatar_id:  number;
   isTrained:  boolean;
@@ -44,7 +44,7 @@ export function createDummyUser(): User {
     name: 'Dummy',
     surname: null,
     gender: 'male',
-    birthYear: 1900,
+    birth_year: 1900,
     phone: null,
     avatar_id: 1,
     isTrained: true,
