@@ -28,6 +28,7 @@ class OdourObservation extends Model implements Likeable
         'odour_hedonic_tone_id',
         'latitude',
         'longitude',
+        'point',
         'description',
         'origin',
         'odour_report_server_time',
