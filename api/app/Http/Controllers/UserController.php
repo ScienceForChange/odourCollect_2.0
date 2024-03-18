@@ -78,11 +78,18 @@ class UserController extends Controller
     {
         if(! $user->userable) { //no tiene perfil asociado
             $user->userable()->create(
-                $request->validated()
+                $request->only([
+                    'birth_year','gender','is_trained'
+                ])
             );
         } else { // tiene perfil asociado
+            $user->update(
+                $request->only('accepted_legal_at')
+            );
             $user->userable()->update(
-                $request->validated()
+                $request->only([
+                    'birth_year','gender','is_trained'
+                ])
             );
         }
 
