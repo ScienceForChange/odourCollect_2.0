@@ -26,9 +26,10 @@ class UpdateUserRequest extends FormRequest
         // TODO REFACTOR WHEN YOU CREATE A CLIENTPROFILE OR CITIZENPROFILE
         return [
             // 'name'      => ['sometimes', 'min:5','max:255'],
-            'birth_year' => ['required', 'integer', 'min:1900', new teenAgeCare(15)],
+            'birthYear' => ['required', 'integer', 'min:1900', new teenAgeCare(15)],
             'gender' => ['required', new Enum(\App\Enums\Citizen\Gender::class)],
             'is_trained' => ['sometimes', 'boolean'],
+            'accepted_legal_at' => ['sometimes', 'date'],
         ];
     }
 }
