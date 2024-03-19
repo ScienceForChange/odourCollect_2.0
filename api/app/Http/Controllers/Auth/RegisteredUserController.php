@@ -29,7 +29,7 @@ class RegisteredUserController extends Controller
             'gender' => ['required', new Enum(\App\Enums\Citizen\Gender::class)],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'dpo' => 'accepted',
-            'ethics' => 'accepted',
+            'ethic' => 'accepted',
         ]);
 
         DB::transaction(function () use ($request) {
