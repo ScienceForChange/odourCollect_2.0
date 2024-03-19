@@ -14,7 +14,6 @@ export class FooterComponent implements OnInit {
     this.notificationService.newNotification.subscribe({
       next: (resp) => {
         this.newNotification = resp;
-        console.log(this.newNotification);
       }
     })
   }

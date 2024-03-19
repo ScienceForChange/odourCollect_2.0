@@ -20,7 +20,6 @@ describe('MenuService', () => {
 
     service.footerVisible.subscribe((value) => {
       bool = value;
-      console.log('value', value);
     expect(bool).toBe(true);
 
     });

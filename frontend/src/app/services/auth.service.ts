@@ -83,7 +83,6 @@ export class AuthService {
       .pipe(
         tap((resp: { status: number, data: User }) => {
           this.user = new User(resp.data);
-          console.log(this.user.value?.relationships);
           if(!this.user.value?.relationships.profile || !this.user.value?.relationships.profile.name){
             this._routeToRedirect = null;
             this.showCompleteProfileModal();

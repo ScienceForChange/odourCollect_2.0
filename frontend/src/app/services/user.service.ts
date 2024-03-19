@@ -68,7 +68,6 @@ export class UserService {
   }
 
   update(): Observable<Object> {
-    console.log(this.user)  
     return this.http.patch(`${environment.BACKEND_BASE_URL}api/users/${this.user?.id}`, { ...this.user, ...this.user?.relationships?.profile }, {
       headers: {
         'Content-Type': 'application/json',
@@ -153,7 +152,6 @@ export class UserService {
         link.remove();
       },
       error: (err) => {
-        console.log(err);
       }
     });
   }
@@ -170,7 +168,6 @@ export class UserService {
     ).pipe(
       map((resp: any) => {
         this.user = new User(resp.data[0]);
-        console.log(resp.data[0])
         return resp;
       })
     );
