@@ -95,12 +95,12 @@
     <div class="d-flex flex-column mb-3">
 
       <div class="d-flex gap-2">
-        <input formControlName="etic" type="checkbox" name="etic" id="etic">
+        <input formControlName="ethics" type="checkbox" name="ethics" id="ethics">
         <label class="label-l">
           Documento de Información Voluntaria sobre <span (click)="openAboutEthicalIssuesOffcanvas()">Cuestiones Humanas y Otras Cuestiones Éticas</span>.
         </label>
       </div>
-      <app-form-error-list *ngIf="signUpForm.get('etic')?.touched && signUpForm.get('etic')?.errors" [errorList]="signUpForm.get('etic')?.errors"/>
+      <app-form-error-list *ngIf="signUpForm.get('ethics')?.touched && signUpForm.get('ethics')?.errors" [errorList]="signUpForm.get('ethics')?.errors"/>
 
     </div>
     <div class="d-flex justify-content-center">

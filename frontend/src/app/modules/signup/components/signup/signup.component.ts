@@ -60,7 +60,7 @@ export class SignupComponent {
         Validators.minLength(8),
       ]),
       dpo: new FormControl(false, [Validators.requiredTrue]),
-      etic: new FormControl(false, [Validators.requiredTrue]),
+      ethics: new FormControl(false, [Validators.requiredTrue]),
     },
     [
       ConfirmPasswordValidator.MatchValidator(

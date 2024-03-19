@@ -41,7 +41,7 @@ describe('SigninComponent', () => {
       password: new FormControl('123123123'),
       password_confirmation: new FormControl('123123123'),
       dpo: new FormControl(true),
-      etic: new FormControl(true),
+      ethics: new FormControl(true),
       name: new FormControl('dummy'),
       birth_year: new FormControl('01/01/2001'),
       gender: new FormControl(''),
@@ -65,7 +65,7 @@ describe('SigninComponent', () => {
         password: new FormControl('123123123'),
         password_confirmation: new FormControl('123123123'),
         dpo: new FormControl(true),
-        etic: new FormControl(true),
+        ethics: new FormControl(true),
 
         relationships: new FormGroup({
 
