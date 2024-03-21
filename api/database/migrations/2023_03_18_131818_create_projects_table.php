@@ -11,15 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('studies', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->foreignId('odour_sub_type_id');
-            $table->string('study_title')->nullable();
+            $table->foreignId('user_id');
+
+            $table->string('title')->nullable();
             $table->string('description')->nullable();
+            $table->integer('hours')->default(4)->nullable();
+            $table->integer('space')->default(600)->nullable();
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->timestamps();
 
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('restrict');
             $table->foreign('odour_sub_type_id')->references('id')->on('odour_sub_types')->onUpdate('cascade')->onDelete('restrict');
         });
     }
@@ -29,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('studies');
+        Schema::dropIfExists('projects');
     }
 };

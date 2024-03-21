@@ -25,7 +25,9 @@ class DatabaseSeeder extends Seeder
             OdourSubTypesSeeder::class,
             OdourObservationsSeeder::class,
             UpdatePointColumnObservationsSeeder::class,
+            ProjectSeeder::class,
             StudyZoneSeeder::class,
+            TestpolygonSeeder::class,
         ]);
     }
 }

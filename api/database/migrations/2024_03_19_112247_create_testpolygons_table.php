@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('zones', function (Blueprint $table) {
+        Schema::create('testpolygons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_id');
-
             $table->string('name')->nullable();
-            $table->text('description')->nullable();
-            $table->polygon('polygon')->nullable();
-
-            $table->foreign('project_id')->references('id')->on('projects')->onUpdate('cascade')->onDelete('restrict');
+            $table->polygon('area')->isGeometry()->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('zones');
+        Schema::dropIfExists('testpolygons');
     }
 };

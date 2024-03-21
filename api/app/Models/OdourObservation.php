@@ -11,10 +11,12 @@ use Illuminate\Support\Carbon;
 use App\Contracts\Likeable;
 use App\Traits\Likes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use MatanYadaev\EloquentSpatial\Objects\Point;
+use MatanYadaev\EloquentSpatial\Traits\HasSpatial;
 
 class OdourObservation extends Model implements Likeable
 {
-    use HasFactory, SoftDeletes, Likes;
+    use HasFactory, SoftDeletes, Likes, HasSpatial;
 
     /**
      * The attributes that are mass assignable.
@@ -41,6 +43,7 @@ class OdourObservation extends Model implements Likeable
      */
     protected $casts = [
         'odour_report_server_time' => 'datetime',
+        'point' => Point::class,
     ];
 
     /**
@@ -130,5 +133,29 @@ class OdourObservation extends Model implements Likeable
           cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
         return $angle * $earthRadius;
       }
+
+      public function wpe_getCoordinatesWithinRadius ( $radius , $available_markers ) {
+        $stores_data = $available_markers;
+        $resultArray= array();
+        foreach ( $stores_data as $store ) {
+            $lat2 = $store->latitude;
+            $lng2 = $store->longitude;
+            $distance = 6371 * acos(cos($this->wpe_radians($this->latitude)) * cos($this->wpe_radians($lat2)) * cos($this->wpe_radians($lng2) - $this->wpe_radians($this->longitude)) + sin($this->wpe_radians($this->latitude)) * sin($this->wpe_radians($lat2)));
+            if ($distance < $radius){
+                $resultArray[] = (object) array( 'ID' => $store->id , 'lat' => $store->latitude , 'lng' => $store->longitude , 'distance' => $distance );
+            }
+        }
+        // need to return id,distance,lat and lng
+        return $resultArray;
+    }
+    
+    /**
+     * @usage to convert degree into radians
+     * @param $deg
+     * @return float
+     */
+    public function wpe_radians($deg) {
+        return $deg * M_PI / 180;
+    }
 
 }
