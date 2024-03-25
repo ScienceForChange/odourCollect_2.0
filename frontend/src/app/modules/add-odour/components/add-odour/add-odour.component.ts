@@ -158,14 +158,13 @@ export class AddOdourComponent implements OnInit, OnDestroy {
   }
 
   private getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.geoLocation = {
-          lat: position.coords.latitude + '',
-          lng: position.coords.longitude + '',
-        };
-      });
-    }
+    this.mapService.userLatLng$.subscribe((latLng) => {
+      if (!latLng) return;
+      this.geoLocation = {
+        lat: latLng.lat + '',
+        lng: latLng.lng + '',
+      };
+    });
   }
 
   private goToStep1(value: any): void {
@@ -199,7 +198,7 @@ export class AddOdourComponent implements OnInit, OnDestroy {
       });
     if (this.activeStep > 0) this.activeStep--;
     return;
-  }
+  };
 
   public next(): void {
     if (this.currentGroup.valid) {
@@ -271,7 +270,7 @@ export class AddOdourComponent implements OnInit, OnDestroy {
       error: () => {
         this.loading = false;
         this.alertService.error(
-          'No se ha podido crear la observación, prueba lo mas tarde.',
+          'No se ha podido crear la observación, pruébalo más tarde.',
         );
       },
     });
