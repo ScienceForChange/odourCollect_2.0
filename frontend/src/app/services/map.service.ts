@@ -220,6 +220,7 @@ export class MapService {
             },
           })),
         };
+        //Funciona al clicar en el cluster
         this.spiderfiedGeoJSON$.next(spiderfiedGeoJson);
       }
     });
@@ -292,6 +293,11 @@ export class MapService {
     this.odourService.getObservations().subscribe((observations) => {
       if (observations.length) {
         this.createGeoJSON(observations);
+        //Avoid to lave spiderfied markers when have filtered
+        this.spiderfiedGeoJSON$.next({
+          type: 'FeatureCollection',
+          features: [],     
+        })
       }
     });
   }

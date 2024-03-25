@@ -368,7 +368,7 @@ export class OdourService {
     let distanceUrl;
 
     if (querys.is_inside) {
-      distanceUrl = `is_inside=${querys.is_inside}&latitude=${querys.latitude}&longitude=${querys.longitude}`;
+      distanceUrl = `&is_inside=${querys.is_inside}&latitude=${querys.latitude}&longitude=${querys.longitude}`;
     }
 
     const { is_inside, latitude, longitude, ...querysFiltered } = querys;
